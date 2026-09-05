@@ -200,12 +200,14 @@ Same theme lab as `/`.
 
 ### `/contact`
 
-Public contact page (glass form inside `(public)` shell):
+Public contact page (inside `(public)` shell):
 
-- Fields: **name**, **email or phone** (at least one), **topic**, **message**
+- Centered page header (title & subtitle)
+- Side-by-side layout:
+  - Contact Information card: Direct phone, WhatsApp, email, office location (Bab Sharqi, Old Damascus), and working hours
+  - Contact Form: Clean glass form with name, email, phone, topic, and message
 - Success state after mock submit (no backend yet)
 - AR / EN copy via `messages/`
-- Optional company email + WhatsApp shown on the page for direct reach-out
 - Linked from footer Company → Contact and from the Home Contact Us band
 
 ### `/legal/[slug]`

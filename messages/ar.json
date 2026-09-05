@@ -1,0 +1,1403 @@
+{
+  "chrome": {
+    "theme": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "تلقائي",
+    "language": "اللغة",
+    "localeEn": "English",
+    "localeAr": "العربية",
+    "localeEnShort": "EN",
+    "localeArShort": "ع",
+    "brand": "تراث",
+    "siteTitle": "تراث | Turath",
+    "siteDescription": "سياحة سوريا، تراثها، وضيافتها."
+  },
+  "countries": {
+    "search": "ابحث عن دولة",
+    "empty": "لا توجد دول مطابقة",
+    "callingCode": "رمز الاتصال الدولي"
+  },
+  "auth": {
+    "loginTitle": "أهلاً بعودتك",
+    "loginLead": "سجّل دخولك لحجز إقامة أو طاولة أو رحلة أو فعالية أو دليل.",
+    "registerTitle": "أنشئ حسابك",
+    "registerLead": "حساب واحد بالعربية والإنجليزية. الأسعار بالليرة السورية. ادفع نقداً عند الوصول.",
+    "tabPhone": "الهاتف",
+    "tabEmail": "البريد الإلكتروني",
+    "email": "البريد",
+    "password": "كلمة المرور",
+    "name": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "9xx xxx xxx",
+    "dateOfBirth": "تاريخ الميلاد",
+    "nationality": "الجنسية",
+    "nationalityPlaceholder": "اختر دولة",
+    "termsLabel": "أوافق على شروط الخدمة وسياسة الخصوصية الخاصة بتراث.",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "sendCode": "إرسال الرمز",
+    "submitLogin": "متابعة",
+    "submitRegister": "إنشاء الحساب",
+    "toRegister": "جديد هنا؟ أنشئ حساباً",
+    "toLogin": "لديك حساب؟ سجّل الدخول",
+    "providerNote": "أصحاب الفنادق والأدلاء يسجّلون من صفحة أخرى.",
+    "imageQuoteLogin": "كل بابٍ في دمشق يفتح على ألف عام أخرى.",
+    "imageQuoteRegister": "المسافرون يعيدون اكتشاف إقامات سوريا وموائدها وأدلتها. انضم إليهم."
+  },
+  "stepper": {
+    "decrease": "إنقاص {label}",
+    "increase": "زيادة {label}",
+    "value": "القيمة"
+  },
+  "picker": {
+    "datePlaceholder": "اختر تاريخاً",
+    "timePlaceholder": "اختر وقتاً",
+    "hour": "الساعة",
+    "minute": "الدقيقة",
+    "period": "صباحاً أو مساءً",
+    "am": "ص",
+    "pm": "م",
+    "previous": "السابق",
+    "next": "التالي",
+    "today": "اليوم"
+  },
+  "themePreview": {
+    "eyebrow": "مختبر الثيم",
+    "title": "نظام تراث البصري",
+    "subtitle": "رموز الوضع الفاتح والداكن من لوحات الألوان، أسطح زجاجية، شعارات، وكتابة ثنائية اللغة. استخدم هذا المختبر لفحص العناصر.",
+    "palette": "رموز الألوان",
+    "paletteHint": "الأدوات مربوطة بمتغيرات CSS. المكوّنات لا تستخدم ألواناً مباشرة.",
+    "glass": "الأسطح الزجاجية",
+    "glassBody": "ألواح ضبابية بحافة فاتحة بسُمك 1 بكسل ونصف قطر كبير. استخدم GlassPanel — لا تلصق خصائص الضباب على كل بطاقة.",
+    "type": "الخطوط",
+    "headingSample": "التراث، أقرب.",
+    "bodySample": "تراث يربط المسافرين بإقامات وطاولات ورحلات وفعاليات وأدلة سورية موثّقة. الدفع نقداً عند الوصول. العربية والإنجليزية من الشاشة الأولى.",
+    "logos": "الشعارات",
+    "logosHint": "الشعار الكامل عندما يكون الشريط مفتوحاً. العلامة المختصرة عند طيه. شعار الإيصال على القسائم فقط.",
+    "sampleTitle": "الجامع الأموي",
+    "sampleMeta": "دمشق · موقع تراثي",
+    "voucher": "قسيمة الحجز",
+    "voucherHint": "رمز QR والرمز الاحتياطي يظهران مع شعار الإيصال فقط.",
+    "buttons": "الأزرار",
+    "buttonsHint": "الصلب يفتح هالة لون. الزجاجي يمرّر لمعة على زوايا مؤطّرة. المحدود يمتلئ عند التمرير. مرّر واضغط.",
+    "variantSolid": "صلب",
+    "variantGlass": "زجاجي",
+    "variantOutline": "محدود",
+    "sizeSm": "صغير",
+    "sizeMd": "متوسط",
+    "sizeLg": "كبير",
+    "inputs": "الحقول",
+    "inputsHint": "الرئيسي يبقي التسمية فوق الحقل ويتوهّج عند التركيز. الزجاجي بئر ممتلئ بحد 2 بكسل. البسيط شريحة بحث مع حلقة تركيز.",
+    "inputNameLabel": "البريد",
+    "inputMainPlaceholder": "example@email.com",
+    "inputGlassPlaceholder": "البريد أو اسم المستخدم",
+    "inputPlainPlaceholder": "ابحث في دمشق، حلب…",
+    "selects": "القوائم",
+    "selectsHint": "نفس تنويعات الحقول الثلاث. افتح القائمة، اختر مدينة، استخدم الأسهم والكتابة للبحث.",
+    "selectCityLabel": "المدينة",
+    "selectPlaceholder": "اختر مدينة",
+    "cityDamascus": "دمشق",
+    "cityAleppo": "حلب",
+    "cityHoms": "حمص",
+    "cityLatakia": "اللاذقية",
+    "cityPalmyra": "تدمر",
+    "controls": "عناصر التحكم",
+    "controlsHint": "الراديو والاختيار هما العلامة فقط. المفتاح يتبع مسار Uiverse بألوان العلامة. التلميح يفضّل جهة وينقلب إن لم يتسع المكان.",
+    "radioHotel": "فندق",
+    "radioRestaurant": "مطعم",
+    "checkWifi": "واي فاي",
+    "checkBreakfast": "إفطار",
+    "switchLabel": "متاح الليلة",
+    "tooltipAuto": "تلقائي",
+    "tooltipTop": "أعلى",
+    "tooltipRight": "يمين",
+    "tooltipBottom": "أسفل",
+    "tooltipLeft": "يسار",
+    "tooltipBody": "الدفع نقداً عند الوصول. القسيمة رمز QR مع رمز احتياطي من 6 أحرف.",
+    "segments": "مفتاح الشرائح",
+    "segmentsHint": "نفس تنويعات الحقول الثلاث، مع الحجم ونصف القطر. يعمل بأكثر من خيارين. الأسهم تنقل الاختيار.",
+    "segmentHotel": "فندق",
+    "segmentRestaurant": "مطعم",
+    "segmentTrip": "رحلة",
+    "segmentEvent": "فعالية",
+    "dates": "التاريخ والوقت",
+    "datesHint": "نفس تنويعات الزناد والقائمة الثلاث للقوائم، مع الحجم ونصف القطر. الوقت عجلة بنمط آبل. التاريخ يفتح تقويماً كاملاً؛ اضغط العنوان لاختيار الشهر أو السنة.",
+    "dateLabel": "تسجيل الوصول",
+    "timeLabel": "وقت الوصول",
+    "steppers": "العدّاد",
+    "steppersHint": "نفس تنويعات الحقول الثلاث، مع الحجم ونصف القطر. اكتب رقماً أو استخدم الناقص والزائد. الأسهم تغيّر القيمة.",
+    "stepperGuests": "الضيوف",
+    "toasts": "الإشعارات",
+    "toastsHint": "نجاح بعد الحفظ. معلومة لرسالة من الإدارة. تحذير عند حد الخطة. خطأ عند فشل الطلب. محايد لأي شيء آخر.",
+    "toastSuccess": "نجاح",
+    "toastInfo": "معلومة",
+    "toastWarn": "تحذير",
+    "toastError": "خطأ",
+    "toastNeutral": "محايد",
+    "toastSuccessTitle": "تم حفظ المعلم",
+    "toastSuccessBody": "الموقع ظاهر على الخريطة العامة.",
+    "toastInfoTitle": "رسالة من تراث",
+    "toastInfoBody": "عروض دمشق تتوقف يوم الجمعة لجولة تراثية في المدينة.",
+    "toastWarnTitle": "اقتربت من حد خطتك",
+    "toastWarnBody": "استخدمت 9 من 10 عروض مميزة هذا الشهر.",
+    "toastErrorTitle": "تعذّر الحفظ",
+    "toastErrorBody": "فشل الطلب. تحقق من النموذج ثم أعد المحاولة.",
+    "toastNeutralTitle": "المسودة محفوظة محلياً",
+    "toastNeutralBody": "هذا الإشعار لأي شيء ليس نجاحاً أو رسالة إدارية أو تحذيراً أو خطأ."
+  },
+  "landing": {
+    "governorates": {
+      "damascus": "دمشق",
+      "aleppo": "حلب",
+      "latakia": "اللاذقية",
+      "tartus": "طرطوس",
+      "homs": "حمص",
+      "hama": "حماة",
+      "palmyra": "تدمر",
+      "bosra": "بصرى"
+    },
+    "header": {
+      "navHotels": "الإقامات",
+      "navDining": "المطاعم",
+      "navTrips": "الرحلات",
+      "navEvents": "الفعاليات",
+      "navGuides": "الأدلاء",
+      "navHowItWorks": "كيف يعمل",
+      "navLabel": "استكشف تراث",
+      "currencyLabel": "العملة",
+      "currencySyp": "ل.س",
+      "currencyUsd": "دولار",
+      "login": "تسجيل الدخول",
+      "register": "إنشاء حساب"
+    },
+    "hero": {
+      "eyebrow": "سوريا، من جديد",
+      "titleLine1": "التراث،",
+      "titleLine2": "أقرب من أي وقت مضى.",
+      "subtitle": "احجز إقامة أو طاولة أو رحلة أو فعالية أو دليلاً مرخّصاً في سوريا. ادفع نقداً عند الوصول — تراث يراجع كل إعلان قبل نشره.",
+      "cta": "ابدأ الاستكشاف",
+      "scrollHint": "مرّر للاستكشاف"
+    },
+    "search": {
+      "sectionEyebrow": "خطّط للرحلة",
+      "sectionTitle": "إلى أين بعدها؟",
+      "sectionSubtitle": "إقامات وطاولات ورحلات وفعاليات وأدلاء مرخّصون. تدفع عند الوصول.",
+      "tabHotels": "الفنادق",
+      "tabDining": "الطاولات",
+      "tabTrips": "الرحلات",
+      "tabEvents": "الفعاليات",
+      "tabGuides": "الأدلاء",
+      "governorateLabel": "المنطقة",
+      "governoratePlaceholder": "اختر منطقة",
+      "checkInLabel": "تاريخ الوصول",
+      "checkOutLabel": "تاريخ المغادرة",
+      "dateLabel": "التاريخ",
+      "timeLabel": "الفترة الزمنية",
+      "guestsLabel": "الضيوف",
+      "partySizeLabel": "عدد الأفراد",
+      "seatsLabel": "المقاعد",
+      "languageLabel": "اللغة المحكية",
+      "languagePlaceholder": "أي لغة",
+      "languageArabic": "العربية",
+      "languageEnglish": "الإنجليزية",
+      "languageFrench": "الفرنسية",
+      "languageKurdish": "الكردية",
+      "languageTurkish": "التركية",
+      "submit": "بحث"
+    },
+    "personas": {
+      "eyebrow": "اختر رحلتك",
+      "title": "لمن هذه الرحلة؟",
+      "firstTime": "زائر لأول مرة",
+      "heritageSeeker": "باحث عن التراث",
+      "foodie": "طعام وثقافة",
+      "family": "أسافر مع العائلة",
+      "provider": "أدير منشأة",
+      "tiles": {
+        "firstTimeOldDamascus": "دمشق القديمة والجامع الأموي",
+        "firstTimeBoutiqueStays": "إقامات تراثية بوتيكية",
+        "firstTimeGuidedWalks": "جولات مدينة بأدلاء",
+        "firstTimeCashOnArrival": "الحجز بالدفع عند الوصول",
+        "heritagePalmyra": "آثار تدمر",
+        "heritageAleppoCitadel": "قلعة حلب",
+        "heritageKrak": "قلعة الحصن (كراك الفرسان)",
+        "heritageGuides": "أدلاء تراثيون مرخّصون",
+        "foodieRooftopDining": "مطاعم الأفنية والأسطح",
+        "foodieSoukTrails": "جولات طعام في الأسواق القديمة",
+        "foodieLiveMusic": "أمسيات موسيقى حية",
+        "foodieReservedTables": "حجز طاولات دون عربون",
+        "familyStays": "إقامات مناسبة للعائلات",
+        "familyDayTrips": "رحلات جماعية ليوم واحد",
+        "familyFestivals": "مهرجانات ثقافية",
+        "familySupport": "دعم للضيوف على مدار الساعة",
+        "providerListBusiness": "أضف فندقك أو منشأتك",
+        "providerScannerApp": "تطبيق مسح QR دون اتصال",
+        "providerLedger": "سجل واضح للمستحقات",
+        "providerDashboard": "لوحة خاصة بمنشأتك"
+      }
+    },
+    "trustBar": {
+      "eyebrow": "لماذا يثق المسافرون بتراث",
+      "cashOnArrivalTitle": "ادفع عند الوصول",
+      "cashOnArrivalBody": "احجز خلال ثوانٍ وادفع في المكان — بلا بطاقة وبلا عربون.",
+      "offlineQrTitle": "تعمل بلا تغطية",
+      "offlineQrBody": "تمريرتك تفتح حتى في أزقة المدينة القديمة بلا إشارة.",
+      "licensedProvidersTitle": "منشآت مرخّصة فقط",
+      "licensedProvidersBody": "كل فندق ودليل ومكان يُراجع قبل أن يظهر هنا.",
+      "dualCurrencyTitle": "الأسعار بالليرة والدولار",
+      "dualCurrencyBody": "كل مبلغ يظهر بالليرة السورية وما يعادله بالدولار."
+    },
+    "pillars": {
+      "eyebrow": "خمس طرق لاختبار سوريا",
+      "title": "أقم، وتذوّق، واستكشف، واحتفل، وامشِ مع دليل.",
+      "hotelsTitle": "إقامات تراثية",
+      "hotelsBody": "فنادق ونُزل مميزة داخل أفنية تراثية مرمّمة.",
+      "diningTitle": "مطاعم الأفنية والأسطح",
+      "diningBody": "احجز طاولة بإطلالة، من دمشق القديمة إلى أسواق حلب.",
+      "tripsTitle": "رحلات جماعية منظّمة",
+      "tripsBody": "برامج متعددة الأيام مع منظّمين موثوقين وعدد مقاعد مباشر.",
+      "eventsTitle": "فعاليات ثقافية",
+      "eventsBody": "مهرجانات وحفلات وأمسيات تراثية بتذاكر متدرجة.",
+      "guidesTitle": "أدلاء سياحيون خاصون",
+      "guidesBody": "أدلاء مرخّصون ومتعددو اللغات يعرفون كل زقاق وحكاية.",
+      "explore": "استكشف",
+      "tags": {
+        "generator": "مولّد كهرباء دائم",
+        "wifi": "واي فاي",
+        "ac": "تكييف",
+        "rooftop": "سطح مفتوح",
+        "liveMusic": "موسيقى حية",
+        "seatsLeft": "مقاعد متبقية",
+        "guidedTour": "برفقة دليل",
+        "vipTier": "فئة VIP",
+        "multilingual": "متعدد اللغات"
+      }
+    },
+    "mapExplorer": {
+      "eyebrow": "استكشف حسب المنطقة",
+      "title": "سوريا على الخريطة.",
+      "subtitle": "اختر منطقة لترى معالمها والإقامات القريبة منها.",
+      "cta": "افتح الخريطة الكاملة",
+      "attractionsNearby": "أبرز المعالم القريبة"
+    },
+    "spotlight": {
+      "eyebrow": "أبرز المعالم التراثية",
+      "title": "معالم تستحق الرحلة.",
+      "dragHint": "اسحب للاستكشاف",
+      "cta": "استكشف الإقامات والأدلاء القريبين",
+      "sites": {
+        "umayyadMosque": {
+          "title": "الجامع الأموي",
+          "meta": "دمشق",
+          "blurb": "من أقدم وأكبر المساجد في العالم، قائم منذ عام 715 للميلاد."
+        },
+        "aleppoCitadel": {
+          "title": "قلعة حلب",
+          "meta": "حلب",
+          "blurb": "قصر محصّن يتوّج المدينة القديمة، أُعيد بناؤه عبر ثلاثة آلاف عام."
+        },
+        "palmyraRuins": {
+          "title": "تدمر",
+          "meta": "تدمر",
+          "blurb": "أعمدة أثرية شامخة لمدينة صحراوية ربطت يوماً بين روما وفارس."
+        },
+        "krakDesChevaliers": {
+          "title": "قلعة الحصن",
+          "meta": "حمص",
+          "blurb": "قلعة صليبية تُعدّ من أفضل القلاع المحفوظة في العالم."
+        },
+        "bosraAmphitheatre": {
+          "title": "مدرج بصرى",
+          "meta": "بصرى",
+          "blurb": "مسرح روماني من الحجر البازلتي الأسود ما زال يستضيف العروض حتى اليوم."
+        },
+        "saladinCastle": {
+          "title": "قلعة صلاح الدين",
+          "meta": "اللاذقية",
+          "blurb": "قلعة على قمة جبل محاطة بالغابات، تطل على السهل الساحلي."
+        }
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "من الحجز إلى الباب",
+      "title": "ثلاث خطوات فقط.",
+      "reserveTitle": "احجز في دقائق",
+      "reserveBody": "أكّد رقم هاتفك — بلا بطاقة — واحجز مكانك.",
+      "qrPassTitle": "احتفظ بتمريرة على هاتفك",
+      "qrPassBody": "تمريرة الحجز تبقى على الجهاز، حتى بلا تغطية.",
+      "checkInTitle": "ادفع عند الوصول",
+      "checkInBody": "أظهر تمريرتك، وادفع نقداً عند الباب، ثم يمكنك كتابة تقييم."
+    },
+    "appDownload": {
+      "eyebrow": "خذها معك",
+      "title": "تمريرتك وخريطتك، حتى تحت الأرض.",
+      "subtitle": "يحفظ تطبيق تراث حجوزاتك وتمريراتك وخريطة تراثية جاهزة داخل أسوار المدينة القديمة — بلا حاجة لتغطية.",
+      "appStore": "حمّل من App Store",
+      "googlePlay": "حمّل من Google Play",
+      "offlineQrLabel": "تمريرة QR بلا اتصال",
+      "offlineMapLabel": "خريطة تراثية بلا اتصال"
+    },
+    "providerCta": {
+      "eyebrow": "للفنادق والأدلاء وأصحاب الأماكن",
+      "title": "أضف منشأتك إلى تراث.",
+      "subtitle": "صل إلى مسافرين يحجزون الإقامات والطاولات والأدلاء في سوريا.",
+      "benefitDashboard": "لوحة لمتابعة الحجوزات والضيوف",
+      "benefitScanner": "تطبيق لتسجيل وصول الضيوف حتى بلا تغطية",
+      "benefitLedger": "سجل واضح بما تستحقه المنصة ومتى تسدّد",
+      "cta": "أضف منشأتك"
+    },
+    "testimonials": {
+      "eyebrow": "بعد الوصول فقط",
+      "title": "ماذا يقول المسافرون.",
+      "subtitle": "يكتب الضيف تقييماً بعد تسجيل الوصول فقط. هذه كلمات من وصلوا فعلاً.",
+      "verifiedBadge": "تم الوصول",
+      "ratingLabel": "{count} من 5 نجوم",
+      "items": {
+        "layla": {
+          "name": "ليلى م.",
+          "quote": "حجز طاولة في دمشق القديمة استغرق دقيقتين، وتمريرة QR عملت حتى بلا تغطية في الزقاق.",
+          "meta": "أقامت في دمشق"
+        },
+        "omar": {
+          "name": "عمر ك.",
+          "quote": "دليلنا كان يعرف عن تدمر قصصاً لم أقرأها في أي مكان. الدفع كان نقداً كما وُعدنا تماماً.",
+          "meta": "رحلة مرشدة، تدمر"
+        },
+        "sara": {
+          "name": "سارة ح.",
+          "quote": "الفندق أوضح وجود مولّدات احتياطية مسبقاً، فلم تكن هناك مفاجآت عند وصولنا ليلاً.",
+          "meta": "أقامت في حلب"
+        },
+        "james": {
+          "name": "جيمس د.",
+          "quote": "أحببت أن كل سعر يظهر بالدولار أيضاً. سهّل ذلك تخطيط ميزانية الرحلة كلها.",
+          "meta": "زار من الخارج"
+        },
+        "nour": {
+          "name": "نور ت.",
+          "quote": "سجّلت وصولي بالرمز المكوّن من 6 أحرف فقط عندما نفدت بطارية هاتفي. إجراء سلس.",
+          "meta": "فعالية في اللاذقية"
+        },
+        "michael": {
+          "name": "مايكل ك.",
+          "quote": "حجز عشاء على السطح في حمص كان تماماً كما في الصور. أنصح به بشدة.",
+          "meta": "تناول الطعام في حمص"
+        }
+      }
+    },
+    "footer": {
+      "tagline": "تراث سوريا وضيافتها — منشآت مراجعة، والدفع عند الوصول.",
+      "categoriesHeading": "استكشف",
+      "categoryHotels": "الإقامات",
+      "categoryDining": "المطاعم",
+      "categoryTrips": "الرحلات",
+      "categoryEvents": "الفعاليات",
+      "categoryGuides": "الأدلاء",
+      "companyHeading": "الشركة",
+      "companyPartner": "كن شريكاً معنا",
+      "companyContact": "تواصل معنا",
+      "legalHeading": "القانون والترخيص",
+      "legalTerms": "شروط الخدمة",
+      "legalPrivacy": "سياسة الخصوصية",
+      "legalLicensing": "ترخيص المنشآت",
+      "hotlinesHeading": "أرقام الطوارئ",
+      "hotlines": {
+        "police": "الشرطة",
+        "ambulance": "الإسعاف",
+        "touristPolice": "شرطة السياحة",
+        "fire": "الدفاع المدني"
+      },
+      "copyright": "© {year} تراث. جميع الحقوق محفوظة."
+    }
+  },
+  "ui": {
+    "retry": "إعادة المحاولة",
+    "close": "إغلاق",
+    "exportCsv": "تصدير CSV",
+    "errorTitle": "تعذّر تحميل هذه الصفحة",
+    "errorDescription": "تحقق من الاتصال ثم أعد المحاولة.",
+    "emptyTitle": "لا يوجد ما نعرضه بعد",
+    "filter": {
+      "title": "تصفية",
+      "clear": "مسح عوامل التصفية",
+      "applied": "عوامل التصفية النشطة",
+      "remove": "إزالة عامل التصفية {filter}"
+    },
+    "pagination": {
+      "label": "ترقيم الصفحات",
+      "summary": "{from}–{to} من {total}",
+      "previous": "الصفحة السابقة",
+      "next": "الصفحة التالية",
+      "page": "صفحة {page}",
+      "perPage": "الصفوف"
+    },
+    "ratingEmpty": "لا تقييمات بعد",
+    "ratingLabel": "{value} من 5 من {count} تقييم",
+    "ratingCount": "{count} تقييمات",
+    "ratingOutOf": "{value} من 5"
+  },
+  "admin": {
+    "shell": {
+      "navLabel": "الإدارة",
+      "openNav": "فتح القائمة",
+      "closeNav": "إغلاق القائمة",
+      "collapse": "طيّ",
+      "expand": "توسيع",
+      "adminBadge": "مشرف",
+      "settings": "الإعدادات",
+      "logout": "تسجيل الخروج",
+      "searchPlaceholder": "انتقال سريع أو بحث (Ctrl+K)",
+      "commandPalette": "شريط الأوامر السريع",
+      "noResults": "لم يتم العثور على صفحات مطابقة.",
+      "paletteNavigate": "تنقّل",
+      "paletteSelect": "اختيار",
+      "paletteClose": "إغلاق",
+      "paletteShortcut": "Ctrl+K"
+    },
+    "roles": {
+      "label": "معاينة بصفة",
+      "tourist": "ضيف",
+      "staff": "موظف منشأة",
+      "owner": "مالك منشأة",
+      "admin": "مشرف"
+    },
+    "nav": {
+      "overview": "الرئيسية",
+      "people": "الحسابات",
+      "users": "الضيوف",
+      "providers": "المنشآت",
+      "reviews": "التقييمات",
+      "bookings": "الحجوزات",
+      "settlement": "المال",
+      "disputes": "التغيّب",
+      "ledger": "المستحقات",
+      "attractions": "المواقع التراثية",
+      "rules": "الإعداد",
+      "commissions": "الرسوم",
+      "taxonomy": "القوائم",
+      "promotions": "المميّز",
+      "coupons": "أكواد الخصم",
+      "auditLogs": "سجل العمليات",
+      "settings": "الإعدادات"
+    },
+    "headers": {
+      "overview": {
+        "title": "الرئيسية",
+        "description": "الحجوزات، حالات التغيّب، زيارات المواقع التراثية، والرسوم عبر المحافظات."
+      },
+      "users": {
+        "title": "الضيوف",
+        "description": "من يحجز عبر تراث. انظر كيف تقيّمهم المنشآت، وهل يصلون في موعدهم."
+      },
+      "userDetail": {
+        "title": "الضيف",
+        "description": "الملف والتقييمات وسجل الحضور والنشاط والحجوزات."
+      },
+      "providers": {
+        "title": "المنشآت",
+        "description": "فنادق ومطاعم ورحلات وفعاليات وأدلاء — راجع التراخيص وتقييمات الضيوف."
+      },
+      "providerDetail": {
+        "title": "المنشأة",
+        "description": "الترخيص والإعلان والرسوم والائتمان والتقييمات والنشاط."
+      },
+      "bookings": {
+        "title": "الحجوزات",
+        "description": "كل الحجوزات على تراث. الضيوف يدفعون نقداً عند الوصول."
+      },
+      "disputes": {
+        "title": "التغيّب",
+        "description": "عندما تقول المنشأة إن الضيف لم يصل، وماذا ردّ الضيف."
+      },
+      "disputeDetail": {
+        "title": "حالة تغيّب",
+        "description": "رواية الطرفين والملاحظات وكيف أُغلقت الحالة."
+      },
+      "ledger": {
+        "title": "المستحقات",
+        "description": "ما تستحقه تراث على كل منشأة، وهل هي ضمن حدّ الائتمان."
+      },
+      "ledgerDetail": {
+        "title": "حساب المنشأة",
+        "description": "الرصيد والكشوف ووضع الحساب لهذه المنشأة."
+      },
+      "attractions": {
+        "title": "المواقع التراثية",
+        "description": "أماكن يكتشفها المسافرون — صور وساعات عمل ورسوم دخول ودبوس على الخريطة."
+      },
+      "attractionDetail": {
+        "title": "الموقع التراثي",
+        "description": "الصور والقصة وساعات العمل والرسوم ودبوس الخريطة وهل الموقع ظاهر للجميع."
+      },
+      "commissions": {
+        "title": "الرسوم",
+        "description": "نسبة تراث الافتراضية حسب الفئة، وسعر صرف الليرة مقابل الدولار."
+      },
+      "taxonomy": {
+        "title": "القوائم",
+        "description": "الفئات والمرافق والمناطق التي يعتمد عليها البحث والإعلانات."
+      },
+      "promotions": {
+        "title": "المميّز",
+        "description": "ثبّت إعلاناً أو موضوعاً على الصفحة الرئيسية لفترة معيّنة. هذا ليس خصماً."
+      },
+      "coupons": {
+        "title": "أكواد الخصم",
+        "description": "أكواد تخفّض المبلغ النقدي المستحق عند الباب. اتفق مع المنشأة أولاً ثم انشر الكود."
+      },
+      "reviews": {
+        "title": "التقييمات",
+        "description": "تقييمات الضيوف والمنشآت بعد إتمام الوصول. الإبلاغ والإخفاء وتدقيق المحتوى."
+      },
+      "auditLogs": {
+        "title": "سجل العمليات",
+        "description": "تتبّع الإجراءات الإدارية وتغييرات الحالات وتحديثات إعدادات المنصة."
+      },
+      "settings": {
+        "title": "الإعدادات",
+        "description": "حدود الائتمان، ومستويات حضور الضيوف، ومفاتيح تشغيل المنصة."
+      }
+    },
+    "users": {
+      "caption": "الضيوف",
+      "searchPlaceholder": "ابحث بالاسم أو رقم الهاتف",
+      "locked": "مقفّل",
+      "allAccounts": "كل الحسابات",
+      "accountLabel": "الحساب",
+      "account": {
+        "active": "نشط",
+        "locked": "مقفّل"
+      },
+      "allReliability": "كل سجلات الحضور",
+      "reliabilityBand": {
+        "strong": "يحضر",
+        "watch": "راقب",
+        "atRisk": "يتغيّب كثيراً"
+      },
+      "empty": "لا يوجد ضيوف بعد.",
+      "emptyFiltered": "لا يوجد ضيوف مطابقون لهذا البحث.",
+      "columns": {
+        "name": "الاسم",
+        "phone": "الهاتف",
+        "rating": "التقييم",
+        "reliability": "الحضور",
+        "bookings": "مكتملة",
+        "joined": "تاريخ الانضمام"
+      },
+      "detail": {
+        "notFound": "لا يوجد ضيف بهذا الرابط.",
+        "notFoundDescription": "ربما حُذف الحساب، أو الرابط لم يعد صالحاً.",
+        "phone": "الهاتف",
+        "email": "البريد",
+        "joined": "تاريخ الانضمام",
+        "lock": "قفل",
+        "unlock": "فتح",
+        "lockedTitle": "تم قفل الحساب",
+        "lockedBody": "لن يتمكن هذا الضيف من إنشاء حجوزات جديدة في بقية هذه الجلسة.",
+        "unlockedTitle": "تم فتح الحساب",
+        "unlockedBody": "يمكن لهذا الضيف الحجز مجدداً في بقية هذه الجلسة.",
+        "reliabilityTitle": "سجل الحضور",
+        "completedCheckIns": "تسجيلات وصول مكتملة",
+        "noShows": "حالات التغيّب",
+        "reliabilityHint": {
+          "strong": "يلتزم بالمواعيد ويكمل الإقامات.",
+          "watch": "بعض حالات التغيّب — راقب الحجوزات الجديدة.",
+          "atRisk": "تغيّب متكرر. يمكن قفل الحساب من هذه الصفحة."
+        },
+        "reviewsTitle": "تقييمات المنشآت",
+        "reviewsHint": "بعد تسجيل الوصول، تقيّم المنشأة هذا الضيف. منفصل عن سجل الحضور.",
+        "reviewsEmpty": "لم تقيّم أي منشأة هذا الضيف بعد.",
+        "activityTitle": "النشاط",
+        "activityEmpty": "لا يوجد نشاط بعد.",
+        "activityFilter": "نوع النشاط",
+        "activityChannel": {
+          "all": "الكل",
+          "bookings": "حجوزات",
+          "money": "أموال",
+          "account": "الحساب"
+        },
+        "activityKind": {
+          "placed": "حجز جديد",
+          "confirmed": "مؤكَّد",
+          "checkedIn": "تم تسجيل الوصول",
+          "completed": "مكتمل",
+          "cancelled": "ملغى",
+          "noShow": "تغيّب",
+          "disputed": "قيد المراجعة",
+          "locked": "قفل الحساب",
+          "unlocked": "فتح الحساب"
+        },
+        "bookingsTitle": "الحجوزات"
+      }
+    },
+    "providers": {
+      "caption": "المنشآت",
+      "searchPlaceholder": "ابحث عن المنشأة أو المالك",
+      "allStatuses": "كل الحالات",
+      "allCategories": "كل الفئات",
+      "allGovernorates": "كل المناطق",
+      "empty": "لا توجد منشآت بعد.",
+      "emptyFiltered": "لا توجد منشآت مطابقة لعوامل التصفية هذه.",
+      "status": {
+        "pending": "معلّق",
+        "approved": "موافق عليه",
+        "rejected": "مرفوض",
+        "suspended": "موقّف"
+      },
+      "columns": {
+        "business": "المنشأة",
+        "category": "الفئة",
+        "governorate": "المنطقة",
+        "rating": "التقييم",
+        "status": "الحالة",
+        "submitted": "تاريخ التقديم"
+      },
+      "detail": {
+        "notFound": "لا توجد منشأة بهذا الرابط.",
+        "notFoundDescription": "ربما حُذفت المنشأة، أو الرابط لم يعد صالحاً.",
+        "owner": "المالك",
+        "phone": "الهاتف",
+        "email": "البريد",
+        "address": "العنوان",
+        "submitted": "تاريخ التقديم",
+        "approve": "قبول",
+        "reject": "رفض",
+        "suspend": "تعليق",
+        "reinstate": "إعادة تفعيل",
+        "noKycActions": "لا إجراء ترخيص إضافي على طلب مرفوض في هذه الجلسة.",
+        "approvedTitle": "تم قبول المنشأة",
+        "approvedBody": "يمكن لهذه المنشأة استقبال الحجوزات في بقية هذه الجلسة.",
+        "rejectedTitle": "رُفض الطلب",
+        "rejectedBody": "تبقى هذه المنشأة خارج السوق في بقية هذه الجلسة.",
+        "suspendedTitle": "تم تعليق المنشأة",
+        "suspendedBody": "الحجوزات الجديدة موقوفة في بقية هذه الجلسة.",
+        "reinstatedTitle": "أُعيد تفعيل المنشأة",
+        "reinstatedBody": "المنشأة مقبولة مجدداً في بقية هذه الجلسة.",
+        "reviewsTitle": "تقييمات الضيوف",
+        "reviewsHint": "بعد تسجيل الوصول، يقيّم الضيف هذه المنشأة. منفصل عن المستحقات والترخيص.",
+        "reviewsEmpty": "لم يقيّم أي ضيف هذه المنشأة بعد.",
+        "activityTitle": "النشاط",
+        "activityEmpty": "لا يوجد نشاط بعد.",
+        "activityFilter": "نوع النشاط",
+        "activityChannel": {
+          "all": "الكل",
+          "bookings": "حجوزات",
+          "money": "أموال",
+          "account": "الحساب"
+        },
+        "activityKind": {
+          "placed": "حجز جديد",
+          "confirmed": "مؤكَّد",
+          "checkedIn": "تم تسجيل الوصول",
+          "completed": "مكتمل",
+          "cancelled": "ملغى",
+          "noShow": "تغيّب",
+          "disputed": "قيد المراجعة",
+          "settled": "تسوية",
+          "submitted": "قُدّم الطلب",
+          "approved": "قُبل الترخيص",
+          "rejected": "رُفض الطلب",
+          "suspended": "عُلّق الحساب",
+          "reinstated": "أُعيد التفعيل",
+          "financeUpdated": "تحديث الرسوم أو الائتمان"
+        },
+        "documentsTitle": "المستندات",
+        "documentsEmpty": "لم يُرفع أي ملف.",
+        "placeholderFile": "ملف تجريبي — ليس تحميلاً حقيقياً.",
+        "documentKind": {
+          "commercialRegistration": "السجل التجاري",
+          "ministryLicense": "رخصة الوزارة",
+          "ownerId": "هوية المالك"
+        },
+        "inventoryPendingHint": "إعلان مقترح — لا يُنشر حتى تُقبل هذه المنشأة.",
+        "inventoryEmpty": "لا تفاصيل إعلان في الملف بعد.",
+        "inventoryTitle": {
+          "hotels": "الغرف",
+          "dining": "الطاولات",
+          "trips": "الرحلة",
+          "events": "الجلسات",
+          "guides": "الدليل"
+        },
+        "rooms": {
+          "name": "نوع الغرفة",
+          "occupancy": "الإشغال",
+          "quantity": "العدد",
+          "price": "لليلة",
+          "amenities": "المرافق"
+        },
+        "tables": {
+          "label": "الطاولة",
+          "capacity": "السعة",
+          "zone": "المنطقة"
+        },
+        "zone": {
+          "indoor": "داخلي",
+          "terrace": "تراس",
+          "vip": "VIP",
+          "smoking": "تدخين"
+        },
+        "slots": "قوالب المواعيد",
+        "trip": {
+          "dates": "التواريخ",
+          "pickup": "نقطة الانطلاق",
+          "capacity": "السعة",
+          "seatsLeft": "مقاعد متبقية",
+          "itinerary": "البرنامج",
+          "price": "السعر"
+        },
+        "events": {
+          "when": "الموعد",
+          "tier": "الشريحة",
+          "capacity": "السعة",
+          "price": "السعر",
+          "maxPerUser": "الحد لكل ضيف"
+        },
+        "guide": {
+          "license": "الرخصة",
+          "languages": "اللغات",
+          "hourly": "بالساعة",
+          "fullDay": "يوم كامل",
+          "specialties": "التخصصات"
+        },
+        "lang": {
+          "ar": "العربية",
+          "en": "الإنجليزية",
+          "fr": "الفرنسية"
+        },
+        "financeTitle": "الرسوم والائتمان",
+        "commission": "تجاوز نسبة الرسوم",
+        "commissionHint": "اترك الحقل فارغاً لاستخدام الافتراضي من صفحة الرسوم.",
+        "commissionDefault": "افتراضي الفئة {rate}",
+        "creditCeiling": "سقف الائتمان",
+        "creditHint": "اترك الحقل فارغاً لاستخدام افتراضي الإعدادات لهذه الشريحة.",
+        "creditDefault": "افتراضي الشريحة {amount}",
+        "tier": "الشريحة",
+        "saveFinance": "حفظ",
+        "financeSaved": "حُفظت المالية",
+        "financeSavedBody": "رسوم هذه المنشأة وائتمانها محدَّثان لهذه الجلسة.",
+        "financeInvalid": "أدخل رسماً بين 0 و 100، أو سقفاً موجباً للائتمان.",
+        "ledgerTitle": "ملخص المستحقات",
+        "ledgerEmpty": "لا مستحقات حتى تُقبل هذه المنشأة وتبدأ استقبال الحجوزات.",
+        "accrued": "المستحق",
+        "paid": "المدفوع",
+        "outstanding": "المتبقي",
+        "creditUsed": "الائتمان المستخدم",
+        "lastSettled": "آخر تسوية"
+      }
+    },
+    "bookings": {
+      "caption": "الحجوزات",
+      "searchPlaceholder": "ابحث بالضيف أو الهاتف أو رمز النسخة الاحتياطية",
+      "allCategories": "كل الفئات",
+      "allStatuses": "كل الحالات",
+      "empty": "لا توجد حجوزات على المنصة بعد.",
+      "emptyFiltered": "لا توجد حجوزات مطابقة لعوامل التصفية هذه.",
+      "status": {
+        "pending": "معلّق",
+        "confirmed": "مؤكّد",
+        "checkedIn": "تم الدخول",
+        "completed": "مكتمل",
+        "cancelled": "ملغى",
+        "noShow": "تغيّب",
+        "disputed": "قيد المراجعة"
+      },
+      "columns": {
+        "guest": "الضيف",
+        "provider": "المنشأة",
+        "category": "الفئة",
+        "when": "الموعد",
+        "amount": "المبلغ",
+        "status": "الحالة",
+        "code": "الرمز",
+        "coupon": "كود الخصم"
+      },
+      "detail": {
+        "title": "تفاصيل الحجز",
+        "code": "رمز تسجيل الوصول",
+        "codeHint": "تسجيل الوصول في المكتب يستخدم هذا الرمز المكوّن من ستة أحرف.",
+        "copyCode": "نسخ الرمز",
+        "copiedCode": "تم نسخ رمز الحجز",
+        "cashOnArrival": "الدفع عند الوصول — يُحصّل المبلغ مباشرة لدى المنشأة.",
+        "schedule": "الموعد",
+        "parties": "الأطراف",
+        "guest": "الضيف",
+        "provider": "المنشأة",
+        "amountDue": "المبلغ المستحق",
+        "openGuest": "فتح ملف الضيف",
+        "openProvider": "فتح ملف المنشأة",
+        "couponTitle": "كود خصم مطبّق",
+        "discountAmount": "قيمة الخصم",
+        "couponHint": "المبلغ النقدي المحصّل عند الباب يعكس هذا الخصم.",
+        "actionsTitle": "إجراءات الحجز",
+        "actionCheckIn": "تسجيل وصول الضيف",
+        "actionComplete": "تأكيد إكمال الحجز",
+        "actionCancel": "إلغاء الحجز",
+        "actionNoShow": "تسجيل حالة تغيّب",
+        "actionDispute": "إحالة للمراجعة",
+        "actionReopen": "إعادة فتح الحجز (مؤكّد)",
+        "statusUpdatedTitle": "تم تحديث الحجز",
+        "statusUpdatedBody": "تغيّرت حالة الحجز إلى {status}.",
+        "statusUpdateFailed": "تعذّر التحديث",
+        "statusUpdateFailedBody": "تعذّر تحديث حالة الحجز. يُرجى المحاولة ثانية."
+      }
+    },
+    "disputes": {
+      "caption": "التغيّب",
+      "searchPlaceholder": "ابحث بالضيف أو المنشأة أو رمز النسخة الاحتياطية",
+      "allStatuses": "كل الحالات",
+      "allCategories": "كل الفئات",
+      "categoryLabel": "الفئة",
+      "empty": "لا توجد حالات تغيّب للمراجعة.",
+      "emptyFiltered": "لا توجد حالات مطابقة لعوامل التصفية هذه.",
+      "providerLabel": "المنشأة",
+      "touristLabel": "الضيف",
+      "noNotes": "لا ملاحظات بعد",
+      "status": {
+        "open": "مفتوح",
+        "resolvedGuest": "الضيف",
+        "resolvedProvider": "المنشأة"
+      },
+      "columns": {
+        "case": "الحالة",
+        "parties": "الأطراف",
+        "claims": "الروايات",
+        "amount": "المبلغ",
+        "status": "القرار",
+        "notes": "ملاحظات"
+      },
+      "detail": {
+        "notFound": "حالة التغيّب غير موجودة",
+        "notFoundDescription": "حالة الوصول الفائت هذه غير مسجّلة.",
+        "openGuest": "فتح الضيف",
+        "openProvider": "فتح المنشأة",
+        "openBooking": "فتح الحجز",
+        "guestRating": "تقييم الضيف",
+        "providerRating": "تقييم المنشأة",
+        "opened": "فُتح في",
+        "amountHint": "الدفع عند الوصول — كان هذا المبلغ مستحقاً لدى المنشأة، ولم تُخصم بطاقة.",
+        "claimsTitle": "رواية كل طرف",
+        "resolveTitle": "إغلاق الحالة",
+        "resolutionTitle": "القرار",
+        "resolveHint": "حدّد لصالح من تُحسم حالة التغيّب هذه. تبقى الملاحظات على الحالة لهذه الجلسة.",
+        "notesEn": "ملاحظات (الإنجليزية)",
+        "notesAr": "ملاحظات (العربية)",
+        "forGuest": "لصالح الضيف",
+        "forProvider": "لصالح المنشأة",
+        "resolvedGuestTitle": "أُغلقت لصالح الضيف",
+        "resolvedGuestBody": "عُلّمت حالة التغيّب هذه لصالح الضيف.",
+        "resolvedProviderTitle": "أُغلقت لصالح المنشأة",
+        "resolvedProviderBody": "عُلّمت حالة التغيّب هذه لصالح المنشأة."
+      }
+    },
+    "ledger": {
+      "caption": "المستحقات",
+      "searchPlaceholder": "ابحث عن المنشآت",
+      "allStandings": "كل الأوضاع",
+      "allCategories": "كل الفئات",
+      "categoryLabel": "الفئة",
+      "empty": "لا توجد حسابات منشآت بعد.",
+      "emptyFiltered": "لا توجد حسابات مطابقة لعوامل التصفية هذه.",
+      "standing": {
+        "healthy": "سليم",
+        "watch": "مراقبة 75٪",
+        "grace": "مهلة 100٪",
+        "suspended": "موقّف"
+      },
+      "cadence": {
+        "weekly": "أسبوعي",
+        "biweekly": "كل أسبوعين",
+        "monthly": "شهري"
+      },
+      "columns": {
+        "provider": "المنشأة",
+        "rating": "التقييم",
+        "outstanding": "المستحق",
+        "accrued": "المتراكم",
+        "credit": "الائتمان المستخدم",
+        "cadence": "التسوية",
+        "standing": "الوضع"
+      },
+      "detail": {
+        "notFound": "الحساب غير موجود",
+        "notFoundDescription": "لا يوجد سجل مستحقات لهذه المنشأة.",
+        "openProvider": "فتح المنشأة",
+        "openLedger": "فتح الحساب",
+        "suspend": "إيقاف",
+        "reinstate": "إعادة التفعيل",
+        "recordSettlement": "تسجيل تسوية",
+        "paid": "المدفوع",
+        "ceiling": "سقف الائتمان",
+        "creditTitle": "الائتمان المستخدم",
+        "creditOf": "من {ceiling}",
+        "lastSettled": "آخر تسوية",
+        "statementsTitle": "الكشوف",
+        "statementsEmpty": "لا توجد فترات تسوية بعد.",
+        "period": "الفترة",
+        "status": "الحالة",
+        "suspendedTitle": "الحساب موقّف",
+        "suspendedBody": "هذه المنشأة تجاوزت سقف الائتمان. راجع الحجوزات حتى تتم التسوية.",
+        "reinstatedTitle": "أُعيد تفعيل الحساب",
+        "reinstatedBody": "الوضع يتبع الآن استخدام الائتمان الحالي.",
+        "settledTitle": "سُجّلت التسوية",
+        "settledBody": "عُلّمت الرسوم المستحقة كمدفوعة لهذه الجلسة.",
+        "hint": {
+          "healthy": "الائتمان ضمن السقف.",
+          "watch": "تجاوز الائتمان 75٪. راجع هذا الحساب قبل الكشف التالي.",
+          "grace": "الائتمان عند 100٪ أو أكثر. أوقف الحساب إن لم تتم التسوية.",
+          "suspended": "يجب إيقاف الاستقبال الجديد حتى يُعاد تفعيل هذا الحساب."
+        },
+        "statementStatus": {
+          "paid": "مدفوع",
+          "due": "مستحق",
+          "overdue": "متأخر"
+        }
+      }
+    },
+    "attractions": {
+      "caption": "المواقع التراثية",
+      "add": "إضافة معلم",
+      "searchPlaceholder": "ابحث عن المواقع",
+      "allGovernorates": "كل المناطق",
+      "allStatuses": "كل الحالات",
+      "viewLabel": "العرض",
+      "view": {
+        "table": "جدول",
+        "cards": "بطاقات",
+        "map": "خريطة"
+      },
+      "mapTitle": "خريطة المواقع التراثية",
+      "mapDescription": "خريطة تفاعلية للمواقع التراثية عبر المحافظات السورية.",
+      "mapSitesCount": "{count} مواقع على الخريطة",
+      "openSite": "فتح تفاصيل الموقع",
+      "closePreview": "إغلاق المعاينة",
+      "status": {
+        "published": "منشور",
+        "draft": "مسودة"
+      },
+      "free": "مجاني",
+      "created": "تمت إضافة المعلم",
+      "createdBody": "الموقع في الكتالوج. انشره عندما تصبح النصوص جاهزة.",
+      "createFailed": "تعذّرت إضافة المعلم",
+      "createFailedBody": "تحقق من النموذج ثم أعد المحاولة.",
+      "empty": "لا توجد معالم تراثية بعد.",
+      "emptyFiltered": "لا توجد معالم مطابقة لعوامل التصفية هذه.",
+      "loadingMore": "جارٍ تحميل المزيد من المواقع…",
+      "actionMenu": "إجراءات {name}",
+      "actionEdit": "تعديل",
+      "actionDelete": "حذف",
+      "columns": {
+        "site": "الموقع",
+        "governorate": "المنطقة",
+        "hours": "الساعات",
+        "fee": "رسم الدخول",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "form": {
+        "addTitle": "إضافة معلم",
+        "editTitle": "تعديل المعلم",
+        "image": "صورة الغلاف",
+        "imageHint": "اختر صورة الغلاف",
+        "imageRequired": "أضف صورة غلاف قبل الحفظ.",
+        "removeImage": "إزالة الصورة",
+        "gallery": "صور المعرض",
+        "galleryHint": "صور إضافية لمعرض الموقع التراثي",
+        "addPhoto": "إضافة صورة",
+        "nameEn": "الاسم (الإنجليزية)",
+        "nameAr": "الاسم (العربية)",
+        "narrativeEn": "القصة (الإنجليزية)",
+        "narrativeAr": "القصة (العربية)",
+        "published": "منشور",
+        "opensAt": "يفتح",
+        "closesAt": "يغلق",
+        "fee": "رسم الدخول (ل.س)",
+        "latitude": "خط العرض",
+        "longitude": "خط الطول",
+        "cancel": "إلغاء",
+        "save": "حفظ المعلم"
+      },
+      "detail": {
+        "notFound": "المعلم غير موجود",
+        "notFoundDescription": "هذا الموقع ليس في الكتالوج، أو الرابط لم يعد صالحاً.",
+        "back": "العودة إلى المواقع التراثية",
+        "edit": "تعديل الموقع",
+        "delete": "حذف",
+        "deleteConfirmTitle": "حذف هذا الموقع؟",
+        "deleteConfirmBody": "ستتم إزالته من الكتالوج لهذه الجلسة.",
+        "deleteConfirmButton": "حذف",
+        "deleteCancelButton": "إلغاء",
+        "deleted": "تم حذف الموقع",
+        "deletedBody": "تمت إزالة الموقع من الكتالوج.",
+        "viewExplore": "عرض على خريطة الاستكشاف",
+        "googleMaps": "فتح في خرائط Google",
+        "copyCoordinates": "نسخ الإحداثيات",
+        "copiedCoordinates": "تم نسخ الإحداثيات",
+        "copyFailed": "تعذّر نسخ الإحداثيات",
+        "photoLabel": "صورة {n}",
+        "coverBadge": "الغلاف",
+        "status": "حالة النشر",
+        "governorate": "المنطقة",
+        "hours": "ساعات العمل",
+        "entryFee": "رسم الدخول",
+        "freeEntry": "دخول مجاني",
+        "allDay": "مفتوح 24 ساعة",
+        "coordinates": "دبوس الخريطة",
+        "coordinatesHint": "إحداثيات عشرية لدبوس الخريطة.",
+        "narrativeTitle": "القصة",
+        "narrativeEn": "القصة بالإنجليزية",
+        "narrativeAr": "القصة بالعربية",
+        "galleryTitle": "معرض الصور",
+        "galleryCount": "{count} صور",
+        "saved": "تم تحديث المعلم",
+        "savedBody": "تم حفظ التغييرات لهذه الجلسة.",
+        "saveFailed": "تعذّر حفظ المعلم",
+        "saveFailedBody": "تحقق من النموذج ثم أعد المحاولة.",
+        "invalid": "تحقق من الأسماء وساعات العمل والرسم ودبوس الخريطة."
+      }
+    },
+    "commissions": {
+      "caption": "نسب الرسوم",
+      "rateLabel": "ليرة سورية لكل دولار أمريكي",
+      "save": "حفظ النسب",
+      "saved": "تم حفظ النسب",
+      "savedBody": "الرسوم الافتراضية وسعر الصرف محدّثان لهذه الجلسة.",
+      "saveFailed": "تعذّر حفظ النسب",
+      "saveFailedBody": "تحقق من الأرقام ثم أعد المحاولة.",
+      "invalid": "أدخل نسبة صحيحة بين 0 و100، وسعر صرف أكبر من صفر.",
+      "tierHint": "مراجعة الترخيص ما زالت قادرة على نقل المنشأة إلى شريحة أخرى.",
+      "tiers": {
+        "preferred": "مفضّل",
+        "standard": "قياسي",
+        "highRisk": "عالي المخاطر"
+      },
+      "columns": {
+        "category": "الفئة",
+        "rate": "النسبة الافتراضية"
+      }
+    },
+    "taxonomy": {
+      "caption": "القوائم",
+      "add": "إضافة بند",
+      "kindLabel": "أي قائمة",
+      "kind": {
+        "categories": "الفئات",
+        "amenities": "المرافق",
+        "governorates": "المناطق"
+      },
+      "empty": "لا توجد بنود في هذه القائمة بعد.",
+      "created": "تمت إضافة البند",
+      "createdBody": "البحث والإعلانات يستخدمان هذا البند الآن.",
+      "updated": "تم حفظ البند",
+      "updatedBody": "الأسماء والمعرّف محدّثان لهذه الجلسة.",
+      "saveFailed": "تعذّر حفظ البند",
+      "saveFailedBody": "تحقق من الأسماء والمعرّف ثم أعد المحاولة.",
+      "duplicateSlug": "هذا المعرّف موجود أصلاً في هذه القائمة.",
+      "moveFailed": "تعذّر إعادة الترتيب",
+      "moveUp": "تحريك للأعلى",
+      "moveDown": "تحريك للأسفل",
+      "edit": "تعديل البند",
+      "delete": "حذف البند",
+      "deleted": "تم حذف البند",
+      "deletedBody": "تمت إزالة البند من هذه القائمة.",
+      "deleteConfirmTitle": "إزالة البند من القائمة؟",
+      "deleteConfirmDescription": "سيؤدي هذا إلى إزالة هذا البند من القائمة ولن يظهر بعد الآن في عوامل التصفية.",
+      "columns": {
+        "name": "الاسم",
+        "slug": "المعرّف",
+        "order": "الترتيب"
+      },
+      "form": {
+        "titleAdd": "إضافة بند",
+        "titleEdit": "تعديل بند",
+        "nameEn": "الاسم (الإنجليزية)",
+        "nameAr": "الاسم (العربية)",
+        "slug": "المعرّف",
+        "cancel": "إلغاء",
+        "save": "حفظ البند"
+      }
+    },
+    "promotions": {
+      "caption": "المميّز",
+      "add": "إضافة مميّز",
+      "searchPlaceholder": "ابحث بالعنوان أو الهدف",
+      "allKinds": "كل الأنواع",
+      "allStatuses": "كل الحالات",
+      "empty": "لا يوجد شيء مميّز على الصفحة الرئيسية بعد.",
+      "emptyFiltered": "لا يوجد ما يطابق عوامل التصفية هذه.",
+      "created": "تمت إضافة العنصر المميّز",
+      "createdBody": "سيظهر على الصفحة الرئيسية عندما تسمح تواريخه.",
+      "updated": "تم حفظ العنصر المميّز",
+      "updatedBody": "التواريخ والاستهداف محدّثان لهذه الجلسة.",
+      "deleted": "تم حذف العنصر المميّز",
+      "deletedBody": "لن يظهر العنصر بعد الآن على الصفحة الرئيسية.",
+      "deleteConfirmTitle": "إزالة العنصر المميّز؟",
+      "deleteConfirmDescription": "سيؤدي هذا إلى إزالة العنصر من العرض المميّز على الفور.",
+      "saveFailed": "تعذّر الحفظ",
+      "saveFailedBody": "تحقق من العناوين والتواريخ ثم أعد المحاولة.",
+      "invalidDates": "يجب أن يكون تاريخ النهاية في يوم البداية أو بعده.",
+      "actionMenu": "إجراءات {name}",
+      "actionEdit": "تعديل",
+      "actionDelete": "حذف",
+      "kind": {
+        "featured": "إعلان مميّز",
+        "campaign": "موضوع على الرئيسية"
+      },
+      "status": {
+        "scheduled": "مجدولة",
+        "live": "جارية",
+        "ended": "انتهت"
+      },
+      "columns": {
+        "title": "العنوان",
+        "kind": "النوع",
+        "target": "الهدف",
+        "start": "تبدأ",
+        "end": "تنتهي",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "form": {
+        "titleAdd": "إضافة عنصر مميّز",
+        "titleEdit": "تعديل عنصر مميّز",
+        "titleEn": "العنوان (الإنجليزية)",
+        "titleAr": "العنوان (العربية)",
+        "kind": "النوع",
+        "targetPreset": "محدد سريع للهدف",
+        "customTarget": "هدف مخصّص…",
+        "targetEn": "الهدف (الإنجليزية)",
+        "targetAr": "الهدف (العربية)",
+        "start": "تاريخ البداية",
+        "end": "تاريخ النهاية",
+        "delete": "حذف",
+        "cancel": "إلغاء",
+        "save": "حفظ"
+      }
+    },
+    "coupons": {
+      "caption": "أكواد الخصم",
+      "add": "إضافة كود",
+      "searchPlaceholder": "ابحث بالعنوان أو الرمز",
+      "allScopes": "كل الأهداف",
+      "allStatuses": "كل الحالات",
+      "empty": "لا توجد أكواد خصم بعد.",
+      "emptyFiltered": "لا توجد أكواد مطابقة لعوامل التصفية هذه.",
+      "created": "تمت إضافة الكود",
+      "createdBody": "يمكن للضيوف استخدامه عندما تسمح تواريخه.",
+      "updated": "تم حفظ الكود",
+      "updatedBody": "المبلغ النقدي عند الباب سيتبع هذا الكود.",
+      "deleted": "تم حذف الكود",
+      "deletedBody": "لم يعد بإمكان الضيوف استخدام هذا الكود.",
+      "saveFailed": "تعذّر حفظ الكود",
+      "saveFailedBody": "تحقق من الرمز والخصم والتواريخ ثم أعد المحاولة.",
+      "deleteFailed": "تعذّر حذف الكود",
+      "deleteFailedBody": "أعد المحاولة بعد لحظة.",
+      "invalidDates": "يجب أن يكون تاريخ النهاية في يوم البداية أو بعده.",
+      "invalidCode": "استخدم 3 إلى 16 حرفاً أو رقماً من دون مسافات.",
+      "invalidDiscount": "أدخل نسبة من 1 إلى 100، أو مبلغاً صحيحاً بالليرة أكبر من صفر.",
+      "invalidScope": "اختر على من ينطبق هذا الرمز.",
+      "invalidCaps": "يجب أن تكون الحدود أرقاماً صحيحة من 1 فأكثر، أو تُترك فارغة.",
+      "duplicateCode": "هذا الرمز موجود مسبقاً في الكتالوج.",
+      "deleteConfirmTitle": "حذف هذا الكود؟",
+      "deleteConfirmBody": "لن يتمكّن الضيوف من استخدامه في الحجوزات الجديدة.",
+      "deleteConfirmButton": "حذف الكود",
+      "actionMenu": "إجراءات {name}",
+      "actionEdit": "تعديل",
+      "actionDelete": "حذف",
+      "percentOff": "{value}٪",
+      "scope": {
+        "provider": "منشأة",
+        "listing": "إعلان",
+        "pillar": "فئة",
+        "platform": "المنصة كلها",
+        "platformHint": "كل الإعلانات على المنصة"
+      },
+      "discountKind": {
+        "percent": "نسبة",
+        "fixed": "مبلغ ثابت (ل.س)"
+      },
+      "status": {
+        "scheduled": "مجدولة",
+        "live": "جارية",
+        "ended": "انتهت",
+        "disabled": "متوقفة"
+      },
+      "columns": {
+        "title": "العنوان",
+        "code": "الرمز",
+        "discount": "الخصم",
+        "scope": "ينطبق على",
+        "start": "تبدأ",
+        "end": "تنتهي",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "form": {
+        "titleAdd": "إضافة كود خصم",
+        "titleEdit": "تعديل كود خصم",
+        "titleEn": "العنوان (الإنجليزية)",
+        "titleAr": "العنوان (العربية)",
+        "code": "الرمز",
+        "discountKind": "نوع الخصم",
+        "percent": "نسبة الخصم",
+        "fixed": "المبلغ المخصوم (ل.س)",
+        "scope": "ينطبق على",
+        "scopeTarget": "الهدف",
+        "scopeTargetPlaceholder": "اختر هدفاً",
+        "start": "تاريخ البداية",
+        "end": "تاريخ النهاية",
+        "maxRedemptions": "الحد الأقصى للاستخدام",
+        "perGuestCap": "الحد لكل ضيف",
+        "enabled": "مفعّلة",
+        "enabledOn": "يمكن للضيوف إدخال هذا الرمز",
+        "enabledOff": "متوقفة — يُرفض الرمز",
+        "cancel": "إلغاء",
+        "save": "حفظ الكود"
+      }
+    },
+    "reviewsPage": {
+      "caption": "التقييمات",
+      "searchPlaceholder": "ابحث باسم الكاتب أو الجهة أو نص التقييم...",
+      "allAbout": "كل الأهداف",
+      "allRatings": "كل التقييمات",
+      "allStatuses": "كل الحالات",
+      "aboutGuest": "عن الضيف",
+      "aboutProvider": "عن المنشأة",
+      "starsCount": "{count} نجوم",
+      "empty": "لم تُرسل أي تقييمات بعد.",
+      "emptyFiltered": "لا توجد تقييمات مطابقة لعوامل التصفية هذه.",
+      "actionMenu": "إجراءات {name}",
+      "columns": {
+        "author": "الكاتب",
+        "subject": "المُقيَّم",
+        "stars": "التقييم",
+        "review": "نص التقييم",
+        "date": "التاريخ",
+        "booking": "الحجز",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "status": {
+        "published": "منشور",
+        "flagged": "مبلّغ عنه",
+        "hidden": "مخفي"
+      },
+      "actions": {
+        "publish": "اعتماد ونشر",
+        "flag": "إحالة للمراجعة",
+        "hide": "إخفاء التقييم"
+      },
+      "statusUpdated": "تم تحديث حالة التقييم",
+      "statusUpdatedBody": "تم ضبط حالة التقييم إلى {status}."
+    },
+    "auditLogs": {
+      "caption": "سجل العمليات",
+      "searchPlaceholder": "ابحث باسم القائم بالعملية أو الإجراء أو الهدف...",
+      "allModules": "كل الأقسام",
+      "empty": "لم تُسجَّل أي عمليات بعد.",
+      "emptyFiltered": "لا توجد سجلات مطابقة للشروط المحددة.",
+      "columns": {
+        "timestamp": "الوقت",
+        "actor": "المشرف",
+        "action": "الإجراء",
+        "module": "القسم",
+        "target": "الهدف",
+        "details": "التفاصيل"
+      },
+      "modules": {
+        "bookings": "الحجوزات",
+        "guests": "الضيوف",
+        "businesses": "المنشآت",
+        "reviews": "التقييمات",
+        "promotions": "المميّز",
+        "taxonomy": "القوائم",
+        "settings": "الإعدادات"
+      }
+    },
+    "settings": {
+      "save": "حفظ الإعدادات",
+      "saved": "تم حفظ الإعدادات",
+      "savedBody": "حُفظت حدود الائتمان وسجل الحضور والمفاتيح لهذه الجلسة.",
+      "saveFailed": "تعذّر حفظ الإعدادات",
+      "saveFailedBody": "تحقق من الأرقام ثم أعد المحاولة.",
+      "invalidCredit": "أدخل سقفاً ائتمانياً أكبر من صفر لكل شريحة.",
+      "invalidReliability": "يجب أن يكون حد المعرّض أقل من حد المراقبة، وكلاهما بين 0 و100.",
+      "credit": {
+        "title": "حدود الائتمان",
+        "description": "كم يمكن للمنشأة أن تستحق قبل أن نوقف الحجوزات الجديدة. يمكنك تعيين حد مختلف لمنشأة واحدة.",
+        "columns": {
+          "tier": "الشريحة",
+          "ceiling": "السقف (ل.س)"
+        }
+      },
+      "tiers": {
+        "preferred": "مفضّل",
+        "standard": "قياسي",
+        "highRisk": "عالي المخاطر"
+      },
+      "reliability": {
+        "title": "سجل الحضور",
+        "description": "مستويات درجات الضيوف في صفحة الضيوف. ما دون «يتغيّب كثيراً» هو الأدنى.",
+        "atRisk": "يتغيّب كثيراً دون",
+        "watch": "راقب دون",
+        "lock": "قفل الضيوف كثيري التغيّب",
+        "lockHint": "الضيف المقفول لا يحجز حتى تفتح حسابه.",
+        "strongHint": "عند خط المراقبة أو فوقه يُعدّ «يحضر»."
+      },
+      "flags": {
+        "title": "المفاتيح",
+        "description": "كيف نرسل رموز الدخول، وما تسمح به المنصة.",
+        "otp": "رموز الدخول عبر",
+        "sms": "رسالة نصية",
+        "whatsapp": "واتساب",
+        "featured": "إبراز الصفحة الرئيسية",
+        "featuredHint": "السماح لصفحة المميّز بتثبيت إعلانات ومواضيع على الصفحة الرئيسية.",
+        "webCheckIn": "تسجيل الوصول من الويب",
+        "webCheckInHint": "يمكن للمنشآت تأكيد الوصول برمز النسخة الاحتياطية المكوّن من 6 أحرف."
+      }
+    },
+    "overview": {
+      "empty": "لا تتوفر أرقام للرئيسية بعد.",
+      "periodHint": "آخر {days} يوماً",
+      "periodLabel": "فترة الرئيسية",
+      "days7": "آخر 7 أيام",
+      "days30": "آخر 30 يوماً",
+      "days90": "آخر 90 يوماً",
+      "grossBookings": "إجمالي الحجوزات",
+      "completed": "مكتملة",
+      "noShowRate": "معدل التغيّب",
+      "commissionRevenue": "إيراد الرسوم",
+      "pendingProviders": "بانتظار المراجعة",
+      "pendingProvidersHint": "منشآت ما زال ترخيصها يحتاج قراراً",
+      "openDisputes": "تغيّب مفتوح",
+      "openDisputesHint": "حالات وصول فائتة بانتظار قرار",
+      "volumeTitle": "الحجوزات المكتملة كل يوم",
+      "noShowByCity": "حالات التغيّب حسب المدينة",
+      "originsTitle": "من أين يأتي الضيوف",
+      "attractionsTitle": "أكثر المعالم زيارة",
+      "commissionByPillar": "الرسوم حسب الفئة",
+      "origins": {
+        "syria": "سوريا",
+        "lebanon": "لبنان",
+        "jordan": "الأردن",
+        "uae": "الإمارات",
+        "germany": "ألمانيا",
+        "france": "فرنسا",
+        "other": "أخرى"
+      },
+      "attractions": {
+        "umayyadMosque": "الجامع الأموي",
+        "aleppoCitadel": "قلعة حلب",
+        "palmyra": "تدمر",
+        "krak": "قلعة الحصن",
+        "bosraTheatre": "مسرح بصرى"
+      },
+      "pillars": {
+        "hotels": "الإقامات",
+        "dining": "المطاعم",
+        "trips": "الرحلات",
+        "events": "الفعاليات",
+        "guides": "الأدلاء"
+      }
+    }
+  }
+}

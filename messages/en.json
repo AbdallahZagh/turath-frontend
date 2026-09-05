@@ -1,0 +1,1403 @@
+{
+  "chrome": {
+    "theme": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "language": "Language",
+    "localeEn": "English",
+    "localeAr": "العربية",
+    "localeEnShort": "EN",
+    "localeArShort": "ع",
+    "brand": "Turath",
+    "siteTitle": "Turath | تراث",
+    "siteDescription": "Syria tourism, heritage, and hospitality."
+  },
+  "countries": {
+    "search": "Search countries",
+    "empty": "No countries match",
+    "callingCode": "Country calling code"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginLead": "Sign in to book a stay, a table, a trip, an event, or a guide.",
+    "registerTitle": "Create your account",
+    "registerLead": "One account, in Arabic and English. Prices in Syrian pounds. Pay cash when you arrive.",
+    "tabPhone": "Phone",
+    "tabEmail": "Email",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "phone": "Phone number",
+    "phonePlaceholder": "9xx xxx xxx",
+    "dateOfBirth": "Date of birth",
+    "nationality": "Nationality",
+    "nationalityPlaceholder": "Select a country",
+    "termsLabel": "I agree to Turath's Terms of Service and Privacy Policy.",
+    "forgotPassword": "Forgot password?",
+    "sendCode": "Send code",
+    "submitLogin": "Continue",
+    "submitRegister": "Create account",
+    "toRegister": "New here? Create an account",
+    "toLogin": "Already have an account? Sign in",
+    "providerNote": "Hotels and guides sign up from a different page.",
+    "imageQuoteLogin": "Every gate in Damascus opens onto another thousand years.",
+    "imageQuoteRegister": "Travelers are finding Syria’s stays, tables, and guides again. Join them."
+  },
+  "stepper": {
+    "decrease": "Decrease {label}",
+    "increase": "Increase {label}",
+    "value": "value"
+  },
+  "picker": {
+    "datePlaceholder": "Choose a date",
+    "timePlaceholder": "Choose a time",
+    "hour": "Hour",
+    "minute": "Minute",
+    "period": "AM or PM",
+    "am": "AM",
+    "pm": "PM",
+    "previous": "Previous",
+    "next": "Next",
+    "today": "Today"
+  },
+  "themePreview": {
+    "eyebrow": "Theme lab",
+    "title": "Turath visual system",
+    "subtitle": "Light and dark tokens from the brand palettes, glass surfaces, logos, and bilingual type. Use this lab to check primitives.",
+    "palette": "Color tokens",
+    "paletteHint": "Utilities map to CSS variables. Components never use raw hex.",
+    "glass": "Glass surfaces",
+    "glassBody": "Frosted panels with a 1px light edge and a large radius. Reuse GlassPanel — do not paste blur utilities on every card.",
+    "type": "Typography",
+    "headingSample": "Heritage, closer.",
+    "bodySample": "Turath connects travelers with verified Syrian stays, tables, trips, events, and guides. Cash on arrival. Arabic and English, from the first screen.",
+    "logos": "Logos",
+    "logosHint": "Main lockup when the nav is open. Compact mark when it collapses. Receipt mark only on vouchers.",
+    "sampleTitle": "Umayyad Mosque",
+    "sampleMeta": "Damascus · Heritage site",
+    "voucher": "Booking voucher",
+    "voucherHint": "QR and backup code sit with the receipt lockup only.",
+    "buttons": "Buttons",
+    "buttonsHint": "Solid expands a color bloom. Glass sweeps a highlight across framed corners. Outline fills on hover. Hover and press them.",
+    "variantSolid": "Solid",
+    "variantGlass": "Glass",
+    "variantOutline": "Outline",
+    "sizeSm": "Small",
+    "sizeMd": "Medium",
+    "sizeLg": "Large",
+    "inputs": "Inputs",
+    "inputsHint": "Main keeps the label above the field and glows on focus. Glass is a filled 2px well. Plain is the compact search chip with a focus ring.",
+    "inputNameLabel": "Email",
+    "inputMainPlaceholder": "example@email.com",
+    "inputGlassPlaceholder": "Email or username",
+    "inputPlainPlaceholder": "Search Damascus, Aleppo…",
+    "selects": "Dropdowns",
+    "selectsHint": "Same three variants as inputs. Open the menu, pick a city, use arrows and type-ahead.",
+    "selectCityLabel": "City",
+    "selectPlaceholder": "Choose a city",
+    "cityDamascus": "Damascus",
+    "cityAleppo": "Aleppo",
+    "cityHoms": "Homs",
+    "cityLatakia": "Latakia",
+    "cityPalmyra": "Palmyra",
+    "controls": "Controls",
+    "controlsHint": "Radio and check are the marks only. The switch uses the Uiverse track in brand colors. Tooltip prefers a side and flips if there is no room.",
+    "radioHotel": "Hotel",
+    "radioRestaurant": "Restaurant",
+    "checkWifi": "Wifi",
+    "checkBreakfast": "Breakfast",
+    "switchLabel": "Available tonight",
+    "tooltipAuto": "Auto",
+    "tooltipTop": "Top",
+    "tooltipRight": "Right",
+    "tooltipBottom": "Bottom",
+    "tooltipLeft": "Left",
+    "tooltipBody": "Cash on arrival. The voucher is a QR code plus a 6-character backup.",
+    "segments": "Segment switch",
+    "segmentsHint": "Same three variants as inputs, with size and radius. Works with more than two options. Arrows move the selection.",
+    "segmentHotel": "Hotel",
+    "segmentRestaurant": "Restaurant",
+    "segmentTrip": "Trip",
+    "segmentEvent": "Event",
+    "dates": "Date and time",
+    "datesHint": "Same three trigger and menu variants as the dropdown, plus size and radius. Time uses an iOS wheel. Date opens a full calendar; tap the header to pick month or year.",
+    "dateLabel": "Check-in",
+    "timeLabel": "Arrival time",
+    "steppers": "Steppers",
+    "steppersHint": "Same three variants as inputs, with size and radius. Type a number or use minus and plus. Arrows step the value.",
+    "stepperGuests": "Guests",
+    "toasts": "Toasts",
+    "toastsHint": "Success after a save. Info for an admin note. Warn at a plan limit. Error when a request fails. Neutral for everything else.",
+    "toastSuccess": "Success",
+    "toastInfo": "Info",
+    "toastWarn": "Warn",
+    "toastError": "Error",
+    "toastNeutral": "Neutral",
+    "toastSuccessTitle": "Attraction saved",
+    "toastSuccessBody": "The site is live on the public map.",
+    "toastInfoTitle": "Message from Turath",
+    "toastInfoBody": "Damascus listings pause this Friday for a city-wide heritage walk.",
+    "toastWarnTitle": "Approaching your plan limit",
+    "toastWarnBody": "You have used 9 of 10 featured listings this month.",
+    "toastErrorTitle": "Could not save",
+    "toastErrorBody": "The request failed. Check the form and try again.",
+    "toastNeutralTitle": "Draft kept locally",
+    "toastNeutralBody": "This notice is for anything that is not a success, admin note, warning, or error."
+  },
+  "landing": {
+    "governorates": {
+      "damascus": "Damascus",
+      "aleppo": "Aleppo",
+      "latakia": "Latakia",
+      "tartus": "Tartus",
+      "homs": "Homs",
+      "hama": "Hama",
+      "palmyra": "Palmyra",
+      "bosra": "Bosra"
+    },
+    "header": {
+      "navHotels": "Stays",
+      "navDining": "Dining",
+      "navTrips": "Trips",
+      "navEvents": "Events",
+      "navGuides": "Guides",
+      "navHowItWorks": "How it works",
+      "navLabel": "Explore Turath",
+      "currencyLabel": "Currency",
+      "currencySyp": "SYP",
+      "currencyUsd": "USD",
+      "login": "Sign in",
+      "register": "Sign up"
+    },
+    "hero": {
+      "eyebrow": "Syria, rediscovered",
+      "titleLine1": "Heritage,",
+      "titleLine2": "closer than ever.",
+      "subtitle": "Book a stay, a table, a trip, an event, or a licensed guide across Syria. Pay cash when you arrive — Turath checks every listing first.",
+      "cta": "Start exploring",
+      "scrollHint": "Scroll to explore"
+    },
+    "search": {
+      "sectionEyebrow": "Plan the trip",
+      "sectionTitle": "Where to next?",
+      "sectionSubtitle": "Stays, tables, trips, events, and licensed guides. You pay when you arrive.",
+      "tabHotels": "Hotels",
+      "tabDining": "Tables",
+      "tabTrips": "Trips",
+      "tabEvents": "Events",
+      "tabGuides": "Guides",
+      "governorateLabel": "Region",
+      "governoratePlaceholder": "Choose a region",
+      "checkInLabel": "Check-in",
+      "checkOutLabel": "Check-out",
+      "dateLabel": "Date",
+      "timeLabel": "Time slot",
+      "guestsLabel": "Guests",
+      "partySizeLabel": "Party size",
+      "seatsLabel": "Seats",
+      "languageLabel": "Spoken language",
+      "languagePlaceholder": "Any language",
+      "languageArabic": "Arabic",
+      "languageEnglish": "English",
+      "languageFrench": "French",
+      "languageKurdish": "Kurdish",
+      "languageTurkish": "Turkish",
+      "submit": "Search"
+    },
+    "personas": {
+      "eyebrow": "Choose your journey",
+      "title": "Who are you traveling as?",
+      "firstTime": "First-time visitor",
+      "heritageSeeker": "Heritage seeker",
+      "foodie": "Food and culture",
+      "family": "Traveling with family",
+      "provider": "I run a business",
+      "tiles": {
+        "firstTimeOldDamascus": "Old Damascus & the Umayyad Mosque",
+        "firstTimeBoutiqueStays": "Boutique Heritage Stays",
+        "firstTimeGuidedWalks": "Guided City Walks",
+        "firstTimeCashOnArrival": "Cash-on-Arrival Booking",
+        "heritagePalmyra": "The Ruins of Palmyra",
+        "heritageAleppoCitadel": "Aleppo Citadel",
+        "heritageKrak": "Krak des Chevaliers",
+        "heritageGuides": "Licensed Heritage Guides",
+        "foodieRooftopDining": "Courtyard & Rooftop Dining",
+        "foodieSoukTrails": "Old Souk Food Trails",
+        "foodieLiveMusic": "Live Music Nights",
+        "foodieReservedTables": "Reserved Tables, No Deposit",
+        "familyStays": "Family-friendly Stays",
+        "familyDayTrips": "Group Day Trips",
+        "familyFestivals": "Cultural Festivals",
+        "familySupport": "24/7 Guest Support",
+        "providerListBusiness": "List Your Hotel or Venue",
+        "providerScannerApp": "Offline QR Scanner App",
+        "providerLedger": "Clear Payout Records",
+        "providerDashboard": "Your Own Dashboard"
+      }
+    },
+    "trustBar": {
+      "eyebrow": "Why travelers trust Turath",
+      "cashOnArrivalTitle": "Pay when you arrive",
+      "cashOnArrivalBody": "Reserve in seconds. Pay in person — no card, no deposit.",
+      "offlineQrTitle": "Works without signal",
+      "offlineQrBody": "Your pass still opens in old-city alleys, even with no reception.",
+      "licensedProvidersTitle": "Licensed businesses only",
+      "licensedProvidersBody": "Every hotel, guide, and venue is checked before it appears here.",
+      "dualCurrencyTitle": "Prices in SYP and USD",
+      "dualCurrencyBody": "Every amount shows Syrian pounds and a US dollar equivalent."
+    },
+    "pillars": {
+      "eyebrow": "Five ways to experience Syria",
+      "title": "Stay, eat, explore, celebrate, and go with a guide.",
+      "hotelsTitle": "Heritage Stays",
+      "hotelsBody": "Boutique hotels and guesthouses inside restored courtyards.",
+      "diningTitle": "Courtyard & Rooftop Dining",
+      "diningBody": "Reserve a table with a view, from Old Damascus to the Aleppo souks.",
+      "tripsTitle": "Organized Group Trips",
+      "tripsBody": "Multi-day itineraries with vetted operators and live seat counts.",
+      "eventsTitle": "Cultural Events",
+      "eventsBody": "Festivals, concerts, and heritage nights with tiered tickets.",
+      "guidesTitle": "Private Tour Guides",
+      "guidesBody": "Licensed, multilingual guides who know every alley and legend.",
+      "explore": "Explore",
+      "tags": {
+        "generator": "24/7 Generator",
+        "wifi": "Wi-Fi",
+        "ac": "AC",
+        "rooftop": "Rooftop",
+        "liveMusic": "Live music",
+        "seatsLeft": "Seats left",
+        "guidedTour": "Guided",
+        "vipTier": "VIP tier",
+        "multilingual": "Multilingual"
+      }
+    },
+    "mapExplorer": {
+      "eyebrow": "Explore by region",
+      "title": "Find Syria on the map.",
+      "subtitle": "Pick a region to see its landmarks and nearby stays.",
+      "cta": "Open full map",
+      "attractionsNearby": "Top sites nearby"
+    },
+    "spotlight": {
+      "eyebrow": "Curated heritage spotlight",
+      "title": "Landmarks worth the journey.",
+      "dragHint": "Drag to explore",
+      "cta": "Explore stays & guides nearby",
+      "sites": {
+        "umayyadMosque": {
+          "title": "Umayyad Mosque",
+          "meta": "Damascus",
+          "blurb": "One of the oldest and largest mosques in the world, standing since 715 CE."
+        },
+        "aleppoCitadel": {
+          "title": "Aleppo Citadel",
+          "meta": "Aleppo",
+          "blurb": "A fortified palace crowning the old city, rebuilt across three millennia."
+        },
+        "palmyraRuins": {
+          "title": "Palmyra",
+          "meta": "Palmyra",
+          "blurb": "Monumental colonnades from a desert city that once bridged Rome and Persia."
+        },
+        "krakDesChevaliers": {
+          "title": "Krak des Chevaliers",
+          "meta": "Homs",
+          "blurb": "A Crusader-era fortress regarded as one of the world's best-preserved castles."
+        },
+        "bosraAmphitheatre": {
+          "title": "Bosra Amphitheatre",
+          "meta": "Bosra",
+          "blurb": "A black-basalt Roman theatre still hosting performances today."
+        },
+        "saladinCastle": {
+          "title": "Saladin's Castle",
+          "meta": "Latakia",
+          "blurb": "A mountaintop citadel wrapped in forest, above the coastal plain."
+        }
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "From booking to the door",
+      "title": "Three steps. That’s it.",
+      "reserveTitle": "Book in minutes",
+      "reserveBody": "Confirm your phone — no card needed — and hold your spot.",
+      "qrPassTitle": "Keep a pass on your phone",
+      "qrPassBody": "Your booking pass stays on the device, even with no signal.",
+      "checkInTitle": "Pay when you arrive",
+      "checkInBody": "Show your pass, pay cash at the door, then you can leave a review."
+    },
+    "appDownload": {
+      "eyebrow": "Take it with you",
+      "title": "Your pass and map, even underground.",
+      "subtitle": "The Turath app keeps your bookings, passes, and a heritage map ready inside old-city walls — no signal needed.",
+      "appStore": "Download on the App Store",
+      "googlePlay": "Get it on Google Play",
+      "offlineQrLabel": "Offline QR pass",
+      "offlineMapLabel": "Offline heritage map"
+    },
+    "providerCta": {
+      "eyebrow": "For hotels, guides & venues",
+      "title": "List your business on Turath.",
+      "subtitle": "Reach travelers who already book stays, tables, and guides across Syria.",
+      "benefitDashboard": "A dashboard for bookings and guests",
+      "benefitScanner": "A scanner app to check guests in, even without signal",
+      "benefitLedger": "A clear record of what you owe and when to settle",
+      "cta": "List your business"
+    },
+    "testimonials": {
+      "eyebrow": "Only after they arrived",
+      "title": "What travelers are saying.",
+      "subtitle": "A guest can review only after check-in. These notes are from people who showed up.",
+      "verifiedBadge": "Checked in",
+      "ratingLabel": "{count} out of 5 stars",
+      "items": {
+        "layla": {
+          "name": "Layla M.",
+          "quote": "Booking a table in Old Damascus took two minutes, and the QR pass worked even without signal in the alley.",
+          "meta": "Stayed in Damascus"
+        },
+        "omar": {
+          "name": "Omar K.",
+          "quote": "Our guide knew stories about Palmyra I'd never read anywhere. Paid in cash exactly as promised.",
+          "meta": "Guided trip, Palmyra"
+        },
+        "sara": {
+          "name": "Sara H.",
+          "quote": "The hotel listed backup generators up front, so there were no surprises when we arrived at night.",
+          "meta": "Stayed in Aleppo"
+        },
+        "james": {
+          "name": "James D.",
+          "quote": "Loved that every price showed in USD too. Made budgeting the whole trip simple.",
+          "meta": "Visited from abroad"
+        },
+        "nour": {
+          "name": "Nour T.",
+          "quote": "Checked in with just the 6-character code when my phone died. Smooth process.",
+          "meta": "Event in Latakia"
+        },
+        "michael": {
+          "name": "Michael K.",
+          "quote": "The rooftop dinner reservation in Homs was exactly as pictured. Highly recommend.",
+          "meta": "Dined in Homs"
+        }
+      }
+    },
+    "footer": {
+      "tagline": "Syria’s heritage and hospitality — checked listings, cash when you arrive.",
+      "categoriesHeading": "Explore",
+      "categoryHotels": "Stays",
+      "categoryDining": "Dining",
+      "categoryTrips": "Trips",
+      "categoryEvents": "Events",
+      "categoryGuides": "Guides",
+      "companyHeading": "Company",
+      "companyPartner": "Partner with Us",
+      "companyContact": "Contact",
+      "legalHeading": "Legal & Licensing",
+      "legalTerms": "Terms of Service",
+      "legalPrivacy": "Privacy Policy",
+      "legalLicensing": "Business Licensing",
+      "hotlinesHeading": "Emergency Hotlines",
+      "hotlines": {
+        "police": "Police",
+        "ambulance": "Ambulance",
+        "touristPolice": "Tourism Police",
+        "fire": "Fire Department"
+      },
+      "copyright": "© {year} Turath. All rights reserved."
+    }
+  },
+  "ui": {
+    "retry": "Try again",
+    "close": "Close",
+    "exportCsv": "Export CSV",
+    "errorTitle": "Could not load this page",
+    "errorDescription": "Check your connection, then try again.",
+    "emptyTitle": "Nothing to show yet",
+    "filter": {
+      "title": "Filter",
+      "clear": "Clear filters",
+      "applied": "Active filters",
+      "remove": "Remove filter {filter}"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "summary": "{from}–{to} of {total}",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {page}",
+      "perPage": "Rows"
+    },
+    "ratingEmpty": "No ratings yet",
+    "ratingLabel": "{value} out of 5 from {count} reviews",
+    "ratingCount": "{count} reviews",
+    "ratingOutOf": "{value} out of 5"
+  },
+  "admin": {
+    "shell": {
+      "navLabel": "Admin",
+      "openNav": "Open navigation",
+      "closeNav": "Close navigation",
+      "collapse": "Collapse",
+      "expand": "Expand",
+      "adminBadge": "Admin",
+      "settings": "Settings",
+      "logout": "Log out",
+      "searchPlaceholder": "Quick navigate or search (Ctrl+K)",
+      "commandPalette": "Command palette",
+      "noResults": "No matching pages found.",
+      "paletteNavigate": "Navigate",
+      "paletteSelect": "Select",
+      "paletteClose": "Close",
+      "paletteShortcut": "Ctrl+K"
+    },
+    "roles": {
+      "label": "Preview as",
+      "tourist": "Guest",
+      "staff": "Business staff",
+      "owner": "Business owner",
+      "admin": "Admin"
+    },
+    "nav": {
+      "overview": "Home",
+      "people": "People",
+      "users": "Guests",
+      "providers": "Businesses",
+      "reviews": "Reviews",
+      "bookings": "Bookings",
+      "settlement": "Money",
+      "disputes": "No-shows",
+      "ledger": "Accounts",
+      "attractions": "Heritage sites",
+      "rules": "Setup",
+      "commissions": "Fees",
+      "taxonomy": "Lists",
+      "promotions": "Featured",
+      "coupons": "Discount codes",
+      "auditLogs": "Audit logs",
+      "settings": "Settings"
+    },
+    "headers": {
+      "overview": {
+        "title": "Home",
+        "description": "Bookings, missed arrivals, heritage visits, and fees across Syria."
+      },
+      "users": {
+        "title": "Guests",
+        "description": "People who book on Turath. See how businesses rate them, and whether they show up."
+      },
+      "userDetail": {
+        "title": "Guest",
+        "description": "Profile, ratings, show-up record, activity, and bookings."
+      },
+      "providers": {
+        "title": "Businesses",
+        "description": "Hotels, restaurants, trips, events, and guides — review licenses and guest ratings."
+      },
+      "providerDetail": {
+        "title": "Business",
+        "description": "License, listing, fees, credit, ratings, and activity."
+      },
+      "bookings": {
+        "title": "Bookings",
+        "description": "Every reservation on Turath. Guests pay in cash when they arrive."
+      },
+      "disputes": {
+        "title": "No-shows",
+        "description": "When a business says a guest did not arrive, and what the guest replied."
+      },
+      "disputeDetail": {
+        "title": "No-show",
+        "description": "Both sides of the story, notes, and how this case was closed."
+      },
+      "ledger": {
+        "title": "Accounts",
+        "description": "What each business owes Turath, and whether they are within their credit limit."
+      },
+      "ledgerDetail": {
+        "title": "Account",
+        "description": "Balance, statements, and standing for this business."
+      },
+      "attractions": {
+        "title": "Heritage sites",
+        "description": "Places travelers discover — photos, hours, entry fees, and a map pin."
+      },
+      "attractionDetail": {
+        "title": "Heritage site",
+        "description": "Photos, story, hours, fees, map pin, and whether this site is public."
+      },
+      "commissions": {
+        "title": "Fees",
+        "description": "Turath’s default cut by category, plus the Syrian pound to US dollar rate."
+      },
+      "taxonomy": {
+        "title": "Lists",
+        "description": "Categories, amenities, and regions used in search and listings."
+      },
+      "promotions": {
+        "title": "Featured",
+        "description": "Pin a listing or a theme on the home page for a date range. This is not a discount."
+      },
+      "coupons": {
+        "title": "Discount codes",
+        "description": "Codes that lower the cash amount due at the door. Agree the deal with the business first."
+      },
+      "reviews": {
+        "title": "Reviews",
+        "description": "Guest and business reviews after completed check-in. Flag, hide, or approve content."
+      },
+      "auditLogs": {
+        "title": "Audit logs",
+        "description": "Trace administrative decisions, status overrides, and platform configuration updates."
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Credit limits, guest show-up bands, and on/off switches for the platform."
+      }
+    },
+    "users": {
+      "caption": "Guests",
+      "searchPlaceholder": "Search by name or phone",
+      "locked": "Locked",
+      "allAccounts": "All accounts",
+      "accountLabel": "Account",
+      "account": {
+        "active": "Active",
+        "locked": "Locked"
+      },
+      "allReliability": "All show-up records",
+      "reliabilityBand": {
+        "strong": "Shows up",
+        "watch": "Watch",
+        "atRisk": "Often misses"
+      },
+      "empty": "No guests yet.",
+      "emptyFiltered": "No guests match this search.",
+      "columns": {
+        "name": "Name",
+        "phone": "Phone",
+        "rating": "Rating",
+        "reliability": "Show-up",
+        "bookings": "Completed",
+        "joined": "Joined"
+      },
+      "detail": {
+        "notFound": "No guest matches this link.",
+        "notFoundDescription": "They may have been removed, or the link is out of date.",
+        "phone": "Phone",
+        "email": "Email",
+        "joined": "Joined",
+        "lock": "Lock",
+        "unlock": "Unlock",
+        "lockedTitle": "Account locked",
+        "lockedBody": "This guest cannot place new bookings for the rest of this session.",
+        "unlockedTitle": "Account unlocked",
+        "unlockedBody": "This guest can book again for the rest of this session.",
+        "reliabilityTitle": "Show-up record",
+        "completedCheckIns": "Completed check-ins",
+        "noShows": "No-shows",
+        "reliabilityHint": {
+          "strong": "Shows up and completes stays.",
+          "watch": "Some missed arrivals — watch new bookings.",
+          "atRisk": "Frequent no-shows. Lock is on this page if needed."
+        },
+        "reviewsTitle": "Ratings from businesses",
+        "reviewsHint": "After check-in, the business rates this guest. Separate from the show-up record.",
+        "reviewsEmpty": "No business has rated this guest yet.",
+        "activityTitle": "Activity",
+        "activityEmpty": "No activity yet.",
+        "activityFilter": "Activity type",
+        "activityChannel": {
+          "all": "All",
+          "bookings": "Bookings",
+          "money": "Money",
+          "account": "Account"
+        },
+        "activityKind": {
+          "placed": "Booking placed",
+          "confirmed": "Confirmed",
+          "checkedIn": "Checked in",
+          "completed": "Completed",
+          "cancelled": "Cancelled",
+          "noShow": "No-show",
+          "disputed": "In review",
+          "locked": "Account locked",
+          "unlocked": "Account unlocked"
+        },
+        "bookingsTitle": "Bookings"
+      }
+    },
+    "providers": {
+      "caption": "Businesses",
+      "searchPlaceholder": "Search businesses or owners",
+      "allStatuses": "All statuses",
+      "allCategories": "All categories",
+      "allGovernorates": "All regions",
+      "empty": "No businesses yet.",
+      "emptyFiltered": "No businesses match these filters.",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "suspended": "Suspended"
+      },
+      "columns": {
+        "business": "Business",
+        "category": "Category",
+        "governorate": "Region",
+        "rating": "Rating",
+        "status": "Status",
+        "submitted": "Submitted"
+      },
+      "detail": {
+        "notFound": "No business matches this link.",
+        "notFoundDescription": "They may have been removed, or the link is out of date.",
+        "owner": "Owner",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "submitted": "Submitted",
+        "approve": "Approve",
+        "reject": "Reject",
+        "suspend": "Suspend",
+        "reinstate": "Reinstate",
+        "noKycActions": "A rejected application cannot be changed again this session.",
+        "approvedTitle": "Business approved",
+        "approvedBody": "This listing can take bookings for the rest of this session.",
+        "rejectedTitle": "Application rejected",
+        "rejectedBody": "This business stays out of the marketplace for the rest of this session.",
+        "suspendedTitle": "Business suspended",
+        "suspendedBody": "New bookings are blocked for the rest of this session.",
+        "reinstatedTitle": "Business reinstated",
+        "reinstatedBody": "This listing is approved again for the rest of this session.",
+        "reviewsTitle": "Ratings from guests",
+        "reviewsHint": "After check-in, the guest rates this business. Separate from the account and license review.",
+        "reviewsEmpty": "No guest has rated this business yet.",
+        "activityTitle": "Activity",
+        "activityEmpty": "No activity yet.",
+        "activityFilter": "Activity type",
+        "activityChannel": {
+          "all": "All",
+          "bookings": "Bookings",
+          "money": "Money",
+          "account": "Account"
+        },
+        "activityKind": {
+          "placed": "Booking placed",
+          "confirmed": "Confirmed",
+          "checkedIn": "Checked in",
+          "completed": "Completed",
+          "cancelled": "Cancelled",
+          "noShow": "No-show",
+          "disputed": "In review",
+          "settled": "Settlement",
+          "submitted": "Application submitted",
+          "approved": "License approved",
+          "rejected": "Application rejected",
+          "suspended": "Suspended",
+          "reinstated": "Reinstated",
+          "financeUpdated": "Fee or credit updated"
+        },
+        "documentsTitle": "Documents",
+        "documentsEmpty": "No files were uploaded.",
+        "placeholderFile": "Placeholder file — not a real download.",
+        "documentKind": {
+          "commercialRegistration": "Commercial registration",
+          "ministryLicense": "Ministry license",
+          "ownerId": "Owner ID"
+        },
+        "inventoryPendingHint": "Proposed listing — not public until this business is approved.",
+        "inventoryEmpty": "No listing details on file yet.",
+        "inventoryTitle": {
+          "hotels": "Rooms",
+          "dining": "Tables",
+          "trips": "Trip",
+          "events": "Sessions",
+          "guides": "Guide"
+        },
+        "rooms": {
+          "name": "Room type",
+          "occupancy": "Occupancy",
+          "quantity": "Qty",
+          "price": "Per night",
+          "amenities": "Amenities"
+        },
+        "tables": {
+          "label": "Table",
+          "capacity": "Capacity",
+          "zone": "Zone"
+        },
+        "zone": {
+          "indoor": "Indoor",
+          "terrace": "Terrace",
+          "vip": "VIP",
+          "smoking": "Smoking"
+        },
+        "slots": "Slot templates",
+        "trip": {
+          "dates": "Dates",
+          "pickup": "Pickup",
+          "capacity": "Capacity",
+          "seatsLeft": "Seats left",
+          "itinerary": "Itinerary",
+          "price": "Price"
+        },
+        "events": {
+          "when": "When",
+          "tier": "Tier",
+          "capacity": "Capacity",
+          "price": "Price",
+          "maxPerUser": "Max / guest"
+        },
+        "guide": {
+          "license": "License",
+          "languages": "Languages",
+          "hourly": "Hourly",
+          "fullDay": "Full day",
+          "specialties": "Specialties"
+        },
+        "lang": {
+          "ar": "Arabic",
+          "en": "English",
+          "fr": "French"
+        },
+        "financeTitle": "Fees and credit",
+        "commission": "Fee override",
+        "commissionHint": "Leave empty to use the category default from Fees.",
+        "commissionDefault": "Category default {rate}",
+        "creditCeiling": "Credit ceiling",
+        "creditHint": "Leave empty to use the Settings default for this tier.",
+        "creditDefault": "Tier default {amount}",
+        "tier": "Tier",
+        "saveFinance": "Save",
+        "financeSaved": "Finance saved",
+        "financeSavedBody": "Fees and credit for this listing are updated for this session.",
+        "financeInvalid": "Enter a fee between 0 and 100, or a positive credit ceiling.",
+        "ledgerTitle": "Account snapshot",
+        "ledgerEmpty": "No account until this business is approved and taking bookings.",
+        "accrued": "Accrued",
+        "paid": "Paid",
+        "outstanding": "Outstanding",
+        "creditUsed": "Credit used",
+        "lastSettled": "Last settled"
+      }
+    },
+    "bookings": {
+      "caption": "Bookings",
+      "searchPlaceholder": "Search guest, phone, or backup code",
+      "allCategories": "All categories",
+      "allStatuses": "All statuses",
+      "empty": "No bookings are on the platform yet.",
+      "emptyFiltered": "No bookings match these filters.",
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "checkedIn": "Checked in",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "noShow": "No-show",
+        "disputed": "In review"
+      },
+      "columns": {
+        "guest": "Guest",
+        "provider": "Business",
+        "category": "Category",
+        "when": "When",
+        "amount": "Amount",
+        "status": "Status",
+        "code": "Code",
+        "coupon": "Discount code"
+      },
+      "detail": {
+        "title": "Booking Details",
+        "code": "Check-in code",
+        "codeHint": "Desk check-in uses this 6-character backup code.",
+        "copyCode": "Copy code",
+        "copiedCode": "Booking code copied",
+        "cashOnArrival": "Cash on arrival — payment collected at the venue.",
+        "schedule": "Schedule",
+        "parties": "Parties",
+        "guest": "Guest",
+        "provider": "Business",
+        "amountDue": "Amount due",
+        "openGuest": "Open guest profile",
+        "openProvider": "Open business profile",
+        "couponTitle": "Discount code applied",
+        "discountAmount": "Discount applied",
+        "couponHint": "The cash collected at the desk reflects this discount.",
+        "actionsTitle": "Booking actions",
+        "actionCheckIn": "Check in guest",
+        "actionComplete": "Mark completed",
+        "actionCancel": "Cancel booking",
+        "actionNoShow": "Mark no-show",
+        "actionDispute": "Flag in review",
+        "actionReopen": "Reopen to confirmed",
+        "statusUpdatedTitle": "Booking updated",
+        "statusUpdatedBody": "Booking status changed to {status}.",
+        "statusUpdateFailed": "Update failed",
+        "statusUpdateFailedBody": "Could not update booking status. Please try again."
+      }
+    },
+    "disputes": {
+      "caption": "No-shows",
+      "searchPlaceholder": "Search guest, business, or backup code",
+      "allStatuses": "All statuses",
+      "allCategories": "All categories",
+      "categoryLabel": "Category",
+      "empty": "No missed arrivals to review.",
+      "emptyFiltered": "No cases match these filters.",
+      "providerLabel": "Business",
+      "touristLabel": "Guest",
+      "noNotes": "No notes yet",
+      "status": {
+        "open": "Open",
+        "resolvedGuest": "Guest",
+        "resolvedProvider": "Business"
+      },
+      "columns": {
+        "case": "Case",
+        "parties": "Parties",
+        "claims": "Stories",
+        "amount": "Amount",
+        "status": "Decision",
+        "notes": "Notes"
+      },
+      "detail": {
+        "notFound": "No-show not found",
+        "notFoundDescription": "This missed arrival is not on file.",
+        "openGuest": "Open guest",
+        "openProvider": "Open business",
+        "openBooking": "Open booking",
+        "guestRating": "Guest rating",
+        "providerRating": "Business rating",
+        "opened": "Opened",
+        "amountHint": "Cash on arrival — this amount was due at the business, not charged on a card.",
+        "claimsTitle": "Each side’s story",
+        "resolveTitle": "Close case",
+        "resolutionTitle": "Decision",
+        "resolveHint": "Decide who this missed arrival favours. Notes stay on this case for the session.",
+        "notesEn": "Notes (English)",
+        "notesAr": "Notes (Arabic)",
+        "forGuest": "For guest",
+        "forProvider": "For business",
+        "resolvedGuestTitle": "Closed in the guest’s favour",
+        "resolvedGuestBody": "This missed arrival is marked in the guest’s favour.",
+        "resolvedProviderTitle": "Closed in the business’s favour",
+        "resolvedProviderBody": "This missed arrival is marked in the business’s favour."
+      }
+    },
+    "ledger": {
+      "caption": "Accounts",
+      "searchPlaceholder": "Search businesses",
+      "allStandings": "All standings",
+      "allCategories": "All categories",
+      "categoryLabel": "Category",
+      "empty": "No business accounts are on file yet.",
+      "emptyFiltered": "No accounts match these filters.",
+      "standing": {
+        "healthy": "Healthy",
+        "watch": "Watch 75%",
+        "grace": "Grace 100%",
+        "suspended": "Suspended"
+      },
+      "cadence": {
+        "weekly": "Weekly",
+        "biweekly": "Bi-weekly",
+        "monthly": "Monthly"
+      },
+      "columns": {
+        "provider": "Business",
+        "rating": "Rating",
+        "outstanding": "Outstanding",
+        "accrued": "Accrued",
+        "credit": "Credit used",
+        "cadence": "Settlement",
+        "standing": "Standing"
+      },
+      "detail": {
+        "notFound": "Account not found",
+        "notFoundDescription": "This business has no receivables record.",
+        "openProvider": "Open business",
+        "openLedger": "Open account",
+        "suspend": "Suspend",
+        "reinstate": "Reinstate",
+        "recordSettlement": "Record settlement",
+        "paid": "Paid",
+        "ceiling": "Credit ceiling",
+        "creditTitle": "Credit used",
+        "creditOf": "of {ceiling}",
+        "lastSettled": "Last settled",
+        "statementsTitle": "Statements",
+        "statementsEmpty": "No settlement periods yet.",
+        "period": "Period",
+        "status": "Status",
+        "suspendedTitle": "Account suspended",
+        "suspendedBody": "This business is over the credit ceiling. Review bookings until they settle.",
+        "reinstatedTitle": "Account reinstated",
+        "reinstatedBody": "Standing now follows current credit use.",
+        "settledTitle": "Settlement recorded",
+        "settledBody": "Outstanding fees are marked paid for this session.",
+        "hint": {
+          "healthy": "Credit is within the ceiling.",
+          "watch": "Credit has passed 75%. Review this account before the next statement.",
+          "grace": "Credit is at or over 100%. Suspend if they do not settle.",
+          "suspended": "New intake should stay blocked until this account is reinstated."
+        },
+        "statementStatus": {
+          "paid": "Paid",
+          "due": "Due",
+          "overdue": "Overdue"
+        }
+      }
+    },
+    "attractions": {
+      "caption": "Heritage sites",
+      "add": "Add site",
+      "searchPlaceholder": "Search sites",
+      "allGovernorates": "All regions",
+      "allStatuses": "All statuses",
+      "viewLabel": "Layout",
+      "view": {
+        "table": "Table",
+        "cards": "Cards",
+        "map": "Map"
+      },
+      "mapTitle": "Heritage sites map",
+      "mapDescription": "Interactive map of heritage sites across Syria.",
+      "mapSitesCount": "{count} sites on map",
+      "openSite": "Open site detail",
+      "closePreview": "Close preview",
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "free": "Free",
+      "created": "Site added",
+      "createdBody": "The site is in the catalog. Publish it when the copy is ready.",
+      "createFailed": "Could not add site",
+      "createFailedBody": "Check the form and try again.",
+      "empty": "No heritage sites yet.",
+      "emptyFiltered": "No sites match these filters.",
+      "loadingMore": "Loading more sites…",
+      "actionMenu": "Actions for {name}",
+      "actionEdit": "Edit",
+      "actionDelete": "Delete",
+      "columns": {
+        "site": "Site",
+        "governorate": "Region",
+        "hours": "Hours",
+        "fee": "Entry fee",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "addTitle": "Add heritage site",
+        "editTitle": "Edit heritage site",
+        "image": "Cover image",
+        "imageHint": "Choose a cover photo",
+        "imageRequired": "Add a cover image before saving.",
+        "removeImage": "Remove image",
+        "gallery": "Gallery images",
+        "galleryHint": "Extra photos for the heritage gallery",
+        "addPhoto": "Add photo",
+        "nameEn": "Name (English)",
+        "nameAr": "Name (Arabic)",
+        "narrativeEn": "Story (English)",
+        "narrativeAr": "Story (Arabic)",
+        "published": "Published",
+        "opensAt": "Opens",
+        "closesAt": "Closes",
+        "fee": "Entry fee (SYP)",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "cancel": "Cancel",
+        "save": "Save site"
+      },
+      "detail": {
+        "notFound": "Site not found",
+        "notFoundDescription": "This site is not in the catalog, or the link is out of date.",
+        "back": "Back to heritage sites",
+        "edit": "Edit site",
+        "delete": "Delete",
+        "deleteConfirmTitle": "Delete this site?",
+        "deleteConfirmBody": "It will be removed from the catalog for this session.",
+        "deleteConfirmButton": "Delete",
+        "deleteCancelButton": "Cancel",
+        "deleted": "Site deleted",
+        "deletedBody": "The site has been removed from the catalog.",
+        "viewExplore": "View on Explore Map",
+        "googleMaps": "Open in Google Maps",
+        "copyCoordinates": "Copy coordinates",
+        "copiedCoordinates": "Coordinates copied",
+        "copyFailed": "Could not copy coordinates",
+        "photoLabel": "Photo {n}",
+        "coverBadge": "Cover",
+        "status": "Publication status",
+        "governorate": "Region",
+        "hours": "Opening hours",
+        "entryFee": "Entry fee",
+        "freeEntry": "Free entry",
+        "allDay": "Open 24 hours",
+        "coordinates": "Map pin",
+        "coordinatesHint": "Decimal coordinates for the map pin.",
+        "narrativeTitle": "The story",
+        "narrativeEn": "English story",
+        "narrativeAr": "Arabic story",
+        "galleryTitle": "Photos",
+        "galleryCount": "{count} photos",
+        "saved": "Site updated",
+        "savedBody": "Changes have been saved for this session.",
+        "saveFailed": "Could not save site",
+        "saveFailedBody": "Check the form and try again.",
+        "invalid": "Check names, hours, fee, and the map pin."
+      }
+    },
+    "commissions": {
+      "caption": "Fee rates",
+      "rateLabel": "SYP per US dollar",
+      "save": "Save rates",
+      "saved": "Rates saved",
+      "savedBody": "Default fees and the exchange rate are updated for this session.",
+      "saveFailed": "Could not save rates",
+      "saveFailedBody": "Check the numbers and try again.",
+      "invalid": "Enter a valid rate between 0 and 100, and a positive exchange rate.",
+      "tierHint": "A license review can still move a business onto a different tier.",
+      "tiers": {
+        "preferred": "Preferred",
+        "standard": "Standard",
+        "highRisk": "High risk"
+      },
+      "columns": {
+        "category": "Category",
+        "rate": "Default %"
+      }
+    },
+    "taxonomy": {
+      "caption": "Lists",
+      "add": "Add item",
+      "kindLabel": "Which list",
+      "kind": {
+        "categories": "Categories",
+        "amenities": "Amenities",
+        "governorates": "Regions"
+      },
+      "empty": "No items in this list yet.",
+      "created": "Item added",
+      "createdBody": "Search and listings now use this item.",
+      "updated": "Item saved",
+      "updatedBody": "Names and short id are updated for this session.",
+      "saveFailed": "Could not save item",
+      "saveFailedBody": "Check the names and short id, then try again.",
+      "duplicateSlug": "That short id is already in this list.",
+      "moveFailed": "Could not reorder",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "edit": "Edit item",
+      "delete": "Delete item",
+      "deleted": "Item removed",
+      "deletedBody": "The item was removed from this list.",
+      "deleteConfirmTitle": "Remove item from list?",
+      "deleteConfirmDescription": "This will remove this item from the list. It will no longer appear in search filters.",
+      "columns": {
+        "name": "Name",
+        "slug": "Short id",
+        "order": "Order"
+      },
+      "form": {
+        "titleAdd": "Add item",
+        "titleEdit": "Edit item",
+        "nameEn": "Name (English)",
+        "nameAr": "Name (Arabic)",
+        "slug": "Short id",
+        "cancel": "Cancel",
+        "save": "Save item"
+      }
+    },
+    "promotions": {
+      "caption": "Featured",
+      "add": "Add featured",
+      "searchPlaceholder": "Search title or target",
+      "allKinds": "All types",
+      "allStatuses": "All statuses",
+      "empty": "Nothing is featured on the home page yet.",
+      "emptyFiltered": "Nothing matches these filters.",
+      "created": "Featured item added",
+      "createdBody": "It will show on the home page when its dates allow.",
+      "updated": "Featured item saved",
+      "updatedBody": "Dates and targeting are updated for this session.",
+      "deleted": "Featured item removed",
+      "deletedBody": "The item will no longer appear on the home page.",
+      "deleteConfirmTitle": "Remove featured item?",
+      "deleteConfirmDescription": "This will remove this item from the home page rotation immediately.",
+      "saveFailed": "Could not save",
+      "saveFailedBody": "Check the titles and dates, then try again.",
+      "invalidDates": "End date must be on or after the start date.",
+      "actionMenu": "Actions for {name}",
+      "actionEdit": "Edit",
+      "actionDelete": "Delete",
+      "kind": {
+        "featured": "Featured listing",
+        "campaign": "Home theme"
+      },
+      "status": {
+        "scheduled": "Scheduled",
+        "live": "Live",
+        "ended": "Ended"
+      },
+      "columns": {
+        "title": "Title",
+        "kind": "Type",
+        "target": "Target",
+        "start": "Starts",
+        "end": "Ends",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "titleAdd": "Add featured item",
+        "titleEdit": "Edit featured item",
+        "titleEn": "Title (English)",
+        "titleAr": "Title (Arabic)",
+        "kind": "Type",
+        "targetPreset": "Quick target picker",
+        "customTarget": "Custom target…",
+        "targetEn": "Target (English)",
+        "targetAr": "Target (Arabic)",
+        "start": "Start date",
+        "end": "End date",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save"
+      }
+    },
+    "coupons": {
+      "caption": "Discount codes",
+      "add": "Add code",
+      "searchPlaceholder": "Search title or code",
+      "allScopes": "All targets",
+      "allStatuses": "All statuses",
+      "empty": "No discount codes yet.",
+      "emptyFiltered": "No codes match these filters.",
+      "created": "Code added",
+      "createdBody": "Guests can use it when the dates allow.",
+      "updated": "Code saved",
+      "updatedBody": "The cash amount at the door will follow this code.",
+      "deleted": "Code deleted",
+      "deletedBody": "Guests can no longer use this code.",
+      "saveFailed": "Could not save the code",
+      "saveFailedBody": "Check the code, discount, and dates, then try again.",
+      "deleteFailed": "Could not delete the code",
+      "deleteFailedBody": "Try again in a moment.",
+      "invalidDates": "End date must be on or after the start date.",
+      "invalidCode": "Use 3–16 letters or numbers, with no spaces.",
+      "invalidDiscount": "Enter a percent from 1 to 100, or a whole SYP amount above zero.",
+      "invalidScope": "Choose who this code applies to.",
+      "invalidCaps": "Caps must be whole numbers of 1 or more, or left empty.",
+      "duplicateCode": "That code is already in the catalog.",
+        "deleteConfirmTitle": "Delete this code?",
+        "deleteConfirmBody": "Guests will not be able to use it on new bookings.",
+        "deleteConfirmButton": "Delete code",
+      "actionMenu": "Actions for {name}",
+      "actionEdit": "Edit",
+      "actionDelete": "Delete",
+      "percentOff": "{value}%",
+      "scope": {
+        "provider": "Business",
+        "listing": "Listing",
+        "pillar": "Category",
+        "platform": "Whole platform",
+        "platformHint": "Every listing on the platform"
+      },
+      "discountKind": {
+        "percent": "Percent",
+        "fixed": "Fixed SYP"
+      },
+      "status": {
+        "scheduled": "Scheduled",
+        "live": "Live",
+        "ended": "Ended",
+        "disabled": "Disabled"
+      },
+      "columns": {
+        "title": "Title",
+        "code": "Code",
+        "discount": "Discount",
+        "scope": "Applies to",
+        "start": "Starts",
+        "end": "Ends",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "form": {
+        "titleAdd": "Add discount code",
+        "titleEdit": "Edit discount code",
+        "titleEn": "Title (English)",
+        "titleAr": "Title (Arabic)",
+        "code": "Code",
+        "discountKind": "Discount type",
+        "percent": "Percent off",
+        "fixed": "Amount off (SYP)",
+        "scope": "Applies to",
+        "scopeTarget": "Target",
+        "scopeTargetPlaceholder": "Choose a target",
+        "start": "Start date",
+        "end": "End date",
+        "maxRedemptions": "Max redemptions",
+        "perGuestCap": "Per-guest cap",
+        "enabled": "Enabled",
+        "enabledOn": "Guests can enter this code",
+        "enabledOff": "Disabled — code is rejected",
+        "cancel": "Cancel",
+        "save": "Save code"
+      }
+    },
+    "reviewsPage": {
+      "caption": "Reviews",
+      "searchPlaceholder": "Search author, subject, or review text...",
+      "allAbout": "All targets",
+      "allRatings": "All star ratings",
+      "allStatuses": "All statuses",
+      "aboutGuest": "About guest",
+      "aboutProvider": "About business",
+      "starsCount": "{count} stars",
+      "empty": "No reviews have been submitted yet.",
+      "emptyFiltered": "No reviews match these filters.",
+      "actionMenu": "Actions for {name}",
+      "columns": {
+        "author": "Author",
+        "subject": "Reviewed",
+        "stars": "Rating",
+        "review": "Review",
+        "date": "Date",
+        "booking": "Booking",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "published": "Published",
+        "flagged": "Flagged",
+        "hidden": "Hidden"
+      },
+      "actions": {
+        "publish": "Approve / Publish",
+        "flag": "Flag for inspection",
+        "hide": "Hide review"
+      },
+      "statusUpdated": "Review status updated",
+      "statusUpdatedBody": "The review status has been set to {status}."
+    },
+    "auditLogs": {
+      "caption": "Audit logs",
+      "searchPlaceholder": "Search actor, action, or target...",
+      "allModules": "All modules",
+      "empty": "No audit records recorded yet.",
+      "emptyFiltered": "No logs match the filter criteria.",
+      "columns": {
+        "timestamp": "Timestamp",
+        "actor": "Admin actor",
+        "action": "Action",
+        "module": "Module",
+        "target": "Target",
+        "details": "Details"
+      },
+      "modules": {
+        "bookings": "Bookings",
+        "guests": "Guests",
+        "businesses": "Businesses",
+        "reviews": "Reviews",
+        "promotions": "Featured",
+        "taxonomy": "Lists",
+        "settings": "Settings"
+      }
+    },
+    "settings": {
+      "save": "Save settings",
+      "saved": "Settings saved",
+      "savedBody": "Credit limits, show-up bands, and switches are updated for this session.",
+      "saveFailed": "Could not save settings",
+      "saveFailedBody": "Check the numbers and try again.",
+      "invalidCredit": "Enter a positive credit ceiling for every tier.",
+      "invalidReliability": "At-risk must be below watch, and both must be between 0 and 100.",
+      "credit": {
+        "title": "Credit limits",
+        "description": "How much a business can owe before we pause new bookings. You can still set a different limit on one business.",
+        "columns": {
+          "tier": "Tier",
+          "ceiling": "Ceiling (SYP)"
+        }
+      },
+      "tiers": {
+        "preferred": "Preferred",
+        "standard": "Standard",
+        "highRisk": "High risk"
+      },
+      "reliability": {
+        "title": "Show-up record",
+        "description": "Bands for guest scores on the Guests page. Below “often misses” is the lowest.",
+        "atRisk": "Often misses below",
+        "watch": "Watch below",
+        "lock": "Lock guests who often miss",
+        "lockHint": "Locked guests cannot book until you unlock them.",
+        "strongHint": "At or above the watch line counts as “shows up.”"
+      },
+      "flags": {
+        "title": "Switches",
+        "description": "How we send login codes, and what the platform allows.",
+        "otp": "Login codes by",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "featured": "Home page featuring",
+        "featuredHint": "Allow the Featured page to pin listings and themes on the home page.",
+        "webCheckIn": "Web check-in",
+        "webCheckInHint": "Businesses can confirm arrival with the 6-character backup code."
+      }
+    },
+    "overview": {
+      "empty": "No overview metrics are available yet.",
+      "periodHint": "Last {days} days",
+      "periodLabel": "Overview period",
+      "days7": "Last 7 days",
+      "days30": "Last 30 days",
+      "days90": "Last 90 days",
+      "grossBookings": "Gross bookings",
+      "completed": "Completed",
+      "noShowRate": "No-show rate",
+      "commissionRevenue": "Fee revenue",
+      "pendingProviders": "Waiting for review",
+      "pendingProvidersHint": "Businesses whose licenses still need a decision",
+      "openDisputes": "Open no-shows",
+      "openDisputesHint": "Missed arrivals still waiting for a decision",
+      "volumeTitle": "Completed bookings each day",
+      "noShowByCity": "Missed arrivals by city",
+      "originsTitle": "Where guests come from",
+      "attractionsTitle": "Most visited sites",
+      "commissionByPillar": "Fees by category",
+      "origins": {
+        "syria": "Syria",
+        "lebanon": "Lebanon",
+        "jordan": "Jordan",
+        "uae": "United Arab Emirates",
+        "germany": "Germany",
+        "france": "France",
+        "other": "Other"
+      },
+      "attractions": {
+        "umayyadMosque": "Umayyad Mosque",
+        "aleppoCitadel": "Aleppo Citadel",
+        "palmyra": "Palmyra",
+        "krak": "Krak des Chevaliers",
+        "bosraTheatre": "Bosra Theatre"
+      },
+      "pillars": {
+        "hotels": "Stays",
+        "dining": "Dining",
+        "trips": "Trips",
+        "events": "Events",
+        "guides": "Guides"
+      }
+    }
+  }
+}

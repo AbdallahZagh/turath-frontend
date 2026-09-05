@@ -1,0 +1,296 @@
+Technical Architecture & Strategic Feasibility Report: Turath Platform (تراث)
+Track 1: Regional Technical Feasibility & Infrastructure Optimization
+1.1 Connectivity & Mapping Services
+Deploying an interactive GIS and mapping infrastructure within the Syrian hospitality sector requires overcoming substantial structural headwinds, including international compliance constraints under OFAC regulations, foreign payment gateway blacklists, intermittent mobile network connectivity, and severely outdated commercial base layers in historical urban centers1. Commercial proprietary mapping providers present operational and technical liabilities in this operational environment:
+Google Maps Platform: Enforces strict API credit card billing mechanisms that reject regional financial instruments, periodically blocks client IP blocks originating from Syrian autonomous systems due to blanket compliance policies, and provides inconsistent Arabic typography across historical alleyways such as Old Damascus, Bab Touma, and the Ancient City of Aleppo1.
+Mapbox GL: Imposes comparable export-control constraints and metered usage costs denominated in foreign fiat currencies, while its client-side SDKs generate substantial network telemetry that fails under high packet-loss conditions1.
+Leaflet with Public Raster OSM: Eliminates licensing dependencies but introduces severe performance bottlenecks; raster tiles consume significant client bandwidth, lack dynamic client-side vector styling, and exhibit noticeable visual stutter during multi-touch zooming over high-latency cellular networks1.
+The optimal architectural pattern consists of a decoupled, self-hosted vector tile infrastructure utilizing OpenStreetMap (OSM) source data, compiled into single-file PMTiles archives via Planetiler, and rendered natively via MapLibre GL across both web and mobile clients3.
+Evaluation Dimension
+Google Maps Platform
+Mapbox GL
+Leaflet + Public Raster OSM
+MapLibre GL + Self-Hosted PMTiles (Recommended)
+Sanctions & Legal Availability
+High Risk (Frequent IP blocks, OFAC billing friction)
+High Risk (Account suspensions, payment constraints)
+Fully Compliant (Decentralized open-source data)
+Fully Compliant (Self-hosted on platform infrastructure)
+Arabic Street Layer Quality
+Moderate (Major arterials only; historic alleys unmapped)
+High (Vector styling, requires external font servers)
+Low to Moderate (Standard tile rendering, no dynamic labels)
+High (Custom OSM pipeline extracting native name:ar tags)
+Offline Vector Caching
+Proprietary SDK cache (Restricted programmatic export)
+Proprietary SDK cache (Strict offline region limits)
+Inefficient (Large disk footprint for multi-zoom raster tiles)
+Native Single-File Archives (Sub-50MB per governorate)3
+Average Initial Map Latency
+450ms–1200ms (Subject to international transit hops)
+400ms–900ms (Dependent on global CDN edge nodes)
+350ms–700ms (Subject to standard HTTP/1.1 tile servers)
+Sub-120ms (Served via localized object cache or local disk)
+Client Storage Footprint
+Dynamic (Unmanaged)
+Dynamic (Unmanaged)
+180MB+ per city (Raster tiles at zoom levels 14–17)
+35MB–50MB (Complete vector layer for Damascus/Aleppo at zoom 0–16)
+Cartographic Pipeline Architecture
+The cartographic engineering pipeline operates through four discrete stages:
+Source Data Ingestion: Automated weekly extraction scripts pull the latest Syria country extract (syria-latest.osm.pbf) from Geofabrik.
+Vector Tile Generation: A containerized Planetiler build pipeline transforms the .osm.pbf extract into an optimized single-file syria.pmtiles archive. The build configuration explicitly maps Arabic name priority (name:ar  name  int_name), ensuring that all historical quarters, souks, and cultural landmarks render correct Arabic typography.
+Distribution & Edge Proxying: The generated syria.pmtiles file is hosted on S3-compatible cloud object storage (e.g., MinIO) behind an Nginx caching reverse proxy configured with HTTP/2 range-request support4.
+Self-Hosted Geocoding Engine: Address resolution and reverse geocoding execute via an isolated Nominatim or Pelias instance seeded exclusively with Syrian administrative boundaries, eliminating all outbound external third-party API dependencies.
+1.2 Multi-Channel OTP & Telephony Reliability
+Mobile communications in Syria are split between two primary mobile network operators: Syriatel (Mobile Country Code 417, Mobile Network Code 01), commanding approximately 55.6% market share with 7.1 million subscribers, and MTN Syria (MCC 417, MNC 02), holding roughly 44.4% market share with 5.7 million subscribers6. Direct international Application-to-Person (A2P) SMS termination via global telecommunications aggregators (such as Twilio or Sinch) experiences failure rates exceeding 40% due to international routing blocks, grey routes, and elevated costs ranging between €0.21 and €0.38 per message6.
+To ensure an authentication completion rate above 99.5% during intermittent network degradation, the platform must implement an automated, multi-tiered fallback orchestration engine.
+Multi-Tier Authentication Fallback Flow
+Tier 1: Data-Driven Messaging (0–25 Seconds): When a user requests an OTP on Web or Mobile, the backend dispatches an encrypted verification template via the WhatsApp Business Cloud API or regional WhatsApp enterprise aggregators1. This channel bypasses cellular SMS congestion, operates over local Wi-Fi during telecommunications outages, and reduces delivery costs to approximately €0.01 per conversation7.
+Tier 2: Direct Local SMS Gateway (25–60 Seconds): If delivery confirmation is not received within 25 seconds, the system falls back to programmatic HTTP REST integration with certified local aggregators (such as EconSMS or direct carrier SMPP binds)10. The engine identifies the carrier prefix—routing +963 93, +963 98, and +963 99 to Syriatel, and +963 94, +963 95, and +963 96 to MTN Syria—to minimize inter-carrier routing latencies12.
+Tier 3: Voice Flash-Call / Fallback SMS (60–90 Seconds): If the OTP remains unacknowledged after 60 seconds, an automated Interactive Voice Response (IVR) flash-call or secondary aggregator SMS route is triggered9.
+Resiliency & Abuse Mitigation Controls
+Carrier Health Circuit Breaker: A Redis-backed sliding-window counter monitors delivery receipt (DLR) latency over the preceding 100 outbound requests per carrier. If average delivery latency exceeds 30 seconds or the failure threshold crosses 15%, the system trips a circuit breaker and promotes WhatsApp as the mandatory primary route platform-wide7.
+Rate Limiting & Cost Shields: Outbound requests are throttled using a leaky bucket algorithm enforcing a maximum of 3 OTP requests per phone number per 15-minute window, and 5 requests per IP address per minute.
+Cryptographic Attestation: Mobile requests must supply a short-lived client attestation token generated via Google Play Integrity API or Apple DeviceCheck to prevent scripted SMS credit exhaustion attacks.
+1.3 Offline Sync & Storage Strategy
+In historical destinations (such as the Old City of Damascus or Krak des Chevaliers), cellular reception often drops entirely1. The Flutter mobile architecture must therefore operate as an offline-first execution environment1.
+The client persistence layer is organized hierarchically:
+Relational Pass Data & Audit Queues: Handled via Drift (a type-safe SQLite abstraction), compiled with SQLCipher for full on-disk AES-256 encryption1.
+Ephemeral Presentation State & Geodata: Managed via Hive, providing low-latency key-value keyrings for temporary UI filters and tile index pointers1.
+Cryptographic Key Management: Master encryption keys are generated on-device and secured inside flutter_secure_storage, backed by iOS Keychain and Android KeyStore (enforcing hardware-backed StrongBox where supported).
+SQL
+-- Drift / SQLCipher Local Schema for Vouchers and Provider ScansCREATE TABLE local_vouchers (    booking_id TEXT PRIMARY KEY NOT NULL,    booking_reference TEXT NOT NULL,    provider_id TEXT NOT NULL,    category TEXT NOT NULL,    start_time INTEGER NOT NULL,    guest_count INTEGER NOT NULL,    total_amount_estimated REAL NOT NULL,    currency TEXT DEFAULT 'SYP',    encrypted_jwt_payload TEXT NOT NULL,    signature_hash TEXT NOT NULL,    verification_status TEXT DEFAULT 'PENDING_REDEMPTION',    cached_at INTEGER NOT NULL,    sync_status TEXT DEFAULT 'SYNCHRONIZED' -- 'SYNCHRONIZED', 'PENDING_UPLOAD');CREATE TABLE offline_scan_audit_queue (    scan_id TEXT PRIMARY KEY NOT NULL,    booking_id TEXT NOT NULL,    provider_id TEXT NOT NULL,    scanned_at INTEGER NOT NULL,    scanner_staff_id TEXT NOT NULL,    raw_qr_payload TEXT NOT NULL,    device_monotonic_timestamp INTEGER NOT NULL,    upload_attempts INTEGER DEFAULT 0,    sync_status TEXT DEFAULT 'QUEUED' -- 'QUEUED', 'IN_FLIGHT', 'COMPLETED');
+Reconnection Synchronization Routine
+The client synchronization engine implements a deterministic state machine:
+Network Connectivity Detection: Monitored via the connectivity_plus plugin, augmented with active lightweight HTTP HEAD health checks to Turath edge nodes to confirm WAN transit.
+Outbound Audit Queue Drainage: The app drains records from offline_scan_audit_queue to the backend /api/v1/qr/sync-scans endpoint using an idempotent batching protocol. Each scan record includes a client-generated UUID (scan_id) to prevent duplicate ledger postings during partial network failures.
+Inbound Delta Synchronization: The client presents its high-watermark timestamp (last_sync_timestamp). The server calculates a binary delta payload containing updated reservation statuses, provider schedule revisions, and revoked voucher hashes, updating the local SQLite tables within a single atomic database transaction.
+Track 2: Concurrency, Inventory Locking & Anti-Double-Booking Architecture
+2.1 Distributed Mutex & Transaction Isolation
+High-demand booking scenarios—such as flash ticket releases for major cultural events, boutique hotel reservations during peak holiday seasons, or prime weekend dining table allocations—require robust concurrency isolation1. Relying solely on relational database row-level locking can lead to database thread pool exhaustion and unacceptable latency spikes under sudden load surges.
+Turath employs a two-tiered concurrency control pipeline:
+Tier 1 (Volatile Distributed Hold): A high-throughput Redis distributed mutex that atomically evaluates inventory availability and creates a temporary hold with a strict 10-minute Time-To-Live (TTL).
+Tier 2 (Durable Relational Commitment): A transactional PostgreSQL persistence routine utilizing pessimistic row-level locking (SELECT ... FOR UPDATE) executing within a READ COMMITTED isolation boundary to record the final booking and update the financial ledger1.
+2.2 Database Level Locking & Redis Mutex Implementation
+Atomic Redis Lua Script for Inventory Allocation
+To prevent race conditions between checking available capacity and decrementing the inventory counter, the volatile hold is acquired atomically using a Lua script executed directly on the Redis primary node:
+Lua
+-- KEYS[1]: Inventory Counter Key (e.g., "inv:stay:room_type_uuid:2025-06-01")-- KEYS[2]: Hold Registry Hash Key (e.g., "holds:stay:room_type_uuid:2025-06-01")-- ARGV[1]: Requested Capacity / Quantity (e.g., 2)-- ARGV[2]: Client Hold UUID-- ARGV[3]: Hold TTL in Seconds (e.g., 600)local current_available = tonumber(redis.call('GET', KEYS[1]) or '-1')if current_available == -1 then    return {0, "INVENTORY_UNINITIALIZED"}endlocal requested = tonumber(ARGV[1])if current_available >= requested then    redis.call('DECRBY', KEYS[1], requested)    redis.call('HSET', KEYS[2], ARGV[2], requested)    redis.call('EXPIRE', KEYS[2], tonumber(ARGV[3]))    return {1, "HOLD_ACQUIRED"}else    return {-1, "INSUFFICIENT_INVENTORY"}end
+PostgreSQL Transaction Execution Pattern (Node.js / NestJS)
+Once the volatile Redis hold is secured, the application executes the durable persistence transaction in PostgreSQL1:
+TypeScript
+// NestJS / TypeORM Reservation Service Implementationasync reserveHotelRoomAtomic(  userId: string,  roomId: string,  checkIn: Date,  checkOut: Date,  roomsCount: number,  clientHoldToken: string): Promise<BookingRecord> {  const queryRunner = this.dataSource.createQueryRunner();  await queryRunner.connect();  await queryRunner.startTransaction('READ COMMITTED');  try {    // 1. Lock only the target room definition row to prevent schema-level concurrent modifications    const room = await queryRunner.manager      .createQueryBuilder(HotelRoomEntity, 'room')      .setLock('pessimistic_write')      .where('room.id = :roomId', { roomId })      .getOne();    if (!room || !room.is_available) {      throw new ConflictException('ROOM_UNAVAILABLE');    }    // 2. Compute overlapping active bookings for the requested date window    const overlappingBookingsCount = await queryRunner.manager      .createQueryBuilder(BookingEntity, 'b')      .where('b.provider_id = :providerId', { providerId: room.provider_id })      .andWhere('b.status IN (:...activeStatuses)', {        activeStatuses: ['CONFIRMED', 'CHECKED_IN', 'PENDING_CONFIRMATION'],      })      .andWhere('b.start_time < :checkOut AND b.end_time > :checkIn', {        checkIn,        checkOut,      })      .getCount();    if (overlappingBookingsCount + roomsCount > room.total_quantity) {      throw new ConflictException('INVENTORY_EXHAUSTED_FOR_DATES');    }    // 3. Persist the booking record    const booking = queryRunner.manager.create(BookingEntity, {      userId,      providerId: room.provider_id,      category: 'HOTEL',      startTime: checkIn,      endTime: checkOut,      guestCount: roomsCount,      status: 'CONFIRMED',      paymentStatus: 'UNPAID_CASH_ON_ARRIVAL',      bookingReference: generateSecureReferenceCode(),      backupNumericCode: generateNumericBackupPin(),      qrTokenPayload: await this.cryptoTokenService.signVoucherPayload({        userId,        providerId: room.provider_id,        roomId,      }),    });    const savedBooking = await queryRunner.manager.save(booking);    // 4. Commit transaction    await queryRunner.commitTransaction();    return savedBooking;  } catch (error) {    await queryRunner.rollbackTransaction();    // Roll back volatile hold in Redis    await this.redisInventoryService.releaseHold(roomId, clientHoldToken, roomsCount);    throw error;  } finally {    await queryRunner.release();  }}
+Lock Cleanup Workers & Asynchronous Rollback
+To ensure that abandoned reservations do not leave inventory locked indefinitely:
+Redis Expiration Events: Keys in the hold registry are assigned a 10-minute TTL.
+Asynchronous BullMQ Sweeper: A BullMQ background worker listens for expired lock keys and executes a compensating Redis transaction to restore the available inventory counter.
+Database Rebalancing Cron: A scheduled cron job runs every 5 minutes to identify any bookings in PENDING_CONFIRMATION status that have exceeded their time limit, automatically transitioning them to EXPIRED and releasing their held resources.
+2.3 Cryptographic QR Validation & Asymmetric Hardening
+Vulnerability Analysis of Initial Symmetric Specification
+The initial specification proposes an HMAC-based symmetric signing mechanism:
+[cite: 1]
+This architecture introduces three critical vulnerabilities:
+Symmetric Secret Compromise: Verifying an HMAC signature offline requires distributing the shared secret key to thousands of provider mobile devices1. Extracting this key via static reverse engineering (e.g., using Frida or Ghidra on the Flutter binary) allows malicious actors to forge arbitrary valid check-in passes.
+Replay Attacks on Offline Scanners: In the absence of real-time database lookups, a valid QR pass can be presented to multiple staff scanners simultaneously or rescanned across different gates before sync occurs1.
+Clock Drift & Device Time Tampering: Devices operating offline may drift or have their system clocks manually rolled back to accept expired vouchers.
+Hardened Asymmetric Ed25519 Protocol
+The cryptographic engine must transition to asymmetric digital signatures using Edwards-curve Digital Signature Algorithm (Ed25519)13. The private key remains in an isolated Hardware Security Module (HSM) / backend Key Management Service, while provider applications embed only the public key13.
+The payload structure contains minimal, structured binary fields:
+Header: {"alg": "EdDSA", "crv": "Ed25519", "typ": "TURATH-PASS"}
+Claims:
+bid: UUID of the booking record.
+pid: UUID of the service provider.
+uid: UUID of the tourist user.
+cat: Category identifier (e.g., HOTEL, TABLE, TRIP, EVENT, GUIDE)1.
+exp: Unix timestamp indicating voucher expiration.
+nbf: Unix timestamp indicating earliest valid check-in time.
+nce: Unique 64-bit cryptographically secure pseudorandom nonce.
+Signature: 
+Provider Verification Lifecycle
+Camera Stream Capture: The staff scanner captures the QR payload using the high-speed camera engine1.
+Asymmetric Cryptographic Validation: The client verifies the signature using the embedded platform public key13. If the signature does not match, the voucher is immediately rejected.
+Anti-Replay Validation via Local Bloom Filter & SQLite: The scanner checks the nce (nonce) against a local Bloom filter backed by a SQLite scanned_nonces table. If the nonce exists, a duplicate scan alert is triggered showing the previous redemption timestamp1.
+Monotonic Clock Check: The app verifies that the scan occurs within the valid window  using device system time correlated with monotonic elapsed uptime to prevent clock manipulation.
+Local Redemption Commitment: The nonce is written to the local database, and the scan is queued in offline_scan_audit_queue for server synchronization upon reconnection1.
+Track 3: Business Model, Leakage Prevention & Trust Engine (Cash on Arrival)
+3.1 Commission Collection & Leakage Control
+In a Cash on Arrival (COA) operational model, the platform faces financial leakage risks: service providers may falsely report arriving tourists as no-shows, or collude with guests to cancel on-platform bookings for an unrecorded cash discount1. Because digital escrow is infeasible in the MVP phase due to banking constraints, the platform enforces compliance using game-theoretic incentive structures, automated auditing, and behavioral tripwires1.
+Automated Tourist Handshake Verification
+Whenever a provider flags a reservation as NO_SHOW or requests a manual cancellation at the venue, the system automatically dispatches an interactive inquiry to the tourist via WhatsApp and Push Notification: "Our records indicate you did not complete your reservation at [Provider Name]. Please confirm if you attended."
+[cite: 1, 7]
+If the tourist indicates successful attendance, the system triggers the following automated actions:
+The booking status immediately transitions to DISPUTED_COMPLETION.
+The standard commission fee is accrued to the provider's ledger balance1.
+A punitive dispute assessment fee (e.g., 200% of standard commission) is levied against the provider.
+The provider's listing visibility is deprioritized in search results.
+Review Eligibility Gating & Loyalty Incentives
+Only reservations verified through a cryptographic QR code scan unlock the ability to submit verified ratings and reviews1. To incentivize tourists to insist on formal check-in scans, completed digital check-ins award Platform Loyalty Credits (redeemable for future platform-subsidized promotions) and increase the user's platform trust standing1.
+Spotlight Promotions vs Cash-on-Arrival Coupons
+Homepage merchandising (featured listings and home campaigns on /admin/promotions) is advertising only: it pins a listing or a themed band on the tourist home for a date window. It does not change the cash amount due. This existing Promotions page remains separate from discount codes.
+Cash-on-arrival coupons are a separate Super Admin catalog (/admin/coupons). After the admin agrees a deal with a provider (or funds a platform- / pillar-wide subsidy), they publish a code with a percent or fixed SYP discount, a scope, dates, and optional caps. The tourist enters the code at booking; the voucher and provider desk show the discounted cash due. Ledger commission uses that collected total. Coupons never charge a card. Platform Loyalty Credits remain a later, platform-subsidized incentive and are not this coupon catalog. Providers do not self-serve coupons in the MVP.
+Dynamic Margin Tiering
+The platform applies a dynamic commission model that rewards transparent reporting:
+Standard Commission Rate: 12% across completed reservations1.
+Preferred Tier (Low Dispute Rate): Providers maintaining a dispute rate below 2% and a no-show rate matching regional baseline distributions see their commission rate reduced to 8.5%.
+High-Risk Penalty Tier: Providers whose cancellation and no-show ratios deviate by more than 2.5 standard deviations from the governorate average are subject to an elevated 18% commission rate and targeted for mystery shopper audits.
+3.2 User Reliability & Anti-Ghosting Scoring Algorithm
+To prevent malicious, phantom, or irresponsible reservations that leave provider inventory stranded, every user profile maintains a dynamic User Reliability Score () bounded deterministically on the interval 1.
+Mathematical Formulation
+Where the event delta  is defined piecewise based on the user's booking lifecycle action:
+Score Range
+Trust Tier
+Operational Status & Reservation Constraints
+80 – 100
+Tier 1 (VIP / Instant Booking)
+Unrestricted access; up to 4 concurrent active bookings across all provider categories.
+50 – 79
+Tier 2 (Standard Verified)
+Standard platform access; max 2 concurrent active bookings. High-value bookings (>500,000 SYP) require manual provider approval1.
+30 – 49
+Tier 3 (Restricted)
+Instant booking disabled; max 1 active booking. Must confirm via secondary OTP before booking dispatch1.
+0 – 29
+Tier 4 (Suspended)
+Account locked from creating new reservations. Requires manual identity verification via platform support to unlock.
+3.3 Provider Settlement Cycles & Suspension Automations
+Providers accumulate platform commission debt from completed Cash on Arrival transactions1. To protect platform cash flow while maintaining operational continuity, settlements are structured around dynamic Credit Ceilings and tiered automated escalation triggers1.
+Provider Tier
+Benchmark Criteria
+Dynamic Credit Ceiling (SYP)
+Settlement Statement Frequency
+Tier 1 (New / Unverified Volume)
+Initial onboarding to first 25 completed bookings
+1,500,000 SYP (~$100 USD equiv.)
+Weekly (Every Monday 00:00 UTC)
+Tier 2 (Established)
+>25 completions, dispute rate < 2%
+5,000,000 SYP (~$350 USD equiv.)
+Bi-weekly (1st and 15th of month)
+Tier 3 (Enterprise / High Volume)
+Hotels / Large Agencies with >100 monthly bookings
+15,000,000 SYP (~$1,000 USD equiv.)
+Monthly
+Automated Suspension State Machine
+Warning Trigger (75% of Credit Ceiling Reached): An automated notification is dispatched via WhatsApp and Provider Portal: "Your account has utilized 75% of its commission credit limit. Please initiate settlement."[cite: 1]
+Ceiling Breach (100% of Ceiling Reached): A mandatory 48-Hour Grace Period initiates. During this window, existing confirmed bookings remain valid, but the provider's listings are down-ranked in search results, and new instant bookings are halted.
+Automated Account Suspension (Grace Period Expired): If no verified payment receipt is uploaded, the backend updates the provider record:SQLUPDATE providers SET status = 'SUSPENDED', updated_at = NOW() WHERE id = :providerId AND status = 'APPROVED';The provider is instantly hidden from discovery maps and search endpoints1. Re-activation requires Super Admin ledger reconciliation.
+Track 4: UI/UX & Frontend Architecture (Next.js 15+ & Flutter)
+4.1 Next.js Web Architecture
+The web architecture is structured around Next.js 15+ using the App Router, separating public discovery, provider operations, and super-administrative control into isolated route groups1. Server and Client Component boundaries are strictly enforced to achieve sub-second Core Web Vitals (LCP < 1.2s, CLS = 0, INP < 100ms) even over degraded 3G networks1.
+The file structure enforces separation across three route groups:
+src/app/(public)/: Public discovery pages, attraction directories, and booking funnels. These leverage React Server Components (RSC) and Incremental Static Regeneration (ISR) to maximize SEO performance and minimize client JavaScript payloads1.
+src/app/(provider)/: Provider business management dashboards, live table layout editors, and inventory planners, guarded by organization-level RBAC middleware1.
+src/app/(admin)/: Super Admin management interface for KYC pipeline reviews, financial reconciliation, CMS curation, homepage promotions merchandising, and the cash-on-arrival coupon catalog1.
+State Management & Performance Boundaries
+Server State: Managed via TanStack Query v5 (@tanstack/react-query), providing background revalidation, server-side prefetching hydration, and optimistic UI mutations for reservation workflows.
+Client Ephemeral State: Managed via Zustand stores with persistent local storage middleware for UI states (e.g., dynamic filter drawers, active map bounding boxes, currency display preferences).
+RSC Optimization Pattern: All listing descriptions, historical landmark narratives, and provider metadata are rendered as static React Server Components. Interactive elements (e.g., date-range pickers, dynamic seat maps, review forms) are extracted into isolated client islands ('use client').
+4.2 Flutter Cross-Platform Architecture
+The mobile application is designed according to Clean Architecture principles, enforcing separation of concerns between Data, Domain, and Presentation layers. It operates in two runtime modes: Tourist Mode and Provider Mode1.
+The codebase is organized into modular feature layers:
+lib/core/: Cryptographic utilities (Ed25519 verifiers), local database engines (Drift SQLCipher), network client configurations (Dio with exponential backoff retry interceptors), and localization themes13.
+lib/features/discovery/: Map interfaces, search filters, and point-of-interest details powered by Riverpod state providers1.
+lib/features/wallet/: Local encrypted pass storage and high-contrast offline QR rendering1.
+lib/features/scanner/: Hardware-accelerated camera barcode scanning pipeline for provider staff1.
+High-Speed Scanner Implementation
+Provider staff require continuous barcode scanning capable of immediate verification1. The Flutter scanner utilizes mobile_scanner with native Google ML Kit barcode decoding running on an isolated background execution thread:
+Dart
+// Flutter Provider Scan Controller (Riverpod Implementation)class ScannerController extends StateNotifier<ScannerState> {  final Ed25519Verifier _verifier;  final LocalAuditRepository _auditRepo;  ScannerController(this._verifier, this._auditRepo) : super(ScannerState.idle());  Future<void> processBarcode(String rawPayload) async {    if (state.isProcessing) return;    state = ScannerState.processing();    try {      // 1. Asymmetric Cryptographic Verification      final VerificationResult result = await _verifier.verifyVoucher(rawPayload);      if (!result.isValid) {        state = ScannerState.error(result.errorMessage);        return;      }      // 2. Check Local Replay Ledger      final bool alreadyRedeemed = await _auditRepo.hasNonce(result.payload.nonce);      if (alreadyRedeemed) {        state = ScannerState.duplicate(result.payload.redemptionTimestamp);        return;      }      // 3. Mark Nonce as Redeemed Locally & Log Audit Entry      await _auditRepo.recordSuccessfulScan(        bookingId: result.payload.bookingId,        nonce: result.payload.nonce,        scannedAt: DateTime.now(),      );      state = ScannerState.success(result.payload);    } catch (e) {      state = ScannerState.error("DECODING_FAILURE");    }  }}
+4.3 Bilingual RTL/LTR Design System & Localization
+The user interface provides native bidirectional support for Arabic (Right-to-Left) and English (Left-to-Right), incorporating dynamic dual-currency calculations.
+Arabic Typography & Layout Rules
+Typography Pipeline: Cairo and IBM Plex Sans Arabic serve as the primary typefaces. Arabic typography requires a +25% vertical line-height multiplier compared to standard Latin typography to prevent clipping of complex diacritics and ligatures across mobile viewports.
+Layout Mirroring via Logical Properties: Layout dimensions are defined using CSS logical properties (margin-inline-start, padding-inline-end, inset-inline-start) in Next.js and EdgeInsetsDirectional in Flutter.
+Directional Iconography: Navigation chevrons, arrows, back buttons, and step indicators mirror automatically when switching between RTL and LTR, while functional brand icons (e.g., camera, map pin, telephone) remain unmirrored.
+Dual-Currency Conversion Engine: All database records store amounts in Syrian Pounds (SYP)1. The UI dynamically renders equivalent USD valuations pegged to an administrative platform exchange rate: "150,000 SYP (~$10.50 USD)"1.
+Track 5: Risk Assessment & Step-by-Step Implementation Roadmap
+5.1 Operational & Legal Risk Matrix
+Deploying a multi-tenant hospitality platform in Syria involves navigating infrastructure instability, legal licensing constraints, currency volatility, and operational mistrust1.
+Risk Identifier
+Impact / Probability
+Root Cause
+Technical & Operational Mitigation
+R-01: Provider KYC Delays
+High / High
+Slow manual verification of Ministry of Tourism licenses1.
+Mitigation: Implement a dual-stage onboarding pipeline: Providers obtain provisional "Unverified" status (capped at 5 bookings) upon identity submission while legal document queues are routed to an expedited Super Admin verification portal1.
+R-02: Hyperinflation & Price Drift
+High / High
+Rapid fluctuation of the Syrian Pound (SYP) against foreign currencies.
+Mitigation: Base pricing can be pegged to USD by the provider while dynamically calculating the SYP settlement total at the moment of reservation using an automated platform exchange-rate index1.
+R-03: Infrastructure & Blackout Grid Failures
+High / High
+Widespread provincial electrical power and cellular data outages1.
+Mitigation: Deploy the full offline-first cryptographic QR check-in engine using on-device Ed25519 validation and SQLite caching, requiring zero network access for on-site ticket redemptions1.
+R-04: Off-Platform Transaction Leakage
+High / Med
+Providers bypassing platform commissions in a Cash-on-Arrival model1.
+Mitigation: Automated tourist verification handshake via WhatsApp, dynamic commission rate reductions for compliant providers, and mystery shopper audits1.
+R-05: Double-Booking Under Network Degradation
+Med / Med
+High concurrency requests colliding during intermittent packet drops1.
+Mitigation: Distributed Redis token locks paired with PostgreSQL row-level SELECT ... FOR UPDATE transactions and idempotent client request UUID tokens1.
+5.2 Optimized Phased Delivery Plan
+The implementation roadmap breaks down the four SRS release phases into eight sprint-ready milestones1:
+Sprint Milestone
+Core Engineering Deliverables
+Acceptance & Production Exit Criteria
+Sprints 1 – 2
+(Phase 1: Foundation & Auth)
+• PostgreSQL schema migrations with PostGIS extensions1.
+• NestJS backend boilerplate with JWT and RBAC guards1.
+• Multi-tier OTP router (WhatsApp Cloud API + Local SMS)1.
+• Flutter base architecture with Drift SQLite encryption1.
+• 100% migration pass rate.
+• OTP delivery falls back within 30s across Syriatel and MTN numbers6.
+• User login and token refresh verified on Web and Mobile1.
+Sprints 3 – 4
+(Phase 2: Onboarding & GIS)
+• Provider KYC document submission and approval pipeline1.
+• Super Admin verification command center1.
+• Syria vector tile generator pipeline (Planetiler / PMTiles)4.
+• MapLibre GL exploration view with category clustering1.
+• Map renders in <120ms from local PMTiles cache3.
+• Super Admin can review, approve, or reject provider licenses1.
+• Full RTL layout verified across all screen widths.
+Sprints 5 – 6
+(Phase 3: Booking & QR Engine)
+• Reservation engines across all 5 provider models1.
+• Redis Redlock and PostgreSQL FOR UPDATE locking1.
+• Ed25519 cryptographic token signing service13.
+• Flutter offline wallet and high-speed scanner1.
+• Zero overbooking under simulated load of 500 concurrent booking requests1.
+• Scanner validates authentic passes in <100ms offline1.
+• Replay attempts display immediate duplicate alerts1.
+Sprints 7 – 8
+(Phase 4: Trust, Ledger & Launch)
+• Deterministic User Reliability Scoring engine1.
+• Cash-on-Arrival ledger and credit limit automation1.
+• Super Admin coupon catalog (cash-on-arrival codes) distinct from homepage spotlight promotions1.
+• Verified review collection pipeline1.
+• End-to-end stress testing under simulated 3G latency conditions1.
+• Automated credit limit suspensions trigger successfully1.
+• Reliability score correctly adjusts on verified attendance1.
+• Full regression pass completed across iOS, Android, and Web1.
+Architectural Synthesis
+The architectural blueprint for the Turath platform addresses the technical and socio-economic constraints of the Syrian hospitality landscape1:
+Infrastructure Independence: Replacing external cloud-dependent mapping services with self-hosted PMTiles and MapLibre GL eliminates sanctions risks, avoids foreign billing liabilities, and delivers offline vector map rendering3.
+Deterministic Resiliency: The multi-tiered authentication engine mitigates local telecom failure modes by prioritizing cost-effective WhatsApp channels before routing through local carrier gateways7.
+Mathematical Concurrency Integrity: Combining Redis distributed mutexes with PostgreSQL pessimistic locking ensures that multi-tenant inventories across hotels, dining tables, trips, and events remain consistent under traffic spikes without double-booking1.
+Zero-Trust Offline Verification: Shifting from symmetric HMAC tokens to asymmetric Ed25519 signatures allows provider staff to authenticate bookings instantly in network-degraded historical quarters while guarding against replay attacks and credential extraction1.
+Economic Alignment: The game-theoretic trust and reliability engine aligns economic incentives in a Cash-on-Arrival model, minimizing platform leakage and ghost bookings through automated verification handshakes and dynamic margin structures1.
+Works cited
+Turath Platform - Software Requirements Specification (SRS).docx
+chengang/flutter_map - Gitee, https://gitee.com/chengan_g666/flutter_map.git
+Flutter MapLibre GL - pub.dev, https://pub.dev/documentation/maplibre_gl/latest/
+PMTiles for MapLibre GL - Protomaps Docs, https://docs.protomaps.com/pmtiles/maplibre
+Offline Mapping in Flutter: Rendering MBTiles with MapLibre GL | by Pranim Singh Thakuri, https://medium.com/@pranimsingh7/offline-mapping-in-flutter-rendering-mbtiles-with-maplibre-gl-e63e7a7ec52d
+SMS Gateway for Syria - SMS Pricing from € 0.21 - BudgetSMS.net, https://www.budgetsms.net/sms-gateway-pricing/sy/syria/
+Business messaging, Syriatel | Syria - Messaggio, https://messaggio.com/messaging/carriers/syria/syriatel/
+SMS messages price from €0.2478 - Syria - SY - BulkGate, https://www.bulkgate.com/en/pricing/sms/sy/syria/
+SMS Gateway API for Syria - Messaggio, https://messaggio.com/sms-gateway-api/syria/
+Leading SMS Gateway Provider in Syria | Bulk SMS API - EasySendSMS, https://www.easysendsms.com/gateway/Syria
+EconSMS.com: SMS API Documentation, https://doc.econsms.com/
+SyriaTel Carrier From Syria - FloppySend, https://floppysend.com/carriers/syria/syriatel/
+aex-cli — Rust application // Lib.rs, https://lib.rs/crates/aex-cli

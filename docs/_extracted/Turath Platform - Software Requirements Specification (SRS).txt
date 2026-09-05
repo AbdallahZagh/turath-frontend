@@ -1,0 +1,144 @@
+Turath Platform - Software Requirements Specification (SRS) & System Architecture Document
+Document Version: 1.1.0
+System Name: Turath (تراث) - Tourism & Hospitality Management Ecosystem for Syria
+Target Platforms: Next.js Web Application (Public Portal, Provider Management, Super Admin) & Flutter Mobile Application (iOS & Android for Tourists and Provider On-Site Scanners)
+Author / Principal Architect: Lead Systems Architect
+1. Executive Summary & Project Overview
+1.1 Vision & Mission
+Turath is a centralized, multi-tenant tourism, cultural heritage, and hospitality ecosystem engineered specifically for Syria. The platform connects domestic and international travelers with verified Syrian hospitality providers, cultural landmarks, historical sites, guided tours, and local experiences. By bridging fragmented offline tourism offerings into a unified digital platform, Turath streamlines discovery, reservations, and on-site cryptographic verification.
+1.2 Target Scope & Operational Context
+The system accommodates Syria's unique operational landscape: primarily offline or spotty mobile connectivity in historic areas, an initial cash-on-arrival transaction model, distinct administrative governorates, and rigorous verification requirements for tourism providers. The MVP incorporates five specialized provider subtypes: Hotels, Restaurants (table reservations only), Trip Agencies, Event Managers, and Independent Licensed Tour Guides.
+2. User Roles, Actors & Permission Matrix (RBAC)
+2.1 System Actors
+Super Admin (Platform Owner): Full root-level control over the platform, provider vetting and KYC verification, commission configuration, homepage promotions merchandising, cash-on-arrival coupon catalog, system analytics, content moderation, dispute mediation, and category taxonomy management.
+Service Providers (Multi-Vendor Profiles):
+Hotels / Accommodations: Manage room inventories, pricing tiers, amenities, generator/utility hours, check-in/out policies.
+Restaurants / Cafes: Manage table allocations, indoor/outdoor zones, smoking/non-smoking sections, and time-slotted dining reservations.
+Trip Planners / Travel Agencies: Publish multi-day or single-day group tours, pickup locations, itinerary milestones, seat caps, and gear requirements.
+Event Managers: Organize cultural, musical, or community events, define venue floorplans, ticket tiers, and capacity limits.
+Licensed Tour Guides: Offer private guided experiences, manage hourly/daily schedules, list spoken languages, and define specialty governorates.
+Tourists / End-Users: Browse heritage sites, search and filter listings, view dynamic interactive maps, make real-time bookings (optionally applying an admin-published coupon code), store digital QR vouchers in offline wallets, and submit verified reviews post-attendance.
+2.2 Role-Based Access Control (RBAC) Matrix
+Module / Capability
+Tourist (End-User)
+Provider (Staff/Scanner)
+Provider (Admin/Owner)
+Super Admin
+ 
+Explore Attractions & Map Layers
+Full
+Full
+Full
+Full (Manage & Edit)
+Create Bookings & Download QR
+Full
+None
+None
+Override / Admin Bypass
+Scan & Verify QR Code Tokens
+None
+Assigned Org Only
+Assigned Org Only
+System-wide Diagnostic
+Manage Inventory & Pricing Tiers
+None
+Read Only
+Full (Owned Org)
+Full (Global Override)
+Provider Approval & KYC Vetting
+None
+None
+Self-Submit Only
+Full Approval / Rejection
+Financial Ledger & Commission Rules
+None
+None
+Owned Ledger Only
+Full System Ledger
+3. Comprehensive Functional Requirements
+3.1 Authentication, Identity & User Security (FR-AUTH)
+FR-AUTH-01 (Multi-Channel OTP Verification): User registration and login shall support primary phone number authentication via SMS or WhatsApp OTP fallback, alongside optional Email/Password authentication.
+FR-AUTH-02 (Stateless JWT Authentication): The backend shall issue secure, short-lived Access Tokens (15 min) paired with cryptographically rotated Refresh Tokens stored in secure HTTP-only cookies on Web and secure storage on Flutter.
+FR-AUTH-03 (Password Lifecycle): Provide automated forgot-password reset routines utilizing single-use, time-bound reset tokens with a 10-minute expiry window.
+FR-AUTH-04 (User Trust & Reliability Engine): The system shall track user attendance history. Every user initializes with a Reliability Score of 100. Confirmed check-ins maintain or boost reliability, while unexcused no-shows deduct 30 points. Users scoring below 50 lose instant-booking privileges and require manual provider acceptance.
+3.2 Discovery, GIS Mapping & Attractions Directory (FR-MAP)
+FR-MAP-01 (Heritage & Tourist Attractions Engine): Super Admins can publish cultural points of interest (e.g., Umayyad Mosque, Palmyra, Citadel of Aleppo, Krak des Chevaliers) with historical narratives, high-resolution photo galleries, entry fee guidelines, and opening hours.
+FR-MAP-02 (Interactive Unified Exploration Map): The tourist interface (Web & Flutter) shall render an interactive map showing tourist areas, hotels, restaurants, and trip departure pins with dynamic category clustering, governorate filtering, and radius search.
+FR-MAP-03 (Entity-Level Location Maps): Every detail page (Hotel, Restaurant, Trip pickup, Event venue, Guide meeting spot) must embed an interactive map pinpointing exact GPS coordinates, accompanied by turn-by-turn navigation deep links to external navigation apps.
+FR-MAP-04 (Multi-Faceted Search & Filters): Filtering by Governorate, Price Range (SYP / USD equivalent), Capacity, Amenities (24/7 Electricity/Generator, High-Speed Wi-Fi, Air Conditioning), Smoking/Non-Smoking, and Accessibility options.
+3.3 Unified Booking & Reservation Subsystems (FR-BOOK)
+Provider Category
+Booking Parameter Constraints
+Inventory & Concurrency Rule
+ 
+Hotels & Stays
+Check-in / Check-out dates, Room Type (Single, Double, Suite), Guest Count, Special Bed Requests.
+Atomic date-range inventory subtraction. Room locked for 10 minutes during booking initialization.
+Restaurants & Cafes
+Reservation Date, Time Slot (e.g., 20:00 - 22:00), Party Size, Zone (Indoor, Terrace, VIP, Smoking).
+Table matching algorithm assigns optimal table combinations without allowing double-booking within overlapping slots.
+Organized Trips
+Trip Date, Seat Quantity, Pickup Location Selection, Emergency Contact Info.
+Fixed total capacity seat decrementation. Automated waitlist triggering when seats reach zero.
+Events & Festivals
+Event Session, Ticket Category (Standard, VIP), Quantity per User Cap (max 6).
+High-concurrency Redis token bucket decrement to prevent overselling ticket allocations.
+Tour Guides
+Requested Date(s), Duration (Full Day / Half Day / Hourly), Selected Language, Custom Focus Area.
+Exclusive schedule locking. Guide cannot be booked simultaneously across conflicting schedules.
+FR-BOOK-01 (Optional Coupon at Checkout): Tourists may enter a coupon code during booking. The code applies only if it is enabled, within its date window, and allowed for that listing / pillar / provider. Invalid, expired, or out-of-scope codes are rejected. The booking summary shows list price, discount, and the cash amount due on arrival.
+3.4 QR Code Verification & Check-In Workflow (FR-QR)
+FR-QR-01 (Asymmetric Cryptographic Signing): Upon booking confirmation, the backend generates an encrypted, digitally signed token embedding {booking_id, user_id, provider_id, expiry, nonce, hmac_signature}.
+FR-QR-02 (Offline Wallet Rendering): The Flutter app caches the generated QR code token locally. Tourists can open their digital ticket and present the QR code without active internet connection.
+FR-QR-03 (Provider Verification & Check-in): Providers scan the QR code using the integrated Flutter camera scanner or enter an alphanumeric 6-character backup pass code on the Next.js web portal. The system validates the signature, marks the booking state as CHECKED_IN / COMPLETED, logs the exact timestamp, and registers the cash payment transaction for the amount due on the voucher (including any coupon discount).
+FR-QR-04 (Anti-Replay Protection): Once a QR code token is checked in, it is immediately invalidated in the database. Any duplicate scanning attempt displays a prominent red warning showing the original scan timestamp and operator identity.
+3.5 Financial Ledger & Cash on Arrival (COA) Model (FR-FIN)
+FR-FIN-01 (Cash on Arrival Workflow): The MVP operates on a Cash on Arrival model. When the tourist completes their check-in at the venue, the provider collects the cash amount displayed on the receipt (the coupon-discounted total when a valid code was applied at booking).
+FR-FIN-02 (Automated Commission Tracking): The system automatically records the platform's commission fee (configurable per category by Super Admin) as an account receivable in the Provider Financial Ledger upon every completed booking. Commission is calculated on the collected (coupon-discounted) total, not the pre-coupon list price.
+FR-FIN-03 (Periodic Settlement Thresholds): Providers receive periodic automated settlement statements. If an account's unpaid commission surpasses the established platform credit limit, automated listing suspension safeguards are triggered.
+3.6 Provider Portal & Business Operations (FR-PROV)
+FR-PROV-01 (Onboarding & Document Submission): Providers can register their business account, upload commercial registration, ministry licenses, identity documentation, business logo, high-resolution media galleries, and set operating hours.
+FR-PROV-02 (Operational Real-Time Dashboard): Next.js web portal offering revenue metrics, upcoming guest lists, table occupation charts, historical check-ins, and cancellation logs.
+FR-PROV-03 (Customer Information Access): Providers can access essential booking metadata (Tourist Name, Verified Phone Number, Party Size, Special Inquiries, and if a coupon was used: the code, discount, and cash due) while protecting user privacy from unnecessary data exposure.
+3.7 Super Admin Command Center (FR-ADM)
+FR-ADM-01 (Provider Approval Pipeline): Super Admin reviews submitted provider applications, verifies uploaded legal documents, and toggles status between PENDING, APPROVED, REJECTED, or SUSPENDED.
+FR-ADM-02 (Platform-Wide Analytics & Intelligence): Aggregated metrics on gross bookings, completed reservations, no-show rates across cities, tourist geographic origins, top-performing attractions, and commission revenue summaries.
+FR-ADM-03 (CMS & Heritage Site Editor): Rich-text and GIS mapping tools to curate the national catalog of historical destinations, cultural articles, and featured promotions (homepage / discovery spotlight merchandising: featured listings and home campaigns). Featured promotions do not change the cash amount due.
+FR-ADM-04 (Coupon Catalog): Super Admin publishes cash-on-arrival coupon codes after agreeing the offer with a provider (or as a platform- / pillar-wide subsidy). Each coupon has bilingual names, a unique code, a percent or fixed SYP discount, a scope (one provider, one listing, one pillar, or the whole platform), a start/end window, optional redemption caps, and an enabled/disabled flag. Providers do not self-serve coupons in the MVP. This catalog is a separate admin page (/admin/coupons) from homepage spotlight promotions. A valid code changes the SYP printed on the voucher; it never charges a card. Commission accrues on the collected (discounted) total.
+4. Non-Functional Requirements (NFR)
+NFR Dimension
+Specification & Acceptance Standard
+ 
+Performance & Latency
+95% of read queries served under 200ms. Search queries with geo-filtering return within 350ms. QR scan verification executes under 150ms on 3G network conditions.
+Concurrency & Integrity
+Strict ACID guarantees using database row-level locking and Redis distributed locks (Redlock) to eliminate overbooking during simultaneous high-volume checkout attempts.
+Data Security & Privacy
+All traffic enforced over TLS 1.3. Passwords hashed using Argon2id / bcrypt (work factor 12). Sensitive identity documents stored in private encrypted S3 buckets with time-limited pre-signed URLs.
+Internationalization & Localization
+Native dual-language support (Arabic with full Right-to-Left / RTL layout styling and English LTR). Dynamic dual-currency display (SYP and USD equivalents).
+Offline Resilience
+The Flutter application must store active ticket passes and receipts in encrypted local storage (Hive / SQLite) to enable display and offline verification when cell service is disconnected.
+5. Technical Architecture & Tech Stack
+The platform utilizes a modern, cloud-native modular architecture separating client interfaces, stateless API gateways, real-time caches, and relational geo-databases.
++-----------------------------------------------------------------------+|                           CLIENT APPLICATIONS                         ||  +-----------------------------------+  +--------------------------+  ||  |       Flutter Mobile App          |  |     Next.js Web Portal   |  ||  | (Tourists, Offline Wallets, Scan) |  | (Admin & Provider Portal)|  ||  +-----------------+-----------------+  +------------+-------------+  |+--------------------|---------------------------------|----------------+                     | HTTPS / REST / WSS              |+--------------------v---------------------------------v----------------+|                           API GATEWAY / BACKEND                       ||  +-----------------------------------------------------------------+  ||  |                 Node.js / NestJS Backend Core                   |  ||  |  * Auth & Guard Module (JWT, RBAC)                              |  ||  |  * Reservation & Locking Engine (Redis Mutex)                   |  ||  |  * Cryptographic QR Token Generator & Validator               |  ||  |  * Multi-Channel Notification Dispatcher (SMS/WhatsApp)         |  ||  +---------------------------------+-------------------------------+  |+------------------------------------|----------------------------------+                                     |+------------------------------------v----------------------------------+|                          PERSISTENCE & STORAGE                        ||  +-----------------------------------+  +--------------------------+  ||  |      PostgreSQL + PostGIS         |  |       Redis Cluster      |  ||  |  * Relational Schema, Bookings    |  |  * Session Caches        |  ||  |  * Spatial Indexing & Geo-Queries |  |  * Concurrency Locks     |  ||  +-----------------------------------+  +--------------------------+  |+-----------------------------------------------------------------------+
+6. Relational Database Schema & Data Models
+The database layer is modeled in PostgreSQL with PostGIS extensions to manage geo-coordinates and high-integrity booking transactions.
+-- ENUMSCREATE TYPE user_role AS ENUM ('SUPER_ADMIN', 'PROVIDER_OWNER', 'PROVIDER_STAFF', 'TOURIST');CREATE TYPE provider_category AS ENUM ('HOTEL', 'RESTAURANT', 'TRIP_AGENCY', 'EVENT_MANAGER', 'TOUR_GUIDE');CREATE TYPE provider_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'SUSPENDED');CREATE TYPE booking_status AS ENUM ('PENDING_CONFIRMATION', 'CONFIRMED', 'CHECKED_IN', 'CANCELLED', 'NO_SHOW');CREATE TYPE payment_status AS ENUM ('UNPAID_CASH_ON_ARRIVAL', 'SETTLED_CASH', 'REFUNDED');-- 1. USERSCREATE TABLE users (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    phone_number VARCHAR(20) UNIQUE NOT NULL,    email VARCHAR(150) UNIQUE,    password_hash VARCHAR(255) NOT NULL,    full_name VARCHAR(100) NOT NULL,    role user_role DEFAULT 'TOURIST',    reliability_score INT DEFAULT 100 CHECK (reliability_score BETWEEN 0 AND 100),    preferred_language VARCHAR(5) DEFAULT 'ar',    is_active BOOLEAN DEFAULT TRUE,    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());-- 2. PROVIDERSCREATE TABLE providers (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    owner_user_id UUID REFERENCES users(id) ON DELETE RESTRICT,    category provider_category NOT NULL,    business_name_ar VARCHAR(150) NOT NULL,    business_name_en VARCHAR(150) NOT NULL,    description_ar TEXT,    description_en TEXT,    governorate VARCHAR(50) NOT NULL,    address_details TEXT NOT NULL,    location GEOMETRY(Point, 4326) NOT NULL,    contact_phone VARCHAR(20) NOT NULL,    contact_email VARCHAR(150),    license_document_url TEXT NOT NULL,    status provider_status DEFAULT 'PENDING',    commission_rate_percentage DECIMAL(5,2) DEFAULT 10.00,    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());-- 3. RESTAURANT TABLES INVENTORYCREATE TABLE restaurant_tables (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    provider_id UUID REFERENCES providers(id) ON DELETE CASCADE,    table_label VARCHAR(30) NOT NULL,    capacity INT NOT NULL,    zone_type VARCHAR(50) NOT NULL, -- e.g., 'Indoor', 'Terrace', 'Smoking'    is_available BOOLEAN DEFAULT TRUE);-- 4. HOTEL ROOM TYPES INVENTORYCREATE TABLE hotel_rooms (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    provider_id UUID REFERENCES providers(id) ON DELETE CASCADE,    room_title VARCHAR(100) NOT NULL,    base_price_per_night DECIMAL(12,2) NOT NULL,    max_occupancy INT NOT NULL,    amenities JSONB DEFAULT '[]'::jsonb,    total_quantity INT NOT NULL DEFAULT 1);-- 5. TRIPS & EVENTSCREATE TABLE organized_trips_events (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    provider_id UUID REFERENCES providers(id) ON DELETE CASCADE,    title_ar VARCHAR(150) NOT NULL,    title_en VARCHAR(150) NOT NULL,    category VARCHAR(20) NOT NULL, -- 'TRIP' or 'EVENT'    start_datetime TIMESTAMP WITH TIME ZONE NOT NULL,    end_datetime TIMESTAMP WITH TIME ZONE,    meeting_location GEOMETRY(Point, 4326),    meeting_address TEXT,    total_capacity INT NOT NULL,    available_seats INT NOT NULL,    price_per_person DECIMAL(12,2) NOT NULL,    itinerary JSONB DEFAULT '[]'::jsonb);-- 6. TOUR GUIDE PROFILESCREATE TABLE tour_guide_profiles (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    provider_id UUID UNIQUE REFERENCES providers(id) ON DELETE CASCADE,    licensed_number VARCHAR(50) NOT NULL,    spoken_languages TEXT[] NOT NULL,    hourly_rate DECIMAL(10,2),    full_day_rate DECIMAL(10,2),    specialties TEXT[]);-- 7. BOOKINGS & SECURE QR TOKENSCREATE TABLE bookings (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    booking_reference VARCHAR(12) UNIQUE NOT NULL,    user_id UUID REFERENCES users(id) ON DELETE RESTRICT,    provider_id UUID REFERENCES providers(id) ON DELETE RESTRICT,    category provider_category NOT NULL,    start_time TIMESTAMP WITH TIME ZONE NOT NULL,    end_time TIMESTAMP WITH TIME ZONE,    guest_count INT NOT NULL DEFAULT 1,    total_amount_estimated DECIMAL(12,2) NOT NULL,    commission_due_amount DECIMAL(12,2) NOT NULL,    qr_token_payload TEXT UNIQUE NOT NULL,    backup_numeric_code VARCHAR(8) NOT NULL,    status booking_status DEFAULT 'CONFIRMED',    payment_status payment_status DEFAULT 'UNPAID_CASH_ON_ARRIVAL',    checked_in_at TIMESTAMP WITH TIME ZONE,    checked_in_by_staff_id UUID REFERENCES users(id),    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());-- 8. REVIEWS & RATINGS (VERIFIED CHECK-IN ONLY)CREATE TABLE reviews (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    booking_id UUID UNIQUE REFERENCES bookings(id) ON DELETE CASCADE,    user_id UUID REFERENCES users(id) ON DELETE CASCADE,    provider_id UUID REFERENCES providers(id) ON DELETE CASCADE,    rating INT CHECK (rating BETWEEN 1 AND 5) NOT NULL,    comment TEXT,    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());-- 9. PROVIDER FINANCIAL LEDGERCREATE TABLE provider_ledger (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    provider_id UUID REFERENCES providers(id) ON DELETE RESTRICT,    booking_id UUID REFERENCES bookings(id),    entry_type VARCHAR(20) NOT NULL, -- 'COMMISSION_ACCRUED', 'COMMISSION_PAID_SETTLEMENT'    amount DECIMAL(12,2) NOT NULL,    balance_after DECIMAL(12,2) NOT NULL,    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());-- 10. CASH-ON-ARRIVAL COUPONS (distinct from homepage spotlight promotions)CREATE TABLE coupons (    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),    code VARCHAR(32) UNIQUE NOT NULL,    name_ar VARCHAR(150) NOT NULL,    name_en VARCHAR(150) NOT NULL,    discount_kind VARCHAR(12) NOT NULL, -- 'PERCENT' or 'FIXED_SYP'    discount_value DECIMAL(12,2) NOT NULL,    scope_kind VARCHAR(20) NOT NULL, -- 'PROVIDER', 'LISTING', 'PILLAR', 'PLATFORM'    scope_id UUID,    starts_at TIMESTAMP WITH TIME ZONE NOT NULL,    ends_at TIMESTAMP WITH TIME ZONE NOT NULL,    max_redemptions INT,    per_guest_cap INT,    is_enabled BOOLEAN DEFAULT TRUE,    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW());
+7. Release Roadmap & Implementation Phases
+Milestone Phase
+Key Deliverables & Functional Scope
+Target Output
+ 
+Phase 1: Foundation & Auth Core
+Setup PostgreSQL + PostGIS schema, NestJS backend boilerplate, Next.js dashboard shell, Flutter baseline app, and multi-channel OTP authentication.
+Operational Auth, RBAC Guards, and Database Migrations.
+Phase 2: Provider Onboarding & Discovery
+Provider registration with KYC verification pipeline, Super Admin vetting interface, CMS heritage attraction management, and interactive discovery map with geo-filters.
+Search, Map Exploration, and Approved Provider Profiles.
+Phase 3: Booking Engine & QR Verification
+Dedicated reservation engines for Hotels, Tables, Trips, Events, and Guides. Signed QR token generation, Flutter offline pass storage, and on-site camera scanner with Cash-on-Arrival ledger tracking.
+Complete End-to-End Booking and Check-in System.
+Phase 4: Trust, Analytics & Polish
+Verified review submission post check-in, user reliability scoring algorithms, provider payout ledger tracking, Super Admin financial and geo-analytics dashboards, cash-on-arrival coupon catalog (separate from homepage spotlight promotions), end-to-end stress testing.
+Production-Ready MVP Launch for Syrian Tourism Market.

@@ -66,6 +66,7 @@ Pick by **theme** (light vs dark) and **space** (full lockup vs compact mark). N
 - Trips `/trips`
 - Events `/events`
 - Guides `/guides`
+- Contact `/contact` (footer Company → Contact; also the Home **Contact Us** band)
 
 Logged-in extras: My bookings `/account/bookings`, Profile `/account`.
 
@@ -174,18 +175,38 @@ Flagship marketing landing (`components/landing/*`), composed in order:
 6. Governorate map explorer preview (stylized, not MapLibre — that's `/explore`)
 7. Heritage spotlight — drag-scroll reel of landmark cards
 8. How it works — 3-step reserve → QR pass → check-in path
-9. App download banner — offline QR + offline map teaser for the Flutter app
+9. App download banner — **teaser / coming soon** for the Flutter app
+   (offline QR + offline map). No live App Store / Google Play links.
 10. Provider CTA (`#grow-with-turath`) — "Grow with Turath"
 11. Verified testimonials — equal glass cards in a 3-up grid
+12. Contact Us — short glass band → `/contact` (last section before the footer)
+
+**Home CTA policy (MVP):** Omni-search, bento tiles, persona interest cards,
+and the map preview may link real tourist routes (`/hotels`, `/restaurants`,
+`/trips`, `/events`, `/guides`, `/explore`, `/attractions/...`). Those
+destinations may be empty or “coming soon” — **do not invent fake inventory
+cards, prices, or live store badges on Home**. Copy stays honest: cash on
+arrival, licensed providers, dual currency (SYP + USD), glass UI, AR/EN RTL.
 
 `PublicHeader` / `PublicFooter` (`components/layout/`) provide the shared
 `(public)` chrome; pages under this route group don't rebuild it.
 Tourist **Log in** and **Register** live in the header. Providers join from
 `#grow-with-turath` (footer “Partner” and the Grow with Turath band), not the header.
+Footer **Contact** links to `/contact` — **not** `mailto:hello@turath.sy`.
 
 ### `/theme`
 
 Same theme lab as `/`.
+
+### `/contact`
+
+Public contact page (glass form inside `(public)` shell):
+
+- Fields: **name**, **email or phone** (at least one), **topic**, **message**
+- Success state after mock submit (no backend yet)
+- AR / EN copy via `messages/`
+- Optional company email + WhatsApp shown on the page for direct reach-out
+- Linked from footer Company → Contact and from the Home Contact Us band
 
 ### `/legal/[slug]`
 

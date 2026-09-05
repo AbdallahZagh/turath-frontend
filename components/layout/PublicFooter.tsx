@@ -84,12 +84,12 @@ export async function PublicFooter(): Promise<ReactNode> {
                 </a>
               </li>
               <li>
-                <a
-                  href="mailto:hello@turath.sy"
+                <Link
+                  href="/contact"
                   className="text-prose-muted hover:text-prose text-sm transition-colors"
                 >
                   {t("companyContact")}
-                </a>
+                </Link>
               </li>
             </ul>
             <h3 className="text-prose mt-8 text-sm font-semibold">

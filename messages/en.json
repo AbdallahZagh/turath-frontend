@@ -404,13 +404,14 @@
       "checkInBody": "Show your pass, pay cash at the door, then you can leave a review."
     },
     "appDownload": {
-      "eyebrow": "Take it with you",
+      "eyebrow": "Coming soon",
       "title": "Your pass and map, even underground.",
-      "subtitle": "The Turath app keeps your bookings, passes, and a heritage map ready inside old-city walls — no signal needed.",
-      "appStore": "Download on the App Store",
-      "googlePlay": "Get it on Google Play",
+      "subtitle": "The Turath app will keep your bookings, passes, and a heritage map ready inside old-city walls — no signal needed. Store links open when the app ships.",
+      "appStore": "App Store — coming soon",
+      "googlePlay": "Google Play — coming soon",
       "offlineQrLabel": "Offline QR pass",
-      "offlineMapLabel": "Offline heritage map"
+      "offlineMapLabel": "Offline heritage map",
+      "comingSoonBadge": "Coming soon"
     },
     "providerCta": {
       "eyebrow": "For hotels, guides & venues",
@@ -483,6 +484,12 @@
         "fire": "Fire Department"
       },
       "copyright": "© {year} Turath. All rights reserved."
+    },
+    "contactUs": {
+      "eyebrow": "We’re here",
+      "title": "Questions? Talk to Turath.",
+      "subtitle": "Booking help, partnerships, or a note about the product — send a message and we’ll get back when we can.",
+      "cta": "Contact us"
     }
   },
   "ui": {
@@ -1547,5 +1554,47 @@
     "stepNotify": "We email you when the listing is approved or needs changes.",
     "backHome": "Back to home",
     "toLogin": "Sign in"
+  },
+  "contact": {
+    "title": "Contact us",
+    "lead": "Questions about bookings, partnerships, or Turath itself? Send a note — we read every message.",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "emailOrPhoneHint": "Leave an email or a phone number — whichever you prefer.",
+    "topic": "Topic",
+    "topicPlaceholder": "Choose a topic",
+    "message": "Message",
+    "messagePlaceholder": "How can we help?",
+    "submit": "Send message",
+    "submitting": "Sending…",
+    "successTitle": "Message received",
+    "successBody": "Thanks for writing. This is a demo submit for now — we will wire real delivery soon.",
+    "successAgain": "Send another message",
+    "successHome": "Back to home",
+    "asideHeading": "Other ways to reach us",
+    "asideEmailLabel": "Email",
+    "asideWhatsappLabel": "WhatsApp",
+    "asideEmail": "hello@turath.sy",
+    "asideWhatsapp": "+963 000 000 000",
+    "asideNote": "Store links and live inventory are still rolling out. We answer partnership and traveler questions first.",
+    "topics": {
+      "general": "General question",
+      "booking": "Booking help",
+      "partner": "Partner with Turath",
+      "press": "Press / media",
+      "report": "Report a problem"
+    },
+    "errors": {
+      "nameRequired": "Enter your full name.",
+      "emailInvalid": "Enter a valid email.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "contactRequired": "Add an email or a phone number.",
+      "topicRequired": "Choose a topic.",
+      "messageRequired": "Write a short message.",
+      "messageMin": "Use at least 10 characters."
+    },
+    "toastErrorTitle": "Could not send",
+    "toastErrorBody": "Check the form and try again."
   }
 }

@@ -5,6 +5,7 @@ import { Apple, MapPinned, PlayCircle, QrCode } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { Badge } from "@/components/ui/Badge";
 import { fadeUp, viewportOnce } from "@/lib/motion/variants";
 
 type PhoneMockupProps = {
@@ -79,13 +80,21 @@ export function AppDownloadBanner(): ReactNode {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-            <span className="glass-surface backdrop-blur-sm text-prose flex items-center gap-2 rounded-[0.9375em] px-5 py-3 text-sm font-medium">
+            <span
+              className="glass-surface backdrop-blur-sm text-prose flex items-center gap-2 rounded-[0.9375em] px-5 py-3 text-sm font-medium"
+              aria-disabled="true"
+            >
               <Apple className="size-5" aria-hidden />
               {t("appStore")}
+              <Badge variant="outline">{t("comingSoonBadge")}</Badge>
             </span>
-            <span className="glass-surface backdrop-blur-sm text-prose flex items-center gap-2 rounded-[0.9375em] px-5 py-3 text-sm font-medium">
+            <span
+              className="glass-surface backdrop-blur-sm text-prose flex items-center gap-2 rounded-[0.9375em] px-5 py-3 text-sm font-medium"
+              aria-disabled="true"
+            >
               <PlayCircle className="size-5" aria-hidden />
               {t("googlePlay")}
+              <Badge variant="outline">{t("comingSoonBadge")}</Badge>
             </span>
           </div>
         </motion.div>

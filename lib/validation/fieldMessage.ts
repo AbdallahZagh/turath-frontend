@@ -19,6 +19,23 @@ export const AUTH_ERROR_KEYS = [
   "categoryRequired",
   "governorateRequired",
   "ownerNameRequired",
+  "addressEnRequired",
+  "addressArRequired",
+  "descriptionEnRequired",
+  "descriptionArRequired",
+  "hoursRequired",
+  "latitudeRequired",
+  "latitudeInvalid",
+  "longitudeRequired",
+  "longitudeInvalid",
+  "guideLicenseRequired",
+  "documentRequired",
+  "documentTypeInvalid",
+  "imageRequired",
+  "imageTypeInvalid",
+  "uploadTooLarge",
+  "galleryRequired",
+  "galleryMax",
 ] as const;
 
 export type AuthErrorKey = (typeof AUTH_ERROR_KEYS)[number];
@@ -39,4 +56,27 @@ export function fieldMessage(
     return error.message;
   }
   return tErrors(error.message);
+}
+
+function asFieldError(value: unknown): FieldError | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+  if (Array.isArray(value)) {
+    return asFieldError(value.find((item) => item !== undefined));
+  }
+  if ("message" in value && typeof value.message === "string" && value.message.length > 0) {
+    return { type: "validate", message: value.message };
+  }
+  if ("root" in value) {
+    return asFieldError(value.root);
+  }
+  return undefined;
+}
+
+export function fieldMessageFromUnknown(
+  tErrors: (key: AuthErrorKey) => string,
+  error: unknown,
+): string | undefined {
+  return fieldMessage(tErrors, asFieldError(error));
 }

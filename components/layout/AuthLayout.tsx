@@ -23,8 +23,10 @@ export function AuthLayout({ mode, children }: AuthLayoutProps): ReactNode {
           </Link>
           <LocaleSwitcher compact />
         </div>
-        <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-3 sm:px-6">
-          {children}
+        <div className="flex min-h-0 flex-1 justify-center overflow-y-auto px-4 py-3 sm:px-6">
+          <div className="flex w-full items-center justify-center py-2">
+            {children}
+          </div>
         </div>
       </div>
     </div>

@@ -36,7 +36,7 @@ const PICKER_RADIUS: Record<FieldVariant, string> = {
 };
 
 const PICKER_MENU_BASE =
-  "fixed z-80 m-0 box-border overflow-y-auto p-2 rounded-(--control-radius)";
+  "wheel-scroll fixed z-80 m-0 box-border overflow-hidden p-1.5 rounded-(--control-radius)";
 
 type PickerFieldProps = {
   variant?: FieldVariant;
@@ -122,6 +122,7 @@ export function PickerField({
         maxHeightCap,
         width: menuWidth,
         minWidth: menuWidth,
+        shrinkToFit: false,
       }),
     );
   }
@@ -140,14 +141,22 @@ export function PickerField({
       return;
     }
 
+    function onScroll(event: Event): void {
+      const target = event.target;
+      if (target instanceof Node && menuRef.current?.contains(target)) {
+        return;
+      }
+      syncMenuBox();
+    }
+
     syncMenuBox();
     window.addEventListener("resize", syncMenuBox);
-    window.addEventListener("scroll", syncMenuBox, true);
+    window.addEventListener("scroll", onScroll, true);
     return () => {
       window.removeEventListener("resize", syncMenuBox);
-      window.removeEventListener("scroll", syncMenuBox, true);
+      window.removeEventListener("scroll", onScroll, true);
     };
-  }, [open, estimatedHeight, maxHeightCap, menuWidth]);
+  }, [open, estimatedHeight, maxHeightCap, menuWidth, menuRef]);
 
   useEffect(() => {
     if (!open) {

@@ -9,6 +9,8 @@ type PlaceAnchoredMenuOptions = {
   width?: number | "max-content";
   minWidth?: number;
   align?: "start" | "end";
+  /** Select lists shrink into leftover space. Date/time drums keep their height. */
+  shrinkToFit?: boolean;
 };
 
 export function placeAnchoredMenu(
@@ -19,6 +21,7 @@ export function placeAnchoredMenu(
     width = "max-content",
     minWidth,
     align = "start",
+    shrinkToFit = true,
   }: PlaceAnchoredMenuOptions,
 ): CSSProperties {
   const rect = trigger.getBoundingClientRect();
@@ -31,7 +34,9 @@ export function placeAnchoredMenu(
   const spaceAbove = rect.top - gap - margin;
   const openUp = spaceBelow < estimatedHeight && spaceAbove > spaceBelow;
   const available = Math.max(openUp ? spaceAbove : spaceBelow, 0);
-  const maxHeight = Math.min(maxHeightCap, available);
+  const maxHeight = shrinkToFit
+    ? Math.min(maxHeightCap, available)
+    : Math.min(maxHeightCap, viewportHeight - margin * 2);
   const maxWidth = Math.max(viewportWidth - margin * 2, 0);
   const floorWidth = Math.min(minWidth ?? rect.width, maxWidth);
   const sizedWidth = width === "max-content" ? floorWidth : Math.min(width, maxWidth);

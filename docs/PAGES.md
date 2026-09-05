@@ -113,7 +113,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
-**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Provider signup lives at `/provider/register` (AuthLayout) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
 
 ### `/login`
 
@@ -317,24 +317,22 @@ Category-specific form on a glass sheet:
 ### `/provider/register`
 
 - AuthLayout (unauthenticated glass card; not the approved provider shell)
-- Business name AR/EN
-- Category: Hotel | Restaurant | Trip agency | Event manager | Tour guide
-- Governorate, phone, email
-- Owner identity (create owner account on this form)
-- Submit → `/provider/pending` (mock approval queue; onboarding docs come later)
+- Stepped application (one form, four steps — do not skip):
+  1. **Owner account** — full name, date of birth, nationality, Syrian phone, email, password
+  2. **Business** — names AR/EN, category (Hotel | Restaurant | Trip agency | Event manager | Tour guide), governorate, address AR/EN, short descriptions AR/EN, operating hours, map pin (latitude / longitude). Tour guides also enter a license number
+  3. **Documents** — commercial registration, ministry license, owner ID (PDF or photo)
+  4. **Photos** — logo, gallery, partner terms
+- Submit → `/provider/pending` (mock approval queue)
 
 ### `/provider/onboarding`
 
-- Commercial registration + ministry license + ID upload
-- Logo + gallery
-- Address + map pin
-- Operating hours
+- Same papers, photos, address, and hours if a listing was started without them (not a separate signup). New applications use `/provider/register`.
 - Submit → `/provider/pending`
 
 ### `/provider/pending`
 
-- Status: Pending KYC
-- What happens next
+- Status: Waiting for approval
+- What happens next (team reviews the details and papers already sent)
 - No access to dashboard
 
 ### `/provider` Dashboard (approved)

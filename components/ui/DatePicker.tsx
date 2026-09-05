@@ -211,7 +211,7 @@ export function DatePicker({
       triggerRef={triggerRef}
       menuRef={menuRef}
       menu={
-        <div className="flex w-70 flex-col gap-3">
+        <div className="flex w-70 flex-col gap-3 overflow-hidden">
           <div className="flex items-center gap-1">
             <button
               type="button"
@@ -268,7 +268,7 @@ export function DatePicker({
                       type="button"
                       disabled={blocked}
                       className={cn(
-                        "mx-auto flex size-9 items-center justify-center rounded-full text-sm font-medium",
+                        "mx-auto flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-medium",
                         outside && "text-prose-muted/50",
                         !outside && !selected && "text-prose hover:bg-option-hover",
                         isToday && !selected && "ring-ring ring-1",

@@ -111,29 +111,72 @@ export function maskDestination(channel: AuthChannel, destination: string): stri
   return `••• ${digits.slice(-3)}`;
 }
 
+export type ProviderUploadedFile = {
+  filename: string;
+  mimeType: string;
+  size: number;
+};
+
 export type ProviderRegisterInput = {
+  ownerName: string;
+  dateOfBirth: string;
+  nationality: string;
+  phone: string;
+  email: string;
+  password: string;
   businessNameEn: string;
   businessNameAr: string;
   category: string;
   governorate: string;
-  phone: string;
-  email: string;
-  ownerName: string;
-  password: string;
+  addressEn: string;
+  addressAr: string;
+  descriptionEn: string;
+  descriptionAr: string;
+  opensAt: string;
+  closesAt: string;
+  latitude: string;
+  longitude: string;
+  guideLicenseNumber: string;
+  commercialRegistration: ProviderUploadedFile;
+  ministryLicense: ProviderUploadedFile;
+  ownerId: ProviderUploadedFile;
+  logo: ProviderUploadedFile;
+  gallery: ProviderUploadedFile[];
 };
+
+function hasUpload(file: ProviderUploadedFile | undefined): boolean {
+  return Boolean(file?.filename.trim() && file.size > 0);
+}
 
 /** Mock: provider signup always succeeds when required fields are present. */
 export async function registerProvider(input: ProviderRegisterInput): Promise<void> {
   await wait();
+  const guideNeedsLicense = input.category === "guides";
   if (
+    !input.ownerName.trim() ||
+    !input.dateOfBirth.trim() ||
+    !input.nationality.trim() ||
+    !input.phone.trim() ||
+    !input.email.trim() ||
+    input.password.length < 8 ||
     !input.businessNameEn.trim() ||
     !input.businessNameAr.trim() ||
     !input.category.trim() ||
     !input.governorate.trim() ||
-    !input.phone.trim() ||
-    !input.email.trim() ||
-    !input.ownerName.trim() ||
-    input.password.length < 8
+    !input.addressEn.trim() ||
+    !input.addressAr.trim() ||
+    !input.descriptionEn.trim() ||
+    !input.descriptionAr.trim() ||
+    !input.opensAt.trim() ||
+    !input.closesAt.trim() ||
+    !input.latitude.trim() ||
+    !input.longitude.trim() ||
+    (guideNeedsLicense && input.guideLicenseNumber.trim().length < 3) ||
+    !hasUpload(input.commercialRegistration) ||
+    !hasUpload(input.ministryLicense) ||
+    !hasUpload(input.ownerId) ||
+    !hasUpload(input.logo) ||
+    input.gallery.length < 1
   ) {
     throw new Error("invalidProviderRegister");
   }

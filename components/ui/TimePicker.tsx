@@ -175,42 +175,49 @@ export function TimePicker({
       triggerRef={triggerRef}
       menuRef={menuRef}
       menu={
-        <div className="flex w-max justify-center gap-0.5 px-0.5 py-1">
-          <WheelColumn
-            aria-label={t("hour")}
-            items={hourItems}
-            value={String(cycle === "12" ? twelve.hour : hours)}
-            onChange={(next) => {
-              const hourValue = Number(next);
-              commit(
-                cycle === "12" ? from12Hour(hourValue, twelve.period) : hourValue,
-                minutes,
-              );
-            }}
+        <div className="relative">
+          <div
+            aria-hidden
+            className="bg-option-hover pointer-events-none absolute inset-x-2 top-1/2 z-0 h-10 -translate-y-1/2 rounded-xl"
           />
-          <WheelColumn
-            aria-label={t("minute")}
-            items={minuteItems}
-            value={String(
-              minuteItems.reduce((best, item) => {
-                const candidate = Number(item.value);
-                return Math.abs(candidate - minutes) < Math.abs(best - minutes)
-                  ? candidate
-                  : best;
-              }, Number(minuteItems[0]?.value ?? 0)),
-            )}
-            onChange={(next) => commit(hours, Number(next))}
-          />
-          {cycle === "12" ? (
+          <div className="relative z-[1] flex w-max justify-center">
             <WheelColumn
-              aria-label={t("period")}
-              items={periodItems}
-              value={twelve.period}
-              onChange={(next) =>
-                commit(from12Hour(twelve.hour, next as "am" | "pm"), minutes)
-              }
+              aria-label={t("hour")}
+              items={hourItems}
+              value={String(cycle === "12" ? twelve.hour : hours)}
+              onChange={(next) => {
+                const hourValue = Number(next);
+                commit(
+                  cycle === "12" ? from12Hour(hourValue, twelve.period) : hourValue,
+                  minutes,
+                );
+              }}
             />
-          ) : null}
+            <WheelColumn
+              aria-label={t("minute")}
+              items={minuteItems}
+              value={String(
+                minuteItems.reduce((best, item) => {
+                  const candidate = Number(item.value);
+                  return Math.abs(candidate - minutes) < Math.abs(best - minutes)
+                    ? candidate
+                    : best;
+                }, Number(minuteItems[0]?.value ?? 0)),
+              )}
+              onChange={(next) => commit(hours, Number(next))}
+            />
+            {cycle === "12" ? (
+              <WheelColumn
+                aria-label={t("period")}
+                className="w-18"
+                items={periodItems}
+                value={twelve.period}
+                onChange={(next) =>
+                  commit(from12Hour(twelve.hour, next as "am" | "pm"), minutes)
+                }
+              />
+            ) : null}
+          </div>
         </div>
       }
     />

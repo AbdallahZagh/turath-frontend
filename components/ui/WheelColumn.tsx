@@ -23,6 +23,7 @@ type WheelColumnProps = {
   value: string;
   onChange: (value: string) => void;
   "aria-label": string;
+  className?: string;
 };
 
 export function WheelColumn({
@@ -30,6 +31,7 @@ export function WheelColumn({
   value,
   onChange,
   "aria-label": ariaLabel,
+  className,
 }: WheelColumnProps): ReactNode {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const skipSync = useRef(false);
@@ -111,50 +113,52 @@ export function WheelColumn({
   const pad = WHEEL_ITEM_PX * 2;
 
   return (
-    <div className="relative w-18 shrink-0">
-      <div
-        aria-hidden
-        className="bg-option-hover pointer-events-none absolute inset-x-1 top-1/2 z-0 h-10 -translate-y-1/2 rounded-lg"
-      />
-      <div
-        ref={scrollerRef}
-        role="listbox"
-        tabIndex={0}
-        aria-label={ariaLabel}
-        aria-activedescendant={`${ariaLabel}-${value}`}
-        className="relative z-[1] h-[200px] snap-y snap-mandatory overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{
-          paddingBlock: pad,
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 28%, black 72%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 28%, black 72%, transparent)",
-        }}
-        onScroll={onScroll}
-        onKeyDown={onKeyDown}
-      >
-        {items.map((item) => {
-          const selected = item.value === value;
-          return (
-            <div
-              key={item.value}
-              id={`${ariaLabel}-${item.value}`}
-              role="option"
-              aria-selected={selected}
-              data-active={selected ? "true" : "false"}
-              className={cn(
-                "flex h-10 snap-start items-center justify-center text-sm",
-                selected
-                  ? "text-prose font-semibold"
-                  : "text-prose-muted font-medium",
-              )}
-              onPointerDown={() => onChange(item.value)}
-            >
-              {item.label}
-            </div>
-          );
-        })}
-      </div>
+    <div
+      ref={scrollerRef}
+      role="listbox"
+      tabIndex={0}
+      aria-label={ariaLabel}
+      aria-activedescendant={`${ariaLabel}-${value}`}
+      className={cn(
+        "wheel-scroll relative z-[1] h-[200px] w-16 shrink-0 snap-y snap-mandatory overflow-y-auto overscroll-contain outline-none",
+        className,
+      )}
+      style={{
+        paddingBlock: pad,
+        maskImage:
+          "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+      }}
+      onScroll={onScroll}
+      onKeyDown={onKeyDown}
+    >
+      {items.map((item, index) => {
+        const selected = item.value === value;
+        const distance = Math.abs(index - selectedIndex);
+        const scale = distance === 0 ? 1 : distance === 1 ? 0.88 : 0.76;
+        const opacity = distance === 0 ? 1 : distance === 1 ? 0.45 : 0.22;
+        return (
+          <div
+            key={item.value}
+            id={`${ariaLabel}-${item.value}`}
+            role="option"
+            aria-selected={selected}
+            data-active={selected ? "true" : "false"}
+            className={cn(
+              "flex h-10 snap-start items-center justify-center text-[1.05rem] tabular-nums",
+              selected ? "text-prose font-semibold" : "text-prose-muted font-medium",
+            )}
+            style={{
+              opacity,
+              transform: `scale(${scale})`,
+            }}
+            onPointerDown={() => onChange(item.value)}
+          >
+            {item.label}
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -14,6 +14,11 @@ export const AUTH_ERROR_KEYS = [
   "otpInvalid",
   "confirmRequired",
   "passwordMismatch",
+  "businessNameEnRequired",
+  "businessNameArRequired",
+  "categoryRequired",
+  "governorateRequired",
+  "ownerNameRequired",
 ] as const;
 
 export type AuthErrorKey = (typeof AUTH_ERROR_KEYS)[number];

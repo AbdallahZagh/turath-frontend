@@ -9,9 +9,9 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
+import { OtpInput } from "@/components/auth/OtpInput";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { useSendLoginCode, useVerifyOtp } from "@/hooks/useAuth";
 import { homePathForRole } from "@/lib/auth/home";
 import { fadeUp } from "@/lib/motion/variants";
@@ -28,6 +28,7 @@ export function VerifyOtpForm(): ReactNode {
   const tErrors = useTranslations("auth.errors");
   const router = useRouter();
   const pending = useAuthStore((state) => state.pendingVerify);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const completeSession = useAuthStore((state) => state.completeSession);
   const userRole = useAuthStore((state) => state.user.role);
   const verify = useVerifyOtp();
@@ -40,10 +41,12 @@ export function VerifyOtpForm(): ReactNode {
   });
 
   useEffect(() => {
-    if (!pending) {
+    // After a successful verify, completeSession clears pendingVerify.
+    // Do not bounce to /login when the session is already authenticated.
+    if (!pending && !isAuthenticated) {
       router.replace("/login");
     }
-  }, [pending, router]);
+  }, [pending, isAuthenticated, router]);
 
   useEffect(() => {
     if (secondsLeft <= 0) {
@@ -71,9 +74,9 @@ export function VerifyOtpForm(): ReactNode {
         code: values.code,
       });
       const role = pending.flow === "register" ? "TOURIST" : userRole;
-      completeSession(pending.flow === "register" ? "TOURIST" : undefined);
+      completeSession(role);
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
-      router.push(homePathForRole(role));
+      router.replace(homePathForRole(role));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -120,18 +123,13 @@ export function VerifyOtpForm(): ReactNode {
             control={form.control}
             name="code"
             render={({ field }) => (
-              <Input
-                {...field}
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                maxLength={6}
-                variant="main"
-                required
+              <OtpInput
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
                 label={t("otp")}
-                placeholder={t("otpPlaceholder")}
-                onChange={(event) =>
-                  field.onChange(event.target.value.replace(/\D/g, "").slice(0, 6))
-                }
+                disabled={busy}
+                aria-invalid={Boolean(form.formState.errors.code)}
               />
             )}
           />

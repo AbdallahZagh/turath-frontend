@@ -87,8 +87,15 @@
       "termsRequired": "وافق على الشروط للمتابعة.",
       "otpInvalid": "أدخل الرمز المكوّن من 6 أرقام.",
       "confirmRequired": "أكد كلمة المرور.",
-      "passwordMismatch": "كلمتا المرور غير متطابقتين."
-    }
+      "passwordMismatch": "كلمتا المرور غير متطابقتين.",
+      "businessNameEnRequired": "أدخل اسم العمل بالإنجليزية.",
+      "businessNameArRequired": "أدخل اسم العمل بالعربية.",
+      "categoryRequired": "اختر نوع العمل.",
+      "governorateRequired": "اختر المنطقة.",
+      "ownerNameRequired": "أدخل الاسم الكامل للمالك."
+    },
+    "imageQuoteProviderRegister": "إقامات وموائد وأدلاء مرخّصة — أدرج عملك على تراث.",
+    "providerNoteLink": "انضم كعمل تجاري"
   },
   "stepper": {
     "decrease": "إنقاص {label}",
@@ -1445,5 +1452,39 @@
         "guides": "الأدلاء"
       }
     }
+  },
+  "providerRegister": {
+    "title": "أدرج عملك",
+    "lead": "أخبرنا عن إقامتك أو مطعمك أو رحلتك أو فعاليتك أو خدمة الدليل. نراجع كل إدراج قبل أن يظهر للزوّار.",
+    "businessNameEn": "اسم العمل (الإنجليزية)",
+    "businessNameAr": "اسم العمل (العربية)",
+    "category": "نوع العمل",
+    "categoryPlaceholder": "اختر النوع",
+    "governorate": "المنطقة",
+    "governoratePlaceholder": "اختر المنطقة",
+    "searchRegions": "ابحث في المناطق",
+    "emptyRegions": "لا توجد مناطق مطابقة",
+    "ownerName": "الاسم الكامل للمالك",
+    "termsLabel": "أوافق على شروط الشركاء وسياسة الخصوصية الخاصة بتراث.",
+    "submit": "إرسال للمراجعة",
+    "toLogin": "مسجّل مسبقاً؟ سجّل الدخول",
+    "toastSubmittedTitle": "استلمنا طلبك",
+    "toastSubmittedBody": "سنراجع عملك ونراسلُك عندما يصبح جاهزاً.",
+    "categories": {
+      "hotels": "فندق / إقامة",
+      "dining": "مطعم",
+      "trips": "وكالة رحلات",
+      "events": "منظّم فعاليات",
+      "guides": "دليل سياحي"
+    }
+  },
+  "providerPending": {
+    "title": "بانتظار الموافقة",
+    "lead": "عملك قيد المراجعة. لا يمكنك فتح لوحة التحكم حتى يؤكد تراث ترخيصك.",
+    "stepReview": "يراجع فريقنا بيانات عملك.",
+    "stepDocs": "قد يُطلب منك لاحقاً ترخيص أو هوية.",
+    "stepNotify": "نرسل بريداً عند الموافقة أو عند الحاجة إلى تعديلات.",
+    "backHome": "العودة للرئيسية",
+    "toLogin": "تسجيل الدخول"
   }
 }

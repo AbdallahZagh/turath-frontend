@@ -87,8 +87,15 @@
       "termsRequired": "Please agree to the terms to continue.",
       "otpInvalid": "Enter the 6-digit code.",
       "confirmRequired": "Confirm your password.",
-      "passwordMismatch": "Passwords do not match."
-    }
+      "passwordMismatch": "Passwords do not match.",
+      "businessNameEnRequired": "Enter the business name in English.",
+      "businessNameArRequired": "Enter the business name in Arabic.",
+      "categoryRequired": "Choose a business type.",
+      "governorateRequired": "Choose a region.",
+      "ownerNameRequired": "Enter the owner’s full name."
+    },
+    "imageQuoteProviderRegister": "Licensed stays, tables, and guides — list yours on Turath.",
+    "providerNoteLink": "Join as a business"
   },
   "stepper": {
     "decrease": "Decrease {label}",
@@ -1445,5 +1452,39 @@
         "guides": "Guides"
       }
     }
+  },
+  "providerRegister": {
+    "title": "List your business",
+    "lead": "Tell us about your stay, restaurant, trip, event, or guide service. We review every listing before it goes live.",
+    "businessNameEn": "Business name (English)",
+    "businessNameAr": "Business name (Arabic)",
+    "category": "Business type",
+    "categoryPlaceholder": "Choose a type",
+    "governorate": "Region",
+    "governoratePlaceholder": "Choose a region",
+    "searchRegions": "Search regions",
+    "emptyRegions": "No regions match",
+    "ownerName": "Owner full name",
+    "termsLabel": "I agree to Turath’s partner terms and privacy policy.",
+    "submit": "Submit for review",
+    "toLogin": "Already listed? Sign in",
+    "toastSubmittedTitle": "Application received",
+    "toastSubmittedBody": "We will review your business and email you when it is ready.",
+    "categories": {
+      "hotels": "Hotel / stay",
+      "dining": "Restaurant",
+      "trips": "Trip agency",
+      "events": "Event manager",
+      "guides": "Tour guide"
+    }
+  },
+  "providerPending": {
+    "title": "Waiting for approval",
+    "lead": "Your business is in review. You cannot open the dashboard until Turath confirms your license.",
+    "stepReview": "Our team checks your business details.",
+    "stepDocs": "You may be asked for a license or ID later.",
+    "stepNotify": "We email you when the listing is approved or needs changes.",
+    "backHome": "Back to home",
+    "toLogin": "Sign in"
   }
 }

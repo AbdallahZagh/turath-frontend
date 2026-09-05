@@ -113,7 +113,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
-**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Provider signup lives at `/provider/register` (AuthLayout) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
 
 ### `/login`
 
@@ -316,11 +316,12 @@ Category-specific form on a glass sheet:
 
 ### `/provider/register`
 
+- AuthLayout (unauthenticated glass card; not the approved provider shell)
 - Business name AR/EN
 - Category: Hotel | Restaurant | Trip agency | Event manager | Tour guide
 - Governorate, phone, email
-- Owner identity (already logged in or create owner account)
-- Continue → onboarding
+- Owner identity (create owner account on this form)
+- Submit → `/provider/pending` (mock approval queue; onboarding docs come later)
 
 ### `/provider/onboarding`
 

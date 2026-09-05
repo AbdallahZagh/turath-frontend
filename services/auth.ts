@@ -110,3 +110,31 @@ export function maskDestination(channel: AuthChannel, destination: string): stri
   }
   return `••• ${digits.slice(-3)}`;
 }
+
+export type ProviderRegisterInput = {
+  businessNameEn: string;
+  businessNameAr: string;
+  category: string;
+  governorate: string;
+  phone: string;
+  email: string;
+  ownerName: string;
+  password: string;
+};
+
+/** Mock: provider signup always succeeds when required fields are present. */
+export async function registerProvider(input: ProviderRegisterInput): Promise<void> {
+  await wait();
+  if (
+    !input.businessNameEn.trim() ||
+    !input.businessNameAr.trim() ||
+    !input.category.trim() ||
+    !input.governorate.trim() ||
+    !input.phone.trim() ||
+    !input.email.trim() ||
+    !input.ownerName.trim() ||
+    input.password.length < 8
+  ) {
+    throw new Error("invalidProviderRegister");
+  }
+}

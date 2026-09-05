@@ -508,8 +508,16 @@ export function AuthCredentialsForm({
           )}
         </p>
         <p className="text-prose-muted flex items-center justify-center gap-2 text-xs">
-          <Info className="h-4 w-4" />
-          <span className="text-prose-muted text-xs">{t("providerNote")}</span>
+          <Info className="h-4 w-4 shrink-0" />
+          <span className="text-prose-muted text-xs">
+            {t("providerNote")}{" "}
+            <Link
+              href="/provider/register"
+              className="text-prose hover:text-prose-muted font-medium transition-colors"
+            >
+              {t("providerNoteLink")}
+            </Link>
+          </span>
         </p>
       </div>
     </motion.div>

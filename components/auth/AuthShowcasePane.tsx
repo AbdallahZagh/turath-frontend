@@ -10,7 +10,13 @@ import type { ReactNode } from "react";
 import { Logo } from "@/components/logo/Logo";
 import { fadeUp } from "@/lib/motion/variants";
 
-export type AuthMode = "login" | "register" | "verify" | "forgot" | "reset";
+export type AuthMode =
+  | "login"
+  | "register"
+  | "verify"
+  | "forgot"
+  | "reset"
+  | "providerRegister";
 
 type AuthShowcasePaneProps = {
   mode: AuthMode;
@@ -22,6 +28,7 @@ const IMAGE_SRC: Record<AuthMode, string> = {
   verify: "/images/landing/site-umayyad-mosque.png",
   forgot: "/images/landing/site-aleppo-citadel.png",
   reset: "/images/landing/site-umayyad-mosque.png",
+  providerRegister: "/images/landing/site-aleppo-citadel.png",
 };
 
 const QUOTE_KEY: Record<
@@ -31,12 +38,14 @@ const QUOTE_KEY: Record<
   | "imageQuoteVerify"
   | "imageQuoteForgot"
   | "imageQuoteReset"
+  | "imageQuoteProviderRegister"
 > = {
   login: "imageQuoteLogin",
   register: "imageQuoteRegister",
   verify: "imageQuoteVerify",
   forgot: "imageQuoteForgot",
   reset: "imageQuoteReset",
+  providerRegister: "imageQuoteProviderRegister",
 };
 
 const TRUST_ITEMS: {

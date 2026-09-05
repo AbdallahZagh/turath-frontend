@@ -7,6 +7,7 @@ import {
 
 import {
   loginWithEmail,
+  registerProvider,
   registerTourist,
   requestPasswordReset,
   resetPassword,
@@ -14,6 +15,7 @@ import {
   verifyOtpCode,
   type ForgotPasswordInput,
   type LoginEmailInput,
+  type ProviderRegisterInput,
   type RegisterInput,
   type ResetPasswordInput,
   type SendCodeInput,
@@ -30,6 +32,14 @@ export function useLoginWithEmail(): UseMutationResult<void, Error, LoginEmailIn
 
 export function useRegisterTourist(): UseMutationResult<void, Error, RegisterInput> {
   return useMutation({ mutationFn: registerTourist });
+}
+
+export function useRegisterProvider(): UseMutationResult<
+  void,
+  Error,
+  ProviderRegisterInput
+> {
+  return useMutation({ mutationFn: registerProvider });
 }
 
 export function useVerifyOtp(): UseMutationResult<void, Error, VerifyCodeInput> {

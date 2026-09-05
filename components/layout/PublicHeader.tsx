@@ -25,7 +25,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/trips", labelKey: "navTrips" },
   { href: "/events", labelKey: "navEvents" },
   { href: "/guides", labelKey: "navGuides" },
-  { href: "#how-it-works", labelKey: "navHowItWorks" },
+  { href: "/#how-it-works", labelKey: "navHowItWorks" },
 ];
 
 const NAV_LINK_CLASS =
@@ -52,7 +52,7 @@ function HeaderNav(): ReactNode {
           onMouseLeave: () => setHovered(null),
         };
 
-        if (item.href.startsWith("#")) {
+        if (item.href.includes("#")) {
           return (
             <a key={item.href} href={item.href} className={NAV_LINK_CLASS} {...hoverProps}>
               {label}

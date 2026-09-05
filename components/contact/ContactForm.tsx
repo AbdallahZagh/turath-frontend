@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
@@ -41,7 +41,6 @@ function isContactTopic(value: string): value is ContactTopic {
   return (CONTACT_TOPICS as readonly string[]).includes(value);
 }
 
-const WHATSAPP_HREF = "https://wa.me/963000000000";
 const COMPANY_EMAIL = "hello@turath.sy";
 
 export function ContactForm(): ReactNode {
@@ -225,22 +224,6 @@ export function ContactForm(): ReactNode {
                   {t("asideEmailLabel")}
                 </span>
                 {t("asideEmail")}
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-prose hover:text-accent inline-flex items-center gap-2 text-sm font-medium transition-colors"
-            >
-              <MessageCircle className="size-4 shrink-0" aria-hidden />
-              <span>
-                <span className="text-prose-muted block text-xs font-normal">
-                  {t("asideWhatsappLabel")}
-                </span>
-                {t("asideWhatsapp")}
               </span>
             </a>
           </li>

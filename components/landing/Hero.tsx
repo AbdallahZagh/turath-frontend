@@ -93,7 +93,7 @@ export function Hero(): ReactNode {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="relative"
         >
-          <Button href="#search" variant="solid" size="lg">
+          <Button href="/#search" variant="solid" size="lg">
             {t("cta")}
           </Button>
         </motion.div>

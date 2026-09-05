@@ -150,7 +150,7 @@ export const PERSONA_INTEREST_TILES: Record<PersonaId, InterestTile[]> = {
     { key: "firstTimeOldDamascus", href: "/attractions/umayyad-mosque", gradient: "from-primary/75 via-accent/35 to-transparent" },
     { key: "firstTimeBoutiqueStays", href: "/hotels", gradient: "from-accent/70 via-primary/40 to-transparent" },
     { key: "firstTimeGuidedWalks", href: "/guides", gradient: "from-primary/65 via-accent/30 to-transparent" },
-    { key: "firstTimeCashOnArrival", href: "#how-it-works", gradient: "from-accent/65 via-primary/35 to-transparent" },
+    { key: "firstTimeCashOnArrival", href: "/#how-it-works", gradient: "from-accent/65 via-primary/35 to-transparent" },
   ],
   heritageSeeker: [
     { key: "heritagePalmyra", href: "/attractions/palmyra-ruins", gradient: "from-primary/70 via-accent/40 to-transparent" },
@@ -172,8 +172,8 @@ export const PERSONA_INTEREST_TILES: Record<PersonaId, InterestTile[]> = {
   ],
   provider: [
     { key: "providerListBusiness", href: "/provider/register", gradient: "from-primary/75 via-accent/35 to-transparent" },
-    { key: "providerScannerApp", href: "#grow-with-turath", gradient: "from-accent/70 via-primary/35 to-transparent" },
-    { key: "providerLedger", href: "#grow-with-turath", gradient: "from-primary/65 via-accent/40 to-transparent" },
+    { key: "providerScannerApp", href: "/#grow-with-turath", gradient: "from-accent/70 via-primary/35 to-transparent" },
+    { key: "providerLedger", href: "/#grow-with-turath", gradient: "from-primary/65 via-accent/40 to-transparent" },
     { key: "providerDashboard", href: "/provider/register", gradient: "from-accent/65 via-primary/30 to-transparent" },
   ],
 };

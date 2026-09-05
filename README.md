@@ -51,14 +51,14 @@ Open [http://localhost:3000](http://localhost:3000).
 | URL | What you get |
 | --- | --- |
 | `/` | Public landing |
-| `/login`, `/register` | Auth (OTP / reset pages still to build) |
+| `/login`, `/register`, `/verify-otp`, `/forgot-password`, `/reset-password` | Auth stubs (mock OTP / reset) |
 | `/admin` | Admin (mock role switcher in the shell) |
 | `/theme` | Token lab |
 
 ## What’s in `frontend` today
 
 - Public landing (glass marketing home)
-- Auth layout + login / register (submit still mock; OTP and password reset not built)
+- Auth layout + login / register / verify-otp / forgot-password / reset-password (mock services + authStore)
 - Admin: guests, businesses, bookings, reviews, no-shows, accounts, heritage sites, fees, lists, featured, discount codes, audit logs, settings
 
 Not in this repo yet (see `docs/PAGES.md` §10): provider portal, listings, booking/voucher, tourist account.

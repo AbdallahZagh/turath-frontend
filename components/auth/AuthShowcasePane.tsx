@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
 import { Logo } from "@/components/logo/Logo";
 import { fadeUp } from "@/lib/motion/variants";
 
-export type AuthMode = "login" | "register";
+export type AuthMode = "login" | "register" | "verify" | "forgot" | "reset";
 
 type AuthShowcasePaneProps = {
   mode: AuthMode;
@@ -19,14 +19,30 @@ type AuthShowcasePaneProps = {
 const IMAGE_SRC: Record<AuthMode, string> = {
   login: "/images/landing/site-umayyad-mosque.png",
   register: "/images/landing/site-aleppo-citadel.png",
+  verify: "/images/landing/site-umayyad-mosque.png",
+  forgot: "/images/landing/site-aleppo-citadel.png",
+  reset: "/images/landing/site-umayyad-mosque.png",
 };
 
-const QUOTE_KEY: Record<AuthMode, "imageQuoteLogin" | "imageQuoteRegister"> = {
+const QUOTE_KEY: Record<
+  AuthMode,
+  | "imageQuoteLogin"
+  | "imageQuoteRegister"
+  | "imageQuoteVerify"
+  | "imageQuoteForgot"
+  | "imageQuoteReset"
+> = {
   login: "imageQuoteLogin",
   register: "imageQuoteRegister",
+  verify: "imageQuoteVerify",
+  forgot: "imageQuoteForgot",
+  reset: "imageQuoteReset",
 };
 
-const TRUST_ITEMS: { key: "cashOnArrivalTitle" | "offlineQrTitle" | "licensedProvidersTitle"; icon: LucideIcon }[] = [
+const TRUST_ITEMS: {
+  key: "cashOnArrivalTitle" | "offlineQrTitle" | "licensedProvidersTitle";
+  icon: LucideIcon;
+}[] = [
   { key: "cashOnArrivalTitle", icon: Wallet },
   { key: "offlineQrTitle", icon: QrCode },
   { key: "licensedProvidersTitle", icon: ShieldCheck },

@@ -113,6 +113,8 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+
 ### `/login`
 
 - Logo: `main-logo` (light) or `dark-main-logo` (dark)

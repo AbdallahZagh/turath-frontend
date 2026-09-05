@@ -284,12 +284,6 @@ export function AuthCredentialsForm({
                     emailForm.formState.errors.password,
                   )}
                 />
-                <Link
-                  href="/forgot-password"
-                  className="text-prose-muted hover:text-prose self-end text-xs font-medium"
-                >
-                  {t("forgotPassword")}
-                </Link>
               </div>
               <Button
                 type="submit"
@@ -300,6 +294,13 @@ export function AuthCredentialsForm({
               </Button>
             </form>
           )}
+
+          <Link
+            href="/forgot-password"
+            className="text-prose-muted hover:text-prose self-end text-xs font-medium"
+          >
+            {t("forgotPassword")}
+          </Link>
         </div>
       ) : (
         <form

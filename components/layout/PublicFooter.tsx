@@ -77,7 +77,7 @@ export async function PublicFooter(): Promise<ReactNode> {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href="#grow-with-turath"
+                  href="/#grow-with-turath"
                   className="text-prose-muted hover:text-prose text-sm transition-colors"
                 >
                   {t("companyPartner")}

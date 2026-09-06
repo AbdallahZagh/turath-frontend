@@ -515,8 +515,8 @@
       "perPage": "Rows"
     },
     "ratingEmpty": "No ratings yet",
-    "ratingLabel": "{value} out of 5 from {count} reviews",
-    "ratingCount": "{count} reviews",
+    "ratingLabel": "{value} out of 5 from {count, plural, one {# review} other {# reviews}}",
+    "ratingCount": "{count, plural, one {# review} other {# reviews}}",
     "ratingOutOf": "{value} out of 5"
   },
   "admin": {

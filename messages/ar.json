@@ -515,8 +515,8 @@
       "perPage": "الصفوف"
     },
     "ratingEmpty": "لا تقييمات بعد",
-    "ratingLabel": "{value} من 5 من {count} تقييم",
-    "ratingCount": "{count} تقييمات",
+    "ratingLabel": "{value} من 5 من {count, plural, one {# تقييم} other {# تقييمات}}",
+    "ratingCount": "{count, plural, one {# تقييم} other {# تقييمات}}",
     "ratingOutOf": "{value} من 5"
   },
   "admin": {

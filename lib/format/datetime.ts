@@ -3,6 +3,7 @@ import {
   format,
   isValid,
   parse,
+  parseISO,
   type Locale as DateFnsLocale,
 } from "date-fns";
 
@@ -10,12 +11,19 @@ import type { Locale } from "@/i18n/config";
 
 export type HourCycle = "12" | "24";
 
+const ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+
 export function dateFnsLocale(locale: Locale): DateFnsLocale {
   return locale === "ar" ? ar : enUS;
 }
 
+/** Parses `yyyy-MM-dd` as local midnight, or a full ISO datetime via `parseISO`. */
 export function parseIsoDate(value: string): Date | undefined {
-  const parsed = parse(value, "yyyy-MM-dd", new Date());
+  if (ISO_DATE_ONLY.test(value)) {
+    const parsed = parse(value, "yyyy-MM-dd", new Date());
+    return isValid(parsed) ? parsed : undefined;
+  }
+  const parsed = parseISO(value);
   return isValid(parsed) ? parsed : undefined;
 }
 

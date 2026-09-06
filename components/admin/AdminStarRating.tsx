@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { StarRating } from "@/components/ui/StarRating";
 import type { Locale } from "@/i18n/config";
-import { formatCount, formatRating } from "@/lib/format/number";
+import { formatRating } from "@/lib/format/number";
 
 type AdminStarRatingProps = {
   average: number;
@@ -38,12 +38,11 @@ export function AdminStarRating({
   }
 
   const valueLabel = formatRating(average, loc);
-  const countLabel = formatCount(count, loc);
   const stars = (
     <StarRating
       value={average}
       size={size}
-      label={t("ratingLabel", { value: valueLabel, count: countLabel })}
+      label={t("ratingLabel", { value: valueLabel, count })}
     />
   );
 
@@ -53,7 +52,7 @@ export function AdminStarRating({
         {stars}
         <span className="text-prose text-sm font-semibold tabular-nums">{valueLabel}</span>
         <span className="text-prose-muted text-xs tabular-nums">
-          {t("ratingCount", { count: countLabel })}
+          {t("ratingCount", { count })}
         </span>
       </span>
     );
@@ -66,7 +65,7 @@ export function AdminStarRating({
         <span className="text-prose text-sm font-semibold tabular-nums">{valueLabel}</span>
       </div>
       <span className="text-prose-muted text-xs tabular-nums">
-        {t("ratingCount", { count: countLabel })}
+        {t("ratingCount", { count })}
       </span>
     </div>
   );

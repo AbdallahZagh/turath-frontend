@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { AuthMobileTrustStrip } from "@/components/auth/AuthMobileTrustStrip";
 import { AuthShowcasePane, type AuthMode } from "@/components/auth/AuthShowcasePane";
 import { Logo } from "@/components/logo/Logo";
 
@@ -24,8 +25,9 @@ export function AuthLayout({ mode, children }: AuthLayoutProps): ReactNode {
           <LocaleSwitcher compact />
         </div>
         <div className="flex min-h-0 flex-1 justify-center overflow-y-auto px-4 py-3 sm:px-6">
-          <div className="flex w-full items-center justify-center py-2">
+          <div className="flex w-full flex-col items-center justify-center py-2">
             {children}
+            <AuthMobileTrustStrip />
           </div>
         </div>
       </div>

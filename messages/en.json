@@ -112,7 +112,8 @@
       "galleryMax": "You can add up to 6 photos."
     },
     "imageQuoteProviderRegister": "Licensed stays, tables, and guides — list yours on Turath.",
-    "providerNoteLink": "Join as a business"
+    "providerNoteLink": "Join as a business",
+    "trustStripLabel": "Why travelers trust Turath"
   },
   "stepper": {
     "decrease": "Decrease {label}",
@@ -239,6 +240,8 @@
       "navGuides": "Guides",
       "navHowItWorks": "How it works",
       "navLabel": "Explore Turath",
+      "openMenu": "Open menu",
+      "appearanceMenu": "Appearance",
       "currencyLabel": "Currency",
       "currencySyp": "SYP",
       "currencyUsd": "USD",
@@ -309,7 +312,8 @@
         "providerScannerApp": "Offline QR Scanner App",
         "providerLedger": "Clear Payout Records",
         "providerDashboard": "Your Own Dashboard"
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "trustBar": {
       "eyebrow": "Why travelers trust Turath",
@@ -346,7 +350,8 @@
         "guidedTour": "Guided",
         "vipTier": "VIP tier",
         "multilingual": "Multilingual"
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "mapExplorer": {
       "eyebrow": "Explore by region",
@@ -391,7 +396,8 @@
           "meta": "Latakia",
           "blurb": "A mountaintop citadel wrapped in forest, above the coastal plain."
         }
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "howItWorks": {
       "eyebrow": "From booking to the door",
@@ -490,6 +496,11 @@
       "title": "Questions? Talk to Turath.",
       "subtitle": "Booking help, partnerships, or a note about the product — send a message and we’ll get back when we can.",
       "cta": "Contact us"
+    },
+    "campaign": {
+      "eyebrow": "This week on Turath",
+      "cta": "Explore",
+      "featuredBadge": "Featured"
     }
   },
   "ui": {
@@ -514,8 +525,8 @@
       "perPage": "Rows"
     },
     "ratingEmpty": "No ratings yet",
-    "ratingLabel": "{value} out of 5 from {count} reviews",
-    "ratingCount": "{count} reviews",
+    "ratingLabel": "{value} out of 5 from {count, plural, one {# review} other {# reviews}}",
+    "ratingCount": "{count, plural, one {# review} other {# reviews}}",
     "ratingOutOf": "{value} out of 5"
   },
   "admin": {
@@ -650,19 +661,14 @@
         "active": "Active",
         "locked": "Locked"
       },
-      "allReliability": "All show-up records",
-      "reliabilityBand": {
-        "strong": "Shows up",
-        "watch": "Watch",
-        "atRisk": "Often misses"
-      },
+      "allReliability": "All reliability tiers",
       "empty": "No guests yet.",
       "emptyFiltered": "No guests match this search.",
       "columns": {
         "name": "Name",
         "phone": "Phone",
         "rating": "Rating",
-        "reliability": "Show-up",
+        "reliability": "Reliability",
         "bookings": "Completed",
         "joined": "Joined"
       },
@@ -678,16 +684,17 @@
         "lockedBody": "This guest cannot place new bookings for the rest of this session.",
         "unlockedTitle": "Account unlocked",
         "unlockedBody": "This guest can book again for the rest of this session.",
-        "reliabilityTitle": "Show-up record",
+        "reliabilityTitle": "Reliability score",
         "completedCheckIns": "Completed check-ins",
         "noShows": "No-shows",
         "reliabilityHint": {
-          "strong": "Shows up and completes stays.",
-          "watch": "Some missed arrivals — watch new bookings.",
-          "atRisk": "Frequent no-shows. Lock is on this page if needed."
+          "vip": "Instant booking; up to 4 concurrent bookings.",
+          "standard": "Standard access; max 2 concurrent. High-value stays need provider approval.",
+          "restricted": "Instant booking off; max 1 active booking. Secondary OTP required.",
+          "suspended": "Cannot create new bookings until support verifies identity."
         },
         "reviewsTitle": "Ratings from businesses",
-        "reviewsHint": "After check-in, the business rates this guest. Separate from the show-up record.",
+        "reviewsHint": "After check-in, the business rates this guest. Separate from the reliability score.",
         "reviewsEmpty": "No business has rated this guest yet.",
         "activityTitle": "Activity",
         "activityEmpty": "No activity yet.",
@@ -710,6 +717,12 @@
           "unlocked": "Account unlocked"
         },
         "bookingsTitle": "Bookings"
+      },
+      "reliabilityTier": {
+        "vip": "VIP",
+        "standard": "Standard",
+        "restricted": "Restricted",
+        "suspended": "Suspended"
       }
     },
     "providers": {
@@ -1025,7 +1038,7 @@
         "hint": {
           "healthy": "Credit is within the ceiling.",
           "watch": "Credit has passed 75%. Review this account before the next statement.",
-          "grace": "Credit is at or over 100%. Suspend if they do not settle.",
+          "grace": "Credit is at or over 100%. A 48-hour grace period applies; suspend if they do not settle.",
           "suspended": "New intake should stay blocked until this account is reinstated."
         },
         "statementStatus": {
@@ -1236,7 +1249,8 @@
         "start": "Starts",
         "end": "Ends",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "slot": "Slot"
       },
       "form": {
         "titleAdd": "Add featured item",
@@ -1252,7 +1266,37 @@
         "end": "End date",
         "delete": "Delete",
         "cancel": "Cancel",
-        "save": "Save"
+        "save": "Save",
+        "slot": "Home slot",
+        "kindHint": "Type follows the slot: listings for rails and pillars, campaign for the home band.",
+        "errors": {
+          "titleEnRequired": "Enter an English title.",
+          "titleArRequired": "Enter an Arabic title.",
+          "slotRequired": "Choose a home slot.",
+          "kindRequired": "Choose a type.",
+          "targetEnRequired": "Enter an English target.",
+          "targetArRequired": "Enter an Arabic target.",
+          "startRequired": "Choose a start date.",
+          "endRequired": "Choose an end date.",
+          "invalidDates": "End date must be on or after the start date.",
+          "kindSlotMismatch": "Campaigns belong in the Home campaign band; listings use the other slots."
+        }
+      },
+      "allSlots": "All slots",
+      "slotDisabled": "This slot is off in Settings",
+      "slotDisabledBody": "Turn featuring on and enable the slot under Settings, then try again.",
+      "slotAtCapacity": "This slot is full",
+      "slotAtCapacityBody": "Remove or end an existing pin in this slot before adding another.",
+      "kindSlotMismatch": "Campaigns belong in the Home campaign band; listings use the other slots.",
+      "slots": {
+        "heritage_spotlight": "Heritage spotlight",
+        "pillar_hotels": "Hotels pillar",
+        "pillar_dining": "Dining pillar",
+        "pillar_trips": "Trips pillar",
+        "pillar_events": "Events pillar",
+        "pillar_guides": "Guides pillar",
+        "home_campaign": "Home campaign",
+        "persona_rail": "Persona rail"
       }
     },
     "coupons": {
@@ -1398,32 +1442,33 @@
     "settings": {
       "save": "Save settings",
       "saved": "Settings saved",
-      "savedBody": "Credit limits, show-up bands, and switches are updated for this session.",
+      "savedBody": "Credit limits, reliability cutoffs, and switches are updated for this session.",
       "saveFailed": "Could not save settings",
       "saveFailedBody": "Check the numbers and try again.",
       "invalidCredit": "Enter a positive credit ceiling for every tier.",
-      "invalidReliability": "At-risk must be below watch, and both must be between 0 and 100.",
+      "invalidReliability": "Restricted must be below Standard, Standard below VIP, and all between 0 and 100.",
       "credit": {
         "title": "Credit limits",
-        "description": "How much a business can owe before we pause new bookings. You can still set a different limit on one business.",
+        "description": "Architecture ceilings by volume tier (not Fees commission). Warn at 75%; at 100% a 48-hour grace period starts before intake is blocked. You can still set a different limit on one business.",
         "columns": {
           "tier": "Tier",
           "ceiling": "Ceiling (SYP)"
         }
       },
       "tiers": {
-        "preferred": "Preferred",
-        "standard": "Standard",
-        "highRisk": "High risk"
+        "new": "New / unverified",
+        "established": "Established",
+        "enterprise": "Enterprise / high volume"
       },
       "reliability": {
-        "title": "Show-up record",
-        "description": "Bands for guest scores on the Guests page. Below “often misses” is the lowest.",
-        "atRisk": "Often misses below",
-        "watch": "Watch below",
-        "lock": "Lock guests who often miss",
+        "title": "Reliability score",
+        "description": "Architecture tiers for guest scores on Guests. Score starts at 100; each unexcused no-show deducts 30.",
+        "vipAtOrAbove": "VIP at or above",
+        "standardAtOrAbove": "Standard at or above",
+        "restrictedAtOrAbove": "Restricted at or above",
+        "lock": "Lock Suspended guests",
         "lockHint": "Locked guests cannot book until you unlock them.",
-        "strongHint": "At or above the watch line counts as “shows up.”"
+        "tierHint": "Below Restricted is Suspended. Defaults: VIP 80, Standard 50, Restricted 30."
       },
       "flags": {
         "title": "Switches",
@@ -1431,10 +1476,22 @@
         "otp": "Login codes by",
         "sms": "SMS",
         "whatsapp": "WhatsApp",
-        "featured": "Home page featuring",
-        "featuredHint": "Allow the Featured page to pin listings and themes on the home page.",
         "webCheckIn": "Web check-in",
-        "webCheckInHint": "Businesses can confirm arrival with the 6-character backup code."
+        "webCheckInHint": "Businesses can confirm arrival with the 6-character backup code.",
+        "featuring": "Home featuring",
+        "featuringHint": "Master switch for pinning listings and campaign bands on the home page. Discount codes stay on Discount codes.",
+        "featuringSlots": "Home slots",
+        "featuringSlotsHint": "Turn individual home sections on or off. Disabled slots keep their static content and reject new Featured saves.",
+        "slots": {
+          "heritage_spotlight": "Heritage spotlight",
+          "pillar_hotels": "Hotels pillar",
+          "pillar_dining": "Dining pillar",
+          "pillar_trips": "Trips pillar",
+          "pillar_events": "Events pillar",
+          "pillar_guides": "Guides pillar",
+          "home_campaign": "Home campaign band",
+          "persona_rail": "Persona rail"
+        }
       }
     },
     "overview": {
@@ -1560,11 +1617,9 @@
     "lead": "Have a question or looking to collaborate? Reach out to our team.",
     "info": {
       "title": "Contact Information",
-      "lead": "Reach out directly by phone, WhatsApp, email, or visit our office in Damascus.",
+      "lead": "Reach out directly by phone, email, or visit our office in Damascus.",
       "phone": "Phone",
       "phoneValue": "+963 11 234 5678",
-      "whatsapp": "WhatsApp",
-      "whatsappValue": "+963 933 000 000",
       "email": "Email",
       "emailValue": "hello@turath.sy",
       "location": "Location",

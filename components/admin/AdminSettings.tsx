@@ -16,49 +16,51 @@ import { useAdminSettings, useSaveAdminSettings } from "@/hooks/useAdminSettings
 import type { Locale } from "@/i18n/config";
 import { formatSyp } from "@/lib/format/money";
 import {
-  COMMISSION_TIERS,
+  CREDIT_CEILING_TIERS,
+  FEATURED_SLOT_IDS,
   OTP_CHANNELS,
   type AdminSettings,
-  type CommissionTierId,
+  type CreditCeilingTierId,
+  type FeaturedSlotId,
   type OtpChannel,
 } from "@/lib/mock/adminSettings";
+import { defaultFeaturedSlotEnables } from "@/lib/mock/featuredSlots";
 import { toast } from "@/store/toastStore";
 
 type SettingsDraft = {
-  ceilings: Record<CommissionTierId, string>;
-  atRisk: string;
-  watch: string;
-  lockAtRisk: boolean;
+  ceilings: Record<CreditCeilingTierId, string>;
+  vipAtOrAbove: string;
+  standardAtOrAbove: string;
+  restrictedAtOrAbove: string;
+  lockSuspended: boolean;
   otpChannel: OtpChannel;
-  featuredListings: boolean;
+  featuringEnabled: boolean;
+  featuredSlots: Record<FeaturedSlotId, boolean>;
   webCheckIn: boolean;
 };
 
-function percentToInput(ratio: number): string {
-  const percent = ratio * 100;
-  return Number.isInteger(percent) ? String(percent) : percent.toFixed(1);
-}
-
-function parsePercent(value: string): number | undefined {
+function parseScoreCutoff(value: string): number | undefined {
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
     return undefined;
   }
-  return parsed / 100;
+  return Math.round(parsed);
 }
 
 function draftFromSettings(data: AdminSettings): SettingsDraft {
   return {
     ceilings: {
-      preferred: String(data.creditCeilingsSyp.preferred),
-      standard: String(data.creditCeilingsSyp.standard),
-      highRisk: String(data.creditCeilingsSyp.highRisk),
+      new: String(data.creditCeilingsSyp.new),
+      established: String(data.creditCeilingsSyp.established),
+      enterprise: String(data.creditCeilingsSyp.enterprise),
     },
-    atRisk: percentToInput(data.reliability.atRiskBelow),
-    watch: percentToInput(data.reliability.watchBelow),
-    lockAtRisk: data.reliability.lockAtRisk,
+    vipAtOrAbove: String(data.reliability.vipAtOrAbove),
+    standardAtOrAbove: String(data.reliability.standardAtOrAbove),
+    restrictedAtOrAbove: String(data.reliability.restrictedAtOrAbove),
+    lockSuspended: data.reliability.lockSuspended,
     otpChannel: data.flags.otpChannel,
-    featuredListings: data.flags.featuredListings,
+    featuringEnabled: data.flags.featuringEnabled,
+    featuredSlots: { ...defaultFeaturedSlotEnables(), ...data.flags.featuredSlots },
     webCheckIn: data.flags.webCheckIn,
   };
 }
@@ -87,9 +89,20 @@ export function AdminSettings(): ReactNode {
     }
   }
 
-  function setCeiling(tier: CommissionTierId, value: string): void {
+  function setCeiling(tier: CreditCeilingTierId, value: string): void {
     setDraft((current) =>
       current ? { ...current, ceilings: { ...current.ceilings, [tier]: value } } : current,
+    );
+  }
+
+  function setSlotEnabled(slot: FeaturedSlotId, enabled: boolean): void {
+    setDraft((current) =>
+      current
+        ? {
+            ...current,
+            featuredSlots: { ...current.featuredSlots, [slot]: enabled },
+          }
+        : current,
     );
   }
 
@@ -99,8 +112,8 @@ export function AdminSettings(): ReactNode {
       return;
     }
 
-    const creditCeilingsSyp = {} as Record<CommissionTierId, number>;
-    for (const tier of COMMISSION_TIERS) {
+    const creditCeilingsSyp = {} as Record<CreditCeilingTierId, number>;
+    for (const tier of CREDIT_CEILING_TIERS) {
       const amount = Number(draft.ceilings[tier]);
       if (!Number.isFinite(amount) || amount <= 0) {
         toast.error(t("saveFailed"), t("invalidCredit"));
@@ -109,12 +122,14 @@ export function AdminSettings(): ReactNode {
       creditCeilingsSyp[tier] = Math.round(amount);
     }
 
-    const atRiskBelow = parsePercent(draft.atRisk);
-    const watchBelow = parsePercent(draft.watch);
+    const vipAtOrAbove = parseScoreCutoff(draft.vipAtOrAbove);
+    const standardAtOrAbove = parseScoreCutoff(draft.standardAtOrAbove);
+    const restrictedAtOrAbove = parseScoreCutoff(draft.restrictedAtOrAbove);
     if (
-      atRiskBelow === undefined ||
-      watchBelow === undefined ||
-      atRiskBelow >= watchBelow
+      vipAtOrAbove === undefined ||
+      standardAtOrAbove === undefined ||
+      restrictedAtOrAbove === undefined ||
+      !(restrictedAtOrAbove < standardAtOrAbove && standardAtOrAbove < vipAtOrAbove)
     ) {
       toast.error(t("saveFailed"), t("invalidReliability"));
       return;
@@ -124,13 +139,15 @@ export function AdminSettings(): ReactNode {
       {
         creditCeilingsSyp,
         reliability: {
-          atRiskBelow,
-          watchBelow,
-          lockAtRisk: draft.lockAtRisk,
+          vipAtOrAbove,
+          standardAtOrAbove,
+          restrictedAtOrAbove,
+          lockSuspended: draft.lockSuspended,
         },
         flags: {
           otpChannel: draft.otpChannel,
-          featuredListings: draft.featuredListings,
+          featuringEnabled: draft.featuringEnabled,
+          featuredSlots: { ...draft.featuredSlots },
           webCheckIn: draft.webCheckIn,
         },
       },
@@ -145,8 +162,8 @@ export function AdminSettings(): ReactNode {
     );
   }
 
-  const creditRows = COMMISSION_TIERS.map((tier) => ({ tier }));
-  const creditColumns: TableColumn<{ tier: CommissionTierId }>[] = [
+  const creditRows = CREDIT_CEILING_TIERS.map((tier) => ({ tier }));
+  const creditColumns: TableColumn<{ tier: CreditCeilingTierId }>[] = [
     {
       id: "tier",
       header: t("credit.columns.tier"),
@@ -240,57 +257,79 @@ export function AdminSettings(): ReactNode {
             {t("reliability.description")}
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
-              {t("reliability.atRisk")}
+              {t("reliability.vipAtOrAbove")}
             </span>
-            <div className="flex items-center gap-2">
-              <Input
-                variant="glass"
-                size="sm"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                inputMode="decimal"
-                value={draft.atRisk}
-                onChange={(event) =>
-                  setDraft((current) =>
-                    current ? { ...current, atRisk: event.target.value } : current,
-                  )
-                }
-                label={t("reliability.atRisk")}
-                className="w-28"
-              />
-              <span className="text-prose-muted text-sm">%</span>
-            </div>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.vipAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current ? { ...current, vipAtOrAbove: event.target.value } : current,
+                )
+              }
+              label={t("reliability.vipAtOrAbove")}
+              className="w-28"
+            />
           </label>
           <label className="flex flex-col gap-1.5">
-            <span className="text-prose-muted text-xs font-medium">{t("reliability.watch")}</span>
-            <div className="flex items-center gap-2">
-              <Input
-                variant="glass"
-                size="sm"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                inputMode="decimal"
-                value={draft.watch}
-                onChange={(event) =>
-                  setDraft((current) =>
-                    current ? { ...current, watch: event.target.value } : current,
-                  )
-                }
-                label={t("reliability.watch")}
-                className="w-28"
-              />
-              <span className="text-prose-muted text-sm">%</span>
-            </div>
+            <span className="text-prose-muted text-xs font-medium">
+              {t("reliability.standardAtOrAbove")}
+            </span>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.standardAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current
+                    ? { ...current, standardAtOrAbove: event.target.value }
+                    : current,
+                )
+              }
+              label={t("reliability.standardAtOrAbove")}
+              className="w-28"
+            />
+          </label>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-prose-muted text-xs font-medium">
+              {t("reliability.restrictedAtOrAbove")}
+            </span>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.restrictedAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current
+                    ? { ...current, restrictedAtOrAbove: event.target.value }
+                    : current,
+                )
+              }
+              label={t("reliability.restrictedAtOrAbove")}
+              className="w-28"
+            />
           </label>
         </div>
-        <p className="text-prose-muted text-xs">{t("reliability.strongHint")}</p>
+        <p className="text-prose-muted text-xs">{t("reliability.tierHint")}</p>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
             <span className="text-prose text-sm font-medium">{t("reliability.lock")}</span>
@@ -300,10 +339,10 @@ export function AdminSettings(): ReactNode {
           </div>
           <Switch
             size="sm"
-            checked={draft.lockAtRisk}
+            checked={draft.lockSuspended}
             onChange={(event) =>
               setDraft((current) =>
-                current ? { ...current, lockAtRisk: event.target.checked } : current,
+                current ? { ...current, lockSuspended: event.target.checked } : current,
               )
             }
             aria-label={t("reliability.lock")}
@@ -339,21 +378,48 @@ export function AdminSettings(): ReactNode {
         </div>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="text-prose text-sm font-medium">{t("flags.featured")}</span>
+            <span className="text-prose text-sm font-medium">{t("flags.featuring")}</span>
             <span className="text-prose-muted text-xs leading-relaxed">
-              {t("flags.featuredHint")}
+              {t("flags.featuringHint")}
             </span>
           </div>
           <Switch
             size="sm"
-            checked={draft.featuredListings}
+            checked={draft.featuringEnabled}
             onChange={(event) =>
               setDraft((current) =>
-                current ? { ...current, featuredListings: event.target.checked } : current,
+                current
+                  ? { ...current, featuringEnabled: event.target.checked }
+                  : current,
               )
             }
-            aria-label={t("flags.featured")}
+            aria-label={t("flags.featuring")}
           />
+        </div>
+        <div className="border-glass-border flex flex-col gap-3 border-t pt-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-prose text-sm font-medium">{t("flags.featuringSlots")}</span>
+            <span className="text-prose-muted text-xs leading-relaxed">
+              {t("flags.featuringSlotsHint")}
+            </span>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {FEATURED_SLOT_IDS.map((slot) => (
+              <div
+                key={slot}
+                className="flex items-center justify-between gap-3 rounded-xl border border-glass-border/70 px-3 py-2.5"
+              >
+                <span className="text-prose text-sm">{t(`flags.slots.${slot}`)}</span>
+                <Switch
+                  size="sm"
+                  checked={draft.featuredSlots[slot]}
+                  disabled={!draft.featuringEnabled}
+                  onChange={(event) => setSlotEnabled(slot, event.target.checked)}
+                  aria-label={t(`flags.slots.${slot}`)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">

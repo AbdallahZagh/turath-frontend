@@ -20,6 +20,7 @@ import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import {
+  FEATURED_SLOT_IDS,
   PROMOTION_KINDS,
   PROMOTION_STATUSES,
   promotionStatus,
@@ -36,7 +37,8 @@ function matchesPromotionQuery(row: AdminPromotion, query: string): boolean {
     return true;
   }
 
-  const haystack = `${row.title.en} ${row.title.ar} ${row.target.en} ${row.target.ar}`.toLowerCase();
+  const haystack =
+    `${row.title.en} ${row.title.ar} ${row.target.en} ${row.target.ar} ${row.slot}`.toLowerCase();
   return haystack.includes(needle);
 }
 
@@ -66,6 +68,7 @@ export function AdminPromotions(): ReactNode {
 
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState(ALL);
+  const [slot, setSlot] = useState(ALL);
   const [status, setStatus] = useState(ALL);
   const [editorOpen, setEditorOpen] = useState(false);
   const [editing, setEditing] = useState<AdminPromotion | null>(null);
@@ -85,14 +88,17 @@ export function AdminPromotions(): ReactNode {
       if (kind !== ALL && row.kind !== kind) {
         return false;
       }
+      if (slot !== ALL && row.slot !== slot) {
+        return false;
+      }
       if (status !== ALL && promotionStatus(row) !== status) {
         return false;
       }
       return matchesPromotionQuery(row, query);
     });
-  }, [data, kind, status, query]);
+  }, [data, kind, slot, status, query]);
 
-  const paging = usePagination(filtered, `${query}|${kind}|${status}`);
+  const paging = usePagination(filtered, `${query}|${kind}|${slot}|${status}`);
 
   function openEdit(row: AdminPromotion): void {
     setEditing(row);
@@ -119,6 +125,11 @@ export function AdminPromotions(): ReactNode {
       cell: (row) => (
         <span className="truncate font-medium">{localizedName(row.title, loc)}</span>
       ),
+    },
+    {
+      id: "slot",
+      header: t("columns.slot"),
+      cell: (row) => t(`slots.${row.slot}`),
     },
     {
       id: "kind",
@@ -220,6 +231,19 @@ export function AdminPromotions(): ReactNode {
         onSearchChange={setQuery}
         searchPlaceholder={t("searchPlaceholder")}
         filters={[
+          {
+            id: "slot",
+            label: t("columns.slot"),
+            value: slot,
+            onChange: setSlot,
+            options: [
+              { value: ALL, label: t("allSlots") },
+              ...FEATURED_SLOT_IDS.map((value) => ({
+                value,
+                label: t(`slots.${value}`),
+              })),
+            ],
+          },
           {
             id: "kind",
             label: t("columns.kind"),

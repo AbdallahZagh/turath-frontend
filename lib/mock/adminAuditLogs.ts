@@ -81,8 +81,8 @@ const AUDIT_LOGS: AdminAuditLog[] = [
     actor: "SuperAdmin (Youssef)",
     module: "settings",
     action: "CREDIT_LIMIT_UPDATED",
-    target: "Standard Tier",
-    details: "Standard credit ceiling adjusted to 15,000,000 SYP.",
+    target: "Enterprise Tier",
+    details: "Enterprise credit ceiling set to 15,000,000 SYP.",
   },
   {
     id: "log_08",

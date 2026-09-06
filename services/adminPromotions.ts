@@ -2,8 +2,10 @@ import {
   createAdminPromotion as insertPromotion,
   deleteAdminPromotion as removePromotion,
   listAdminPromotions as readPromotions,
+  listLiveFeaturedForSlot as readLiveForSlot,
   updateAdminPromotion as patchPromotion,
   type AdminPromotion,
+  type FeaturedSlotId,
   type SaveAdminPromotionInput,
 } from "@/lib/mock/adminPromotions";
 
@@ -26,4 +28,10 @@ export async function updateAdminPromotion(
 
 export async function deleteAdminPromotion(id: string): Promise<void> {
   removePromotion(id);
+}
+
+export async function listLiveFeaturedForSlot(
+  slot: FeaturedSlotId,
+): Promise<AdminPromotion[]> {
+  return readLiveForSlot(slot);
 }

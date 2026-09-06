@@ -29,6 +29,7 @@ export function useSaveAdminSettings(): UseMutationResult<
     mutationFn: updateAdminSettings,
     onSuccess: (next) => {
       client.setQueryData(adminSettingsQueryKey, next);
+      void client.invalidateQueries({ queryKey: ["public", "featured"] });
     },
   });
 }

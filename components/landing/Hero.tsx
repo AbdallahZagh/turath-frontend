@@ -33,7 +33,7 @@ export function Hero(): ReactNode {
         sizes="100vw"
         className="absolute inset-0 -z-30 object-cover"
       />
-      <div aria-hidden className="bg-hero-veil/25 absolute inset-0 -z-20" />
+      <div aria-hidden className="bg-hero-veil/40 absolute inset-0 -z-20" />
       <div
         aria-hidden
         className="from-app/55 absolute inset-0 -z-20 bg-linear-to-t via-app/20 to-app/40 dark:from-ink/85 dark:via-transparent dark:to-ink/60"
@@ -93,7 +93,7 @@ export function Hero(): ReactNode {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="relative"
         >
-          <Button href="#search" variant="solid" size="lg">
+          <Button href="/#search" variant="solid" size="lg">
             {t("cta")}
           </Button>
         </motion.div>

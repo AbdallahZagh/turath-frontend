@@ -129,7 +129,7 @@ export function OtpInput({
     <div className={FIELD_GROUP_MAIN}>
       <div
         dir="ltr"
-        className="z-[5] flex w-full items-stretch justify-between gap-2 sm:gap-2.5"
+        className="z-[5] flex w-full min-w-0 items-stretch justify-between gap-1.5 overflow-x-clip sm:gap-2.5"
         role="group"
         aria-label={label}
       >
@@ -158,7 +158,7 @@ export function OtpInput({
               onFocus={(event) => event.currentTarget.select()}
               className={cn(
                 FIELD_VARIANT.main,
-                "box-border aspect-square min-h-12 w-full max-w-14 flex-1 rounded-[0.75rem] px-0 py-0 text-center text-xl font-semibold tracking-tight caret-primary sm:min-h-14 sm:text-2xl",
+                "box-border aspect-square min-h-11 min-w-0 w-full max-w-14 flex-1 basis-0 rounded-[0.75rem] px-0 py-0 text-center text-xl font-semibold tracking-tight caret-primary sm:min-h-14 sm:text-2xl",
                 "shadow-[inset_0_1px_0_var(--glass-highlight)] dark:shadow-none",
               )}
             />

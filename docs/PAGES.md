@@ -163,23 +163,36 @@ Flagship marketing landing (`components/landing/*`), composed in order:
 
 1. Hero — full-bleed cinematic scene (AI-generated Damascus photography).
    Headline, lead, and a single CTA into the search band. No booking form
-   on the photo.
+   on the photo. **Hero is not a Featured slot** — Settings / Featured never
+   merchandize the hero.
 2. Omni-search (`#search`) — 5-pillar widget (Hotels, Tables, Trips, Events,
    Tour Guides)
 3. Persona explorer — "Experience Turath through the eyes of a..." pill
    switcher (first-time visitor, heritage seeker, foodie, family, provider)
-   over a rail of photo-tile interest cards
+   over a rail of photo-tile interest cards (`persona_rail` Featured slot)
 4. Trust bar — cash on arrival, offline QR passes, licensed providers,
    dual-currency pricing
-5. Bento grid — one tile per pillar with amenity/language tags
-6. Governorate map explorer preview (stylized, not MapLibre — that's `/explore`)
-7. Heritage spotlight — drag-scroll reel of landmark cards
-8. How it works — 3-step reserve → QR pass → check-in path
-9. App download banner — **teaser / coming soon** for the Flutter app
+5. Home campaign band (`home_campaign` Featured slot) — themed glass band when
+   a **live** campaign assignment exists; omitted when the slot is empty or
+   disabled (no static campaign placeholder)
+6. Bento grid — one tile per pillar with amenity/language tags
+   (`pillar_hotels` · `pillar_dining` · `pillar_trips` · `pillar_events` ·
+   `pillar_guides` Featured slots, one pin each)
+7. Governorate map explorer preview (stylized, not MapLibre — that's `/explore`)
+8. Heritage spotlight — drag-scroll reel of landmark cards
+   (`heritage_spotlight` Featured slot, short rail ≤6)
+9. How it works — 3-step reserve → QR pass → check-in path
+10. App download banner — **teaser / coming soon** for the Flutter app
    (offline QR + offline map). No live App Store / Google Play links.
-10. Provider CTA (`#grow-with-turath`) — "Grow with Turath"
-11. Verified testimonials — equal glass cards in a 3-up grid
-12. Contact Us — short glass band → `/contact` (last section before the footer)
+11. Provider CTA (`#grow-with-turath`) — "Grow with Turath"
+12. Verified testimonials — equal glass cards in a 3-up grid
+13. Contact Us — short glass band → `/contact` (last section before the footer)
+
+**Featured merchandising on Home (MVP):** `/` consumes **live** assignments from
+`/admin/featured` for the named slots above, and only when Settings has
+featuring on and that slot enabled. Empty or disabled slots **keep the current
+static / mock content** for that section — never blank Home. Discount codes are
+unrelated (see `/admin/discount-codes`).
 
 **Home CTA policy (MVP):** Omni-search, bento tiles, persona interest cards,
 and the map preview may link real tourist routes (`/hotels`, `/restaurants`,
@@ -204,7 +217,7 @@ Public contact page (inside `(public)` shell):
 
 - Centered page header (title & subtitle)
 - Side-by-side layout:
-  - Contact Information card: Direct phone, WhatsApp, email, office location (Bab Sharqi, Old Damascus), and working hours
+  - Contact Information card: Direct phone, email, office location (Bab Sharqi, Old Damascus), and working hours (no placeholder WhatsApp until a real number exists)
   - Contact Form: Clean glass form with name, email, phone, topic, and message
 - Success state after mock submit (no backend yet)
 - AR / EN copy via `messages/`
@@ -467,15 +480,15 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 ### `/admin/guests`
 
-- Guests + show-up score (show-up vs no-show) and guest rating (businesses rating this guest after check-in) — two different scores
-- Search by phone / name; filter popover (account, show-up) with removable pills
+- Guests + reliability score (0–100; start 100, no-show −30) with Architecture tiers (VIP / Standard / Restricted / Suspended) and guest rating (businesses rating this guest after check-in) — two different scores
+- Search by phone / name; filter popover (account, reliability tier) with removable pills
 - Row → `/admin/guests/[id]`
 
 ### `/admin/guests/[id]`
 
 - Scroll the page (no table/cards/map switch). Header title is static (“Guest”); the guest’s name lives in the profile card
 - Profile (glass): initials, names AR/EN, phone, email, joined, guest rating from providers, Locked badge, Lock / Unlock (mock for the session)
-- Reliability (glass): score + band from Settings cutoffs (`atRiskBelow` / `watchBelow`), completed check-ins vs no-shows, short band hint — not a settings editor, not a star rating
+- Reliability (glass): score (0–100) + tier from Settings cutoffs (`vipAtOrAbove` / `standardAtOrAbove` / `restrictedAtOrAbove`; defaults 80 / 50 / 30), completed check-ins vs no-shows (−30), short tier hint — not a settings editor, not a star rating
 - Bookings (ops table for this guest, match by phone): same search + filter + pills as `/admin/bookings`. Columns: provider (with average guest rating of that business), when, amount, status, backup code. Row opens booking details in a side `Drawer` (no booking-detail route yet)
 - Reviews from providers (verified check-in only): several mock rows so the section is a list — date · stars · provider name · comment. Empty if nobody has rated yet
 - Activity (timeline, newest first): chips on this card only — All / Bookings / Money / Account. Rows: date · type chip · one line (provider or action) · SYP when it is money. Cash-on-arrival: money = booking status (completed / no-show / disputed), not cards. Types: booking placed / confirmed / checked-in / completed / cancelled; money completed / no-show / disputed; account locked / unlocked
@@ -554,21 +567,36 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 - Scroll the page. Header title is static (“Account”); the business name lives in the account card
 - Account (glass): names AR/EN, guest rating average, category, cadence, last settled, standing. Actions by standing — watch or grace: Suspend; suspended: Reinstate; healthy: no standing action. Record settlement when outstanding is above zero (mock for the session)
-- Balance: accrued, paid, outstanding. Credit used vs ceiling with warning copy at 75% and grace copy at 100%
+- Balance: accrued, paid, outstanding. Credit used vs ceiling with warning copy at 75% and grace copy at 100% (48-hour grace)
 - Statements: recent settlement periods for this cadence — period, accrued, paid, status (paid / due / overdue)
 - Link to the business profile when a matching business exists
 
 ### `/admin/featured`
 
-Homepage / discovery merchandising only — not discount codes. Discount codes are a separate page (`/admin/discount-codes`).
+Homepage / discovery merchandising only — **not** discount codes. Discount codes stay on `/admin/discount-codes`.
 
-- **Featured listing:** pin one provider or attraction in a featured slot for a date window
-- **Home campaign:** a themed band on `/` (e.g. Heritage week, Ramadan tables) aimed at a pillar or the attractions rail, not one property
+**Named Home slots (MVP)** — Hero is not a slot:
+
+| Slot id | Home section | Capacity |
+|---|---|---|
+| `heritage_spotlight` | Heritage spotlight rail | ≤6 pins |
+| `pillar_hotels` | Bento Hotels tile | 1 pin |
+| `pillar_dining` | Bento Dining tile | 1 pin |
+| `pillar_trips` | Bento Trips tile | 1 pin |
+| `pillar_events` | Bento Events tile | 1 pin |
+| `pillar_guides` | Bento Guides tile | 1 pin |
+| `home_campaign` | Home campaign band | 1 campaign |
+| `persona_rail` | Persona interest rail | ≤4 pins |
+
+- **Featured listing** (`kind: featured`): assign a listing / attraction into a listing slot (`heritage_spotlight`, `pillar_*`, `persona_rail`) for a date window
+- **Home campaign** (`kind: campaign`): assign into `home_campaign` only — a themed band on `/`, not one property
 - Target preset quick selector for popular sites, categories, and hotels, plus custom text
-- Status is scheduled / live / ended from the start / end dates
+- Status is **scheduled / live / ended** from the start / end dates (no manual status field)
+- **Reject save** when featuring is off in Settings, the chosen slot is disabled, or the slot is already at capacity (count scheduled + live; ended free capacity). Editing an existing row does not count against itself
 - Delete action with confirmation dialog
-- Add / edit in a modal
+- Add / edit in a modal (RHF + zod)
 - Row ⋯ menu: Edit and Delete
+- Search / filter by type and status; table shows slot + dates + derived status
 
 ### `/admin/audit-logs`
 
@@ -590,9 +618,13 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 ### `/admin/settings`
 
 - Save form (no search/filter table)
-- Credit-limit defaults by provider tier (preferred / standard / high-risk)
-- Reliability cutoffs (at-risk / watch) and lock-at-risk toggle
-- Login codes (SMS / WhatsApp) and platform switches (placeholders), including featured-listing slots from Featured (spotlight only — discount codes stay on `/admin/discount-codes`)
+- Credit-limit defaults by Architecture volume tier (New / unverified 1.5M, Established 5M, Enterprise / high volume 15M SYP) — separate from Fees commission tiers; warn at 75%, 48h grace at 100%
+- Reliability cutoffs (VIP / Standard / Restricted floors on the 0–100 score; below Restricted = Suspended) and lock-suspended toggle
+- Login codes (SMS / WhatsApp) and platform switches (placeholders)
+- **Featuring (spotlight only — not discount codes):**
+  - Master switch: featuring on / off for the whole home merchandising system
+  - Per-slot enable toggles for the eight named Home slots (`heritage_spotlight`, `pillar_hotels`, `pillar_dining`, `pillar_trips`, `pillar_events`, `pillar_guides`, `home_campaign`, `persona_rail`)
+  - Replaces the old single boolean-only “featured listings” wording. Discount codes stay on `/admin/discount-codes`
 
 ---
 

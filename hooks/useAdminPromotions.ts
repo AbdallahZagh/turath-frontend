@@ -51,6 +51,7 @@ export function useSaveAdminPromotion(): UseMutationResult<
         }
         return [saved, ...current];
       });
+      void client.invalidateQueries({ queryKey: ["public", "featured"] });
     },
   });
 }
@@ -67,6 +68,7 @@ export function useDeleteAdminPromotion(): UseMutationResult<void, Error, string
         }
         return current.filter((row) => row.id !== id);
       });
+      void client.invalidateQueries({ queryKey: ["public", "featured"] });
     },
   });
 }

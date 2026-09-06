@@ -174,7 +174,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       "aria-current": ariaCurrent,
     } as const;
 
-    if (href.startsWith("#")) {
+    if (href.startsWith("#") || href.startsWith("/#")) {
       return <a {...linkProps}>{chrome}</a>;
     }
 

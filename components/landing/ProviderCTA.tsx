@@ -19,7 +19,7 @@ export function ProviderCTA(): ReactNode {
   const t = useTranslations("landing.providerCta");
 
   return (
-    <section id="grow-with-turath" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
+    <section id="grow-with-turath" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-24">
       <motion.div
         initial="hidden"
         whileInView="visible"

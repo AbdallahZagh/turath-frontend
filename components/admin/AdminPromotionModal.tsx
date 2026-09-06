@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash2 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useState, type ReactNode } from "react";
+import { Controller, useForm, type FieldError } from "react-hook-form";
 
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Button } from "@/components/ui/Button";
@@ -17,12 +19,23 @@ import {
 import type { Locale } from "@/i18n/config";
 import {
   CUSTOM_PROMOTION_TARGET_ID,
-  PROMOTION_KINDS,
+  FEATURED_SLOT_IDS,
+  FeaturedKindSlotMismatchError,
+  FeaturedSlotAtCapacityError,
+  FeaturedSlotDisabledError,
   PROMOTION_TARGET_PRESETS,
   promotionPresetIdForTarget,
+  slotRequiresCampaign,
   type AdminPromotion,
+  type FeaturedSlotId,
   type PromotionKind,
 } from "@/lib/mock/adminPromotions";
+import {
+  featuredFormSchema,
+  isFeaturedFormErrorKey,
+  type FeaturedFormErrorKey,
+  type FeaturedFormValues,
+} from "@/lib/validation/adminFeatured";
 import { toast } from "@/store/toastStore";
 
 type AdminPromotionModalProps = {
@@ -31,8 +44,21 @@ type AdminPromotionModalProps = {
   onClose: () => void;
 };
 
-function isKind(value: string): value is PromotionKind {
-  return (PROMOTION_KINDS as readonly string[]).includes(value);
+function fieldMessage(
+  tErrors: (key: FeaturedFormErrorKey) => string,
+  error: FieldError | undefined,
+): string | undefined {
+  if (!error?.message) {
+    return undefined;
+  }
+  if (!isFeaturedFormErrorKey(error.message)) {
+    return error.message;
+  }
+  return tErrors(error.message);
+}
+
+function kindForSlot(slot: FeaturedSlotId): PromotionKind {
+  return slotRequiresCampaign(slot) ? "campaign" : "featured";
 }
 
 export function AdminPromotionModal({
@@ -47,7 +73,7 @@ export function AdminPromotionModal({
       open={open}
       onClose={onClose}
       title={promotion ? t("form.titleEdit") : t("form.titleAdd")}
-      className="flex max-w-lg flex-col"
+      className="flex max-h-[min(92vh,44rem)] max-w-lg flex-col overflow-hidden"
     >
       {open ? (
         <PromotionForm
@@ -67,32 +93,30 @@ type PromotionFormProps = {
 
 function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
   const t = useTranslations("admin.promotions");
+  const tErrors = useTranslations("admin.promotions.form.errors");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
 
   const savePromotion = useSaveAdminPromotion();
   const deletePromotion = useDeleteAdminPromotion();
-
-  const [titleEn, setTitleEn] = useState(promotion?.title.en ?? "");
-  const [titleAr, setTitleAr] = useState(promotion?.title.ar ?? "");
-  const [kind, setKind] = useState<PromotionKind>(promotion?.kind ?? "featured");
-  const [targetPreset, setTargetPreset] = useState(
-    promotion ? promotionPresetIdForTarget(promotion.target) : CUSTOM_PROMOTION_TARGET_ID,
-  );
-  const [targetEn, setTargetEn] = useState(promotion?.target.en ?? "");
-  const [targetAr, setTargetAr] = useState(promotion?.target.ar ?? "");
-  const [startAt, setStartAt] = useState(promotion?.startAt ?? "");
-  const [endAt, setEndAt] = useState(promotion?.endAt ?? "");
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  function handlePresetChange(val: string): void {
-    setTargetPreset(val);
-    const match = PROMOTION_TARGET_PRESETS.find((preset) => preset.id === val);
-    if (match) {
-      setTargetEn(match.target.en);
-      setTargetAr(match.target.ar);
-    }
-  }
+  const form = useForm<FeaturedFormValues>({
+    resolver: zodResolver(featuredFormSchema),
+    defaultValues: {
+      titleEn: promotion?.title.en ?? "",
+      titleAr: promotion?.title.ar ?? "",
+      slot: promotion?.slot ?? "heritage_spotlight",
+      kind: promotion?.kind ?? "featured",
+      targetPreset: promotion
+        ? promotionPresetIdForTarget(promotion.target)
+        : CUSTOM_PROMOTION_TARGET_ID,
+      targetEn: promotion?.target.en ?? "",
+      targetAr: promotion?.target.ar ?? "",
+      startAt: promotion?.startAt ?? "",
+      endAt: promotion?.endAt ?? "",
+    },
+  });
 
   function dismiss(): void {
     savePromotion.reset();
@@ -113,22 +137,18 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
     });
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-    if (!startAt || !endAt || endAt < startAt) {
-      toast.error(t("saveFailed"), t("invalidDates"));
-      return;
-    }
-
+  function onValid(values: FeaturedFormValues): void {
+    const slot = values.slot as FeaturedSlotId;
     savePromotion.mutate(
       {
         id: promotion?.id,
         input: {
-          title: { en: titleEn, ar: titleAr },
-          kind,
-          target: { en: targetEn, ar: targetAr },
-          startAt,
-          endAt,
+          title: { en: values.titleEn, ar: values.titleAr },
+          kind: kindForSlot(slot),
+          slot,
+          target: { en: values.targetEn, ar: values.targetAr },
+          startAt: values.startAt,
+          endAt: values.endAt,
         },
       },
       {
@@ -139,7 +159,19 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
           );
           onClose();
         },
-        onError: () => {
+        onError: (error) => {
+          if (error instanceof FeaturedSlotDisabledError) {
+            toast.error(t("slotDisabled"), t("slotDisabledBody"));
+            return;
+          }
+          if (error instanceof FeaturedSlotAtCapacityError) {
+            toast.error(t("slotAtCapacity"), t("slotAtCapacityBody"));
+            return;
+          }
+          if (error instanceof FeaturedKindSlotMismatchError) {
+            toast.error(t("saveFailed"), t("kindSlotMismatch"));
+            return;
+          }
           toast.error(t("saveFailed"), t("saveFailedBody"));
         },
       },
@@ -148,66 +180,126 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
 
   return (
     <>
-      <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+      <form
+        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto pe-1"
+        onSubmit={form.handleSubmit(onValid)}
+      >
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">{t("form.titleEn")}</span>
             <Input
               variant="glass"
               size="sm"
-              required
-              value={titleEn}
-              onChange={(event) => setTitleEn(event.target.value)}
+              {...form.register("titleEn")}
               label={t("form.titleEn")}
+              aria-invalid={Boolean(form.formState.errors.titleEn)}
             />
+            {fieldMessage(tErrors, form.formState.errors.titleEn) ? (
+              <span className="text-destructive text-xs">
+                {fieldMessage(tErrors, form.formState.errors.titleEn)}
+              </span>
+            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">{t("form.titleAr")}</span>
             <Input
               variant="glass"
               size="sm"
-              required
               dir="rtl"
-              value={titleAr}
-              onChange={(event) => setTitleAr(event.target.value)}
+              {...form.register("titleAr")}
               label={t("form.titleAr")}
+              aria-invalid={Boolean(form.formState.errors.titleAr)}
             />
+            {fieldMessage(tErrors, form.formState.errors.titleAr) ? (
+              <span className="text-destructive text-xs">
+                {fieldMessage(tErrors, form.formState.errors.titleAr)}
+              </span>
+            ) : null}
           </label>
         </div>
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-prose-muted text-xs font-medium">{t("form.slot")}</span>
+          <Controller
+            control={form.control}
+            name="slot"
+            render={({ field }) => (
+              <Select
+                variant="glass"
+                size="sm"
+                value={field.value}
+                onChange={(value) => {
+                  field.onChange(value);
+                  if ((FEATURED_SLOT_IDS as readonly string[]).includes(value)) {
+                    form.setValue("kind", kindForSlot(value as FeaturedSlotId));
+                  }
+                }}
+                label={t("form.slot")}
+                options={FEATURED_SLOT_IDS.map((slot) => ({
+                  value: slot,
+                  label: t(`slots.${slot}`),
+                }))}
+              />
+            )}
+          />
+          {fieldMessage(tErrors, form.formState.errors.slot) ? (
+            <span className="text-destructive text-xs">
+              {fieldMessage(tErrors, form.formState.errors.slot)}
+            </span>
+          ) : null}
+        </div>
+
         <div className="flex flex-col gap-1.5">
           <span className="text-prose-muted text-xs font-medium">{t("form.kind")}</span>
-          <Select
-            variant="glass"
-            size="sm"
-            value={kind}
-            onChange={(value) => {
-              if (isKind(value)) {
-                setKind(value);
-              }
-            }}
-            label={t("form.kind")}
-            options={PROMOTION_KINDS.map((value) => ({
-              value,
-              label: t(`kind.${value}`),
-            }))}
+          <Controller
+            control={form.control}
+            name="kind"
+            render={({ field }) => (
+              <Select
+                variant="glass"
+                size="sm"
+                value={field.value}
+                onChange={field.onChange}
+                label={t("form.kind")}
+                disabled
+                options={[
+                  { value: "featured", label: t("kind.featured") },
+                  { value: "campaign", label: t("kind.campaign") },
+                ]}
+              />
+            )}
           />
+          <p className="text-prose-muted text-xs">{t("form.kindHint")}</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
           <span className="text-prose-muted text-xs font-medium">{t("form.targetPreset")}</span>
-          <Select
-            variant="glass"
-            size="sm"
-            value={targetPreset}
-            onChange={handlePresetChange}
-            label={t("form.targetPreset")}
-            options={[
-              { value: CUSTOM_PROMOTION_TARGET_ID, label: t("form.customTarget") },
-              ...PROMOTION_TARGET_PRESETS.map((preset) => ({
-                value: preset.id,
-                label: loc === "ar" ? preset.target.ar : preset.target.en,
-              })),
-            ]}
+          <Controller
+            control={form.control}
+            name="targetPreset"
+            render={({ field }) => (
+              <Select
+                variant="glass"
+                size="sm"
+                value={field.value}
+                onChange={(val) => {
+                  field.onChange(val);
+                  const match = PROMOTION_TARGET_PRESETS.find((preset) => preset.id === val);
+                  if (match) {
+                    form.setValue("targetEn", match.target.en);
+                    form.setValue("targetAr", match.target.ar);
+                  }
+                }}
+                label={t("form.targetPreset")}
+                options={[
+                  { value: CUSTOM_PROMOTION_TARGET_ID, label: t("form.customTarget") },
+                  ...PROMOTION_TARGET_PRESETS.map((preset) => ({
+                    value: preset.id,
+                    label: loc === "ar" ? preset.target.ar : preset.target.en,
+                  })),
+                ]}
+              />
+            )}
           />
         </div>
 
@@ -217,46 +309,71 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             <Input
               variant="glass"
               size="sm"
-              required
-              value={targetEn}
-              onChange={(event) => setTargetEn(event.target.value)}
+              {...form.register("targetEn")}
               label={t("form.targetEn")}
+              aria-invalid={Boolean(form.formState.errors.targetEn)}
             />
+            {fieldMessage(tErrors, form.formState.errors.targetEn) ? (
+              <span className="text-destructive text-xs">
+                {fieldMessage(tErrors, form.formState.errors.targetEn)}
+              </span>
+            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">{t("form.targetAr")}</span>
             <Input
               variant="glass"
               size="sm"
-              required
               dir="rtl"
-              value={targetAr}
-              onChange={(event) => setTargetAr(event.target.value)}
+              {...form.register("targetAr")}
               label={t("form.targetAr")}
+              aria-invalid={Boolean(form.formState.errors.targetAr)}
             />
+            {fieldMessage(tErrors, form.formState.errors.targetAr) ? (
+              <span className="text-destructive text-xs">
+                {fieldMessage(tErrors, form.formState.errors.targetAr)}
+              </span>
+            ) : null}
           </label>
         </div>
+
         <div className="grid gap-3 sm:grid-cols-2">
-          <DatePicker
-            variant="glass"
-            size="sm"
-            required
-            value={startAt}
-            onChange={setStartAt}
-            label={t("form.start")}
-            max={endAt || undefined}
+          <Controller
+            control={form.control}
+            name="startAt"
+            render={({ field }) => (
+              <DatePicker
+                variant="glass"
+                size="sm"
+                value={field.value}
+                onChange={field.onChange}
+                label={t("form.start")}
+                max={form.getValues("endAt") || undefined}
+              />
+            )}
           />
-          <DatePicker
-            variant="glass"
-            size="sm"
-            required
-            value={endAt}
-            onChange={setEndAt}
-            label={t("form.end")}
-            min={startAt || undefined}
+          <Controller
+            control={form.control}
+            name="endAt"
+            render={({ field }) => (
+              <DatePicker
+                variant="glass"
+                size="sm"
+                value={field.value}
+                onChange={field.onChange}
+                label={t("form.end")}
+                min={form.getValues("startAt") || undefined}
+              />
+            )}
           />
         </div>
-        <div className="flex shrink-0 items-center justify-between gap-2 pt-2 border-t border-glass-border">
+        {fieldMessage(tErrors, form.formState.errors.endAt) ? (
+          <span className="text-destructive text-xs">
+            {fieldMessage(tErrors, form.formState.errors.endAt)}
+          </span>
+        ) : null}
+
+        <div className="border-glass-border flex shrink-0 items-center justify-between gap-2 border-t pt-2">
           {promotion ? (
             <Button
               type="button"

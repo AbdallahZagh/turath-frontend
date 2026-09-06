@@ -33,7 +33,7 @@ export function HowItWorks(): ReactNode {
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="how-it-works" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
+    <section id="how-it-works" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-24">
       <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 
       <div ref={containerRef} className="relative mx-auto mt-16 max-w-5xl">

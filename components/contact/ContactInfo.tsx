@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
@@ -38,27 +38,6 @@ export function ContactInfo(): ReactNode {
                   dir="ltr"
                 >
                   {t("phoneValue")}
-                </a>
-              </div>
-            </div>
-
-            {/* WhatsApp */}
-            <div className="flex items-start gap-3.5">
-              <div className="bg-accent/15 text-accent flex size-10 shrink-0 items-center justify-center rounded-xl">
-                <MessageCircle className="size-5" aria-hidden />
-              </div>
-              <div className="min-w-0">
-                <p className="text-prose-muted text-xs font-medium uppercase tracking-wider">
-                  {t("whatsapp")}
-                </p>
-                <a
-                  href={`https://wa.me/${t("whatsappValue").replace(/[^\d]/g, "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-prose hover:text-accent mt-0.5 inline-block text-sm font-semibold transition-colors sm:text-base"
-                  dir="ltr"
-                >
-                  {t("whatsappValue")}
                 </a>
               </div>
             </div>

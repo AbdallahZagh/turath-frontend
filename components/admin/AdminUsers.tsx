@@ -19,13 +19,12 @@ import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatCount, formatPercent } from "@/lib/format/number";
+import { formatCount, formatReliabilityScore } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import {
-  DEFAULT_AT_RISK_BELOW,
-  DEFAULT_WATCH_BELOW,
-  reliabilityBand,
-  reliabilityBandClass,
+  DEFAULT_RELIABILITY_CUTOFFS,
+  reliabilityTier,
+  reliabilityTierClass,
   type AdminUser,
 } from "@/lib/mock/adminUsers";
 
@@ -51,8 +50,13 @@ export function AdminUsers(): ReactNode {
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const { data, isPending, isError, refetch } = useAdminUsers();
   const { data: settings } = useAdminSettings();
-  const atRiskBelow = settings?.reliability.atRiskBelow ?? DEFAULT_AT_RISK_BELOW;
-  const watchBelow = settings?.reliability.watchBelow ?? DEFAULT_WATCH_BELOW;
+  const cutoffs = settings
+    ? {
+        vipAtOrAbove: settings.reliability.vipAtOrAbove,
+        standardAtOrAbove: settings.reliability.standardAtOrAbove,
+        restrictedAtOrAbove: settings.reliability.restrictedAtOrAbove,
+      }
+    : DEFAULT_RELIABILITY_CUTOFFS;
   const [query, setQuery] = useState("");
   const [account, setAccount] = useState(ALL);
   const [reliability, setReliability] = useState(ALL);
@@ -70,13 +74,13 @@ export function AdminUsers(): ReactNode {
       }
       if (
         reliability !== ALL &&
-        reliabilityBand(user.reliability, atRiskBelow, watchBelow) !== reliability
+        reliabilityTier(user.reliability, cutoffs) !== reliability
       ) {
         return false;
       }
       return matchesUserQuery(user, query);
     });
-  }, [data, query, account, reliability, atRiskBelow, watchBelow]);
+  }, [data, query, account, reliability, cutoffs]);
 
   const handleExportCsv = useCallback(() => {
     const headers = [
@@ -94,7 +98,7 @@ export function AdminUsers(): ReactNode {
       user.email,
       formatMediumDate(user.joinedAt, loc),
       user.completedBookings,
-      `${Math.round(user.reliability * 100)}%`,
+      formatReliabilityScore(user.reliability, loc),
       user.locked ? t("account.locked") : t("account.active"),
     ]);
     exportToCsv(`turath-guests-${new Date().toISOString().slice(0, 10)}`, headers, rows);
@@ -140,10 +144,10 @@ export function AdminUsers(): ReactNode {
         <span
           className={cn(
             "font-semibold tabular-nums",
-            reliabilityBandClass(reliabilityBand(user.reliability, atRiskBelow, watchBelow)),
+            reliabilityTierClass(reliabilityTier(user.reliability, cutoffs)),
           )}
         >
-          {formatPercent(user.reliability, loc, 0)}
+          {formatReliabilityScore(user.reliability, loc)}
         </span>
       ),
     },
@@ -216,9 +220,10 @@ export function AdminUsers(): ReactNode {
             onChange: setReliability,
             options: [
               { value: ALL, label: t("allReliability") },
-              { value: "strong", label: t("reliabilityBand.strong") },
-              { value: "watch", label: t("reliabilityBand.watch") },
-              { value: "atRisk", label: t("reliabilityBand.atRisk") },
+              { value: "vip", label: t("reliabilityTier.vip") },
+              { value: "standard", label: t("reliabilityTier.standard") },
+              { value: "restricted", label: t("reliabilityTier.restricted") },
+              { value: "suspended", label: t("reliabilityTier.suspended") },
             ],
           },
         ]}

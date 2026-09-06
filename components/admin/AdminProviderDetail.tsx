@@ -75,7 +75,7 @@ export function AdminProviderDetail({ providerId }: AdminProviderDetailProps): R
   const rating = reviewSummary(reviews);
   const pillarRate =
     commissions?.rows.find((row) => row.category === provider.category)?.rate ?? 0.12;
-  const tierCeilingSyp = settings?.creditCeilingsSyp[provider.tier] ?? 3_000_000;
+  const tierCeilingSyp = settings?.creditCeilingsSyp[provider.creditTier] ?? 5_000_000;
 
   function onStatus(status: ProviderStatus): void {
     const from = provider.status;

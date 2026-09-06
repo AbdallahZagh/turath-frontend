@@ -3,6 +3,7 @@ import { addDays } from "date-fns";
 import { parseIsoDate, toIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import type { CommissionTierId } from "@/lib/mock/adminCommissions";
+import type { CreditCeilingTierId } from "@/lib/mock/adminSettings";
 import {
   cloneInventory,
   inventoryFor,
@@ -64,6 +65,8 @@ export type AdminProvider = {
   description: LocalizedName;
   documents: AdminProviderDocument[];
   tier: CommissionTierId;
+  /** Architecture credit-ceiling axis (separate from Fees commission tier). */
+  creditTier: CreditCeilingTierId;
   commissionOverride: number | null;
   creditOverrideSyp: number | null;
   inventory: ProviderInventory;
@@ -310,6 +313,19 @@ function tierFor(seed: ProviderSeed): CommissionTierId {
   return "standard";
 }
 
+function creditTierFor(seed: ProviderSeed): CreditCeilingTierId {
+  if (seed.status === "pending" || seed.status === "rejected") {
+    return "new";
+  }
+  if (seed.id === "prv_09" || seed.id === "prv_10") {
+    return "enterprise";
+  }
+  if (seed.status === "approved") {
+    return "established";
+  }
+  return "new";
+}
+
 function descriptionFor(seed: ProviderSeed): LocalizedName {
   return {
     en: `${seed.name.en} — ${seed.owner.en}.`,
@@ -374,6 +390,7 @@ function enrich(seed: ProviderSeed): AdminProvider {
     description: descriptionFor(seed),
     documents: documentsFor(seed),
     tier: tierFor(seed),
+    creditTier: creditTierFor(seed),
     commissionOverride: seed.id === "prv_09" ? 0.1 : null,
     creditOverrideSyp: null,
     inventory: inventoryFor(seed),

@@ -1036,7 +1036,7 @@
         "hint": {
           "healthy": "Credit is within the ceiling.",
           "watch": "Credit has passed 75%. Review this account before the next statement.",
-          "grace": "Credit is at or over 100%. Suspend if they do not settle.",
+          "grace": "Credit is at or over 100%. A 48-hour grace period applies; suspend if they do not settle.",
           "suspended": "New intake should stay blocked until this account is reinstated."
         },
         "statementStatus": {
@@ -1447,16 +1447,16 @@
       "invalidReliability": "Restricted must be below Standard, Standard below VIP, and all between 0 and 100.",
       "credit": {
         "title": "Credit limits",
-        "description": "How much a business can owe before we pause new bookings. You can still set a different limit on one business.",
+        "description": "Architecture ceilings by volume tier (not Fees commission). Warn at 75%; at 100% a 48-hour grace period starts before intake is blocked. You can still set a different limit on one business.",
         "columns": {
           "tier": "Tier",
           "ceiling": "Ceiling (SYP)"
         }
       },
       "tiers": {
-        "preferred": "Preferred",
-        "standard": "Standard",
-        "highRisk": "High risk"
+        "new": "New / unverified",
+        "established": "Established",
+        "enterprise": "Enterprise / high volume"
       },
       "reliability": {
         "title": "Reliability score",

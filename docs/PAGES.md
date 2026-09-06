@@ -567,7 +567,7 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 - Scroll the page. Header title is static (“Account”); the business name lives in the account card
 - Account (glass): names AR/EN, guest rating average, category, cadence, last settled, standing. Actions by standing — watch or grace: Suspend; suspended: Reinstate; healthy: no standing action. Record settlement when outstanding is above zero (mock for the session)
-- Balance: accrued, paid, outstanding. Credit used vs ceiling with warning copy at 75% and grace copy at 100%
+- Balance: accrued, paid, outstanding. Credit used vs ceiling with warning copy at 75% and grace copy at 100% (48-hour grace)
 - Statements: recent settlement periods for this cadence — period, accrued, paid, status (paid / due / overdue)
 - Link to the business profile when a matching business exists
 
@@ -618,7 +618,7 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 ### `/admin/settings`
 
 - Save form (no search/filter table)
-- Credit-limit defaults by provider tier (preferred / standard / high-risk)
+- Credit-limit defaults by Architecture volume tier (New / unverified 1.5M, Established 5M, Enterprise / high volume 15M SYP) — separate from Fees commission tiers; warn at 75%, 48h grace at 100%
 - Reliability cutoffs (VIP / Standard / Restricted floors on the 0–100 score; below Restricted = Suspended) and lock-suspended toggle
 - Login codes (SMS / WhatsApp) and platform switches (placeholders)
 - **Featuring (spotlight only — not discount codes):**

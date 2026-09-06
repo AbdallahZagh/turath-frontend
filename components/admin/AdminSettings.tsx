@@ -16,11 +16,11 @@ import { useAdminSettings, useSaveAdminSettings } from "@/hooks/useAdminSettings
 import type { Locale } from "@/i18n/config";
 import { formatSyp } from "@/lib/format/money";
 import {
-  COMMISSION_TIERS,
+  CREDIT_CEILING_TIERS,
   FEATURED_SLOT_IDS,
   OTP_CHANNELS,
   type AdminSettings,
-  type CommissionTierId,
+  type CreditCeilingTierId,
   type FeaturedSlotId,
   type OtpChannel,
 } from "@/lib/mock/adminSettings";
@@ -28,7 +28,7 @@ import { defaultFeaturedSlotEnables } from "@/lib/mock/featuredSlots";
 import { toast } from "@/store/toastStore";
 
 type SettingsDraft = {
-  ceilings: Record<CommissionTierId, string>;
+  ceilings: Record<CreditCeilingTierId, string>;
   vipAtOrAbove: string;
   standardAtOrAbove: string;
   restrictedAtOrAbove: string;
@@ -50,9 +50,9 @@ function parseScoreCutoff(value: string): number | undefined {
 function draftFromSettings(data: AdminSettings): SettingsDraft {
   return {
     ceilings: {
-      preferred: String(data.creditCeilingsSyp.preferred),
-      standard: String(data.creditCeilingsSyp.standard),
-      highRisk: String(data.creditCeilingsSyp.highRisk),
+      new: String(data.creditCeilingsSyp.new),
+      established: String(data.creditCeilingsSyp.established),
+      enterprise: String(data.creditCeilingsSyp.enterprise),
     },
     vipAtOrAbove: String(data.reliability.vipAtOrAbove),
     standardAtOrAbove: String(data.reliability.standardAtOrAbove),
@@ -89,7 +89,7 @@ export function AdminSettings(): ReactNode {
     }
   }
 
-  function setCeiling(tier: CommissionTierId, value: string): void {
+  function setCeiling(tier: CreditCeilingTierId, value: string): void {
     setDraft((current) =>
       current ? { ...current, ceilings: { ...current.ceilings, [tier]: value } } : current,
     );
@@ -112,8 +112,8 @@ export function AdminSettings(): ReactNode {
       return;
     }
 
-    const creditCeilingsSyp = {} as Record<CommissionTierId, number>;
-    for (const tier of COMMISSION_TIERS) {
+    const creditCeilingsSyp = {} as Record<CreditCeilingTierId, number>;
+    for (const tier of CREDIT_CEILING_TIERS) {
       const amount = Number(draft.ceilings[tier]);
       if (!Number.isFinite(amount) || amount <= 0) {
         toast.error(t("saveFailed"), t("invalidCredit"));
@@ -162,8 +162,8 @@ export function AdminSettings(): ReactNode {
     );
   }
 
-  const creditRows = COMMISSION_TIERS.map((tier) => ({ tier }));
-  const creditColumns: TableColumn<{ tier: CommissionTierId }>[] = [
+  const creditRows = CREDIT_CEILING_TIERS.map((tier) => ({ tier }));
+  const creditColumns: TableColumn<{ tier: CreditCeilingTierId }>[] = [
     {
       id: "tier",
       header: t("credit.columns.tier"),

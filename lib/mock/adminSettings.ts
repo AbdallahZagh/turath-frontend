@@ -1,26 +1,26 @@
 import {
-  COMMISSION_TIERS,
-  type CommissionTierId,
-} from "@/lib/mock/adminCommissions";
-import {
   FEATURED_SLOT_IDS,
   defaultFeaturedSlotEnables,
   type FeaturedSlotId,
 } from "@/lib/mock/featuredSlots";
 
-export { COMMISSION_TIERS, type CommissionTierId };
 export {
   FEATURED_SLOT_IDS,
   FEATURED_SLOT_CAPACITY,
   type FeaturedSlotId,
 } from "@/lib/mock/featuredSlots";
 
+/** Architecture credit-ceiling axis — not Fees commission tiers. */
+export const CREDIT_CEILING_TIERS = ["new", "established", "enterprise"] as const;
+
+export type CreditCeilingTierId = (typeof CREDIT_CEILING_TIERS)[number];
+
 export const OTP_CHANNELS = ["sms", "whatsapp"] as const;
 
 export type OtpChannel = (typeof OTP_CHANNELS)[number];
 
 export type AdminSettings = {
-  creditCeilingsSyp: Record<CommissionTierId, number>;
+  creditCeilingsSyp: Record<CreditCeilingTierId, number>;
   reliability: {
     vipAtOrAbove: number;
     standardAtOrAbove: number;
@@ -50,9 +50,9 @@ function cloneSettings(value: AdminSettings): AdminSettings {
 
 let settings: AdminSettings = {
   creditCeilingsSyp: {
-    preferred: 8_000_000,
-    standard: 3_000_000,
-    highRisk: 1_200_000,
+    new: 1_500_000,
+    established: 5_000_000,
+    enterprise: 15_000_000,
   },
   reliability: {
     vipAtOrAbove: 80,

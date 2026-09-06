@@ -1,9 +1,26 @@
 import type { LocalizedName } from "@/lib/i18n/localized";
 
-export type ReliabilityBand = "atRisk" | "watch" | "strong";
+/** Architecture §3.2 trust tiers (docs win over the old 0–1 / 3-band mock). */
+export type ReliabilityTier = "vip" | "standard" | "restricted" | "suspended";
 
-export const DEFAULT_AT_RISK_BELOW = 0.6;
-export const DEFAULT_WATCH_BELOW = 0.8;
+export const RELIABILITY_START = 100;
+export const RELIABILITY_NO_SHOW_DELTA = 30;
+
+export const DEFAULT_VIP_AT_OR_ABOVE = 80;
+export const DEFAULT_STANDARD_AT_OR_ABOVE = 50;
+export const DEFAULT_RESTRICTED_AT_OR_ABOVE = 30;
+
+export type ReliabilityCutoffs = {
+  vipAtOrAbove: number;
+  standardAtOrAbove: number;
+  restrictedAtOrAbove: number;
+};
+
+export const DEFAULT_RELIABILITY_CUTOFFS: ReliabilityCutoffs = {
+  vipAtOrAbove: DEFAULT_VIP_AT_OR_ABOVE,
+  standardAtOrAbove: DEFAULT_STANDARD_AT_OR_ABOVE,
+  restrictedAtOrAbove: DEFAULT_RESTRICTED_AT_OR_ABOVE,
+};
 
 export type AdminUserAccountEvent = {
   at: string;
@@ -15,6 +32,7 @@ export type AdminUser = {
   name: LocalizedName;
   phone: string;
   email: string;
+  /** Integer reliability score on 0–100 (Architecture / SRS). */
   reliability: number;
   completedBookings: number;
   joinedAt: string;
@@ -33,7 +51,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Rami Haddad", ar: "رامي حداد" },
     phone: "+963 933 441 208",
     email: "rami.haddad@example.com",
-    reliability: 0.96,
+    reliability: 100,
     completedBookings: 18,
     joinedAt: "2025-11-04",
     locked: false,
@@ -43,7 +61,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Maya Al-Khatib", ar: "مايا الخطيب" },
     phone: "+963 944 112 330",
     email: "maya.khatib@example.com",
-    reliability: 0.91,
+    reliability: 100,
     completedBookings: 11,
     joinedAt: "2026-01-18",
     locked: false,
@@ -53,7 +71,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Omar Nseir", ar: "عمر نصير" },
     phone: "+963 955 870 014",
     email: "omar.nseir@example.com",
-    reliability: 0.54,
+    reliability: 40,
     completedBookings: 7,
     joinedAt: "2026-03-02",
     locked: false,
@@ -63,7 +81,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Lina Barakat", ar: "لينا بركات" },
     phone: "+963 991 220 441",
     email: "lina.barakat@example.com",
-    reliability: 0.88,
+    reliability: 100,
     completedBookings: 22,
     joinedAt: "2025-08-21",
     locked: false,
@@ -73,7 +91,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Tarek Qudsi", ar: "طارق قدسي" },
     phone: "+963 988 334 119",
     email: "tarek.qudsi@example.com",
-    reliability: 0.42,
+    reliability: 40,
     completedBookings: 4,
     joinedAt: "2026-05-09",
     locked: true,
@@ -83,7 +101,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Hala Karam", ar: "هلا كرم" },
     phone: "+961 3 445 901",
     email: "hala.karam@example.com",
-    reliability: 0.93,
+    reliability: 100,
     completedBookings: 9,
     joinedAt: "2026-02-14",
     locked: false,
@@ -93,7 +111,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Sami Deeb", ar: "سامي ديب" },
     phone: "+963 922 667 880",
     email: "sami.deeb@example.com",
-    reliability: 0.77,
+    reliability: 70,
     completedBookings: 13,
     joinedAt: "2025-12-11",
     locked: false,
@@ -103,7 +121,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Nour Al-Hassan", ar: "نور الحسن" },
     phone: "+963 966 501 273",
     email: "nour.hassan@example.com",
-    reliability: 0.85,
+    reliability: 100,
     completedBookings: 6,
     joinedAt: "2026-04-27",
     locked: false,
@@ -113,7 +131,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Fadi Sharif", ar: "فادي شريف" },
     phone: "+971 50 882 1044",
     email: "fadi.sharif@example.com",
-    reliability: 0.69,
+    reliability: 70,
     completedBookings: 5,
     joinedAt: "2026-06-03",
     locked: false,
@@ -123,7 +141,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Yara Mansour", ar: "يارا منصور" },
     phone: "+963 911 778 652",
     email: "yara.mansour@example.com",
-    reliability: 0.98,
+    reliability: 100,
     completedBookings: 31,
     joinedAt: "2025-06-30",
     locked: false,
@@ -133,7 +151,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Bassel Atassi", ar: "باسل الأتاسي" },
     phone: "+963 947 219 008",
     email: "bassel.atassi@example.com",
-    reliability: 0.33,
+    reliability: 10,
     completedBookings: 2,
     joinedAt: "2026-07-19",
     locked: true,
@@ -143,7 +161,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Reem Jabri", ar: "ريم الجابري" },
     phone: "+962 79 554 2210",
     email: "reem.jabri@example.com",
-    reliability: 0.9,
+    reliability: 100,
     completedBookings: 8,
     joinedAt: "2026-03-28",
     locked: false,
@@ -153,7 +171,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Dina Shahin", ar: "دينا شاهين" },
     phone: "+963 934 661 902",
     email: "dina.shahin@example.com",
-    reliability: 0.81,
+    reliability: 100,
     completedBookings: 10,
     joinedAt: "2026-04-11",
     locked: false,
@@ -163,7 +181,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Majd Harmoush", ar: "مجد حرموش" },
     phone: "+963 958 440 173",
     email: "majd.harmoush@example.com",
-    reliability: 0.73,
+    reliability: 70,
     completedBookings: 6,
     joinedAt: "2026-05-22",
     locked: false,
@@ -173,7 +191,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Salma Qassar", ar: "سلمى قصّار" },
     phone: "+963 912 808 441",
     email: "salma.qassar@example.com",
-    reliability: 0.94,
+    reliability: 100,
     completedBookings: 15,
     joinedAt: "2025-10-08",
     locked: false,
@@ -183,7 +201,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Nabil Khouri", ar: "نبيل خوري" },
     phone: "+961 70 221 884",
     email: "nabil.khouri@example.com",
-    reliability: 0.61,
+    reliability: 70,
     completedBookings: 3,
     joinedAt: "2026-07-02",
     locked: false,
@@ -193,7 +211,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Hiba Zayat", ar: "هبة الزيات" },
     phone: "+963 993 115 770",
     email: "hiba.zayat@example.com",
-    reliability: 0.87,
+    reliability: 100,
     completedBookings: 12,
     joinedAt: "2026-01-29",
     locked: false,
@@ -203,7 +221,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Karim Tello", ar: "كريم تلّو" },
     phone: "+963 967 330 215",
     email: "karim.tello@example.com",
-    reliability: 0.48,
+    reliability: 40,
     completedBookings: 4,
     joinedAt: "2026-08-05",
     locked: false,
@@ -213,7 +231,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Farah Nahas", ar: "فرح نحاس" },
     phone: "+963 945 672 001",
     email: "farah.nahas@example.com",
-    reliability: 0.92,
+    reliability: 100,
     completedBookings: 19,
     joinedAt: "2025-09-14",
     locked: false,
@@ -223,7 +241,7 @@ const USER_SEED: Omit<AdminUser, "accountEvents">[] = [
     name: { en: "Waleed Homsi", ar: "وليد حمصي" },
     phone: "+963 921 449 338",
     email: "waleed.homsi@example.com",
-    reliability: 0.79,
+    reliability: 70,
     completedBookings: 9,
     joinedAt: "2026-02-21",
     locked: false,
@@ -289,35 +307,36 @@ export function setAdminUserLocked(id: string, locked: boolean, at: string): Adm
   return cloneUser(next);
 }
 
-export function reliabilityBand(
+export function reliabilityTier(
   score: number,
-  atRiskBelow = DEFAULT_AT_RISK_BELOW,
-  watchBelow = DEFAULT_WATCH_BELOW,
-): ReliabilityBand {
-  if (score < atRiskBelow) {
-    return "atRisk";
+  cutoffs: ReliabilityCutoffs = DEFAULT_RELIABILITY_CUTOFFS,
+): ReliabilityTier {
+  if (score >= cutoffs.vipAtOrAbove) {
+    return "vip";
   }
-  if (score < watchBelow) {
-    return "watch";
+  if (score >= cutoffs.standardAtOrAbove) {
+    return "standard";
   }
-  return "strong";
+  if (score >= cutoffs.restrictedAtOrAbove) {
+    return "restricted";
+  }
+  return "suspended";
 }
 
-export function reliabilityBandClass(band: ReliabilityBand): string {
-  if (band === "atRisk") {
+export function reliabilityTierClass(tier: ReliabilityTier): string {
+  if (tier === "suspended" || tier === "restricted") {
     return "text-destructive";
   }
-  if (band === "watch") {
+  if (tier === "standard") {
     return "text-prose-muted";
   }
   return "text-prose";
 }
 
-/** No-shows implied by completed stays ÷ reliability (the list score). */
+/** No-shows implied by Architecture: start 100, each unexcused no-show −30. */
 export function reliabilityNoShowCount(user: AdminUser): number {
-  if (user.reliability <= 0) {
-    return Math.max(user.completedBookings, 1);
-  }
-  const total = user.completedBookings / user.reliability;
-  return Math.max(0, Math.round(total - user.completedBookings));
+  return Math.max(
+    0,
+    Math.round((RELIABILITY_START - user.reliability) / RELIABILITY_NO_SHOW_DELTA),
+  );
 }

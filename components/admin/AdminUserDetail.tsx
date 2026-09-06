@@ -15,10 +15,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
 import { useAdminUser, useSetAdminUserLocked } from "@/hooks/useAdminUsers";
 import { reviewSummary } from "@/lib/mock/adminReviews";
-import {
-  DEFAULT_AT_RISK_BELOW,
-  DEFAULT_WATCH_BELOW,
-} from "@/lib/mock/adminUsers";
+import { DEFAULT_RELIABILITY_CUTOFFS } from "@/lib/mock/adminUsers";
 import { toast } from "@/store/toastStore";
 
 type AdminUserDetailProps = {
@@ -71,8 +68,13 @@ export function AdminUserDetail({ userId }: AdminUserDetailProps): ReactNode {
 
   const { user, bookings, activity, reviews } = data;
   const rating = reviewSummary(reviews);
-  const atRiskBelow = settings?.reliability.atRiskBelow ?? DEFAULT_AT_RISK_BELOW;
-  const watchBelow = settings?.reliability.watchBelow ?? DEFAULT_WATCH_BELOW;
+  const cutoffs = settings
+    ? {
+        vipAtOrAbove: settings.reliability.vipAtOrAbove,
+        standardAtOrAbove: settings.reliability.standardAtOrAbove,
+        restrictedAtOrAbove: settings.reliability.restrictedAtOrAbove,
+      }
+    : DEFAULT_RELIABILITY_CUTOFFS;
 
   function onToggleLock(): void {
     const nextLocked = !user.locked;
@@ -103,11 +105,7 @@ export function AdminUserDetail({ userId }: AdminUserDetailProps): ReactNode {
           lockPending={lockUser.isPending}
           onToggleLock={onToggleLock}
         />
-        <AdminUserReliability
-          user={user}
-          atRiskBelow={atRiskBelow}
-          watchBelow={watchBelow}
-        />
+        <AdminUserReliability user={user} cutoffs={cutoffs} />
       </div>
       <AdminUserBookings bookings={bookings} />
       <AdminReviews

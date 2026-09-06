@@ -29,26 +29,22 @@ import { toast } from "@/store/toastStore";
 
 type SettingsDraft = {
   ceilings: Record<CommissionTierId, string>;
-  atRisk: string;
-  watch: string;
-  lockAtRisk: boolean;
+  vipAtOrAbove: string;
+  standardAtOrAbove: string;
+  restrictedAtOrAbove: string;
+  lockSuspended: boolean;
   otpChannel: OtpChannel;
   featuringEnabled: boolean;
   featuredSlots: Record<FeaturedSlotId, boolean>;
   webCheckIn: boolean;
 };
 
-function percentToInput(ratio: number): string {
-  const percent = ratio * 100;
-  return Number.isInteger(percent) ? String(percent) : percent.toFixed(1);
-}
-
-function parsePercent(value: string): number | undefined {
+function parseScoreCutoff(value: string): number | undefined {
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
     return undefined;
   }
-  return parsed / 100;
+  return Math.round(parsed);
 }
 
 function draftFromSettings(data: AdminSettings): SettingsDraft {
@@ -58,9 +54,10 @@ function draftFromSettings(data: AdminSettings): SettingsDraft {
       standard: String(data.creditCeilingsSyp.standard),
       highRisk: String(data.creditCeilingsSyp.highRisk),
     },
-    atRisk: percentToInput(data.reliability.atRiskBelow),
-    watch: percentToInput(data.reliability.watchBelow),
-    lockAtRisk: data.reliability.lockAtRisk,
+    vipAtOrAbove: String(data.reliability.vipAtOrAbove),
+    standardAtOrAbove: String(data.reliability.standardAtOrAbove),
+    restrictedAtOrAbove: String(data.reliability.restrictedAtOrAbove),
+    lockSuspended: data.reliability.lockSuspended,
     otpChannel: data.flags.otpChannel,
     featuringEnabled: data.flags.featuringEnabled,
     featuredSlots: { ...defaultFeaturedSlotEnables(), ...data.flags.featuredSlots },
@@ -125,12 +122,14 @@ export function AdminSettings(): ReactNode {
       creditCeilingsSyp[tier] = Math.round(amount);
     }
 
-    const atRiskBelow = parsePercent(draft.atRisk);
-    const watchBelow = parsePercent(draft.watch);
+    const vipAtOrAbove = parseScoreCutoff(draft.vipAtOrAbove);
+    const standardAtOrAbove = parseScoreCutoff(draft.standardAtOrAbove);
+    const restrictedAtOrAbove = parseScoreCutoff(draft.restrictedAtOrAbove);
     if (
-      atRiskBelow === undefined ||
-      watchBelow === undefined ||
-      atRiskBelow >= watchBelow
+      vipAtOrAbove === undefined ||
+      standardAtOrAbove === undefined ||
+      restrictedAtOrAbove === undefined ||
+      !(restrictedAtOrAbove < standardAtOrAbove && standardAtOrAbove < vipAtOrAbove)
     ) {
       toast.error(t("saveFailed"), t("invalidReliability"));
       return;
@@ -140,9 +139,10 @@ export function AdminSettings(): ReactNode {
       {
         creditCeilingsSyp,
         reliability: {
-          atRiskBelow,
-          watchBelow,
-          lockAtRisk: draft.lockAtRisk,
+          vipAtOrAbove,
+          standardAtOrAbove,
+          restrictedAtOrAbove,
+          lockSuspended: draft.lockSuspended,
         },
         flags: {
           otpChannel: draft.otpChannel,
@@ -257,57 +257,79 @@ export function AdminSettings(): ReactNode {
             {t("reliability.description")}
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
-              {t("reliability.atRisk")}
+              {t("reliability.vipAtOrAbove")}
             </span>
-            <div className="flex items-center gap-2">
-              <Input
-                variant="glass"
-                size="sm"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                inputMode="decimal"
-                value={draft.atRisk}
-                onChange={(event) =>
-                  setDraft((current) =>
-                    current ? { ...current, atRisk: event.target.value } : current,
-                  )
-                }
-                label={t("reliability.atRisk")}
-                className="w-28"
-              />
-              <span className="text-prose-muted text-sm">%</span>
-            </div>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.vipAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current ? { ...current, vipAtOrAbove: event.target.value } : current,
+                )
+              }
+              label={t("reliability.vipAtOrAbove")}
+              className="w-28"
+            />
           </label>
           <label className="flex flex-col gap-1.5">
-            <span className="text-prose-muted text-xs font-medium">{t("reliability.watch")}</span>
-            <div className="flex items-center gap-2">
-              <Input
-                variant="glass"
-                size="sm"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                inputMode="decimal"
-                value={draft.watch}
-                onChange={(event) =>
-                  setDraft((current) =>
-                    current ? { ...current, watch: event.target.value } : current,
-                  )
-                }
-                label={t("reliability.watch")}
-                className="w-28"
-              />
-              <span className="text-prose-muted text-sm">%</span>
-            </div>
+            <span className="text-prose-muted text-xs font-medium">
+              {t("reliability.standardAtOrAbove")}
+            </span>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.standardAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current
+                    ? { ...current, standardAtOrAbove: event.target.value }
+                    : current,
+                )
+              }
+              label={t("reliability.standardAtOrAbove")}
+              className="w-28"
+            />
+          </label>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-prose-muted text-xs font-medium">
+              {t("reliability.restrictedAtOrAbove")}
+            </span>
+            <Input
+              variant="glass"
+              size="sm"
+              type="number"
+              min={0}
+              max={100}
+              step={1}
+              inputMode="numeric"
+              value={draft.restrictedAtOrAbove}
+              onChange={(event) =>
+                setDraft((current) =>
+                  current
+                    ? { ...current, restrictedAtOrAbove: event.target.value }
+                    : current,
+                )
+              }
+              label={t("reliability.restrictedAtOrAbove")}
+              className="w-28"
+            />
           </label>
         </div>
-        <p className="text-prose-muted text-xs">{t("reliability.strongHint")}</p>
+        <p className="text-prose-muted text-xs">{t("reliability.tierHint")}</p>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
             <span className="text-prose text-sm font-medium">{t("reliability.lock")}</span>
@@ -317,10 +339,10 @@ export function AdminSettings(): ReactNode {
           </div>
           <Switch
             size="sm"
-            checked={draft.lockAtRisk}
+            checked={draft.lockSuspended}
             onChange={(event) =>
               setDraft((current) =>
-                current ? { ...current, lockAtRisk: event.target.checked } : current,
+                current ? { ...current, lockSuspended: event.target.checked } : current,
               )
             }
             aria-label={t("reliability.lock")}

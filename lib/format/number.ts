@@ -21,3 +21,13 @@ export function formatRating(value: number, locale: string): string {
     maximumFractionDigits: 1,
   }).format(value);
 }
+
+/** Reliability score 0–100 (Architecture / SRS). Not a 0–1 ratio. */
+export function formatReliabilityScore(score: number, locale: string): string {
+  const numberLocale = locale === "ar" ? "ar-SY" : "en-US";
+  const clamped = Math.max(0, Math.min(100, Math.round(score)));
+  return new Intl.NumberFormat(numberLocale, {
+    maximumFractionDigits: 0,
+  }).format(clamped);
+}
+

@@ -480,15 +480,15 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 ### `/admin/guests`
 
-- Guests + show-up score (show-up vs no-show) and guest rating (businesses rating this guest after check-in) — two different scores
-- Search by phone / name; filter popover (account, show-up) with removable pills
+- Guests + reliability score (0–100; start 100, no-show −30) with Architecture tiers (VIP / Standard / Restricted / Suspended) and guest rating (businesses rating this guest after check-in) — two different scores
+- Search by phone / name; filter popover (account, reliability tier) with removable pills
 - Row → `/admin/guests/[id]`
 
 ### `/admin/guests/[id]`
 
 - Scroll the page (no table/cards/map switch). Header title is static (“Guest”); the guest’s name lives in the profile card
 - Profile (glass): initials, names AR/EN, phone, email, joined, guest rating from providers, Locked badge, Lock / Unlock (mock for the session)
-- Reliability (glass): score + band from Settings cutoffs (`atRiskBelow` / `watchBelow`), completed check-ins vs no-shows, short band hint — not a settings editor, not a star rating
+- Reliability (glass): score (0–100) + tier from Settings cutoffs (`vipAtOrAbove` / `standardAtOrAbove` / `restrictedAtOrAbove`; defaults 80 / 50 / 30), completed check-ins vs no-shows (−30), short tier hint — not a settings editor, not a star rating
 - Bookings (ops table for this guest, match by phone): same search + filter + pills as `/admin/bookings`. Columns: provider (with average guest rating of that business), when, amount, status, backup code. Row opens booking details in a side `Drawer` (no booking-detail route yet)
 - Reviews from providers (verified check-in only): several mock rows so the section is a list — date · stars · provider name · comment. Empty if nobody has rated yet
 - Activity (timeline, newest first): chips on this card only — All / Bookings / Money / Account. Rows: date · type chip · one line (provider or action) · SYP when it is money. Cash-on-arrival: money = booking status (completed / no-show / disputed), not cards. Types: booking placed / confirmed / checked-in / completed / cancelled; money completed / no-show / disputed; account locked / unlocked
@@ -619,7 +619,7 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 
 - Save form (no search/filter table)
 - Credit-limit defaults by provider tier (preferred / standard / high-risk)
-- Reliability cutoffs (at-risk / watch) and lock-at-risk toggle
+- Reliability cutoffs (VIP / Standard / Restricted floors on the 0–100 score; below Restricted = Suspended) and lock-suspended toggle
 - Login codes (SMS / WhatsApp) and platform switches (placeholders)
 - **Featuring (spotlight only — not discount codes):**
   - Master switch: featuring on / off for the whole home merchandising system

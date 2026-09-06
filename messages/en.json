@@ -659,19 +659,14 @@
         "active": "Active",
         "locked": "Locked"
       },
-      "allReliability": "All show-up records",
-      "reliabilityBand": {
-        "strong": "Shows up",
-        "watch": "Watch",
-        "atRisk": "Often misses"
-      },
+      "allReliability": "All reliability tiers",
       "empty": "No guests yet.",
       "emptyFiltered": "No guests match this search.",
       "columns": {
         "name": "Name",
         "phone": "Phone",
         "rating": "Rating",
-        "reliability": "Show-up",
+        "reliability": "Reliability",
         "bookings": "Completed",
         "joined": "Joined"
       },
@@ -687,16 +682,17 @@
         "lockedBody": "This guest cannot place new bookings for the rest of this session.",
         "unlockedTitle": "Account unlocked",
         "unlockedBody": "This guest can book again for the rest of this session.",
-        "reliabilityTitle": "Show-up record",
+        "reliabilityTitle": "Reliability score",
         "completedCheckIns": "Completed check-ins",
         "noShows": "No-shows",
         "reliabilityHint": {
-          "strong": "Shows up and completes stays.",
-          "watch": "Some missed arrivals — watch new bookings.",
-          "atRisk": "Frequent no-shows. Lock is on this page if needed."
+          "vip": "Instant booking; up to 4 concurrent bookings.",
+          "standard": "Standard access; max 2 concurrent. High-value stays need provider approval.",
+          "restricted": "Instant booking off; max 1 active booking. Secondary OTP required.",
+          "suspended": "Cannot create new bookings until support verifies identity."
         },
         "reviewsTitle": "Ratings from businesses",
-        "reviewsHint": "After check-in, the business rates this guest. Separate from the show-up record.",
+        "reviewsHint": "After check-in, the business rates this guest. Separate from the reliability score.",
         "reviewsEmpty": "No business has rated this guest yet.",
         "activityTitle": "Activity",
         "activityEmpty": "No activity yet.",
@@ -719,6 +715,12 @@
           "unlocked": "Account unlocked"
         },
         "bookingsTitle": "Bookings"
+      },
+      "reliabilityTier": {
+        "vip": "VIP",
+        "standard": "Standard",
+        "restricted": "Restricted",
+        "suspended": "Suspended"
       }
     },
     "providers": {
@@ -1438,11 +1440,11 @@
     "settings": {
       "save": "Save settings",
       "saved": "Settings saved",
-      "savedBody": "Credit limits, show-up bands, and switches are updated for this session.",
+      "savedBody": "Credit limits, reliability cutoffs, and switches are updated for this session.",
       "saveFailed": "Could not save settings",
       "saveFailedBody": "Check the numbers and try again.",
       "invalidCredit": "Enter a positive credit ceiling for every tier.",
-      "invalidReliability": "At-risk must be below watch, and both must be between 0 and 100.",
+      "invalidReliability": "Restricted must be below Standard, Standard below VIP, and all between 0 and 100.",
       "credit": {
         "title": "Credit limits",
         "description": "How much a business can owe before we pause new bookings. You can still set a different limit on one business.",
@@ -1457,13 +1459,14 @@
         "highRisk": "High risk"
       },
       "reliability": {
-        "title": "Show-up record",
-        "description": "Bands for guest scores on the Guests page. Below “often misses” is the lowest.",
-        "atRisk": "Often misses below",
-        "watch": "Watch below",
-        "lock": "Lock guests who often miss",
+        "title": "Reliability score",
+        "description": "Architecture tiers for guest scores on Guests. Score starts at 100; each unexcused no-show deducts 30.",
+        "vipAtOrAbove": "VIP at or above",
+        "standardAtOrAbove": "Standard at or above",
+        "restrictedAtOrAbove": "Restricted at or above",
+        "lock": "Lock Suspended guests",
         "lockHint": "Locked guests cannot book until you unlock them.",
-        "strongHint": "At or above the watch line counts as “shows up.”"
+        "tierHint": "Below Restricted is Suspended. Defaults: VIP 80, Standard 50, Restricted 30."
       },
       "flags": {
         "title": "Switches",

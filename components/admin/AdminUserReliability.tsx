@@ -7,36 +7,35 @@ import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
-import { formatCount, formatPercent } from "@/lib/format/number";
+import { formatCount, formatReliabilityScore } from "@/lib/format/number";
 import {
-  reliabilityBand,
-  reliabilityBandClass,
   reliabilityNoShowCount,
+  reliabilityTier,
+  reliabilityTierClass,
   type AdminUser,
+  type ReliabilityCutoffs,
 } from "@/lib/mock/adminUsers";
 
 type AdminUserReliabilityProps = {
   user: AdminUser;
-  atRiskBelow: number;
-  watchBelow: number;
+  cutoffs: ReliabilityCutoffs;
 };
 
 export function AdminUserReliability({
   user,
-  atRiskBelow,
-  watchBelow,
+  cutoffs,
 }: AdminUserReliabilityProps): ReactNode {
   const t = useTranslations("admin.users");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
-  const band = reliabilityBand(user.reliability, atRiskBelow, watchBelow);
+  const tier = reliabilityTier(user.reliability, cutoffs);
 
   return (
     <GlassPanel className="flex-none justify-between gap-5 p-5 sm:p-6">
       <div className="flex flex-col gap-1">
         <h2 className="text-prose text-lg font-semibold">{t("detail.reliabilityTitle")}</h2>
         <p className="text-prose-muted text-sm leading-relaxed">
-          {t(`detail.reliabilityHint.${band}`)}
+          {t(`detail.reliabilityHint.${tier}`)}
         </p>
       </div>
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -44,13 +43,16 @@ export function AdminUserReliability({
           <span
             className={cn(
               "font-heading text-5xl font-semibold tabular-nums tracking-tight",
-              reliabilityBandClass(band),
+              reliabilityTierClass(tier),
             )}
           >
-            {formatPercent(user.reliability, loc, 0)}
+            {formatReliabilityScore(user.reliability, loc)}
           </span>
-          <Badge variant={band === "atRisk" ? "outline" : "glass"} className={reliabilityBandClass(band)}>
-            {t(`reliabilityBand.${band}`)}
+          <Badge
+            variant={tier === "suspended" || tier === "restricted" ? "outline" : "glass"}
+            className={reliabilityTierClass(tier)}
+          >
+            {t(`reliabilityTier.${tier}`)}
           </Badge>
         </div>
         <dl className="grid gap-3 text-sm">

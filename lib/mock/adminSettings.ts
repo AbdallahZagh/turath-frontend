@@ -22,9 +22,10 @@ export type OtpChannel = (typeof OTP_CHANNELS)[number];
 export type AdminSettings = {
   creditCeilingsSyp: Record<CommissionTierId, number>;
   reliability: {
-    atRiskBelow: number;
-    watchBelow: number;
-    lockAtRisk: boolean;
+    vipAtOrAbove: number;
+    standardAtOrAbove: number;
+    restrictedAtOrAbove: number;
+    lockSuspended: boolean;
   };
   flags: {
     otpChannel: OtpChannel;
@@ -54,9 +55,10 @@ let settings: AdminSettings = {
     highRisk: 1_200_000,
   },
   reliability: {
-    atRiskBelow: 0.6,
-    watchBelow: 0.8,
-    lockAtRisk: true,
+    vipAtOrAbove: 80,
+    standardAtOrAbove: 50,
+    restrictedAtOrAbove: 30,
+    lockSuspended: true,
   },
   flags: {
     otpChannel: "sms",

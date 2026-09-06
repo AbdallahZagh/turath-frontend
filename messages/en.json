@@ -310,7 +310,8 @@
         "providerScannerApp": "Offline QR Scanner App",
         "providerLedger": "Clear Payout Records",
         "providerDashboard": "Your Own Dashboard"
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "trustBar": {
       "eyebrow": "Why travelers trust Turath",
@@ -347,7 +348,8 @@
         "guidedTour": "Guided",
         "vipTier": "VIP tier",
         "multilingual": "Multilingual"
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "mapExplorer": {
       "eyebrow": "Explore by region",
@@ -392,7 +394,8 @@
           "meta": "Latakia",
           "blurb": "A mountaintop citadel wrapped in forest, above the coastal plain."
         }
-      }
+      },
+      "featuredBadge": "Featured"
     },
     "howItWorks": {
       "eyebrow": "From booking to the door",
@@ -491,6 +494,11 @@
       "title": "Questions? Talk to Turath.",
       "subtitle": "Booking help, partnerships, or a note about the product — send a message and we’ll get back when we can.",
       "cta": "Contact us"
+    },
+    "campaign": {
+      "eyebrow": "This week on Turath",
+      "cta": "Explore",
+      "featuredBadge": "Featured"
     }
   },
   "ui": {
@@ -1237,7 +1245,8 @@
         "start": "Starts",
         "end": "Ends",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "slot": "Slot"
       },
       "form": {
         "titleAdd": "Add featured item",
@@ -1253,7 +1262,37 @@
         "end": "End date",
         "delete": "Delete",
         "cancel": "Cancel",
-        "save": "Save"
+        "save": "Save",
+        "slot": "Home slot",
+        "kindHint": "Type follows the slot: listings for rails and pillars, campaign for the home band.",
+        "errors": {
+          "titleEnRequired": "Enter an English title.",
+          "titleArRequired": "Enter an Arabic title.",
+          "slotRequired": "Choose a home slot.",
+          "kindRequired": "Choose a type.",
+          "targetEnRequired": "Enter an English target.",
+          "targetArRequired": "Enter an Arabic target.",
+          "startRequired": "Choose a start date.",
+          "endRequired": "Choose an end date.",
+          "invalidDates": "End date must be on or after the start date.",
+          "kindSlotMismatch": "Campaigns belong in the Home campaign band; listings use the other slots."
+        }
+      },
+      "allSlots": "All slots",
+      "slotDisabled": "This slot is off in Settings",
+      "slotDisabledBody": "Turn featuring on and enable the slot under Settings, then try again.",
+      "slotAtCapacity": "This slot is full",
+      "slotAtCapacityBody": "Remove or end an existing pin in this slot before adding another.",
+      "kindSlotMismatch": "Campaigns belong in the Home campaign band; listings use the other slots.",
+      "slots": {
+        "heritage_spotlight": "Heritage spotlight",
+        "pillar_hotels": "Hotels pillar",
+        "pillar_dining": "Dining pillar",
+        "pillar_trips": "Trips pillar",
+        "pillar_events": "Events pillar",
+        "pillar_guides": "Guides pillar",
+        "home_campaign": "Home campaign",
+        "persona_rail": "Persona rail"
       }
     },
     "coupons": {
@@ -1432,10 +1471,22 @@
         "otp": "Login codes by",
         "sms": "SMS",
         "whatsapp": "WhatsApp",
-        "featured": "Home page featuring",
-        "featuredHint": "Allow the Featured page to pin listings and themes on the home page.",
         "webCheckIn": "Web check-in",
-        "webCheckInHint": "Businesses can confirm arrival with the 6-character backup code."
+        "webCheckInHint": "Businesses can confirm arrival with the 6-character backup code.",
+        "featuring": "Home featuring",
+        "featuringHint": "Master switch for pinning listings and campaign bands on the home page. Discount codes stay on Discount codes.",
+        "featuringSlots": "Home slots",
+        "featuringSlotsHint": "Turn individual home sections on or off. Disabled slots keep their static content and reject new Featured saves.",
+        "slots": {
+          "heritage_spotlight": "Heritage spotlight",
+          "pillar_hotels": "Hotels pillar",
+          "pillar_dining": "Dining pillar",
+          "pillar_trips": "Trips pillar",
+          "pillar_events": "Events pillar",
+          "pillar_guides": "Guides pillar",
+          "home_campaign": "Home campaign band",
+          "persona_rail": "Persona rail"
+        }
       }
     },
     "overview": {

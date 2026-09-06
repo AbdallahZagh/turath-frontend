@@ -4,14 +4,17 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import { staggerContainer, viewportOnce } from "@/lib/motion/variants";
+import { useHomeFeatured } from "@/hooks/useHomeFeatured";
+import { SLOT_BY_PILLAR_ID } from "@/lib/mock/featuredSlots";
 import { BENTO_PILLARS } from "@/lib/mock/landing";
+import { staggerContainer, viewportOnce } from "@/lib/motion/variants";
 
 import { BentoCard } from "./BentoCard";
 import { SectionHeading } from "./SectionHeading";
 
 export function BentoGrid(): ReactNode {
   const t = useTranslations("landing.pillars");
+  const { bySlot } = useHomeFeatured();
 
   return (
     <section className="px-4 py-20 sm:px-6 sm:py-28">
@@ -25,9 +28,11 @@ export function BentoGrid(): ReactNode {
           variants={staggerContainer}
           className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
         >
-          {BENTO_PILLARS.map((pillar) => (
-            <BentoCard key={pillar.id} pillar={pillar} />
-          ))}
+          {BENTO_PILLARS.map((pillar) => {
+            const slot = SLOT_BY_PILLAR_ID[pillar.id];
+            const featured = bySlot[slot][0] ?? null;
+            return <BentoCard key={pillar.id} pillar={pillar} featured={featured} />;
+          })}
         </motion.div>
       </div>
     </section>

@@ -2,8 +2,18 @@ import {
   COMMISSION_TIERS,
   type CommissionTierId,
 } from "@/lib/mock/adminCommissions";
+import {
+  FEATURED_SLOT_IDS,
+  defaultFeaturedSlotEnables,
+  type FeaturedSlotId,
+} from "@/lib/mock/featuredSlots";
 
 export { COMMISSION_TIERS, type CommissionTierId };
+export {
+  FEATURED_SLOT_IDS,
+  FEATURED_SLOT_CAPACITY,
+  type FeaturedSlotId,
+} from "@/lib/mock/featuredSlots";
 
 export const OTP_CHANNELS = ["sms", "whatsapp"] as const;
 
@@ -18,7 +28,10 @@ export type AdminSettings = {
   };
   flags: {
     otpChannel: OtpChannel;
-    featuredListings: boolean;
+    /** Master switch for home Featured merchandising. */
+    featuringEnabled: boolean;
+    /** Per-slot enable for the eight named Home slots. */
+    featuredSlots: Record<FeaturedSlotId, boolean>;
     webCheckIn: boolean;
   };
 };
@@ -27,7 +40,10 @@ function cloneSettings(value: AdminSettings): AdminSettings {
   return {
     creditCeilingsSyp: { ...value.creditCeilingsSyp },
     reliability: { ...value.reliability },
-    flags: { ...value.flags },
+    flags: {
+      ...value.flags,
+      featuredSlots: { ...value.flags.featuredSlots },
+    },
   };
 }
 
@@ -44,7 +60,8 @@ let settings: AdminSettings = {
   },
   flags: {
     otpChannel: "sms",
-    featuredListings: true,
+    featuringEnabled: true,
+    featuredSlots: defaultFeaturedSlotEnables(),
     webCheckIn: true,
   },
 };
@@ -54,6 +71,27 @@ export function getAdminSettings(): AdminSettings {
 }
 
 export function saveAdminSettings(input: AdminSettings): AdminSettings {
-  settings = cloneSettings(input);
+  const featuredSlots = { ...defaultFeaturedSlotEnables() };
+  for (const slot of FEATURED_SLOT_IDS) {
+    featuredSlots[slot] = Boolean(input.flags.featuredSlots[slot]);
+  }
+
+  settings = cloneSettings({
+    ...input,
+    flags: {
+      ...input.flags,
+      featuringEnabled: Boolean(input.flags.featuringEnabled),
+      featuredSlots,
+      webCheckIn: Boolean(input.flags.webCheckIn),
+    },
+  });
   return getAdminSettings();
+}
+
+/** Slot is usable on Home / assignable in Featured when master + slot are on. */
+export function isFeaturedSlotActive(
+  slot: FeaturedSlotId,
+  data: AdminSettings = getAdminSettings(),
+): boolean {
+  return data.flags.featuringEnabled && data.flags.featuredSlots[slot];
 }

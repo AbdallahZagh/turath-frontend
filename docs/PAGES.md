@@ -163,23 +163,36 @@ Flagship marketing landing (`components/landing/*`), composed in order:
 
 1. Hero — full-bleed cinematic scene (AI-generated Damascus photography).
    Headline, lead, and a single CTA into the search band. No booking form
-   on the photo.
+   on the photo. **Hero is not a Featured slot** — Settings / Featured never
+   merchandize the hero.
 2. Omni-search (`#search`) — 5-pillar widget (Hotels, Tables, Trips, Events,
    Tour Guides)
 3. Persona explorer — "Experience Turath through the eyes of a..." pill
    switcher (first-time visitor, heritage seeker, foodie, family, provider)
-   over a rail of photo-tile interest cards
+   over a rail of photo-tile interest cards (`persona_rail` Featured slot)
 4. Trust bar — cash on arrival, offline QR passes, licensed providers,
    dual-currency pricing
-5. Bento grid — one tile per pillar with amenity/language tags
-6. Governorate map explorer preview (stylized, not MapLibre — that's `/explore`)
-7. Heritage spotlight — drag-scroll reel of landmark cards
-8. How it works — 3-step reserve → QR pass → check-in path
-9. App download banner — **teaser / coming soon** for the Flutter app
+5. Home campaign band (`home_campaign` Featured slot) — themed glass band when
+   a **live** campaign assignment exists; omitted when the slot is empty or
+   disabled (no static campaign placeholder)
+6. Bento grid — one tile per pillar with amenity/language tags
+   (`pillar_hotels` · `pillar_dining` · `pillar_trips` · `pillar_events` ·
+   `pillar_guides` Featured slots, one pin each)
+7. Governorate map explorer preview (stylized, not MapLibre — that's `/explore`)
+8. Heritage spotlight — drag-scroll reel of landmark cards
+   (`heritage_spotlight` Featured slot, short rail ≤6)
+9. How it works — 3-step reserve → QR pass → check-in path
+10. App download banner — **teaser / coming soon** for the Flutter app
    (offline QR + offline map). No live App Store / Google Play links.
-10. Provider CTA (`#grow-with-turath`) — "Grow with Turath"
-11. Verified testimonials — equal glass cards in a 3-up grid
-12. Contact Us — short glass band → `/contact` (last section before the footer)
+11. Provider CTA (`#grow-with-turath`) — "Grow with Turath"
+12. Verified testimonials — equal glass cards in a 3-up grid
+13. Contact Us — short glass band → `/contact` (last section before the footer)
+
+**Featured merchandising on Home (MVP):** `/` consumes **live** assignments from
+`/admin/featured` for the named slots above, and only when Settings has
+featuring on and that slot enabled. Empty or disabled slots **keep the current
+static / mock content** for that section — never blank Home. Discount codes are
+unrelated (see `/admin/discount-codes`).
 
 **Home CTA policy (MVP):** Omni-search, bento tiles, persona interest cards,
 and the map preview may link real tourist routes (`/hotels`, `/restaurants`,
@@ -560,15 +573,30 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 ### `/admin/featured`
 
-Homepage / discovery merchandising only — not discount codes. Discount codes are a separate page (`/admin/discount-codes`).
+Homepage / discovery merchandising only — **not** discount codes. Discount codes stay on `/admin/discount-codes`.
 
-- **Featured listing:** pin one provider or attraction in a featured slot for a date window
-- **Home campaign:** a themed band on `/` (e.g. Heritage week, Ramadan tables) aimed at a pillar or the attractions rail, not one property
+**Named Home slots (MVP)** — Hero is not a slot:
+
+| Slot id | Home section | Capacity |
+|---|---|---|
+| `heritage_spotlight` | Heritage spotlight rail | ≤6 pins |
+| `pillar_hotels` | Bento Hotels tile | 1 pin |
+| `pillar_dining` | Bento Dining tile | 1 pin |
+| `pillar_trips` | Bento Trips tile | 1 pin |
+| `pillar_events` | Bento Events tile | 1 pin |
+| `pillar_guides` | Bento Guides tile | 1 pin |
+| `home_campaign` | Home campaign band | 1 campaign |
+| `persona_rail` | Persona interest rail | ≤4 pins |
+
+- **Featured listing** (`kind: featured`): assign a listing / attraction into a listing slot (`heritage_spotlight`, `pillar_*`, `persona_rail`) for a date window
+- **Home campaign** (`kind: campaign`): assign into `home_campaign` only — a themed band on `/`, not one property
 - Target preset quick selector for popular sites, categories, and hotels, plus custom text
-- Status is scheduled / live / ended from the start / end dates
+- Status is **scheduled / live / ended** from the start / end dates (no manual status field)
+- **Reject save** when featuring is off in Settings, the chosen slot is disabled, or the slot is already at capacity (count scheduled + live; ended free capacity). Editing an existing row does not count against itself
 - Delete action with confirmation dialog
-- Add / edit in a modal
+- Add / edit in a modal (RHF + zod)
 - Row ⋯ menu: Edit and Delete
+- Search / filter by type and status; table shows slot + dates + derived status
 
 ### `/admin/audit-logs`
 
@@ -592,7 +620,11 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 - Save form (no search/filter table)
 - Credit-limit defaults by provider tier (preferred / standard / high-risk)
 - Reliability cutoffs (at-risk / watch) and lock-at-risk toggle
-- Login codes (SMS / WhatsApp) and platform switches (placeholders), including featured-listing slots from Featured (spotlight only — discount codes stay on `/admin/discount-codes`)
+- Login codes (SMS / WhatsApp) and platform switches (placeholders)
+- **Featuring (spotlight only — not discount codes):**
+  - Master switch: featuring on / off for the whole home merchandising system
+  - Per-slot enable toggles for the eight named Home slots (`heritage_spotlight`, `pillar_hotels`, `pillar_dining`, `pillar_trips`, `pillar_events`, `pillar_guides`, `home_campaign`, `persona_rail`)
+  - Replaces the old single boolean-only “featured listings” wording. Discount codes stay on `/admin/discount-codes`
 
 ---
 

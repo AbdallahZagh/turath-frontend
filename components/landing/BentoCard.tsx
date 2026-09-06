@@ -2,13 +2,16 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import type { MouseEvent, ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/cn";
+import type { Locale } from "@/i18n/config";
+import { localizedName } from "@/lib/i18n/localized";
+import type { AdminPromotion } from "@/lib/mock/adminPromotions";
 import type { BentoPillar, BentoTileSize, LandingPillarId } from "@/lib/mock/landing";
 
 const SIZE_CLASSES: Record<BentoTileSize, string> = {
@@ -45,11 +48,14 @@ const TILT_RANGE_DEG = 9;
 
 type BentoCardProps = {
   pillar: BentoPillar;
+  featured?: AdminPromotion | null;
 };
 
-export function BentoCard({ pillar }: BentoCardProps): ReactNode {
+export function BentoCard({ pillar, featured = null }: BentoCardProps): ReactNode {
   const t = useTranslations("landing.pillars");
   const tTags = useTranslations("landing.pillars.tags");
+  const locale = useLocale();
+  const loc: Locale = locale === "ar" ? "ar" : "en";
 
   const rotateX = useSpring(useMotionValue(0), { stiffness: 260, damping: 22 });
   const rotateY = useSpring(useMotionValue(0), { stiffness: 260, damping: 22 });
@@ -66,6 +72,13 @@ export function BentoCard({ pillar }: BentoCardProps): ReactNode {
     rotateX.set(0);
     rotateY.set(0);
   }
+
+  const title = featured
+    ? localizedName(featured.target, loc)
+    : t(TITLE_KEY[pillar.id]);
+  const body = featured
+    ? localizedName(featured.title, loc)
+    : t(BODY_KEY[pillar.id]);
 
   return (
     <motion.div
@@ -89,20 +102,26 @@ export function BentoCard({ pillar }: BentoCardProps): ReactNode {
         className="from-ink/92 absolute inset-0 -z-10 bg-linear-to-t via-ink/60 to-ink/40"
       />
 
-      <h3 className="font-heading text-foam relative text-xl font-semibold tracking-tight sm:text-2xl">
-        {t(TITLE_KEY[pillar.id])}
-      </h3>
-      <p className="text-foam/85 relative mt-2.5 max-w-sm text-sm leading-relaxed">
-        {t(BODY_KEY[pillar.id])}
-      </p>
+      {featured ? (
+        <Badge variant="glass" className="text-foam absolute top-4 start-4 z-10">
+          {t("featuredBadge")}
+        </Badge>
+      ) : null}
 
-      <div className="relative mt-4 flex flex-wrap gap-2">
-        {pillar.tagKeys.map((tagKey) => (
-          <Badge key={tagKey} variant="glass" className="text-foam">
-            {tTags(tagKey)}
-          </Badge>
-        ))}
-      </div>
+      <h3 className="font-heading text-foam relative text-xl font-semibold tracking-tight sm:text-2xl">
+        {title}
+      </h3>
+      <p className="text-foam/85 relative mt-2.5 max-w-sm text-sm leading-relaxed">{body}</p>
+
+      {!featured ? (
+        <div className="relative mt-4 flex flex-wrap gap-2">
+          {pillar.tagKeys.map((tagKey) => (
+            <Badge key={tagKey} variant="glass" className="text-foam">
+              {tTags(tagKey)}
+            </Badge>
+          ))}
+        </div>
+      ) : null}
 
       <Link
         href={pillar.href}

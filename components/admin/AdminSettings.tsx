@@ -17,11 +17,14 @@ import type { Locale } from "@/i18n/config";
 import { formatSyp } from "@/lib/format/money";
 import {
   COMMISSION_TIERS,
+  FEATURED_SLOT_IDS,
   OTP_CHANNELS,
   type AdminSettings,
   type CommissionTierId,
+  type FeaturedSlotId,
   type OtpChannel,
 } from "@/lib/mock/adminSettings";
+import { defaultFeaturedSlotEnables } from "@/lib/mock/featuredSlots";
 import { toast } from "@/store/toastStore";
 
 type SettingsDraft = {
@@ -30,7 +33,8 @@ type SettingsDraft = {
   watch: string;
   lockAtRisk: boolean;
   otpChannel: OtpChannel;
-  featuredListings: boolean;
+  featuringEnabled: boolean;
+  featuredSlots: Record<FeaturedSlotId, boolean>;
   webCheckIn: boolean;
 };
 
@@ -58,7 +62,8 @@ function draftFromSettings(data: AdminSettings): SettingsDraft {
     watch: percentToInput(data.reliability.watchBelow),
     lockAtRisk: data.reliability.lockAtRisk,
     otpChannel: data.flags.otpChannel,
-    featuredListings: data.flags.featuredListings,
+    featuringEnabled: data.flags.featuringEnabled,
+    featuredSlots: { ...defaultFeaturedSlotEnables(), ...data.flags.featuredSlots },
     webCheckIn: data.flags.webCheckIn,
   };
 }
@@ -90,6 +95,17 @@ export function AdminSettings(): ReactNode {
   function setCeiling(tier: CommissionTierId, value: string): void {
     setDraft((current) =>
       current ? { ...current, ceilings: { ...current.ceilings, [tier]: value } } : current,
+    );
+  }
+
+  function setSlotEnabled(slot: FeaturedSlotId, enabled: boolean): void {
+    setDraft((current) =>
+      current
+        ? {
+            ...current,
+            featuredSlots: { ...current.featuredSlots, [slot]: enabled },
+          }
+        : current,
     );
   }
 
@@ -130,7 +146,8 @@ export function AdminSettings(): ReactNode {
         },
         flags: {
           otpChannel: draft.otpChannel,
-          featuredListings: draft.featuredListings,
+          featuringEnabled: draft.featuringEnabled,
+          featuredSlots: { ...draft.featuredSlots },
           webCheckIn: draft.webCheckIn,
         },
       },
@@ -339,21 +356,48 @@ export function AdminSettings(): ReactNode {
         </div>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="text-prose text-sm font-medium">{t("flags.featured")}</span>
+            <span className="text-prose text-sm font-medium">{t("flags.featuring")}</span>
             <span className="text-prose-muted text-xs leading-relaxed">
-              {t("flags.featuredHint")}
+              {t("flags.featuringHint")}
             </span>
           </div>
           <Switch
             size="sm"
-            checked={draft.featuredListings}
+            checked={draft.featuringEnabled}
             onChange={(event) =>
               setDraft((current) =>
-                current ? { ...current, featuredListings: event.target.checked } : current,
+                current
+                  ? { ...current, featuringEnabled: event.target.checked }
+                  : current,
               )
             }
-            aria-label={t("flags.featured")}
+            aria-label={t("flags.featuring")}
           />
+        </div>
+        <div className="border-glass-border flex flex-col gap-3 border-t pt-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-prose text-sm font-medium">{t("flags.featuringSlots")}</span>
+            <span className="text-prose-muted text-xs leading-relaxed">
+              {t("flags.featuringSlotsHint")}
+            </span>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {FEATURED_SLOT_IDS.map((slot) => (
+              <div
+                key={slot}
+                className="flex items-center justify-between gap-3 rounded-xl border border-glass-border/70 px-3 py-2.5"
+              >
+                <span className="text-prose text-sm">{t(`flags.slots.${slot}`)}</span>
+                <Switch
+                  size="sm"
+                  checked={draft.featuredSlots[slot]}
+                  disabled={!draft.featuringEnabled}
+                  onChange={(event) => setSlotEnabled(slot, event.target.checked)}
+                  aria-label={t(`flags.slots.${slot}`)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">

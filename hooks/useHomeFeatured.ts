@@ -79,13 +79,22 @@ export function useLiveFeaturedSlot(
   slot: FeaturedSlotId,
 ): UseQueryResult<AdminPromotion[]> {
   const settingsQuery = useAdminSettings();
-  const enabled =
-    Boolean(settingsQuery.data?.flags.featuringEnabled) &&
-    Boolean(settingsQuery.data?.flags.featuredSlots[slot]);
+  const featuringOn = settingsQuery.data?.flags.featuringEnabled ?? false;
+  const slotEnables = settingsQuery.data?.flags.featuredSlots;
+  const slotOn = Boolean(slotEnables?.[slot]);
+  const queryEnabled =
+    Boolean(settingsQuery.data) && featuringOn && slotOn;
 
-  return useQuery({
+  const query = useQuery({
     queryKey: [...homeFeaturedQueryKey, slot] as const,
     queryFn: () => listLiveFeaturedForSlot(slot),
-    enabled: Boolean(settingsQuery.data) && enabled,
+    enabled: queryEnabled,
   });
+
+  // Match useHomeFeatured: ignore React Query cache when featuring/slot is off.
+  if (!featuringOn || !slotEnables || !slotOn) {
+    return { ...query, data: [] };
+  }
+
+  return query;
 }

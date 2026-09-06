@@ -249,7 +249,7 @@ export function ProviderRegisterForm(): ReactNode {
       initial="hidden"
       animate="visible"
       variants={fadeUp}
-      className="w-full max-w-2xl rounded-glass p-4 sm:p-5"
+      className="glass-surface glass-frost backdrop-blur-sm w-full max-w-2xl rounded-glass p-4 sm:p-6"
       lang={locale}
     >
       <Logo variant="main" className="h-9 w-fit [&_img]:h-full [&_img]:w-auto lg:hidden" />

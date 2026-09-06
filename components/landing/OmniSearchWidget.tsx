@@ -146,7 +146,7 @@ export function OmniSearchWidget(): ReactNode {
 
   return (
     <GlassPanel className="p-4 sm:p-6">
-      <div role="tablist" className="glass-surface backdrop-blur-sm flex w-fit flex-wrap gap-1 rounded-full p-1">
+      <div role="tablist" className="glass-surface backdrop-blur-sm flex w-full flex-wrap gap-1 rounded-full p-1 sm:w-fit">
         {BENTO_PILLARS.map((pillar) => {
           const Icon = pillar.icon;
           const isActive = pillar.id === activeTab;
@@ -159,7 +159,7 @@ export function OmniSearchWidget(): ReactNode {
               aria-selected={isActive}
               onClick={() => setActiveTab(pillar.id)}
               className={cn(
-                "relative flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                "relative flex min-h-11 items-center gap-1.5 rounded-full px-3 py-2.5 text-sm font-medium transition-colors sm:px-4",
                 isActive ? "text-primary-foreground" : "text-prose-muted hover:text-prose",
               )}
             >

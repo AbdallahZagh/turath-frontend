@@ -165,10 +165,7 @@ export function AuthCredentialsForm({
       initial="hidden"
       animate="visible"
       variants={fadeUp}
-      className={cn(
-        "w-full max-w-xl rounded-glass",
-        isRegister ? "p-4 sm:p-5" : "p-8 sm:p-5",
-      )}
+      className="glass-surface glass-frost backdrop-blur-sm w-full max-w-xl rounded-glass p-4 sm:p-6"
     >
       <Logo variant="main" className="h-9 w-fit [&_img]:h-full [&_img]:w-auto lg:hidden" />
 
@@ -327,7 +324,7 @@ export function AuthCredentialsForm({
               message={fieldMessage(tErrors, registerForm.formState.errors.name)}
             />
           </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Controller
                 control={registerForm.control}
@@ -487,7 +484,7 @@ export function AuthCredentialsForm({
 
       <div
         className={cn(
-          "flex items-center justify-between",
+          "flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between",
           isRegister ? "mt-4" : "mt-6",
         )}
       >

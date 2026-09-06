@@ -18,7 +18,7 @@ export function ProviderPendingView(): ReactNode {
       initial="hidden"
       animate="visible"
       variants={fadeUp}
-      className="w-full max-w-xl rounded-glass p-8 sm:p-5"
+      className="glass-surface glass-frost backdrop-blur-sm w-full max-w-xl rounded-glass p-4 sm:p-6"
     >
       <Logo variant="main" className="h-9 w-fit [&_img]:h-full [&_img]:w-auto lg:hidden" />
       <div className="bg-app-muted text-primary mt-6 flex size-12 items-center justify-center rounded-full">

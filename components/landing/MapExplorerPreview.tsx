@@ -29,7 +29,7 @@ export function MapExplorerPreview(): ReactNode {
       whileInView="visible"
       viewport={viewportOnce}
       variants={fadeUp}
-      className="px-4 py-20 sm:px-6 sm:py-28"
+      className="px-4 py-20 sm:px-6 sm:py-24"
     >
       <div className="mx-auto max-w-7xl">
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
@@ -56,7 +56,7 @@ export function MapExplorerPreview(): ReactNode {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <GlassPanel className="relative h-90 overflow-hidden p-0 sm:h-105">
+          <GlassPanel className="border-glass-border relative h-90 overflow-hidden border p-0 sm:h-105">
             <div
               aria-hidden
               className="absolute inset-0"
@@ -81,19 +81,28 @@ export function MapExplorerPreview(): ReactNode {
                     key={governorate.slug}
                     type="button"
                     onClick={() => setActive(governorate.slug)}
-                    animate={{ scale: isActive ? 1.3 : 1 }}
+                    animate={{ scale: isActive ? 1.25 : 1 }}
                     className="absolute -translate-x-1/2 -translate-y-1/2"
                     style={{
                       left: `${governorate.positionPercent.x}%`,
                       top: `${governorate.positionPercent.y}%`,
                     }}
                   >
+                    <span
+                      className={cn(
+                        "border-glass-border absolute left-1/2 top-1/2 size-9 -translate-x-1/2 -translate-y-1/2 rounded-full border",
+                        isActive
+                          ? "bg-accent/20 shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_18%,transparent)]"
+                          : "bg-primary/10",
+                      )}
+                      aria-hidden
+                    />
                     <MapPin
                       className={cn(
-                        "size-6 drop-shadow-sm",
-                        isActive ? "text-accent" : "text-primary/60",
+                        "relative size-6 drop-shadow-sm",
+                        isActive ? "text-accent" : "text-primary/70",
                       )}
-                      fill={isActive ? "var(--accent)" : "transparent"}
+                      fill={isActive ? "var(--accent)" : "color-mix(in srgb, var(--primary) 35%, transparent)"}
                       aria-hidden
                     />
                     <span className="sr-only">{tGov(governorate.slug)}</span>

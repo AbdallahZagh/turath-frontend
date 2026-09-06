@@ -45,7 +45,7 @@ export function PersonaExplorer(): ReactNode {
   const tiles = PERSONA_INTEREST_TILES[active];
 
   return (
-    <section className="px-4 py-20 sm:px-6 sm:py-28">
+    <section className="px-4 py-20 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-7xl">
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
 

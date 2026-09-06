@@ -112,7 +112,8 @@
       "galleryMax": "You can add up to 6 photos."
     },
     "imageQuoteProviderRegister": "Licensed stays, tables, and guides — list yours on Turath.",
-    "providerNoteLink": "Join as a business"
+    "providerNoteLink": "Join as a business",
+    "trustStripLabel": "Why travelers trust Turath"
   },
   "stepper": {
     "decrease": "Decrease {label}",
@@ -240,6 +241,7 @@
       "navHowItWorks": "How it works",
       "navLabel": "Explore Turath",
       "openMenu": "Open menu",
+      "appearanceMenu": "Appearance",
       "currencyLabel": "Currency",
       "currencySyp": "SYP",
       "currencyUsd": "USD",

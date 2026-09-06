@@ -52,7 +52,7 @@ export function HeritageSpotlight(): ReactNode {
       whileInView="visible"
       viewport={viewportOnce}
       variants={fadeUp}
-      className="py-20 sm:py-28"
+      className="py-20 sm:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">

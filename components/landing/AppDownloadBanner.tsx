@@ -24,9 +24,23 @@ function PhoneMockup({ children, delay }: PhoneMockupProps): ReactNode {
       <motion.div
         animate={{ y: [0, -14, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay }}
-        className="glass-surface backdrop-blur-sm border-glass-border flex h-105 w-55 flex-col items-center justify-center gap-4 rounded-[2.5rem] border-2 p-4 sm:h-120 sm:w-62.5"
+        className="glass-surface glass-frost border-glass-border relative flex h-105 w-55 flex-col items-center justify-center gap-4 rounded-[2.5rem] border-2 p-4 backdrop-blur-md sm:h-120 sm:w-62.5"
       >
-        {children}
+        <span
+          aria-hidden
+          className="bg-prose/15 absolute top-3 left-1/2 h-1.5 w-16 -translate-x-1/2 rounded-full"
+        />
+        <span
+          aria-hidden
+          className="border-glass-border absolute inset-2 rounded-[2rem] border"
+        />
+        <div className="relative z-[1] flex flex-col items-center gap-4 pt-4">
+          {children}
+        </div>
+        <span
+          aria-hidden
+          className="bg-prose/20 absolute bottom-3 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full"
+        />
       </motion.div>
     </motion.div>
   );
@@ -36,7 +50,7 @@ export function AppDownloadBanner(): ReactNode {
   const t = useTranslations("landing.appDownload");
 
   return (
-    <section className="px-4 py-20 sm:px-6 sm:py-28">
+    <section className="px-4 py-20 sm:px-6 sm:py-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <motion.div
           initial="hidden"

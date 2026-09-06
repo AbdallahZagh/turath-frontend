@@ -49,7 +49,7 @@ const NAV_ITEMS: NavItem[] = [
 const NAV_LINK_CLASS =
   "text-prose-muted hover:text-prose relative px-3 py-2 text-sm font-medium transition-colors";
 
-const MOBILE_MENU_MIN_WIDTH_PX = 192;
+const MOBILE_MENU_MIN_WIDTH_PX = 220;
 
 function HeaderNav(): ReactNode {
   const t = useTranslations("landing.header");
@@ -92,7 +92,17 @@ function HeaderNav(): ReactNode {
   );
 }
 
-function HeaderMobileNav(): ReactNode {
+type HeaderMobileNavProps = {
+  currencyOptions: SelectOption[];
+  currency: string;
+  onCurrencyChange: (value: string) => void;
+};
+
+function HeaderMobileNav({
+  currencyOptions,
+  currency,
+  onCurrencyChange,
+}: HeaderMobileNavProps): ReactNode {
   const t = useTranslations("landing.header");
   const mounted = useIsClient();
   const menuId = useId();
@@ -113,8 +123,8 @@ function HeaderMobileNav(): ReactNode {
       }
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 12 + NAV_ITEMS.length * 40,
-          maxHeightCap: 320,
+          estimatedHeight: 12 + NAV_ITEMS.length * 40 + 120,
+          maxHeightCap: 420,
           width: "max-content",
           minWidth: Math.max(trigger.getBoundingClientRect().width, MOBILE_MENU_MIN_WIDTH_PX),
           align: "end",
@@ -178,11 +188,11 @@ function HeaderMobileNav(): ReactNode {
             role="menu"
             aria-label={t("navLabel")}
             style={{ ...controlStyle({ size: "sm", defaultRadius: "0.5rem" }), ...box }}
-            className={cn(SELECT_MENU_BASE, SELECT_MENU_VARIANT.glass, "w-max")}
+            className={cn(SELECT_MENU_BASE, SELECT_MENU_VARIANT.glass, "w-max max-w-[min(100vw-2rem,20rem)]")}
           >
             {NAV_ITEMS.map((item) => {
               const label = t(item.labelKey);
-              const className = cn(SELECT_OPTION, "w-full no-underline");
+              const className = cn(SELECT_OPTION, "min-h-11 w-full no-underline");
               const onNavigate = () => setOpen(false);
 
               if (item.href.includes("#")) {
@@ -211,6 +221,39 @@ function HeaderMobileNav(): ReactNode {
                 </Link>
               );
             })}
+
+            <div
+              role="none"
+              className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 sm:hidden"
+            >
+              <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
+                {t("appearanceMenu")}
+              </p>
+              <ThemeToggle />
+            </div>
+
+            <div
+              role="none"
+              className="border-glass-border mt-1 flex flex-col gap-2 border-t px-3 py-3 md:hidden"
+            >
+              <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
+                {t("currencyLabel")}
+              </p>
+              <Select
+                compact
+                size="sm"
+                paddingX="0.7em"
+                variant="plain"
+                className="w-full"
+                icon={<Coins className="size-3.5" />}
+                options={currencyOptions}
+                value={currency}
+                onChange={(value) => {
+                  onCurrencyChange(value);
+                }}
+                label={t("currencyLabel")}
+              />
+            </div>
           </div>,
           document.body,
         )
@@ -225,7 +268,7 @@ function HeaderMobileNav(): ReactNode {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        className="text-prose-muted hover:bg-option-hover hover:text-prose flex size-8 items-center justify-center rounded-full transition-colors"
+        className="text-prose-muted hover:bg-option-hover hover:text-prose flex size-11 items-center justify-center rounded-full transition-colors"
         onClick={() => setOpen((current) => !current)}
         onKeyDown={onTriggerKeyDown}
       >
@@ -246,22 +289,32 @@ export function PublicHeader(): ReactNode {
     { value: "USD", label: t("currencyUsd") },
   ];
 
+  function onCurrencyChange(value: string): void {
+    if (isCurrency(value)) {
+      setCurrency(value);
+    }
+  }
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6"
+      className="fixed inset-x-0 top-4 z-50 overflow-x-clip px-3 sm:px-6"
     >
-      <div className="glass-surface backdrop-blur-sm rounded-glass mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:px-5 sm:py-2.5">
-        <Link href="/" className="flex shrink-0 items-center gap-2 p-2">
-          <Logo variant="main" className="h-11 sm:h-9" priority />
+      <div className="glass-surface glass-frost backdrop-blur-md rounded-glass mx-auto flex max-w-7xl min-w-0 items-center justify-between gap-2 px-3 py-2 sm:gap-3 sm:px-5 sm:py-2.5">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2 p-1.5 sm:p-2">
+          <Logo variant="main" className="h-9 sm:h-9" priority />
         </Link>
 
         <HeaderNav />
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <HeaderMobileNav />
+        <div className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-3">
+          <HeaderMobileNav
+            currencyOptions={currencyOptions}
+            currency={currency}
+            onCurrencyChange={onCurrencyChange}
+          />
           <div className="hidden sm:block">
             <ThemeToggle />
           </div>
@@ -274,18 +327,14 @@ export function PublicHeader(): ReactNode {
             icon={<Coins className="size-3.5" />}
             options={currencyOptions}
             value={currency}
-            onChange={(value) => {
-              if (isCurrency(value)) {
-                setCurrency(value);
-              }
-            }}
+            onChange={onCurrencyChange}
             label={t("currencyLabel")}
           />
           <LocaleSwitcher compact />
-          <Button variant="outline" size="sm" href="/login">
+          <Button variant="outline" size="sm" href="/login" className="shrink-0">
             {t("login")}
           </Button>
-          <Button variant="solid" size="sm" href="/register">
+          <Button variant="solid" size="sm" href="/register" className="shrink-0">
             {t("register")}
           </Button>
         </div>

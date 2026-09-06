@@ -112,7 +112,8 @@
       "galleryMax": "يمكنك إضافة حتى 6 صور."
     },
     "imageQuoteProviderRegister": "إقامات وموائد وأدلاء مرخّصة — أدرج عملك على تراث.",
-    "providerNoteLink": "انضم كعمل تجاري"
+    "providerNoteLink": "انضم كعمل تجاري",
+    "trustStripLabel": "لماذا يثق المسافرون بتراث"
   },
   "stepper": {
     "decrease": "إنقاص {label}",
@@ -240,6 +241,7 @@
       "navHowItWorks": "كيف يعمل",
       "navLabel": "استكشف تراث",
       "openMenu": "فتح القائمة",
+      "appearanceMenu": "المظهر",
       "currencyLabel": "العملة",
       "currencySyp": "ل.س",
       "currencyUsd": "دولار",

@@ -13,7 +13,7 @@ export function ContactUs(): ReactNode {
   const t = useTranslations("landing.contactUs");
 
   return (
-    <section id="contact-us" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-28">
+    <section id="contact-us" className="scroll-mt-24 px-4 py-20 sm:px-6 sm:py-24">
       <motion.div
         initial="hidden"
         whileInView="visible"

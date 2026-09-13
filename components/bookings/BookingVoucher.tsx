@@ -10,10 +10,10 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBooking } from "@/hooks/useBookings";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 
 type BookingVoucherProps = { bookingId: string };
@@ -23,6 +23,7 @@ export function BookingVoucher({ bookingId }: BookingVoucherProps): ReactNode {
   const tRooms = useTranslations("hotels.roomTypes");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const bookingQuery = useTouristBooking(bookingId);
   const hotelQuery = useHotel(bookingQuery.data?.hotelId ?? "");
 
@@ -121,14 +122,14 @@ export function BookingVoucher({ bookingId }: BookingVoucherProps): ReactNode {
         },
       ]}
       listPriceLabel={t("listPrice")}
-      listPrice={formatSyp(booking.listPriceSyp, loc)}
+      listPrice={formatMoney(booking.listPriceSyp)}
       discount={
         booking.discountSyp > 0
-          ? { label: discountLabel, value: formatSyp(booking.discountSyp, loc) }
+          ? { label: discountLabel, value: formatMoney(booking.discountSyp) }
           : undefined
       }
       totalLabel={t("cashDue")}
-      total={formatSyp(booking.cashDueSyp, loc)}
+      total={formatMoney(booking.cashDueSyp)}
       totalHint={t("cashDueHint")}
       qrValue={booking.qrPayload}
       qrTitle={t("voucher.showOnArrival")}

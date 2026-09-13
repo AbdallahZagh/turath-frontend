@@ -24,9 +24,9 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 
 type HotelDetailProps = {
@@ -52,6 +52,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
 
   if (hotelQuery.isPending) return <HotelDetailSkeleton />;
@@ -143,7 +144,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
                     </p>
                   </div>
                   <div className="sm:text-end">
-                    <p className="text-prose font-semibold">{formatSyp(room.priceSyp, loc)}</p>
+                    <p className="text-prose font-semibold">{formatMoney(room.priceSyp)}</p>
                     <p className="text-prose-muted text-xs">{t("perNight")}</p>
                   </div>
                 </div>
@@ -207,7 +208,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
 
         <GlassPanel className="p-6 lg:sticky lg:top-28">
           <p className="text-prose-muted text-sm">{t("from")}</p>
-          <p className="text-prose mt-1 text-xl font-semibold">{formatSyp(lowestPrice, loc)}</p>
+          <p className="text-prose mt-1 text-xl font-semibold">{formatMoney(lowestPrice)}</p>
           <p className="text-prose-muted text-xs">{t("perNight")}</p>
           <div className="border-border my-5 border-t" />
           <p className="text-prose-muted text-sm leading-relaxed">{tDetail("cashOnArrival")}</p>

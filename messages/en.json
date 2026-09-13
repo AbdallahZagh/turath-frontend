@@ -1647,6 +1647,8 @@
     "discountDemoHint": "For this frontend demo, try TURATH10.",
     "holdTitle": "Your selection is held for 10 minutes",
     "holdBody": "Complete confirmation within this window. A live availability lock will be connected when the booking API is ready.",
+    "reliabilityWarningTitle": "This booking may need hotel approval",
+    "reliabilityWarningBody": "Your guest standing is below 50, so the hotel may need to accept this reservation before it is confirmed.",
     "dates": "Dates",
     "room": "Room",
     "nights": "Nights",

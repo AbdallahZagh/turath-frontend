@@ -10,8 +10,8 @@ import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 import type { Hotel } from "@/lib/mock/hotels";
 
@@ -24,6 +24,7 @@ export function HotelCard({ hotel }: HotelCardProps): ReactNode {
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const lowestPrice = Math.min(...hotel.rooms.map((room) => room.priceSyp));
   const maxGuests = Math.max(...hotel.rooms.map((room) => room.maxGuests));
 
@@ -85,7 +86,7 @@ export function HotelCard({ hotel }: HotelCardProps): ReactNode {
             <div className="border-border mt-auto flex items-end justify-between gap-4 border-t pt-4">
               <div>
                 <p className="text-prose-muted text-xs">{t("from")}</p>
-                <p className="text-prose text-sm font-semibold">{formatSyp(lowestPrice, loc)}</p>
+                <p className="text-prose text-sm font-semibold">{formatMoney(lowestPrice)}</p>
                 <p className="text-prose-muted text-xs">{t("perNight")}</p>
               </div>
               <span className="text-prose-muted inline-flex items-center gap-1 text-xs">

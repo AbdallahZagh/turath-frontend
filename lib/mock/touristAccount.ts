@@ -1,3 +1,6 @@
+/** PAGES.md: checkout warns when the guest score is below this. */
+export const RELIABILITY_PROVIDER_ACCEPTANCE_BELOW = 50;
+
 export type ReliabilityTier = "VIP" | "STANDARD" | "RESTRICTED" | "SUSPENDED";
 
 export type ReliabilityEvent = {

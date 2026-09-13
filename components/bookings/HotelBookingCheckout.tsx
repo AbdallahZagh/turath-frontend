@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, format, parseISO } from "date-fns";
-import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
+import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, TriangleAlert, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
@@ -20,12 +20,14 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Textarea } from "@/components/ui/Textarea";
 import { useCreateHotelBooking, useValidateHotelCoupon } from "@/hooks/useBookings";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
+import { useTouristAccount } from "@/hooks/useTouristAccount";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 import type { CouponResult } from "@/lib/mock/bookings";
+import { RELIABILITY_PROVIDER_ACCEPTANCE_BELOW } from "@/lib/mock/touristAccount";
 import {
   hotelBookingSchema,
   isHotelBookingErrorKey,
@@ -61,10 +63,15 @@ export function HotelBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
+  const accountQuery = useTouristAccount();
   const createBooking = useCreateHotelBooking();
   const couponMutation = useValidateHotelCoupon();
   const [coupon, setCoupon] = useState<CouponResult | null>(null);
+  const needsProviderAcceptance =
+    typeof accountQuery.data?.reliabilityScore === "number" &&
+    accountQuery.data.reliabilityScore < RELIABILITY_PROVIDER_ACCEPTANCE_BELOW;
 
   const today = format(new Date(), "yyyy-MM-dd");
   const defaultCheckIn = initialCheckIn ?? format(addDays(new Date(), 1), "yyyy-MM-dd");
@@ -115,7 +122,7 @@ export function HotelBookingCheckout({
   const roomOptions: SelectOption[] = availableHotel.rooms.map((room) => ({
     value: room.id,
     label: tRooms(room.type),
-    hint: formatSyp(room.priceSyp, loc),
+    hint: formatMoney(room.priceSyp),
     disabled: room.available < 1 || room.maxGuests < guests,
   }));
 
@@ -197,6 +204,16 @@ export function HotelBookingCheckout({
             {coupon ? <p className={coupon.valid ? "text-primary mt-2 text-sm" : "text-destructive mt-2 text-sm"}>{coupon.valid ? t("discountApplied", { percent: coupon.percent }) : t("discountInvalid")}</p> : <p className="text-prose-muted mt-2 text-xs">{t("discountDemoHint")}</p>}
           </section>
 
+          {needsProviderAcceptance ? (
+            <div className="bg-warning/12 flex gap-3 rounded-2xl p-4 text-sm">
+              <TriangleAlert className="text-warning mt-0.5 size-5 shrink-0" aria-hidden />
+              <div>
+                <p className="text-prose font-semibold">{t("reliabilityWarningTitle")}</p>
+                <p className="text-prose-muted mt-1 leading-relaxed">{t("reliabilityWarningBody")}</p>
+              </div>
+            </div>
+          ) : null}
+
           <div className="bg-glass-control flex gap-3 rounded-2xl p-4 text-sm">
             <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
             <div><p className="text-prose font-semibold">{t("holdTitle")}</p><p className="text-prose-muted mt-1 leading-relaxed">{t("holdBody")}</p></div>
@@ -213,9 +230,9 @@ export function HotelBookingCheckout({
           <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{nights}</dd></div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{formatSyp(listPriceSyp, loc)}</dd></div>
-          {discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatSyp(discountSyp, loc)}</dd></div> : null}
-          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{formatSyp(cashDueSyp, loc)}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd></div>
+          {discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}
+          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{formatMoney(cashDueSyp)}</dd></div>
         </dl>
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
         <Button type="submit" className="mt-6 w-full" disabled={createBooking.isPending || !selectedRoom || nights < 1} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>

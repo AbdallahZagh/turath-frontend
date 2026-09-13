@@ -91,7 +91,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
 
       <HotelGallery images={hotel.gallery} hotelName={hotelName} />
 
-      <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="mt-7 grid items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_22rem] lg:pb-0">
         <div className="space-y-7">
           <section>
             <div className="flex flex-wrap items-center gap-2">
@@ -206,7 +206,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
           </GlassPanel>
         </div>
 
-        <GlassPanel className="p-6 lg:sticky lg:top-28">
+        <GlassPanel className="hidden p-6 lg:sticky lg:top-28 lg:block">
           <p className="text-prose-muted text-sm">{t("from")}</p>
           <p className="text-prose mt-1 text-xl font-semibold">{formatMoney(lowestPrice)}</p>
           <p className="text-prose-muted text-xs">{t("perNight")}</p>
@@ -217,6 +217,22 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
             {tDetail("book")}
           </Button>
         </GlassPanel>
+      </div>
+
+      <div className="border-border bg-surface/95 supports-[backdrop-filter]:bg-surface/80 fixed inset-x-0 bottom-0 z-40 border-t px-4 py-3 backdrop-blur-md lg:hidden">
+        <div className="mx-auto flex max-w-[98rem] items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-prose-muted text-xs">{t("from")}</p>
+            <p className="text-prose truncate text-sm font-semibold">
+              {formatMoney(lowestPrice)}
+              <span className="text-prose-muted ms-1 font-normal">{t("perNight")}</span>
+            </p>
+          </div>
+          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} size="sm" className="shrink-0">
+            <CalendarCheck className="size-4" aria-hidden />
+            {tDetail("book")}
+          </Button>
+        </div>
       </div>
     </>
   );

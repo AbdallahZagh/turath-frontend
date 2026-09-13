@@ -168,7 +168,7 @@ export function UniversalBookingPass({
         </div>
 
         <div className="grid lg:grid-cols-[minmax(0,1fr)_17.5rem]">
-          <section className="flex min-w-0 flex-col">
+          <section className="order-2 flex min-w-0 flex-col lg:order-1">
             <header className="grid gap-5 border-b border-dashed border-border px-6 py-5 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:px-8">
               <div className="rounded-xl bg-white px-3 py-2 shadow-sm dark:bg-white">
                 <Image
@@ -288,7 +288,7 @@ export function UniversalBookingPass({
             </div>
           </section>
 
-          <aside className="relative flex flex-col items-center border-t border-dashed border-border bg-app-muted/45 px-6 py-5 text-center lg:border-s lg:border-t-0">
+          <aside className="relative order-1 flex flex-col items-center border-b border-dashed border-border bg-app-muted/45 px-6 py-5 text-center lg:order-2 lg:border-b-0 lg:border-s">
             <span className="absolute -top-3 size-6 rounded-full bg-app lg:-start-3" aria-hidden />
             <span className="absolute -bottom-3 hidden size-6 rounded-full bg-app lg:-start-3 lg:block" aria-hidden />
 

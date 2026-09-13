@@ -16,7 +16,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
-import { HotelGallery } from "@/components/hotels/HotelGallery";
+import { ListingGallery } from "@/components/listings/ListingGallery";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -31,6 +31,7 @@ import { localizedName } from "@/lib/i18n/localized";
 
 type HotelDetailProps = {
   hotelId: string;
+  basePath?: string;
 };
 
 function HotelDetailSkeleton(): ReactNode {
@@ -45,7 +46,7 @@ function HotelDetailSkeleton(): ReactNode {
   );
 }
 
-export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
+export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps): ReactNode {
   const t = useTranslations("hotels");
   const tDetail = useTranslations("hotels.detail");
   const tRooms = useTranslations("hotels.roomTypes");
@@ -71,7 +72,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
         icon={HotelIcon}
         title={t("states.notFoundTitle")}
         description={t("states.notFoundDescription")}
-        action={<Button href="/hotels" variant="outline" size="sm">{tDetail("backToHotels")}</Button>}
+        action={<Button href={basePath} variant="outline" size="sm">{tDetail("backToHotels")}</Button>}
       />
     );
   }
@@ -83,12 +84,16 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
 
   return (
     <>
-      <Button href="/hotels" variant="glass" size="sm" className="mb-5 w-fit">
+      <Button href={basePath} variant="glass" size="sm" className="mb-5 w-fit">
         <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
         {tDetail("backToHotels")}
       </Button>
 
-      <HotelGallery images={hotel.gallery} hotelName={hotelName} />
+      <ListingGallery
+        images={hotel.gallery}
+        imageAlt={tDetail("galleryImage", { hotel: hotelName })}
+        openImageLabel={(number) => tDetail("openImage", { number })}
+      />
 
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="space-y-7">

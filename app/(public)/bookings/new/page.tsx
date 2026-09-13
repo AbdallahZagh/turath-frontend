@@ -3,6 +3,9 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { HotelBookingCheckout } from "@/components/bookings/HotelBookingCheckout";
+import { RestaurantBookingCheckout } from "@/components/bookings/RestaurantBookingCheckout";
+import { TripBookingCheckout } from "@/components/bookings/TripBookingCheckout";
+import { EventBookingCheckout } from "@/components/bookings/EventBookingCheckout";
 
 type BookingSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -15,6 +18,11 @@ function parseGuests(value: string | undefined): number {
   return Number.isInteger(parsed) && parsed >= 1 && parsed <= 8 ? parsed : 1;
 }
 
+function parseTicketQuantity(value: string | undefined): number {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= 1 && parsed <= 6 ? parsed : 1;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("bookings");
   return { title: `${t("title")} | Turath`, description: t("metaDescription") };
@@ -24,9 +32,18 @@ export default async function NewBookingPage({ searchParams }: { searchParams: B
   const params = await searchParams;
   const type = firstValue(params.type);
   const id = firstValue(params.id) ?? "";
+  const guests = parseGuests(firstValue(params.guests));
   return (
     <main className="mx-auto max-w-[98rem] px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24 lg:px-8">
-      <HotelBookingCheckout hotelId={type === "hotel" ? id : ""} initialCheckIn={firstValue(params.checkIn)} initialCheckOut={firstValue(params.checkOut)} initialGuests={parseGuests(firstValue(params.guests))} />
+      {type === "restaurant" ? (
+        <RestaurantBookingCheckout restaurantId={id} initialPartySize={guests} />
+      ) : type === "trip" ? (
+        <TripBookingCheckout tripId={id} initialDate={firstValue(params.date)} initialSeats={guests} />
+      ) : type === "event" ? (
+        <EventBookingCheckout eventId={id} initialSessionId={firstValue(params.session)} initialQuantity={parseTicketQuantity(firstValue(params.quantity))} />
+      ) : (
+        <HotelBookingCheckout hotelId={type === "hotel" ? id : ""} initialCheckIn={firstValue(params.checkIn)} initialCheckOut={firstValue(params.checkOut)} initialGuests={guests} />
+      )}
     </main>
   );
 }

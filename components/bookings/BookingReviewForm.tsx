@@ -14,7 +14,10 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Textarea } from "@/components/ui/Textarea";
 import { useSubmitTouristBookingReview, useTouristBooking } from "@/hooks/useBookings";
+import { useEvent } from "@/hooks/useEvents";
 import { useHotel } from "@/hooks/useHotels";
+import { useRestaurant } from "@/hooks/useRestaurants";
+import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
@@ -39,17 +42,26 @@ export function BookingReviewForm({ bookingId }: BookingReviewFormProps): ReactN
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const bookingQuery = useTouristBooking(bookingId);
-  const hotelQuery = useHotel(bookingQuery.data?.hotelId ?? "");
+  const booking = bookingQuery.data;
+  const hotelQuery = useHotel(booking?.type === "hotel" ? booking.hotelId : "");
+  const restaurantQuery = useRestaurant(booking?.type === "restaurant" ? booking.restaurantId : "");
+  const tripQuery = useTrip(booking?.type === "trip" ? booking.tripId : "");
+  const eventQuery = useEvent(booking?.type === "event" ? booking.eventId : "");
   const submitReview = useSubmitTouristBookingReview();
   const [submitted, setSubmitted] = useState(false);
   const form = useForm<BookingReviewValues>({ resolver: zodResolver(bookingReviewSchema), defaultValues: { rating: 0, comment: "" } });
 
-  if (bookingQuery.isPending || hotelQuery.isPending) return <Skeleton className="mx-auto h-[30rem] max-w-2xl" />;
-  if (bookingQuery.isError || hotelQuery.isError) return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => { void bookingQuery.refetch(); void hotelQuery.refetch(); }} />;
-  const booking = bookingQuery.data;
-  const hotel = hotelQuery.data;
-  if (!booking || !hotel || booking.status !== "CHECKED_IN") {
-    return <EmptyState icon={MessageSquareQuote} title={t("unavailableTitle")} description={t("unavailableBody")} action={<Button href={booking ? `/bookings/${booking.id}` : "/user/bookings"} variant="outline">{t("back")}</Button>} />;
+  if (bookingQuery.isPending) return <Skeleton className="mx-auto h-[30rem] max-w-2xl" />;
+  if (bookingQuery.isError) return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => void bookingQuery.refetch()} />;
+  if (!booking) {
+    return <EmptyState icon={MessageSquareQuote} title={t("unavailableTitle")} description={t("unavailableBody")} action={<Button href="/user/bookings" variant="outline">{t("back")}</Button>} />;
+  }
+  const providerQuery = booking.type === "restaurant" ? restaurantQuery : booking.type === "trip" ? tripQuery : booking.type === "event" ? eventQuery : hotelQuery;
+  if (providerQuery.isPending) return <Skeleton className="mx-auto h-[30rem] max-w-2xl" />;
+  if (providerQuery.isError) return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => void providerQuery.refetch()} />;
+  const provider = providerQuery.data;
+  if (!provider || booking.status !== "CHECKED_IN") {
+    return <EmptyState icon={MessageSquareQuote} title={t("unavailableTitle")} description={t("unavailableBody")} action={<Button href={`/bookings/${booking.id}`} variant="outline">{t("back")}</Button>} />;
   }
 
   async function onSubmit(values: BookingReviewValues): Promise<void> {
@@ -69,7 +81,7 @@ export function BookingReviewForm({ bookingId }: BookingReviewFormProps): ReactN
     <GlassPanel className="mx-auto max-w-2xl p-6 sm:p-8">
       <p className="text-primary text-xs font-bold uppercase tracking-[0.15em]">{t("eyebrow")}</p>
       <h1 className="font-heading text-prose mt-2 text-3xl font-semibold">{t("title")}</h1>
-      <p className="text-prose-muted mt-2 text-sm">{t("description", { provider: localizedName(hotel.name, loc) })}</p>
+      <p className="text-prose-muted mt-2 text-sm">{t("description", { provider: localizedName(provider.name, loc) })}</p>
       <form className="mt-7 space-y-6" noValidate onSubmit={form.handleSubmit(onSubmit)}>
         <div>
           <p className="text-prose mb-3 text-sm font-semibold">{t("rating")}</p>

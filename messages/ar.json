@@ -233,7 +233,7 @@
       "bosra": "بصرى"
     },
     "header": {
-      "navHotels": "الإقامات",
+      "navHotels": "الفنادق",
       "navDining": "المطاعم",
       "navTrips": "الرحلات",
       "navEvents": "الفعاليات",
@@ -331,7 +331,7 @@
     "pillars": {
       "eyebrow": "خمس طرق لاختبار سوريا",
       "title": "أقم، وتذوّق، واستكشف، واحتفل، وامشِ مع دليل.",
-      "hotelsTitle": "إقامات تراثية",
+      "hotelsTitle": "فنادق تراثية",
       "hotelsBody": "فنادق ونُزل مميزة داخل أفنية تراثية مرمّمة.",
       "diningTitle": "مطاعم الأفنية والأسطح",
       "diningBody": "احجز طاولة بإطلالة، من دمشق القديمة إلى أسواق حلب.",
@@ -472,7 +472,7 @@
     "footer": {
       "tagline": "تراث سوريا وضيافتها — منشآت مراجعة، والدفع عند الوصول.",
       "categoriesHeading": "استكشف",
-      "categoryHotels": "الإقامات",
+      "categoryHotels": "الفنادق",
       "categoryDining": "المطاعم",
       "categoryTrips": "الرحلات",
       "categoryEvents": "الفعاليات",
@@ -1533,7 +1533,7 @@
         "bosraTheatre": "مسرح بصرى"
       },
       "pillars": {
-        "hotels": "الإقامات",
+        "hotels": "الفنادق",
         "dining": "المطاعم",
         "trips": "الرحلات",
         "events": "الفعاليات",
@@ -1544,17 +1544,17 @@
   "hotels": {
     "headers": {
       "index": {
-        "title": "إقامات بروح المكان",
+        "title": "فنادق بروح المكان",
         "description": "اكتشف فنادق وإقامات تراثية موثّقة في أنحاء سوريا، مع وسائل الراحة والأسعار بوضوح قبل الحجز."
       }
     },
-    "verified": "إقامة موثّقة",
+    "verified": "فندق موثّق",
     "ratingLabel": "التقييم {rating} من 5",
     "reviewsCount": "{count} تقييم",
     "from": "ابتداءً من",
     "perNight": "لليلة الواحدة",
     "sleepsUpTo": "حتى {count} ضيوف",
-    "resultCount": "تم العثور على {count} إقامة",
+    "resultCount": "تم العثور على {count} فندق",
     "searchDates": "من {checkIn} إلى {checkOut}",
     "oneSearchDate": "التاريخ: {date}",
     "amenities": {
@@ -1573,7 +1573,7 @@
       "suite": "جناح"
     },
     "filters": {
-      "title": "تصفية الإقامات",
+      "title": "تصفية الفنادق",
       "reset": "إعادة ضبط",
       "governorate": "المحافظة",
       "allGovernorates": "كل المحافظات",
@@ -1591,21 +1591,21 @@
       }
     },
     "states": {
-      "errorTitle": "تعذّر تحميل الإقامات",
-      "detailErrorTitle": "تعذّر تحميل هذه الإقامة",
+      "errorTitle": "تعذّر تحميل الفنادق",
+      "detailErrorTitle": "تعذّر تحميل هذا الفندق",
       "errorDescription": "تحقق من اتصالك ثم حاول مجدداً.",
       "retry": "حاول مجدداً",
-      "emptyTitle": "لا توجد إقامات تطابق هذه الخيارات",
+      "emptyTitle": "لا توجد فنادق تطابق هذه الخيارات",
       "emptyDescription": "جرّب محافظة أو نوع غرفة أو سعراً أو وسيلة راحة مختلفة.",
       "clearFilters": "مسح عوامل التصفية",
-      "notFoundTitle": "لم يتم العثور على الإقامة",
-      "notFoundDescription": "قد لا تكون هذه الإقامة متاحة بعد الآن أو قد يكون الرابط غير صحيح."
+      "notFoundTitle": "لم يتم العثور على الفندق",
+      "notFoundDescription": "قد لا يكون هذا الفندق متاحاً بعد الآن أو قد يكون الرابط غير صحيح."
     },
     "detail": {
       "galleryImage": "صورة من {hotel}",
       "openImage": "فتح الصورة {number}",
-      "backToHotels": "العودة إلى الإقامات",
-      "about": "عن هذه الإقامة",
+      "backToHotels": "العودة إلى الفنادق",
+      "about": "عن هذا الفندق",
       "amenities": "ما يقدمه المكان",
       "rooms": "الغرف والأسعار",
       "roomGuests": "حتى {count} ضيوف",
@@ -1619,11 +1619,242 @@
       "reviews": "تقييمات الضيوف الموثّقة",
       "noReviews": "لا توجد تقييمات موثّقة بعد.",
       "cashOnArrival": "احجز الآن وادفع المبلغ النهائي نقداً عند الوصول.",
-      "book": "احجز هذه الإقامة"
+      "book": "احجز هذا الفندق"
+    }
+  },
+  "restaurants": {
+    "headers": {
+      "index": {
+        "title": "موائد تستحق اللقاء",
+        "description": "اكتشف مطاعم سورية موثّقة، وقارن الجلسات والأسعار، واحجز طاولتك مع الدفع نقداً عند الوصول."
+      }
+    },
+    "verified": "مطعم موثّق",
+    "ratingLabel": "التقييم {rating} من 5",
+    "reviewsCount": "{count} تقييم",
+    "from": "ابتداءً من",
+    "perGuest": "للضيف",
+    "partyUpTo": "طاولات حتى {count}",
+    "resultCount": "تم العثور على {count} مطعم",
+    "amenities": {
+      "generator": "مولدة كهرباء",
+      "wifi": "واي فاي",
+      "ac": "تكييف",
+      "accessible": "مهيأ لسهولة الوصول"
+    },
+    "zones": {
+      "indoor": "صالة داخلية",
+      "terrace": "شرفة",
+      "vip": "جلسة خاصة",
+      "smoking": "منطقة تدخين"
+    },
+    "filters": {
+      "title": "تصفية المطاعم",
+      "reset": "إعادة ضبط",
+      "governorate": "المحافظة",
+      "allGovernorates": "كل المحافظات",
+      "price": "السعر للضيف",
+      "allPrices": "كل الأسعار",
+      "zone": "منطقة الجلوس",
+      "allZones": "كل مناطق الجلوس",
+      "partySize": "عدد الضيوف",
+      "partyCount": "{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}",
+      "amenities": "وسائل الراحة الأساسية",
+      "prices": {
+        "under75": "أقل من 75,000 ل.س",
+        "75to150": "75,000–150,000 ل.س",
+        "over150": "أكثر من 150,000 ل.س"
+      }
+    },
+    "states": {
+      "errorTitle": "تعذّر تحميل المطاعم",
+      "detailErrorTitle": "تعذّر تحميل هذا المطعم",
+      "errorDescription": "تحقق من اتصالك ثم حاول مجدداً.",
+      "retry": "حاول مجدداً",
+      "emptyTitle": "لا توجد مطاعم تطابق هذه الخيارات",
+      "emptyDescription": "جرّب محافظة أو منطقة جلوس أو عدداً أو سعراً مختلفاً.",
+      "clearFilters": "مسح عوامل التصفية",
+      "notFoundTitle": "لم يتم العثور على المطعم",
+      "notFoundDescription": "قد لا يكون هذا المطعم متاحاً بعد الآن أو قد يكون الرابط غير صحيح."
+    },
+    "detail": {
+      "back": "العودة إلى المطاعم",
+      "galleryImage": "صورة من {restaurant}",
+      "openImage": "فتح الصورة {number}",
+      "about": "عن هذا المطعم",
+      "amenities": "ما يقدمه المكان",
+      "hours": "الساعات والقائمة",
+      "menuHighlights": "أبرز الأطباق",
+      "seating": "اختر جلستك",
+      "zoneCapacity": "حتى {count} ضيوف",
+      "availableTimes": "أوقات الحجز المتاحة",
+      "location": "الموقع",
+      "navigate": "فتح الاتجاهات",
+      "reviews": "تقييمات الضيوف الموثّقة",
+      "noReviews": "لا توجد تقييمات موثّقة بعد.",
+      "cashOnArrival": "احجز طاولتك الآن وادفع المبلغ النهائي مباشرة في المطعم.",
+      "book": "احجز طاولة"
+    }
+  },
+  "trips": {
+    "headers": {
+      "index": {
+        "title": "رحلات تحمل حكاية",
+        "description": "استكشف رحلات جماعية موثّقة في أنحاء سوريا، وقارن المواعيد القادمة، واحجز مقعدك مع الدفع نقداً عند الانطلاق."
+      }
+    },
+    "verified": "منظّم رحلات موثّق",
+    "ratingLabel": "التقييم {rating} من 5",
+    "reviewsCount": "{count} تقييم",
+    "from": "ابتداءً من",
+    "perPerson": "للمسافر",
+    "nextDeparture": "الانطلاق القادم",
+    "seatsLeft": "{count, plural, one {مقعد واحد متبقٍ} two {مقعدان متبقيان} few {# مقاعد متبقية} many {# مقعداً متبقياً} other {# مقعد متبقٍ}}",
+    "soldOut": "مكتملة",
+    "people": "{count, plural, one {مسافر واحد} two {مسافران} few {# مسافرين} many {# مسافراً} other {# مسافر}}",
+    "resultCount": "تم العثور على {count} رحلة",
+    "durations": {
+      "halfDay": "نصف يوم",
+      "fullDay": "يوم كامل",
+      "multiDay": "عدة أيام"
+    },
+    "gear": {
+      "water": "مياه للشرب",
+      "snacks": "وجبات خفيفة محلية",
+      "walkingPoles": "عصي للمشي",
+      "firstAid": "حقيبة إسعافات أولية",
+      "transport": "نقل جماعي"
+    },
+    "filters": {
+      "title": "تصفية الرحلات",
+      "reset": "إعادة ضبط",
+      "governorate": "المحافظة",
+      "allGovernorates": "كل المحافظات",
+      "date": "تاريخ الانطلاق",
+      "duration": "المدة",
+      "allDurations": "كل المدد",
+      "price": "السعر للمسافر",
+      "allPrices": "كل الأسعار",
+      "seats": "المقاعد المطلوبة",
+      "prices": {
+        "under200": "أقل من 200,000 ل.س",
+        "200to400": "200,000–400,000 ل.س",
+        "over400": "أكثر من 400,000 ل.س"
+      }
+    },
+    "states": {
+      "errorTitle": "تعذّر تحميل الرحلات",
+      "detailErrorTitle": "تعذّر تحميل هذه الرحلة",
+      "errorDescription": "تحقق من اتصالك ثم حاول مجدداً.",
+      "retry": "حاول مجدداً",
+      "emptyTitle": "لا توجد رحلات تطابق هذه الخيارات",
+      "emptyDescription": "جرّب تاريخاً أو مدة أو محافظة أو عدداً مختلفاً من المقاعد.",
+      "clearFilters": "مسح عوامل التصفية",
+      "notFoundTitle": "لم يتم العثور على الرحلة",
+      "notFoundDescription": "قد لا تكون هذه الرحلة متاحة بعد الآن أو قد يكون الرابط غير صحيح."
+    },
+    "detail": {
+      "back": "العودة إلى الرحلات",
+      "galleryImage": "صورة من {trip}",
+      "openImage": "فتح الصورة {number}",
+      "about": "عن هذه الرحلة",
+      "routeEyebrow": "مسارك",
+      "itinerary": "برنامج الرحلة خطوة بخطوة",
+      "departures": "مواعيد الانطلاق القادمة",
+      "pickupPoints": "نقاط الالتقاء",
+      "included": "المشمول في الرحلة",
+      "meetingPoint": "نقطة الالتقاء الرئيسية",
+      "navigate": "فتح الاتجاهات",
+      "reviews": "تقييمات المسافرين الموثّقة",
+      "noReviews": "لا توجد تقييمات موثّقة بعد.",
+      "capacity": "حجم المجموعة",
+      "nextDate": "الموعد القادم",
+      "cashOnArrival": "احجز مقاعدك الآن وادفع المبلغ النهائي مباشرة لمنظّم الرحلة عند الانطلاق.",
+      "book": "احجز المقاعد"
+    }
+  },
+  "events": {
+    "headers": {
+      "index": {
+        "title": "لقاءات تبقى في الذاكرة",
+        "description": "اكتشف فعاليات ثقافية موثّقة في أنحاء سوريا، وقارن المواعيد والتذاكر، واحجز مع الدفع نقداً عند الوصول."
+      }
+    },
+    "verified": "منظّم فعالية موثّق",
+    "ratingLabel": "التقييم {rating} من 5",
+    "reviewsCount": "{count} تقييم",
+    "from": "ابتداءً من",
+    "perTicket": "للتذكرة",
+    "nextSession": "الموعد القادم",
+    "ticketsLeft": "{count, plural, one {تذكرة واحدة متبقية} two {تذكرتان متبقيتان} few {# تذاكر متبقية} many {# تذكرة متبقية} other {# تذكرة متبقية}}",
+    "soldOut": "نفدت التذاكر",
+    "sessionCount": "{count, plural, one {موعد واحد} two {موعدان} few {# مواعيد} many {# موعداً} other {# موعد}}",
+    "resultCount": "تم العثور على {count} فعالية",
+    "categories": {
+      "music": "موسيقى",
+      "heritage": "تراث",
+      "food": "طعام",
+      "craft": "حرف"
+    },
+    "tiers": {
+      "standard": "عادية",
+      "vip": "كبار الزوار"
+    },
+    "features": {
+      "indoor": "داخلية",
+      "outdoor": "في الهواء الطلق",
+      "accessible": "مهيأة لسهولة الوصول",
+      "familyFriendly": "مناسبة للعائلات"
+    },
+    "filters": {
+      "title": "تصفية الفعاليات",
+      "reset": "إعادة ضبط",
+      "governorate": "المحافظة",
+      "allGovernorates": "كل المحافظات",
+      "date": "تاريخ الفعالية",
+      "tier": "نوع التذكرة",
+      "allTiers": "كل أنواع التذاكر",
+      "price": "السعر للتذكرة",
+      "allPrices": "كل الأسعار",
+      "tickets": "التذاكر المطلوبة",
+      "prices": {
+        "under100": "أقل من 100,000 ل.س",
+        "100to250": "100,000–250,000 ل.س",
+        "over250": "أكثر من 250,000 ل.س"
+      }
+    },
+    "states": {
+      "errorTitle": "تعذّر تحميل الفعاليات",
+      "detailErrorTitle": "تعذّر تحميل هذه الفعالية",
+      "errorDescription": "تحقق من اتصالك ثم حاول مجدداً.",
+      "retry": "حاول مجدداً",
+      "emptyTitle": "لا توجد فعاليات تطابق هذه الخيارات",
+      "emptyDescription": "جرّب تاريخاً أو محافظة أو نوع تذكرة أو عدداً مختلفاً.",
+      "clearFilters": "مسح عوامل التصفية",
+      "notFoundTitle": "لم يتم العثور على الفعالية",
+      "notFoundDescription": "قد لا تكون هذه الفعالية متاحة بعد الآن أو قد يكون الرابط غير صحيح."
+    },
+    "detail": {
+      "back": "العودة إلى الفعاليات",
+      "galleryImage": "صورة من {event}",
+      "openImage": "فتح الصورة {number}",
+      "about": "عن هذه الفعالية",
+      "sessionsEyebrow": "اختر وقتك",
+      "sessions": "المواعيد القادمة",
+      "tickets": "خيارات التذاكر",
+      "experience": "ماذا تتوقع",
+      "venue": "المكان والاتجاهات",
+      "navigate": "فتح الاتجاهات",
+      "reviews": "تقييمات الضيوف الموثّقة",
+      "noReviews": "لا توجد تقييمات موثّقة بعد.",
+      "nextDate": "الموعد القادم",
+      "time": "يبدأ في",
+      "cashOnArrival": "احجز التذاكر الآن وادفع المبلغ النهائي مباشرة للمنظّم عند الوصول.",
+      "book": "احجز التذاكر"
     }
   },
   "bookings": {
-    "metaDescription": "راجع تفاصيل إقامتك وأكّد حجزك عبر تراث.",
+    "metaDescription": "راجع التفاصيل وأكّد حجزك عبر تراث.",
     "eyebrow": "حجز آمن",
     "title": "أكمل حجزك",
     "stayDetails": "تفاصيل الإقامة",
@@ -1657,7 +1888,7 @@
     "confirm": "تأكيد الحجز",
     "confirming": "جارٍ التأكيد…",
     "backToStay": "العودة إلى الإقامة",
-    "backToHotels": "تصفح الإقامات",
+    "backToHotels": "تصفح الفنادق",
     "toastErrorTitle": "لم يتم تأكيد الحجز",
     "toastErrorBody": "راجع التفاصيل وحاول مرة أخرى.",
     "errors": {
@@ -1709,6 +1940,175 @@
       }
     }
   },
+  "restaurantBooking": {
+    "eyebrow": "حجز طاولة",
+    "title": "احجز طاولتك",
+    "reservationDetails": "تفاصيل الحجز",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "timePlaceholder": "اختر وقتاً",
+    "partySize": "عدد الضيوف",
+    "zone": "منطقة الجلوس",
+    "zonePlaceholder": "اختر منطقة الجلوس",
+    "requestsTitle": "تفضيلات تناول الطعام",
+    "requestsHint": "تُرسل الطلبات الاختيارية إلى المطعم وتبقى خاضعة للتوفر.",
+    "specialRequests": "طلبات خاصة",
+    "specialRequestsPlaceholder": "الحساسيات، احتياجات سهولة الوصول، كرسي طفل، أو مناسبة خاصة",
+    "discountTitle": "رمز الخصم",
+    "discountCode": "الرمز",
+    "discountPlaceholder": "أدخل الرمز",
+    "apply": "تطبيق",
+    "applying": "جارٍ التحقق…",
+    "discountApplied": "تم تطبيق خصم {percent}٪.",
+    "discountInvalid": "هذا الرمز غير صالح لهذا الحجز.",
+    "discountDemoHint": "لهذا النموذج الأمامي، جرّب TURATH10.",
+    "holdTitle": "طاولتك محفوظة لمدة 10 دقائق",
+    "holdBody": "أكمل التأكيد خلال هذه المدة. سيُربط توفر الطاولات الفعلي عند تجهيز واجهة الحجوزات البرمجية.",
+    "notSelected": "لم يُحدد",
+    "listPrice": "السعر الأساسي",
+    "discount": "الخصم",
+    "cashDue": "المبلغ النقدي عند الوصول",
+    "cashDueHint": "لا يتم تحصيل أي دفعة عبر الإنترنت. ادفع هذا المبلغ مباشرة في المطعم.",
+    "confirm": "تأكيد الحجز",
+    "confirming": "جارٍ التأكيد…",
+    "backToRestaurant": "العودة إلى المطعم",
+    "backToRestaurants": "تصفح المطاعم",
+    "toastErrorTitle": "لم يتم تأكيد الحجز",
+    "toastErrorBody": "راجع التفاصيل وحاول مرة أخرى.",
+    "states": {
+      "loadErrorTitle": "تعذر تجهيز هذا الحجز",
+      "loadErrorBody": "يرجى المحاولة مجدداً. لم يتم حجز طاولتك.",
+      "retry": "حاول مجدداً",
+      "unavailableTitle": "هذا المطعم غير متاح",
+      "unavailableBody": "قد يكون رابط الحجز غير مكتمل أو لم يعد هذا المطعم مدرجاً."
+    },
+    "errors": {
+      "dateRequired": "اختر تاريخ الحجز.",
+      "timeRequired": "اختر وقتاً متاحاً.",
+      "zoneRequired": "اختر منطقة الجلوس.",
+      "partyMin": "أضف ضيفاً واحداً على الأقل.",
+      "partyMax": "يدعم هذا الحجز حتى 12 ضيفاً.",
+      "specialRequestsMax": "اجعل الطلبات أقل من 500 حرف."
+    },
+    "voucher": {
+      "date": "تاريخ الحجز",
+      "arrival": "وقت الوصول",
+      "reservation": "الحجز",
+      "tableFor": "طاولة لـ {count}",
+      "zone": "منطقة الجلوس",
+      "guests": "{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}"
+    }
+  },
+  "tripBooking": {
+    "eyebrow": "حجز رحلة",
+    "title": "احجز رحلتك",
+    "tripDetails": "تفاصيل الرحلة",
+    "date": "تاريخ الانطلاق",
+    "datePlaceholder": "اختر موعد الانطلاق",
+    "seats": "المسافرون",
+    "seatsAvailable": "متبقٍ {count}",
+    "pickup": "نقطة الالتقاء",
+    "pickupPlaceholder": "اختر نقطة الالتقاء",
+    "emergencyContact": "رقم للطوارئ",
+    "emergencyContactPlaceholder": "+963 9xx xxx xxx",
+    "discountTitle": "رمز الخصم",
+    "discountCode": "الرمز",
+    "discountPlaceholder": "أدخل رمزاً",
+    "apply": "تطبيق",
+    "applying": "جارٍ التحقق…",
+    "discountApplied": "تم تطبيق خصم {percent}%.",
+    "discountInvalid": "هذا الرمز غير صالح لهذه الرحلة.",
+    "discountDemoHint": "في هذا النموذج التجريبي، جرّب TURATH10.",
+    "holdTitle": "مقاعدك محفوظة لمدة 10 دقائق",
+    "holdBody": "أكمل التأكيد خلال هذه المدة. سيتم ربط توفر المقاعد المباشر عند جاهزية واجهة الحجز.",
+    "summary": "ملخص الحجز",
+    "notSelected": "لم يتم الاختيار",
+    "listPrice": "السعر الأساسي",
+    "discount": "الخصم",
+    "cashDue": "المبلغ النقدي عند الوصول",
+    "cashDueHint": "لا يتم تحصيل أي دفعة إلكترونية. ادفع هذا المبلغ مباشرة لمنظّم الرحلة.",
+    "confirm": "تأكيد الرحلة",
+    "confirming": "جارٍ التأكيد…",
+    "backToTrip": "العودة إلى الرحلة",
+    "backToTrips": "تصفح الرحلات",
+    "toastErrorTitle": "لم يتم تأكيد الرحلة",
+    "toastErrorBody": "راجع التفاصيل ثم حاول مجدداً.",
+    "states": {
+      "loadErrorTitle": "تعذّر تجهيز هذه الرحلة",
+      "loadErrorBody": "يرجى المحاولة مجدداً. لم يتم حجز مقاعدك.",
+      "retry": "حاول مجدداً",
+      "unavailableTitle": "هذه الرحلة غير متاحة",
+      "unavailableBody": "قد يكون رابط الحجز ناقصاً أو ربما لم تعد هذه الرحلة مدرجة."
+    },
+    "errors": {
+      "dateRequired": "اختر موعد انطلاق متاحاً.",
+      "pickupRequired": "اختر نقطة الالتقاء.",
+      "seatsMin": "احجز مقعداً واحداً على الأقل.",
+      "seatsMax": "يدعم هذا الحجز حتى 12 مسافراً.",
+      "emergencyContactRequired": "أضف رقم اتصال للطوارئ.",
+      "emergencyContactInvalid": "أدخل رقم هاتف صالحاً."
+    },
+    "voucher": {
+      "date": "تاريخ الانطلاق",
+      "pickupTime": "وقت الالتقاء",
+      "journey": "مدة الرحلة",
+      "travelers": "{count, plural, one {مسافر واحد} two {مسافران} few {# مسافرين} many {# مسافراً} other {# مسافر}}",
+      "operator": "منظّم الرحلة"
+    }
+  },
+  "eventBooking": {
+    "eyebrow": "حجز فعالية",
+    "title": "احجز تذاكرك",
+    "ticketDetails": "تفاصيل التذاكر",
+    "session": "الموعد",
+    "sessionPlaceholder": "اختر موعداً",
+    "tier": "نوع التذكرة",
+    "tierPlaceholder": "اختر نوع التذكرة",
+    "quantity": "التذاكر",
+    "remaining": "متبقٍ {count}",
+    "discountTitle": "رمز الخصم",
+    "discountCode": "الرمز",
+    "discountPlaceholder": "أدخل رمزاً",
+    "apply": "تطبيق",
+    "applying": "جارٍ التحقق…",
+    "discountApplied": "تم تطبيق خصم {percent}%.",
+    "discountInvalid": "هذا الرمز غير صالح لهذه الفعالية.",
+    "discountDemoHint": "في هذا النموذج التجريبي، جرّب TURATH10.",
+    "holdTitle": "تذاكرك محفوظة لمدة 10 دقائق",
+    "holdBody": "أكمل التأكيد خلال هذه المدة. سيتم ربط توفر التذاكر المباشر عند جاهزية واجهة الحجز.",
+    "summary": "ملخص الحجز",
+    "notSelected": "لم يتم الاختيار",
+    "listPrice": "السعر الأساسي",
+    "discount": "الخصم",
+    "cashDue": "المبلغ النقدي عند الوصول",
+    "cashDueHint": "لا يتم تحصيل أي دفعة إلكترونية. ادفع هذا المبلغ مباشرة لمنظّم الفعالية.",
+    "confirm": "تأكيد التذاكر",
+    "confirming": "جارٍ التأكيد…",
+    "backToEvent": "العودة إلى الفعالية",
+    "backToEvents": "تصفح الفعاليات",
+    "toastErrorTitle": "لم يتم تأكيد التذاكر",
+    "toastErrorBody": "راجع التفاصيل ثم حاول مجدداً.",
+    "states": {
+      "loadErrorTitle": "تعذّر تجهيز هذا الحجز",
+      "loadErrorBody": "يرجى المحاولة مجدداً. لم يتم حجز تذاكرك.",
+      "retry": "حاول مجدداً",
+      "unavailableTitle": "هذه الفعالية غير متاحة",
+      "unavailableBody": "قد يكون رابط الحجز ناقصاً أو ربما لم تعد هذه الفعالية مدرجة."
+    },
+    "errors": {
+      "sessionRequired": "اختر موعداً متاحاً.",
+      "tierRequired": "اختر نوع التذكرة.",
+      "quantityMin": "احجز تذكرة واحدة على الأقل.",
+      "quantityMax": "يمكنك حجز 6 تذاكر كحد أقصى."
+    },
+    "voucher": {
+      "date": "تاريخ الفعالية",
+      "doors": "وقت البدء",
+      "admission": "الدخول",
+      "venue": "المكان",
+      "tickets": "{count, plural, one {تذكرة واحدة} two {تذكرتان} few {# تذاكر} many {# تذكرة} other {# تذكرة}}"
+    }
+  },
   "account": {
     "headers": {
       "profile": { "title": "حسابك", "description": "أدر تفاصيلك وتفضيلاتك وحجوزاتك وموثوقيتك كضيف في مكان واحد." },
@@ -1726,7 +2126,7 @@
     "nav": {
       "label": "التنقل في الحساب",
       "groups": { "discover": "استكشف", "account": "حسابك" },
-      "hotels": "الإقامات",
+      "hotels": "الفنادق",
       "restaurants": "المطاعم",
       "trips": "الرحلات",
       "events": "الفعاليات",
@@ -1744,7 +2144,9 @@
     "bookings": {
       "tabsLabel": "سجل الحجوزات",
       "tabs": { "upcoming": "القادمة", "past": "السابقة", "cancelled": "الملغاة" },
-      "voucher": "فتح القسيمة", "review": "كتابة مراجعة", "browse": "تصفح الإقامات",
+      "voucher": "فتح القسيمة", "review": "كتابة مراجعة", "browse": "تصفح الفنادق",
+      "travelers": "{count, plural, one {مسافر واحد} two {مسافران} few {# مسافرين} many {# مسافراً} other {# مسافر}}",
+      "tickets": "{count, plural, one {تذكرة واحدة} two {تذكرتان} few {# تذاكر} many {# تذكرة} other {# تذكرة}}",
       "errorTitle": "تعذر تحميل حجوزاتك", "errorBody": "يرجى المحاولة مجدداً. لم تتغير القسائم المحفوظة.", "retry": "حاول مجدداً",
       "empty": {
         "upcoming": { "title": "لا توجد حجوزات قادمة", "description": "عندما تجري حجزاً ستظهر قسيمته هنا." },

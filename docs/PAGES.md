@@ -62,14 +62,27 @@ Pick by **theme** (light vs dark) and **space** (full lockup vs compact mark). N
 - Home `/`
 - Explore `/explore`
 - Attractions `/attractions`
-- Stays `/hotels`
+- Hotels `/hotels`
 - Dining `/restaurants`
 - Trips `/trips`
 - Events `/events`
 - Guides `/guides`
 - Contact `/contact` (footer Company → Contact; also the Home **Contact Us** band)
 
-Logged-in extras: My bookings `/user/bookings`, Profile `/user`.
+Signed-in tourist navigation uses the same discovery screens inside the user shell:
+
+- Hotels `/user/hotels`
+- Dining `/user/restaurants`
+- Trips `/user/trips`
+- Events `/user/events`
+- Guides `/user/guides`
+- Attractions `/user/attractions`
+- My bookings `/user/bookings`
+- Dashboard / profile `/user`
+
+Public routes remain available for visitors. Signed-in discovery routes reuse the same
+catalog/detail components and data layer, but keep the user header and sidebar and do
+not render the public footer.
 
 Dev-only (not in tourist nav): theme lab `/theme` (same screen as `/` until the tourist home exists).
 
@@ -258,7 +271,10 @@ Static content pages linked from the public footer (`terms`, `privacy`,
 
 ### Category indexes
 
-`/hotels` · `/restaurants` · `/trips` · `/events` · `/guides`
+Public: `/hotels` · `/restaurants` · `/trips` · `/events` · `/guides`
+
+Signed-in: `/user/hotels` · `/user/restaurants` · `/user/trips` ·
+`/user/events` · `/user/guides`
 
 Each page:
 
@@ -274,7 +290,11 @@ Each page:
 
 ### Detail pages
 
-`/hotels/[id]` · `/restaurants/[id]` · `/trips/[id]` · `/events/[id]` · `/guides/[id]`
+Public: `/hotels/[id]` · `/restaurants/[id]` · `/trips/[id]` ·
+`/events/[id]` · `/guides/[id]`
+
+Signed-in: `/user/hotels/[id]` · `/user/restaurants/[id]` ·
+`/user/trips/[id]` · `/user/events/[id]` · `/user/guides/[id]`
 
 Shared:
 

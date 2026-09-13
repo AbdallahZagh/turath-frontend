@@ -18,6 +18,7 @@ type HotelCatalogProps = {
   initialFilters: HotelFilters;
   checkIn?: string;
   checkOut?: string;
+  detailBasePath?: string;
 };
 
 const DEFAULT_FILTERS: HotelFilters = { guests: 1, amenities: [] };
@@ -36,6 +37,7 @@ export function HotelCatalog({
   initialFilters,
   checkIn,
   checkOut,
+  detailBasePath = "/hotels",
 }: HotelCatalogProps): ReactNode {
   const t = useTranslations("hotels");
   const [filters, setFilters] = useState<HotelFilters>(initialFilters);
@@ -87,7 +89,7 @@ export function HotelCatalog({
         {hotelsQuery.isSuccess && hotelsQuery.data.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {hotelsQuery.data.map((hotel) => (
-              <HotelCard key={hotel.id} hotel={hotel} />
+              <HotelCard key={hotel.id} hotel={hotel} detailBasePath={detailBasePath} />
             ))}
           </div>
         ) : null}

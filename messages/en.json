@@ -233,7 +233,7 @@
       "bosra": "Bosra"
     },
     "header": {
-      "navHotels": "Stays",
+      "navHotels": "Hotels",
       "navDining": "Dining",
       "navTrips": "Trips",
       "navEvents": "Events",
@@ -331,7 +331,7 @@
     "pillars": {
       "eyebrow": "Five ways to experience Syria",
       "title": "Stay, eat, explore, celebrate, and go with a guide.",
-      "hotelsTitle": "Heritage Stays",
+      "hotelsTitle": "Heritage Hotels",
       "hotelsBody": "Boutique hotels and guesthouses inside restored courtyards.",
       "diningTitle": "Courtyard & Rooftop Dining",
       "diningBody": "Reserve a table with a view, from Old Damascus to the Aleppo souks.",
@@ -472,7 +472,7 @@
     "footer": {
       "tagline": "Syria’s heritage and hospitality — checked listings, cash when you arrive.",
       "categoriesHeading": "Explore",
-      "categoryHotels": "Stays",
+      "categoryHotels": "Hotels",
       "categoryDining": "Dining",
       "categoryTrips": "Trips",
       "categoryEvents": "Events",
@@ -1533,7 +1533,7 @@
         "bosraTheatre": "Bosra Theatre"
       },
       "pillars": {
-        "hotels": "Stays",
+        "hotels": "Hotels",
         "dining": "Dining",
         "trips": "Trips",
         "events": "Events",
@@ -1544,17 +1544,17 @@
   "hotels": {
     "headers": {
       "index": {
-        "title": "Stays with a sense of place",
+        "title": "Hotels with a sense of place",
         "description": "Find verified hotels and heritage stays across Syria, with clear amenities and prices before you book."
       }
     },
-    "verified": "Verified stay",
+    "verified": "Verified hotel",
     "ratingLabel": "Rated {rating} out of 5",
     "reviewsCount": "{count} reviews",
     "from": "From",
     "perNight": "per night",
     "sleepsUpTo": "Up to {count} guests",
-    "resultCount": "{count} stays found",
+    "resultCount": "{count} hotels found",
     "searchDates": "{checkIn} to {checkOut}",
     "oneSearchDate": "Date: {date}",
     "amenities": {
@@ -1573,7 +1573,7 @@
       "suite": "Suite"
     },
     "filters": {
-      "title": "Filter stays",
+      "title": "Filter hotels",
       "reset": "Reset",
       "governorate": "Governorate",
       "allGovernorates": "All governorates",
@@ -1591,21 +1591,21 @@
       }
     },
     "states": {
-      "errorTitle": "We couldn't load these stays",
-      "detailErrorTitle": "We couldn't load this stay",
+      "errorTitle": "We couldn't load these hotels",
+      "detailErrorTitle": "We couldn't load this hotel",
       "errorDescription": "Please check your connection and try again.",
       "retry": "Try again",
-      "emptyTitle": "No stays match these filters",
+      "emptyTitle": "No hotels match these filters",
       "emptyDescription": "Try a different governorate, room type, price, or amenity.",
       "clearFilters": "Clear filters",
-      "notFoundTitle": "Stay not found",
-      "notFoundDescription": "This stay may no longer be available or the link may be incorrect."
+      "notFoundTitle": "Hotel not found",
+      "notFoundDescription": "This hotel may no longer be available or the link may be incorrect."
     },
     "detail": {
       "galleryImage": "View of {hotel}",
       "openImage": "Open photo {number}",
-      "backToHotels": "Back to stays",
-      "about": "About this stay",
+      "backToHotels": "Back to hotels",
+      "about": "About this hotel",
       "amenities": "What this place offers",
       "rooms": "Rooms and prices",
       "roomGuests": "Up to {count} guests",
@@ -1619,11 +1619,242 @@
       "reviews": "Verified guest reviews",
       "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve now and pay the final amount in cash when you arrive.",
-      "book": "Book this stay"
+      "book": "Book this hotel"
+    }
+  },
+  "restaurants": {
+    "headers": {
+      "index": {
+        "title": "Tables worth gathering around",
+        "description": "Discover verified Syrian restaurants, compare seating and prices, and reserve your table with cash due on arrival."
+      }
+    },
+    "verified": "Verified restaurant",
+    "ratingLabel": "Rated {rating} out of 5",
+    "reviewsCount": "{count} reviews",
+    "from": "From",
+    "perGuest": "per guest",
+    "partyUpTo": "Tables up to {count}",
+    "resultCount": "{count} restaurants found",
+    "amenities": {
+      "generator": "Generator",
+      "wifi": "Wi-Fi",
+      "ac": "Air conditioning",
+      "accessible": "Accessible"
+    },
+    "zones": {
+      "indoor": "Indoor dining",
+      "terrace": "Terrace",
+      "vip": "Private dining",
+      "smoking": "Smoking area"
+    },
+    "filters": {
+      "title": "Filter restaurants",
+      "reset": "Reset",
+      "governorate": "Governorate",
+      "allGovernorates": "All governorates",
+      "price": "Price per guest",
+      "allPrices": "All prices",
+      "zone": "Seating area",
+      "allZones": "All seating areas",
+      "partySize": "Party size",
+      "partyCount": "{count, plural, one {# guest} other {# guests}}",
+      "amenities": "Essential amenities",
+      "prices": {
+        "under75": "Under 75,000 SYP",
+        "75to150": "75,000–150,000 SYP",
+        "over150": "Over 150,000 SYP"
+      }
+    },
+    "states": {
+      "errorTitle": "We couldn't load these restaurants",
+      "detailErrorTitle": "We couldn't load this restaurant",
+      "errorDescription": "Please check your connection and try again.",
+      "retry": "Try again",
+      "emptyTitle": "No restaurants match these filters",
+      "emptyDescription": "Try a different governorate, seating area, party size, or price.",
+      "clearFilters": "Clear filters",
+      "notFoundTitle": "Restaurant not found",
+      "notFoundDescription": "This restaurant may no longer be available or the link may be incorrect."
+    },
+    "detail": {
+      "back": "Back to dining",
+      "galleryImage": "View of {restaurant}",
+      "openImage": "Open photo {number}",
+      "about": "About this restaurant",
+      "amenities": "What this place offers",
+      "hours": "Hours and menu",
+      "menuHighlights": "Menu highlights",
+      "seating": "Choose your setting",
+      "zoneCapacity": "Up to {count} guests",
+      "availableTimes": "Available reservation times",
+      "location": "Location",
+      "navigate": "Open directions",
+      "reviews": "Verified guest reviews",
+      "noReviews": "No verified reviews yet.",
+      "cashOnArrival": "Reserve your table now and pay the final amount directly at the restaurant.",
+      "book": "Reserve a table"
+    }
+  },
+  "trips": {
+    "headers": {
+      "index": {
+        "title": "Journeys with a story",
+        "description": "Explore verified small-group trips across Syria, compare upcoming dates, and reserve your seat with cash due on arrival."
+      }
+    },
+    "verified": "Verified trip operator",
+    "ratingLabel": "Rated {rating} out of 5",
+    "reviewsCount": "{count} reviews",
+    "from": "From",
+    "perPerson": "per traveler",
+    "nextDeparture": "Next departure",
+    "seatsLeft": "{count, plural, one {# seat left} other {# seats left}}",
+    "soldOut": "Sold out",
+    "people": "{count, plural, one {# traveler} other {# travelers}}",
+    "resultCount": "{count} trips found",
+    "durations": {
+      "halfDay": "Half day",
+      "fullDay": "Full day",
+      "multiDay": "Multi-day"
+    },
+    "gear": {
+      "water": "Drinking water",
+      "snacks": "Local snacks",
+      "walkingPoles": "Walking poles",
+      "firstAid": "First-aid kit",
+      "transport": "Group transport"
+    },
+    "filters": {
+      "title": "Filter trips",
+      "reset": "Reset",
+      "governorate": "Governorate",
+      "allGovernorates": "All governorates",
+      "date": "Departure date",
+      "duration": "Duration",
+      "allDurations": "All durations",
+      "price": "Price per traveler",
+      "allPrices": "All prices",
+      "seats": "Seats needed",
+      "prices": {
+        "under200": "Under 200,000 SYP",
+        "200to400": "200,000–400,000 SYP",
+        "over400": "Over 400,000 SYP"
+      }
+    },
+    "states": {
+      "errorTitle": "We couldn't load these trips",
+      "detailErrorTitle": "We couldn't load this trip",
+      "errorDescription": "Please check your connection and try again.",
+      "retry": "Try again",
+      "emptyTitle": "No trips match these filters",
+      "emptyDescription": "Try another date, duration, governorate, or number of seats.",
+      "clearFilters": "Clear filters",
+      "notFoundTitle": "Trip not found",
+      "notFoundDescription": "This trip may no longer be available or the link may be incorrect."
+    },
+    "detail": {
+      "back": "Back to trips",
+      "galleryImage": "View from {trip}",
+      "openImage": "Open photo {number}",
+      "about": "About this journey",
+      "routeEyebrow": "Your route",
+      "itinerary": "The day, step by step",
+      "departures": "Upcoming departures",
+      "pickupPoints": "Pickup points",
+      "included": "Included on the trip",
+      "meetingPoint": "Main meeting point",
+      "navigate": "Open directions",
+      "reviews": "Verified traveler reviews",
+      "noReviews": "No verified reviews yet.",
+      "capacity": "Group size",
+      "nextDate": "Next date",
+      "cashOnArrival": "Reserve your seats now and pay the final amount directly to the operator when the trip begins.",
+      "book": "Reserve seats"
+    }
+  },
+  "events": {
+    "headers": {
+      "index": {
+        "title": "Gather for something memorable",
+        "description": "Find verified cultural events across Syria, compare sessions and ticket choices, and reserve with cash due on arrival."
+      }
+    },
+    "verified": "Verified event organizer",
+    "ratingLabel": "Rated {rating} out of 5",
+    "reviewsCount": "{count} reviews",
+    "from": "From",
+    "perTicket": "per ticket",
+    "nextSession": "Next session",
+    "ticketsLeft": "{count, plural, one {# ticket left} other {# tickets left}}",
+    "soldOut": "Sold out",
+    "sessionCount": "{count, plural, one {# session} other {# sessions}}",
+    "resultCount": "{count} events found",
+    "categories": {
+      "music": "Music",
+      "heritage": "Heritage",
+      "food": "Food",
+      "craft": "Craft"
+    },
+    "tiers": {
+      "standard": "Standard",
+      "vip": "VIP"
+    },
+    "features": {
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "accessible": "Accessible",
+      "familyFriendly": "Family-friendly"
+    },
+    "filters": {
+      "title": "Filter events",
+      "reset": "Reset",
+      "governorate": "Governorate",
+      "allGovernorates": "All governorates",
+      "date": "Event date",
+      "tier": "Ticket type",
+      "allTiers": "All ticket types",
+      "price": "Price per ticket",
+      "allPrices": "All prices",
+      "tickets": "Tickets needed",
+      "prices": {
+        "under100": "Under 100,000 SYP",
+        "100to250": "100,000–250,000 SYP",
+        "over250": "Over 250,000 SYP"
+      }
+    },
+    "states": {
+      "errorTitle": "We couldn't load these events",
+      "detailErrorTitle": "We couldn't load this event",
+      "errorDescription": "Please check your connection and try again.",
+      "retry": "Try again",
+      "emptyTitle": "No events match these filters",
+      "emptyDescription": "Try another date, governorate, ticket type, or quantity.",
+      "clearFilters": "Clear filters",
+      "notFoundTitle": "Event not found",
+      "notFoundDescription": "This event may no longer be available or the link may be incorrect."
+    },
+    "detail": {
+      "back": "Back to events",
+      "galleryImage": "View from {event}",
+      "openImage": "Open photo {number}",
+      "about": "About this event",
+      "sessionsEyebrow": "Choose your time",
+      "sessions": "Upcoming sessions",
+      "tickets": "Ticket choices",
+      "experience": "What to expect",
+      "venue": "Venue and directions",
+      "navigate": "Open directions",
+      "reviews": "Verified guest reviews",
+      "noReviews": "No verified reviews yet.",
+      "nextDate": "Next date",
+      "time": "Starts at",
+      "cashOnArrival": "Reserve tickets now and pay the final amount directly to the organizer when you arrive.",
+      "book": "Reserve tickets"
     }
   },
   "bookings": {
-    "metaDescription": "Review your stay details and confirm your Turath reservation.",
+    "metaDescription": "Review your details and confirm your Turath reservation.",
     "eyebrow": "Secure reservation",
     "title": "Complete your booking",
     "stayDetails": "Stay details",
@@ -1657,7 +1888,7 @@
     "confirm": "Confirm booking",
     "confirming": "Confirming…",
     "backToStay": "Back to stay",
-    "backToHotels": "Browse stays",
+    "backToHotels": "Browse hotels",
     "toastErrorTitle": "Booking not confirmed",
     "toastErrorBody": "Check the details and try again.",
     "errors": {
@@ -1709,6 +1940,175 @@
       }
     }
   },
+  "restaurantBooking": {
+    "eyebrow": "Table reservation",
+    "title": "Reserve your table",
+    "reservationDetails": "Reservation details",
+    "date": "Date",
+    "time": "Time",
+    "timePlaceholder": "Choose a time",
+    "partySize": "Party size",
+    "zone": "Seating area",
+    "zonePlaceholder": "Choose a seating area",
+    "requestsTitle": "Your dining preferences",
+    "requestsHint": "Optional requests are shared with the restaurant and remain subject to availability.",
+    "specialRequests": "Special requests",
+    "specialRequestsPlaceholder": "Allergies, accessibility needs, high chair, or celebration notes",
+    "discountTitle": "Discount code",
+    "discountCode": "Code",
+    "discountPlaceholder": "Enter a code",
+    "apply": "Apply",
+    "applying": "Checking…",
+    "discountApplied": "{percent}% discount applied.",
+    "discountInvalid": "This code is not valid for this reservation.",
+    "discountDemoHint": "For this frontend demo, try TURATH10.",
+    "holdTitle": "Your table is held for 10 minutes",
+    "holdBody": "Complete confirmation within this window. Live table availability will be connected when the booking API is ready.",
+    "notSelected": "Not selected",
+    "listPrice": "List price",
+    "discount": "Discount",
+    "cashDue": "Cash due on arrival",
+    "cashDueHint": "No online payment is collected. Pay this amount directly at the restaurant.",
+    "confirm": "Confirm reservation",
+    "confirming": "Confirming…",
+    "backToRestaurant": "Back to restaurant",
+    "backToRestaurants": "Browse restaurants",
+    "toastErrorTitle": "Reservation not confirmed",
+    "toastErrorBody": "Check the details and try again.",
+    "states": {
+      "loadErrorTitle": "We couldn't prepare this reservation",
+      "loadErrorBody": "Please try again. Your table has not been reserved.",
+      "retry": "Try again",
+      "unavailableTitle": "This restaurant is unavailable",
+      "unavailableBody": "The booking link may be incomplete, or this restaurant may no longer be listed."
+    },
+    "errors": {
+      "dateRequired": "Choose a reservation date.",
+      "timeRequired": "Choose an available time.",
+      "zoneRequired": "Choose a seating area.",
+      "partyMin": "Add at least one guest.",
+      "partyMax": "This reservation supports up to 12 guests.",
+      "specialRequestsMax": "Keep requests under 500 characters."
+    },
+    "voucher": {
+      "date": "Reservation date",
+      "arrival": "Arrival time",
+      "reservation": "Reservation",
+      "tableFor": "Table for {count}",
+      "zone": "Seating area",
+      "guests": "{count, plural, one {# guest} other {# guests}}"
+    }
+  },
+  "tripBooking": {
+    "eyebrow": "Trip reservation",
+    "title": "Reserve your journey",
+    "tripDetails": "Trip details",
+    "date": "Departure date",
+    "datePlaceholder": "Choose a departure",
+    "seats": "Travelers",
+    "seatsAvailable": "{count} left",
+    "pickup": "Pickup point",
+    "pickupPlaceholder": "Choose a pickup point",
+    "emergencyContact": "Emergency contact",
+    "emergencyContactPlaceholder": "+963 9xx xxx xxx",
+    "discountTitle": "Discount code",
+    "discountCode": "Code",
+    "discountPlaceholder": "Enter a code",
+    "apply": "Apply",
+    "applying": "Checking…",
+    "discountApplied": "{percent}% discount applied.",
+    "discountInvalid": "This code is not valid for this trip.",
+    "discountDemoHint": "For this frontend demo, try TURATH10.",
+    "holdTitle": "Your seats are held for 10 minutes",
+    "holdBody": "Complete confirmation within this window. Live seat availability will be connected when the booking API is ready.",
+    "summary": "Reservation summary",
+    "notSelected": "Not selected",
+    "listPrice": "List price",
+    "discount": "Discount",
+    "cashDue": "Cash due on arrival",
+    "cashDueHint": "No online payment is collected. Pay this amount directly to the trip operator.",
+    "confirm": "Confirm trip",
+    "confirming": "Confirming…",
+    "backToTrip": "Back to trip",
+    "backToTrips": "Browse trips",
+    "toastErrorTitle": "Trip not confirmed",
+    "toastErrorBody": "Check the details and try again.",
+    "states": {
+      "loadErrorTitle": "We couldn't prepare this trip",
+      "loadErrorBody": "Please try again. Your seats have not been reserved.",
+      "retry": "Try again",
+      "unavailableTitle": "This trip is unavailable",
+      "unavailableBody": "The booking link may be incomplete, or this trip may no longer be listed."
+    },
+    "errors": {
+      "dateRequired": "Choose an available departure.",
+      "pickupRequired": "Choose a pickup point.",
+      "seatsMin": "Reserve at least one seat.",
+      "seatsMax": "This reservation supports up to 12 travelers.",
+      "emergencyContactRequired": "Add an emergency contact number.",
+      "emergencyContactInvalid": "Enter a valid phone number."
+    },
+    "voucher": {
+      "date": "Departure date",
+      "pickupTime": "Pickup time",
+      "journey": "Journey duration",
+      "travelers": "{count, plural, one {# traveler} other {# travelers}}",
+      "operator": "Trip operator"
+    }
+  },
+  "eventBooking": {
+    "eyebrow": "Event reservation",
+    "title": "Reserve your tickets",
+    "ticketDetails": "Ticket details",
+    "session": "Session",
+    "sessionPlaceholder": "Choose a session",
+    "tier": "Ticket type",
+    "tierPlaceholder": "Choose a ticket type",
+    "quantity": "Tickets",
+    "remaining": "{count} left",
+    "discountTitle": "Discount code",
+    "discountCode": "Code",
+    "discountPlaceholder": "Enter a code",
+    "apply": "Apply",
+    "applying": "Checking…",
+    "discountApplied": "{percent}% discount applied.",
+    "discountInvalid": "This code is not valid for this event.",
+    "discountDemoHint": "For this frontend demo, try TURATH10.",
+    "holdTitle": "Your tickets are held for 10 minutes",
+    "holdBody": "Complete confirmation within this window. Live ticket availability will be connected when the booking API is ready.",
+    "summary": "Reservation summary",
+    "notSelected": "Not selected",
+    "listPrice": "List price",
+    "discount": "Discount",
+    "cashDue": "Cash due on arrival",
+    "cashDueHint": "No online payment is collected. Pay this amount directly to the event organizer.",
+    "confirm": "Confirm tickets",
+    "confirming": "Confirming…",
+    "backToEvent": "Back to event",
+    "backToEvents": "Browse events",
+    "toastErrorTitle": "Tickets not confirmed",
+    "toastErrorBody": "Check the details and try again.",
+    "states": {
+      "loadErrorTitle": "We couldn't prepare this reservation",
+      "loadErrorBody": "Please try again. Your tickets have not been reserved.",
+      "retry": "Try again",
+      "unavailableTitle": "This event is unavailable",
+      "unavailableBody": "The booking link may be incomplete, or this event may no longer be listed."
+    },
+    "errors": {
+      "sessionRequired": "Choose an available session.",
+      "tierRequired": "Choose a ticket type.",
+      "quantityMin": "Reserve at least one ticket.",
+      "quantityMax": "You can reserve up to 6 tickets."
+    },
+    "voucher": {
+      "date": "Event date",
+      "doors": "Start time",
+      "admission": "Admission",
+      "venue": "Venue",
+      "tickets": "{count, plural, one {# ticket} other {# tickets}}"
+    }
+  },
   "account": {
     "headers": {
       "profile": {
@@ -1743,7 +2143,7 @@
         "discover": "Discover",
         "account": "Your account"
       },
-      "hotels": "Stays",
+      "hotels": "Hotels",
       "restaurants": "Dining",
       "trips": "Trips",
       "events": "Events",
@@ -1784,7 +2184,9 @@
       },
       "voucher": "Open voucher",
       "review": "Write review",
-      "browse": "Browse stays",
+      "browse": "Browse hotels",
+      "travelers": "{count, plural, one {# traveler} other {# travelers}}",
+      "tickets": "{count, plural, one {# ticket} other {# tickets}}",
       "errorTitle": "We couldn't load your bookings",
       "errorBody": "Please try again. Your saved vouchers have not been changed.",
       "retry": "Try again",

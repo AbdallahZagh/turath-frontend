@@ -1,15 +1,24 @@
 import {
   listMockTouristBookings,
-  validateMockHotelCoupon,
+  validateMockBookingCoupon,
   type CouponResult,
   type CreateHotelBookingInput,
+  type CreateRestaurantBookingInput,
+  type CreateTripBookingInput,
+  type CreateEventBookingInput,
   type HotelBooking,
+  type RestaurantBooking,
+  type TripBooking,
+  type EventBooking,
+  type TouristBooking,
   type TouristBookingReview,
 } from "@/lib/mock/bookings";
 
 const STORAGE_KEY = "turath-tourist-bookings";
 const REVIEW_STORAGE_KEY = "turath-tourist-booking-reviews";
-const memoryBookings = new Map<string, HotelBooking>();
+const memoryBookings = new Map<string, TouristBooking>();
+
+type LegacyHotelBooking = Omit<HotelBooking, "type">;
 
 function makeToken(length: number): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -19,12 +28,16 @@ function makeToken(length: number): string {
   return Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join("");
 }
 
-function readBookings(): HotelBooking[] {
+function normalizeBooking(booking: TouristBooking | LegacyHotelBooking): TouristBooking {
+  return "type" in booking ? booking : { ...booking, type: "hotel" };
+}
+
+function readBookings(): TouristBooking[] {
   if (typeof window === "undefined") return Array.from(memoryBookings.values());
   try {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return listMockTouristBookings();
-    const stored = JSON.parse(raw) as HotelBooking[];
+    const stored = (JSON.parse(raw) as Array<TouristBooking | LegacyHotelBooking>).map(normalizeBooking);
     const storedIds = new Set(stored.map((booking) => booking.id));
     return [
       ...stored,
@@ -36,7 +49,7 @@ function readBookings(): HotelBooking[] {
   }
 }
 
-function saveBooking(booking: HotelBooking): void {
+function saveBooking(booking: TouristBooking): void {
   memoryBookings.set(booking.id, booking);
   if (typeof window === "undefined") return;
   try {
@@ -47,8 +60,8 @@ function saveBooking(booking: HotelBooking): void {
   }
 }
 
-export async function validateHotelCoupon(code: string): Promise<CouponResult> {
-  return validateMockHotelCoupon(code);
+export async function validateBookingCoupon(code: string): Promise<CouponResult> {
+  return validateMockBookingCoupon(code);
 }
 
 export async function createHotelBooking(
@@ -61,6 +74,7 @@ export async function createHotelBooking(
     ...input,
     id,
     reference,
+    type: "hotel",
     status: "CONFIRMED",
     backupCode,
     qrPayload: JSON.stringify({ bookingId: id, reference, backupCode }),
@@ -70,11 +84,56 @@ export async function createHotelBooking(
   return booking;
 }
 
-export async function getTouristBooking(id: string): Promise<HotelBooking | null> {
+export async function createRestaurantBooking(input: CreateRestaurantBookingInput): Promise<RestaurantBooking> {
+  const id = `restaurant-${Date.now().toString(36)}-${makeToken(4).toLowerCase()}`;
+  const reference = `TRH-${makeToken(6)}`;
+  const backupCode = makeToken(6);
+  const booking: RestaurantBooking = {
+    ...input,
+    id,
+    reference,
+    type: "restaurant",
+    status: "CONFIRMED",
+    backupCode,
+    qrPayload: JSON.stringify({ bookingId: id, reference, backupCode }),
+    createdAt: new Date().toISOString(),
+  };
+  saveBooking(booking);
+  return booking;
+}
+
+export async function createTripBooking(input: CreateTripBookingInput): Promise<TripBooking> {
+  const id = `trip-${Date.now().toString(36)}-${makeToken(4).toLowerCase()}`;
+  const reference = `TRH-${makeToken(6)}`;
+  const backupCode = makeToken(6);
+  const booking: TripBooking = {
+    ...input,
+    id,
+    reference,
+    type: "trip",
+    status: "CONFIRMED",
+    backupCode,
+    qrPayload: JSON.stringify({ bookingId: id, reference, backupCode }),
+    createdAt: new Date().toISOString(),
+  };
+  saveBooking(booking);
+  return booking;
+}
+
+export async function createEventBooking(input: CreateEventBookingInput): Promise<EventBooking> {
+  const id = `event-${Date.now().toString(36)}-${makeToken(4).toLowerCase()}`;
+  const reference = `TRH-${makeToken(6)}`;
+  const backupCode = makeToken(6);
+  const booking: EventBooking = { ...input, id, reference, type: "event", status: "CONFIRMED", backupCode, qrPayload: JSON.stringify({ bookingId: id, reference, backupCode }), createdAt: new Date().toISOString() };
+  saveBooking(booking);
+  return booking;
+}
+
+export async function getTouristBooking(id: string): Promise<TouristBooking | null> {
   return readBookings().find((booking) => booking.id === id) ?? memoryBookings.get(id) ?? null;
 }
 
-export async function listTouristBookings(): Promise<HotelBooking[]> {
+export async function listTouristBookings(): Promise<TouristBooking[]> {
   return readBookings();
 }
 

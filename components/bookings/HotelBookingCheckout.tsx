@@ -19,7 +19,7 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Textarea } from "@/components/ui/Textarea";
-import { useCreateHotelBooking, useValidateHotelCoupon } from "@/hooks/useBookings";
+import { useCreateHotelBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
@@ -63,7 +63,7 @@ export function HotelBookingCheckout({
   const router = useRouter();
   const hotelQuery = useHotel(hotelId);
   const createBooking = useCreateHotelBooking();
-  const couponMutation = useValidateHotelCoupon();
+  const couponMutation = useValidateBookingCoupon();
   const [coupon, setCoupon] = useState<CouponResult | null>(null);
 
   const today = format(new Date(), "yyyy-MM-dd");

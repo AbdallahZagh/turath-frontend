@@ -17,9 +17,10 @@ import type { Hotel } from "@/lib/mock/hotels";
 
 type HotelCardProps = {
   hotel: Hotel;
+  detailBasePath?: string;
 };
 
-export function HotelCard({ hotel }: HotelCardProps): ReactNode {
+export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps): ReactNode {
   const t = useTranslations("hotels");
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
@@ -29,7 +30,7 @@ export function HotelCard({ hotel }: HotelCardProps): ReactNode {
 
   return (
     <article className="group h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
-      <Link href={`/hotels/${hotel.id}`} className="block h-full min-w-0">
+      <Link href={`${detailBasePath}/${hotel.id}`} className="block h-full min-w-0">
         <GlassPanel
           frost={false}
           className="h-full transition duration-300 group-hover:ring-1 group-hover:ring-primary/40"

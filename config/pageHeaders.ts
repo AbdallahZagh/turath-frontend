@@ -4,7 +4,7 @@
  */
 import { ADMIN_PATHS, isAdminDetailPath } from "@/config/adminRoutes";
 
-export type PageHeaderNamespace = "admin.headers" | "hotels.headers" | "account.headers";
+export type PageHeaderNamespace = "admin.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "account.headers";
 
 export type AdminHeaderPage =
   | "overview"
@@ -53,7 +53,14 @@ export type PageHeaderSpec = {
 
 const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/hotels": { namespace: "hotels.headers", page: "index" },
+  "/restaurants": { namespace: "restaurants.headers", page: "index" },
+  "/trips": { namespace: "trips.headers", page: "index" },
+  "/events": { namespace: "events.headers", page: "index" },
   "/user": { namespace: "account.headers", page: "profile" },
+  "/user/hotels": { namespace: "hotels.headers", page: "index" },
+  "/user/restaurants": { namespace: "restaurants.headers", page: "index" },
+  "/user/trips": { namespace: "trips.headers", page: "index" },
+  "/user/events": { namespace: "events.headers", page: "index" },
   "/user/bookings": { namespace: "account.headers", page: "bookings" },
   "/user/reliability": { namespace: "account.headers", page: "reliability" },
   [ADMIN_PATHS.home]: { namespace: "admin.headers", page: "overview" },

@@ -73,7 +73,7 @@ export function VerifyOtpForm(): ReactNode {
         destination: pending.destination,
         code: values.code,
       });
-      const role = pending.flow === "register" ? "TOURIST" : userRole;
+      const role = pending.flow === "register" || !isAuthenticated ? "TOURIST" : userRole;
       completeSession(role);
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
       router.replace(homePathForRole(role));

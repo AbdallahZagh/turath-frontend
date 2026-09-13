@@ -246,7 +246,9 @@
       "currencySyp": "ل.س",
       "currencyUsd": "دولار",
       "login": "تسجيل الدخول",
-      "register": "إنشاء حساب"
+      "register": "إنشاء حساب",
+      "myBookings": "حجوزاتي",
+      "profile": "الملف الشخصي"
     },
     "hero": {
       "eyebrow": "سوريا، من جديد",
@@ -1538,6 +1540,243 @@
         "guides": "الأدلاء"
       }
     }
+  },
+  "hotels": {
+    "headers": {
+      "index": {
+        "title": "إقامات بروح المكان",
+        "description": "اكتشف فنادق وإقامات تراثية موثّقة في أنحاء سوريا، مع وسائل الراحة والأسعار بوضوح قبل الحجز."
+      }
+    },
+    "verified": "إقامة موثّقة",
+    "ratingLabel": "التقييم {rating} من 5",
+    "reviewsCount": "{count} تقييم",
+    "from": "ابتداءً من",
+    "perNight": "لليلة الواحدة",
+    "sleepsUpTo": "حتى {count} ضيوف",
+    "resultCount": "تم العثور على {count} إقامة",
+    "searchDates": "من {checkIn} إلى {checkOut}",
+    "oneSearchDate": "التاريخ: {date}",
+    "amenities": {
+      "generator": "مولدة كهرباء",
+      "wifi": "واي فاي",
+      "ac": "تكييف",
+      "breakfast": "إفطار",
+      "airportTransfer": "نقل من المطار",
+      "accessible": "مهيأ لسهولة الوصول",
+      "parking": "موقف سيارات",
+      "terrace": "شرفة"
+    },
+    "roomTypes": {
+      "single": "غرفة مفردة",
+      "double": "غرفة مزدوجة",
+      "suite": "جناح"
+    },
+    "filters": {
+      "title": "تصفية الإقامات",
+      "reset": "إعادة ضبط",
+      "governorate": "المحافظة",
+      "allGovernorates": "كل المحافظات",
+      "price": "سعر الليلة",
+      "allPrices": "كل الأسعار",
+      "roomType": "نوع الغرفة",
+      "allRoomTypes": "كل أنواع الغرف",
+      "guests": "الضيوف",
+      "guestCount": "{count} ضيوف",
+      "amenities": "وسائل الراحة الأساسية",
+      "prices": {
+        "under150": "أقل من 150,000 ل.س",
+        "150to300": "150,000–300,000 ل.س",
+        "over300": "أكثر من 300,000 ل.س"
+      }
+    },
+    "states": {
+      "errorTitle": "تعذّر تحميل الإقامات",
+      "detailErrorTitle": "تعذّر تحميل هذه الإقامة",
+      "errorDescription": "تحقق من اتصالك ثم حاول مجدداً.",
+      "retry": "حاول مجدداً",
+      "emptyTitle": "لا توجد إقامات تطابق هذه الخيارات",
+      "emptyDescription": "جرّب محافظة أو نوع غرفة أو سعراً أو وسيلة راحة مختلفة.",
+      "clearFilters": "مسح عوامل التصفية",
+      "notFoundTitle": "لم يتم العثور على الإقامة",
+      "notFoundDescription": "قد لا تكون هذه الإقامة متاحة بعد الآن أو قد يكون الرابط غير صحيح."
+    },
+    "detail": {
+      "galleryImage": "صورة من {hotel}",
+      "openImage": "فتح الصورة {number}",
+      "backToHotels": "العودة إلى الإقامات",
+      "about": "عن هذه الإقامة",
+      "amenities": "ما يقدمه المكان",
+      "rooms": "الغرف والأسعار",
+      "roomGuests": "حتى {count} ضيوف",
+      "roomsLeft": "{count} غرف متاحة",
+      "policies": "تفاصيل الإقامة",
+      "checkIn": "تسجيل الوصول",
+      "checkOut": "تسجيل المغادرة",
+      "generatorHours": "ساعات عمل المولدة",
+      "location": "الموقع",
+      "navigate": "فتح الاتجاهات",
+      "reviews": "تقييمات الضيوف الموثّقة",
+      "noReviews": "لا توجد تقييمات موثّقة بعد.",
+      "cashOnArrival": "احجز الآن وادفع المبلغ النهائي نقداً عند الوصول.",
+      "book": "احجز هذه الإقامة"
+    }
+  },
+  "bookings": {
+    "metaDescription": "راجع تفاصيل إقامتك وأكّد حجزك عبر تراث.",
+    "eyebrow": "حجز آمن",
+    "title": "أكمل حجزك",
+    "stayDetails": "تفاصيل الإقامة",
+    "checkIn": "تسجيل الوصول",
+    "checkOut": "تسجيل المغادرة",
+    "roomType": "نوع الغرفة",
+    "roomPlaceholder": "اختر غرفة",
+    "guests": "الضيوف",
+    "requestsTitle": "تفضيلات إقامتك",
+    "requestsHint": "تُرسل الطلبات الاختيارية إلى الفندق وتبقى خاضعة للتوفر.",
+    "specialRequests": "طلبات خاصة",
+    "specialRequestsPlaceholder": "سريران منفصلان، احتياجات سهولة الوصول، أو ملاحظات الوصول",
+    "discountTitle": "رمز الخصم",
+    "discountCode": "الرمز",
+    "discountPlaceholder": "أدخل الرمز",
+    "apply": "تطبيق",
+    "applying": "جارٍ التحقق…",
+    "discountApplied": "تم تطبيق خصم {percent}٪.",
+    "discountInvalid": "هذا الرمز غير صالح لهذا الحجز.",
+    "discountDemoHint": "لهذا النموذج الأمامي، جرّب TURATH10.",
+    "holdTitle": "اختيارك محفوظ لمدة 10 دقائق",
+    "holdBody": "أكمل التأكيد خلال هذه المدة. سيُربط حجز التوفر الفعلي عند تجهيز واجهة الحجوزات البرمجية.",
+    "dates": "التواريخ",
+    "room": "الغرفة",
+    "nights": "الليالي",
+    "notSelected": "لم يُحدد",
+    "listPrice": "السعر الأساسي",
+    "discount": "الخصم",
+    "cashDue": "المبلغ النقدي عند الوصول",
+    "cashDueHint": "لا يتم تحصيل أي دفعة عبر الإنترنت. ادفع هذا المبلغ مباشرة للفندق عند وصولك.",
+    "confirm": "تأكيد الحجز",
+    "confirming": "جارٍ التأكيد…",
+    "backToStay": "العودة إلى الإقامة",
+    "backToHotels": "تصفح الإقامات",
+    "toastErrorTitle": "لم يتم تأكيد الحجز",
+    "toastErrorBody": "راجع التفاصيل وحاول مرة أخرى.",
+    "errors": {
+      "checkInRequired": "اختر تاريخ تسجيل الوصول.",
+      "checkOutRequired": "اختر تاريخ تسجيل المغادرة.",
+      "checkOutAfterCheckIn": "يجب أن يكون تسجيل المغادرة بعد الوصول.",
+      "roomRequired": "اختر نوع الغرفة.",
+      "guestsMin": "أضف ضيفاً واحداً على الأقل.",
+      "guestsMax": "يدعم هذا الحجز حتى 8 ضيوف.",
+      "specialRequestsMax": "اجعل الطلبات أقل من 500 حرف."
+    },
+    "states": {
+      "loadErrorTitle": "تعذر تجهيز هذا الحجز",
+      "loadErrorBody": "يرجى المحاولة مجدداً. لم يتم تأكيد اختيارك.",
+      "retry": "حاول مجدداً",
+      "unavailableTitle": "هذه الإقامة غير متاحة",
+      "unavailableBody": "قد يكون رابط الحجز غير مكتمل أو لم تعد هذه الإقامة مدرجة.",
+      "voucherErrorTitle": "تعذر تحميل القسيمة",
+      "voucherMissingTitle": "لم يتم العثور على القسيمة",
+      "voucherMissingBody": "تُحفظ قسيمة النموذج في جلسة المتصفح الحالية. ربما انتهت الجلسة أو أن الرابط غير صحيح."
+    },
+    "voucher": {
+      "eyebrow": "تم تأكيد الحجز",
+      "title": "قسيمة حجزك",
+      "subtitle": "احتفظ بهذه الصفحة وأظهر رمز QR أو الرمز الاحتياطي عند وصولك.",
+      "passLabel": "بطاقة حجز تراث",
+      "downloadQr": "تنزيل QR",
+      "print": "طباعة القسيمة",
+      "logoAlt": "تراث",
+      "reference": "مرجع الحجز",
+      "stayLength": "مدة الإقامة",
+      "when": "تواريخ الإقامة",
+      "nights": "{count, plural, one {ليلة واحدة} two {ليلتان} few {# ليالٍ} many {# ليلة} other {# ليلة}}",
+      "room": "الغرفة",
+      "guests": "{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}",
+      "requests": "الطلبات الخاصة",
+      "showOnArrival": "أظهر هذا عند الوصول",
+      "qrHint": "امسح هذا الرمز عند الوصول، أو استخدم الرمز الاحتياطي أدناه.",
+      "backupTitle": "رمز احتياطي من 6 محارف",
+      "backupHint": "استخدم هذا الرمز إذا تعذر مسح رمز QR.",
+      "exploreMore": "استكشف إقامات أخرى",
+      "writeReview": "كتابة مراجعة موثقة",
+      "status": {
+        "PENDING": "قيد الانتظار",
+        "CONFIRMED": "مؤكد",
+        "CHECKED_IN": "تم تسجيل الوصول",
+        "CANCELLED": "ملغى",
+        "NO_SHOW": "عدم حضور"
+      }
+    }
+  },
+  "account": {
+    "headers": {
+      "profile": { "title": "حسابك", "description": "أدر تفاصيلك وتفضيلاتك وحجوزاتك وموثوقيتك كضيف في مكان واحد." },
+      "bookings": { "title": "حجوزاتي", "description": "افتح القسائم القادمة وراجع الإقامات المكتملة والحجوزات الملغاة." },
+      "reliability": { "title": "الموثوقية", "description": "تعرّف إلى تأثير الوصول المكتمل وعدم الحضور في إمكانية الحجز." }
+    },
+    "shell": {
+      "searchPlaceholder": "ابحث في تراث...",
+      "searchLabel": "البحث في الصفحات والتجارب",
+      "searchEmpty": "لم يتم العثور على وجهة مطابقة.",
+      "openMenu": "فتح تنقل المستخدم",
+      "closeMenu": "إغلاق تنقل المستخدم"
+    },
+    "access": { "title": "سجّل الدخول إلى حسابك", "description": "تُحفظ حجوزاتك وقسائمك وتفضيلاتك ودرجة موثوقيتك في حساب الزائر.", "signIn": "تسجيل الدخول", "preview": "معاينة حساب الزائر" },
+    "nav": {
+      "label": "التنقل في الحساب",
+      "groups": { "discover": "استكشف", "account": "حسابك" },
+      "hotels": "الإقامات",
+      "restaurants": "المطاعم",
+      "trips": "الرحلات",
+      "events": "الفعاليات",
+      "guides": "الأدلاء",
+      "attractions": "المعالم",
+      "dashboard": "لوحة التحكم",
+      "bookings": "حجوزاتي",
+      "reliability": "الموثوقية",
+      "signOut": "تسجيل الخروج"
+    },
+    "profile": { "guest": "ضيف تراث" },
+    "preferences": { "title": "التفضيلات", "description": "اختر طريقة عرض اللغة والأسعار في تراث.", "language": "اللغة", "currency": "عرض العملة", "syp": "الليرة السورية", "usd": "تقدير بالدولار الأمريكي" },
+    "states": { "errorTitle": "تعذر تحميل حسابك", "errorBody": "يرجى المحاولة مجدداً بعد قليل.", "retry": "حاول مجدداً" },
+    "bookingsCard": { "title": "رحلاتك في مكان واحد", "description": "احتفظ بكل قسيمة ورمز وصول جاهزاً قبل السفر.", "open": "فتح حجوزاتي" },
+    "bookings": {
+      "tabsLabel": "سجل الحجوزات",
+      "tabs": { "upcoming": "القادمة", "past": "السابقة", "cancelled": "الملغاة" },
+      "voucher": "فتح القسيمة", "review": "كتابة مراجعة", "browse": "تصفح الإقامات",
+      "errorTitle": "تعذر تحميل حجوزاتك", "errorBody": "يرجى المحاولة مجدداً. لم تتغير القسائم المحفوظة.", "retry": "حاول مجدداً",
+      "empty": {
+        "upcoming": { "title": "لا توجد حجوزات قادمة", "description": "عندما تجري حجزاً ستظهر قسيمته هنا." },
+        "past": { "title": "لا توجد حجوزات سابقة", "description": "ستظهر الحجوزات المكتملة هنا." },
+        "cancelled": { "title": "لا توجد حجوزات ملغاة", "description": "ستبقى الحجوزات التي تلغيها هنا للرجوع إليها." }
+      }
+    },
+    "reliability": {
+      "score": "درجة الموثوقية", "summary": "تمنحك الدرجة المرتفعة وصولاً أسرع للحجز وحداً أعلى للحجوزات المتزامنة.", "open": "عرض تفاصيل الدرجة",
+      "outOf": "من 100", "scoreExplanation": "تبدأ درجتك من 100 وتعكس التزامك بالحضور للحجوزات المؤكدة.",
+      "completed": "مرات الوصول المكتملة", "noShows": "حالات عدم الحضور", "bookingCap": "الحجوزات المتزامنة",
+      "instantTitle": "الحجز الفوري", "instantEnabled": "متاح ضمن فئتك الحالية.", "instantDisabled": "غير متاح ضمن فئتك الحالية.",
+      "noShowRule": "يخصم عدم الحضور 30 نقطة", "noShowRuleBody": "إذا تغيّرت خططك، ألغِ قبل الوصول لحماية درجتك وإمكانية الحجز.",
+      "historyTitle": "سجل الموثوقية الأخير", "tiersTitle": "ما الذي تتيحه كل فئة", "noChange": "دون خصم",
+      "errorTitle": "تعذر تحميل درجة الموثوقية", "errorBody": "يرجى المحاولة مجدداً بعد قليل.", "retry": "حاول مجدداً",
+      "tiers": { "VIP": "مميز", "STANDARD": "قياسي", "RESTRICTED": "مقيّد", "SUSPENDED": "موقوف" },
+      "tierDetails": {
+        "VIP": "حجز فوري وأعلى حد للحجوزات المتزامنة.", "STANDARD": "حجز فوري مع حد قياسي للحجوزات المتزامنة.",
+        "RESTRICTED": "حدود حجز أقل وقد تحتاج بعض الحجوزات إلى مراجعة.", "SUSPENDED": "تتوقف الحجوزات الجديدة حتى مراجعة الحساب."
+      },
+      "events": { "CHECK_IN": "تم الوصول للحجز", "NO_SHOW": "فوات موعد وصول مؤكد" }
+    }
+  },
+  "bookingReview": {
+    "metaDescription": "شارك مراجعة موثقة بعد إكمال حجزك عبر تراث.", "eyebrow": "إقامة موثقة", "title": "شارك تجربتك",
+    "description": "كيف كانت تجربتك مع {provider}؟", "rating": "تقييمك",
+    "star": "{count, plural, one {نجمة واحدة} two {نجمتان} few {# نجوم} many {# نجمة} other {# نجمة}}",
+    "comment": "مراجعتك", "commentPlaceholder": "أخبر الضيوف الآخرين بما ميّز تجربتك", "submit": "إرسال المراجعة", "submitting": "جارٍ الإرسال…",
+    "back": "العودة إلى القسيمة", "thanksTitle": "شكراً لمراجعتك", "thanksBody": "استلمنا رأيك الموثق وسيساعد الضيوف القادمين.",
+    "backToBookings": "العودة إلى حجوزاتي", "unavailableTitle": "المراجعة غير متاحة بعد", "unavailableBody": "يمكنك مراجعة هذا الحجز فقط بعد تأكيد وصولك.",
+    "errorTitle": "تعذر حفظ مراجعتك", "errorBody": "راجع ما كتبته وحاول مجدداً.", "retry": "حاول مجدداً",
+    "errors": { "ratingRequired": "اختر تقييماً من نجمة إلى خمس نجوم.", "commentMin": "اكتب 10 أحرف على الأقل.", "commentMax": "اجعل مراجعتك أقل من 500 حرف." }
   },
   "providerRegister": {
     "title": "أدرج عملك",

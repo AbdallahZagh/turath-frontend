@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Coins, Menu as MenuIcon } from "lucide-react";
+import { Coins, Menu as MenuIcon, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import {
@@ -28,13 +28,14 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { useIsClient } from "@/hooks/useIsClient";
 import { cn } from "@/lib/cn";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
+import { useAuthStore } from "@/store/authStore";
 
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
 type NavItem = {
   href: string;
-  labelKey: "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks";
+  labelKey: "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks" | "myBookings" | "profile";
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -51,13 +52,13 @@ const NAV_LINK_CLASS =
 
 const MOBILE_MENU_MIN_WIDTH_PX = 220;
 
-function HeaderNav(): ReactNode {
+function HeaderNav({ items }: { items: NavItem[] }): ReactNode {
   const t = useTranslations("landing.header");
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <nav className="hidden items-center gap-1 lg:flex" aria-label={t("navLabel")}>
-      {NAV_ITEMS.map((item) => {
+      {items.map((item) => {
         const label = t(item.labelKey);
         const underline =
           hovered === item.href ? (
@@ -93,12 +94,14 @@ function HeaderNav(): ReactNode {
 }
 
 type HeaderMobileNavProps = {
+  items: NavItem[];
   currencyOptions: SelectOption[];
   currency: string;
   onCurrencyChange: (value: string) => void;
 };
 
 function HeaderMobileNav({
+  items,
   currencyOptions,
   currency,
   onCurrencyChange,
@@ -123,7 +126,7 @@ function HeaderMobileNav({
       }
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 12 + NAV_ITEMS.length * 40 + 120,
+          estimatedHeight: 12 + items.length * 40 + 120,
           maxHeightCap: 420,
           width: "max-content",
           minWidth: Math.max(trigger.getBoundingClientRect().width, MOBILE_MENU_MIN_WIDTH_PX),
@@ -139,7 +142,7 @@ function HeaderMobileNav({
       window.removeEventListener("resize", sync);
       window.removeEventListener("scroll", sync, true);
     };
-  }, [open]);
+  }, [items.length, open]);
 
   useEffect(() => {
     if (!open) {
@@ -190,7 +193,7 @@ function HeaderMobileNav({
             style={{ ...controlStyle({ size: "sm", defaultRadius: "0.5rem" }), ...box }}
             className={cn(SELECT_MENU_BASE, SELECT_MENU_VARIANT.glass, "w-max max-w-[min(100vw-2rem,20rem)]")}
           >
-            {NAV_ITEMS.map((item) => {
+            {items.map((item) => {
               const label = t(item.labelKey);
               const className = cn(SELECT_OPTION, "min-h-11 w-full no-underline");
               const onNavigate = () => setOpen(false);
@@ -281,8 +284,15 @@ function HeaderMobileNav({
 
 export function PublicHeader(): ReactNode {
   const t = useTranslations("landing.header");
+  const mounted = useIsClient();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
+  const touristSignedIn = mounted && isAuthenticated && user.role === "TOURIST";
+  const navItems: NavItem[] = touristSignedIn
+    ? [...NAV_ITEMS, { href: "/user/bookings", labelKey: "myBookings" }]
+    : NAV_ITEMS;
 
   const currencyOptions: SelectOption[] = [
     { value: "SYP", label: t("currencySyp") },
@@ -307,10 +317,11 @@ export function PublicHeader(): ReactNode {
           <Logo variant="main" className="h-9 sm:h-9" priority />
         </Link>
 
-        <HeaderNav />
+        <HeaderNav items={navItems} />
 
         <div className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-3">
           <HeaderMobileNav
+            items={touristSignedIn ? [...navItems, { href: "/user", labelKey: "profile" }] : navItems}
             currencyOptions={currencyOptions}
             currency={currency}
             onCurrencyChange={onCurrencyChange}
@@ -331,12 +342,21 @@ export function PublicHeader(): ReactNode {
             label={t("currencyLabel")}
           />
           <LocaleSwitcher compact />
-          <Button variant="outline" size="sm" href="/login" className="shrink-0">
-            {t("login")}
-          </Button>
-          <Button variant="solid" size="sm" href="/register" className="shrink-0">
-            {t("register")}
-          </Button>
+          {touristSignedIn ? (
+            <Button variant="solid" size="sm" href="/user" className="shrink-0" aria-label={t("profile")}>
+              <UserRound className="size-4" aria-hidden />
+              <span className="hidden xl:inline">{t("profile")}</span>
+            </Button>
+          ) : (
+            <>
+              <Button variant="outline" size="sm" href="/login" className="shrink-0">
+                {t("login")}
+              </Button>
+              <Button variant="solid" size="sm" href="/register" className="shrink-0">
+                {t("register")}
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </motion.header>

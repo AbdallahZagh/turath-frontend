@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { DEFAULT_MOCK_USER, MOCK_USERS, type MockUser } from "@/lib/auth/session";
 import type { AppRole } from "@/lib/auth/roles";
@@ -22,22 +23,33 @@ type AuthStore = {
   signOut: () => void;
 };
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  user: DEFAULT_MOCK_USER,
-  isAuthenticated: false,
-  pendingVerify: null,
-  setRole: (role) => set({ user: MOCK_USERS[role] }),
-  setPendingVerify: (pendingVerify) => set({ pendingVerify }),
-  completeSession: (role) =>
-    set((state) => ({
-      isAuthenticated: true,
-      pendingVerify: null,
-      user: role ? MOCK_USERS[role] : state.user,
-    })),
-  signOut: () =>
-    set({
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => ({
+      user: DEFAULT_MOCK_USER,
       isAuthenticated: false,
       pendingVerify: null,
-      user: DEFAULT_MOCK_USER,
+      setRole: (role) => set({ user: MOCK_USERS[role] }),
+      setPendingVerify: (pendingVerify) => set({ pendingVerify }),
+      completeSession: (role) =>
+        set((state) => ({
+          isAuthenticated: true,
+          pendingVerify: null,
+          user: role ? MOCK_USERS[role] : state.user,
+        })),
+      signOut: () =>
+        set({
+          isAuthenticated: false,
+          pendingVerify: null,
+          user: DEFAULT_MOCK_USER,
+        }),
     }),
-}));
+    {
+      name: "turath-auth-session",
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
+    },
+  ),
+);

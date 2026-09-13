@@ -246,7 +246,9 @@
       "currencySyp": "SYP",
       "currencyUsd": "USD",
       "login": "Sign in",
-      "register": "Sign up"
+      "register": "Sign up",
+      "myBookings": "My bookings",
+      "profile": "Profile"
     },
     "hero": {
       "eyebrow": "Syria, rediscovered",
@@ -1537,6 +1539,332 @@
         "events": "Events",
         "guides": "Guides"
       }
+    }
+  },
+  "hotels": {
+    "headers": {
+      "index": {
+        "title": "Stays with a sense of place",
+        "description": "Find verified hotels and heritage stays across Syria, with clear amenities and prices before you book."
+      }
+    },
+    "verified": "Verified stay",
+    "ratingLabel": "Rated {rating} out of 5",
+    "reviewsCount": "{count} reviews",
+    "from": "From",
+    "perNight": "per night",
+    "sleepsUpTo": "Up to {count} guests",
+    "resultCount": "{count} stays found",
+    "searchDates": "{checkIn} to {checkOut}",
+    "oneSearchDate": "Date: {date}",
+    "amenities": {
+      "generator": "Generator",
+      "wifi": "Wi-Fi",
+      "ac": "Air conditioning",
+      "breakfast": "Breakfast",
+      "airportTransfer": "Airport transfer",
+      "accessible": "Accessible",
+      "parking": "Parking",
+      "terrace": "Terrace"
+    },
+    "roomTypes": {
+      "single": "Single room",
+      "double": "Double room",
+      "suite": "Suite"
+    },
+    "filters": {
+      "title": "Filter stays",
+      "reset": "Reset",
+      "governorate": "Governorate",
+      "allGovernorates": "All governorates",
+      "price": "Nightly price",
+      "allPrices": "All prices",
+      "roomType": "Room type",
+      "allRoomTypes": "All room types",
+      "guests": "Guests",
+      "guestCount": "{count} guests",
+      "amenities": "Essential amenities",
+      "prices": {
+        "under150": "Under 150,000 SYP",
+        "150to300": "150,000–300,000 SYP",
+        "over300": "Over 300,000 SYP"
+      }
+    },
+    "states": {
+      "errorTitle": "We couldn't load these stays",
+      "detailErrorTitle": "We couldn't load this stay",
+      "errorDescription": "Please check your connection and try again.",
+      "retry": "Try again",
+      "emptyTitle": "No stays match these filters",
+      "emptyDescription": "Try a different governorate, room type, price, or amenity.",
+      "clearFilters": "Clear filters",
+      "notFoundTitle": "Stay not found",
+      "notFoundDescription": "This stay may no longer be available or the link may be incorrect."
+    },
+    "detail": {
+      "galleryImage": "View of {hotel}",
+      "openImage": "Open photo {number}",
+      "backToHotels": "Back to stays",
+      "about": "About this stay",
+      "amenities": "What this place offers",
+      "rooms": "Rooms and prices",
+      "roomGuests": "Up to {count} guests",
+      "roomsLeft": "{count} rooms available",
+      "policies": "Stay details",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "generatorHours": "Generator hours",
+      "location": "Location",
+      "navigate": "Open directions",
+      "reviews": "Verified guest reviews",
+      "noReviews": "No verified reviews yet.",
+      "cashOnArrival": "Reserve now and pay the final amount in cash when you arrive.",
+      "book": "Book this stay"
+    }
+  },
+  "bookings": {
+    "metaDescription": "Review your stay details and confirm your Turath reservation.",
+    "eyebrow": "Secure reservation",
+    "title": "Complete your booking",
+    "stayDetails": "Stay details",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "roomType": "Room type",
+    "roomPlaceholder": "Choose a room",
+    "guests": "Guests",
+    "requestsTitle": "Your stay preferences",
+    "requestsHint": "Optional requests are shared with the hotel and are subject to availability.",
+    "specialRequests": "Special requests",
+    "specialRequestsPlaceholder": "Twin beds, accessibility needs, or arrival notes",
+    "discountTitle": "Discount code",
+    "discountCode": "Code",
+    "discountPlaceholder": "Enter a code",
+    "apply": "Apply",
+    "applying": "Checking…",
+    "discountApplied": "{percent}% discount applied.",
+    "discountInvalid": "This code is not valid for this booking.",
+    "discountDemoHint": "For this frontend demo, try TURATH10.",
+    "holdTitle": "Your selection is held for 10 minutes",
+    "holdBody": "Complete confirmation within this window. A live availability lock will be connected when the booking API is ready.",
+    "dates": "Dates",
+    "room": "Room",
+    "nights": "Nights",
+    "notSelected": "Not selected",
+    "listPrice": "List price",
+    "discount": "Discount",
+    "cashDue": "Cash due on arrival",
+    "cashDueHint": "No online payment is collected. Pay this amount directly to the hotel when you arrive.",
+    "confirm": "Confirm booking",
+    "confirming": "Confirming…",
+    "backToStay": "Back to stay",
+    "backToHotels": "Browse stays",
+    "toastErrorTitle": "Booking not confirmed",
+    "toastErrorBody": "Check the details and try again.",
+    "errors": {
+      "checkInRequired": "Choose a check-in date.",
+      "checkOutRequired": "Choose a check-out date.",
+      "checkOutAfterCheckIn": "Check-out must be after check-in.",
+      "roomRequired": "Choose a room type.",
+      "guestsMin": "Add at least one guest.",
+      "guestsMax": "This booking supports up to 8 guests.",
+      "specialRequestsMax": "Keep requests under 500 characters."
+    },
+    "states": {
+      "loadErrorTitle": "We couldn't prepare this booking",
+      "loadErrorBody": "Please try again. Your selection has not been confirmed.",
+      "retry": "Try again",
+      "unavailableTitle": "This stay is unavailable",
+      "unavailableBody": "The booking link may be incomplete, or this stay may no longer be listed.",
+      "voucherErrorTitle": "We couldn't load this voucher",
+      "voucherMissingTitle": "Voucher not found",
+      "voucherMissingBody": "This demo voucher is saved in the current browser session. It may have expired or the link may be incorrect."
+    },
+    "voucher": {
+      "eyebrow": "Booking confirmed",
+      "title": "Your booking voucher",
+      "subtitle": "Keep this page available and show the QR code or backup code when you arrive.",
+      "passLabel": "Turath booking pass",
+      "downloadQr": "Download QR",
+      "print": "Print voucher",
+      "logoAlt": "Turath",
+      "reference": "Booking reference",
+      "stayLength": "Stay length",
+      "when": "Stay dates",
+      "nights": "{count, plural, one {# night} other {# nights}}",
+      "room": "Room",
+      "guests": "{count, plural, one {# guest} other {# guests}}",
+      "requests": "Special requests",
+      "showOnArrival": "Show this on arrival",
+      "qrHint": "Scan this code at arrival, or use the backup code below.",
+      "backupTitle": "6-character backup code",
+      "backupHint": "Use this code if the QR cannot be scanned.",
+      "exploreMore": "Explore more stays",
+      "writeReview": "Write a verified review",
+      "status": {
+        "PENDING": "Pending",
+        "CONFIRMED": "Confirmed",
+        "CHECKED_IN": "Checked in",
+        "CANCELLED": "Cancelled",
+        "NO_SHOW": "No-show"
+      }
+    }
+  },
+  "account": {
+    "headers": {
+      "profile": {
+        "title": "Your account",
+        "description": "Manage your details, preferences, bookings, and guest standing in one place."
+      },
+      "bookings": {
+        "title": "My bookings",
+        "description": "Open upcoming vouchers, revisit completed stays, and review cancelled reservations."
+      },
+      "reliability": {
+        "title": "Reliability",
+        "description": "See how completed arrivals and no-shows affect your booking access."
+      }
+    },
+    "shell": {
+      "searchPlaceholder": "Search Turath...",
+      "searchLabel": "Search pages and experiences",
+      "searchEmpty": "No matching destination found.",
+      "openMenu": "Open user navigation",
+      "closeMenu": "Close user navigation"
+    },
+    "access": {
+      "title": "Sign in to your account",
+      "description": "Your bookings, vouchers, preferences, and reliability score are kept with your tourist account.",
+      "signIn": "Sign in",
+      "preview": "Preview tourist account"
+    },
+    "nav": {
+      "label": "Account navigation",
+      "groups": {
+        "discover": "Discover",
+        "account": "Your account"
+      },
+      "hotels": "Stays",
+      "restaurants": "Dining",
+      "trips": "Trips",
+      "events": "Events",
+      "guides": "Guides",
+      "attractions": "Attractions",
+      "dashboard": "Dashboard",
+      "bookings": "My bookings",
+      "reliability": "Reliability",
+      "signOut": "Sign out"
+    },
+    "profile": {
+      "guest": "Turath guest"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "description": "Choose how Turath displays language and prices for you.",
+      "language": "Language",
+      "currency": "Currency display",
+      "syp": "Syrian pound (SYP)",
+      "usd": "US dollar estimate (USD)"
+    },
+    "states": {
+      "errorTitle": "We couldn't load your account",
+      "errorBody": "Please try again in a moment.",
+      "retry": "Try again"
+    },
+    "bookingsCard": {
+      "title": "Your trips in one place",
+      "description": "Keep every voucher and arrival code ready before you travel.",
+      "open": "Open my bookings"
+    },
+    "bookings": {
+      "tabsLabel": "Booking history",
+      "tabs": {
+        "upcoming": "Upcoming",
+        "past": "Past",
+        "cancelled": "Cancelled"
+      },
+      "voucher": "Open voucher",
+      "review": "Write review",
+      "browse": "Browse stays",
+      "errorTitle": "We couldn't load your bookings",
+      "errorBody": "Please try again. Your saved vouchers have not been changed.",
+      "retry": "Try again",
+      "empty": {
+        "upcoming": {
+          "title": "No upcoming bookings",
+          "description": "When you reserve something, its voucher will appear here."
+        },
+        "past": {
+          "title": "No past bookings",
+          "description": "Completed bookings will appear here."
+        },
+        "cancelled": {
+          "title": "No cancelled bookings",
+          "description": "Bookings you cancel will remain here for reference."
+        }
+      }
+    },
+    "reliability": {
+      "score": "Reliability score",
+      "summary": "A strong score gives you faster booking access and a higher concurrent booking limit.",
+      "open": "View score details",
+      "outOf": "out of 100",
+      "scoreExplanation": "Your score starts at 100 and reflects whether you arrive for confirmed bookings.",
+      "completed": "Completed check-ins",
+      "noShows": "No-shows",
+      "bookingCap": "Concurrent bookings",
+      "instantTitle": "Instant booking",
+      "instantEnabled": "Enabled for your current tier.",
+      "instantDisabled": "Unavailable for your current tier.",
+      "noShowRule": "A no-show deducts 30 points",
+      "noShowRuleBody": "If plans change, cancel before arrival so your score and booking access remain protected.",
+      "historyTitle": "Recent reliability history",
+      "tiersTitle": "What each tier allows",
+      "noChange": "No deduction",
+      "errorTitle": "We couldn't load your reliability score",
+      "errorBody": "Please try again in a moment.",
+      "retry": "Try again",
+      "tiers": {
+        "VIP": "VIP",
+        "STANDARD": "Standard",
+        "RESTRICTED": "Restricted",
+        "SUSPENDED": "Suspended"
+      },
+      "tierDetails": {
+        "VIP": "Instant booking and the highest concurrent booking limit.",
+        "STANDARD": "Instant booking with a standard concurrent booking limit.",
+        "RESTRICTED": "Lower booking limits and some reservations may need review.",
+        "SUSPENDED": "New bookings are paused until the account is reviewed."
+      },
+      "events": {
+        "CHECK_IN": "Arrived for booking",
+        "NO_SHOW": "Missed confirmed arrival"
+      }
+    }
+  },
+  "bookingReview": {
+    "metaDescription": "Share a verified review after completing your Turath booking.",
+    "eyebrow": "Verified stay",
+    "title": "Share your experience",
+    "description": "How was your experience with {provider}?",
+    "rating": "Your rating",
+    "star": "{count, plural, one {# star} other {# stars}}",
+    "comment": "Your review",
+    "commentPlaceholder": "Tell other guests what stood out about your experience",
+    "submit": "Submit review",
+    "submitting": "Submitting…",
+    "back": "Back to voucher",
+    "thanksTitle": "Thank you for your review",
+    "thanksBody": "Your verified feedback has been received and will help future guests.",
+    "backToBookings": "Back to my bookings",
+    "unavailableTitle": "Review not available yet",
+    "unavailableBody": "You can review this booking only after your arrival has been confirmed.",
+    "errorTitle": "We couldn't save your review",
+    "errorBody": "Please check your review and try again.",
+    "retry": "Try again",
+    "errors": {
+      "ratingRequired": "Choose a rating from 1 to 5 stars.",
+      "commentMin": "Write at least 10 characters.",
+      "commentMax": "Keep your review under 500 characters."
     }
   },
   "providerRegister": {

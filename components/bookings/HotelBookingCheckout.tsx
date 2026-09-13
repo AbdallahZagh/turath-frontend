@@ -155,7 +155,7 @@ export function HotelBookingCheckout({
   }
 
   return (
-    <div className="grid items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
+    <div className="grid min-w-0 items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
       <GlassPanel className="order-2 p-6 sm:p-8 lg:order-1 lg:p-9">
         <div className="border-border border-b pb-6">
           <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
@@ -166,20 +166,20 @@ export function HotelBookingCheckout({
         <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="space-y-1.5">
+            <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
+              <div className="min-w-0 space-y-1.5">
                 <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkIn)} />
               </div>
-              <div className="space-y-1.5">
+              <div className="min-w-0 space-y-1.5">
                 <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkOut)} />
               </div>
-              <div className="space-y-1.5">
+              <div className="min-w-0 space-y-1.5">
                 <Controller control={form.control} name="roomId" render={({ field }) => <Select variant="main" required label={t("roomType")} placeholder={t("roomPlaceholder")} options={roomOptions} value={field.value} onChange={field.onChange} icon={<BedDouble className="size-4" />} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.roomId)} />
               </div>
-              <div className="space-y-1.5">
+              <div className="min-w-0 space-y-1.5">
                 <Controller control={form.control} name="guests" render={({ field }) => <Stepper variant="main" required label={t("guests")} min={1} max={selectedRoom?.maxGuests ?? 8} value={field.value} onChange={(value) => { field.onChange(value); if (selectedRoom && value > selectedRoom.maxGuests) form.setValue("roomId", ""); }} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.guests)} />
               </div>
@@ -243,7 +243,7 @@ export function HotelBookingCheckout({
         <div className="mx-auto flex max-w-[98rem] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-prose-muted text-xs">{t("cashDue")}</p>
-            <p className="text-prose truncate text-sm font-semibold">{formatMoney(cashDueSyp)}</p>
+            <p className="text-prose text-sm leading-tight font-semibold">{formatMoney(cashDueSyp)}</p>
           </div>
           <Button
             type="submit"

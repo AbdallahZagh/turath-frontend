@@ -223,7 +223,7 @@ export function HotelDetail({ hotelId }: HotelDetailProps): ReactNode {
         <div className="mx-auto flex max-w-[98rem] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-prose-muted text-xs">{t("from")}</p>
-            <p className="text-prose truncate text-sm font-semibold">
+            <p className="text-prose text-sm leading-tight font-semibold">
               {formatMoney(lowestPrice)}
               <span className="text-prose-muted ms-1 font-normal">{t("perNight")}</span>
             </p>

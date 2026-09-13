@@ -24,7 +24,7 @@ function PhoneMockup({ children, delay }: PhoneMockupProps): ReactNode {
       <motion.div
         animate={{ y: [0, -14, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay }}
-        className="glass-surface glass-frost border-glass-border relative flex h-105 w-55 flex-col items-center justify-center gap-4 rounded-[2.5rem] border-2 p-4 backdrop-blur-md sm:h-120 sm:w-62.5"
+        className="glass-surface glass-frost border-glass-border relative flex h-88 w-40 flex-col items-center justify-center gap-4 rounded-[2.5rem] border-2 p-4 backdrop-blur-md sm:h-120 sm:w-62.5"
       >
         <span
           aria-hidden
@@ -57,16 +57,16 @@ export function AppDownloadBanner(): ReactNode {
           whileInView="visible"
           viewport={viewportOnce}
           variants={fadeUp}
-          className="order-2 flex justify-center gap-6 lg:order-1"
+          className="order-2 flex max-w-full justify-center gap-3 overflow-x-clip sm:gap-6 lg:order-1"
         >
           <PhoneMockup delay={0}>
-            <QrCode className="text-primary size-20 sm:size-24" aria-hidden />
+            <QrCode className="text-primary size-14 sm:size-24" aria-hidden />
             <span className="text-prose-muted text-center text-xs font-medium">
               {t("offlineQrLabel")}
             </span>
           </PhoneMockup>
           <PhoneMockup delay={0.4}>
-            <MapPinned className="text-accent size-20 sm:size-24" aria-hidden />
+            <MapPinned className="text-accent size-14 sm:size-24" aria-hidden />
             <span className="text-prose-muted text-center text-xs font-medium">
               {t("offlineMapLabel")}
             </span>

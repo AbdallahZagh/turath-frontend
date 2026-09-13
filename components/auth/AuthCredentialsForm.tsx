@@ -165,7 +165,7 @@ export function AuthCredentialsForm({
       initial="hidden"
       animate="visible"
       variants={fadeUp}
-      className="glass-surface glass-frost backdrop-blur-sm w-full max-w-xl rounded-glass p-4 sm:p-6"
+      className="glass-surface glass-frost auth-glass-card isolate w-full min-w-0 max-w-md overflow-hidden rounded-glass p-4 sm:max-w-xl sm:p-6"
     >
       <Logo variant="main" className="h-9 w-fit [&_img]:h-full [&_img]:w-auto lg:hidden" />
 
@@ -182,7 +182,7 @@ export function AuthCredentialsForm({
       </p>
 
       {mode === "login" ? (
-        <div className="mt-7 flex flex-col gap-5">
+        <div className="mt-7 flex min-w-0 flex-col gap-5">
           <SegmentSwitch
             variant="main"
             className="mb-2 w-full"
@@ -202,11 +202,11 @@ export function AuthCredentialsForm({
 
           {loginMethod === "phone" ? (
             <form
-              className="flex flex-col gap-5"
+              className="flex min-w-0 flex-col gap-5"
               onSubmit={phoneForm.handleSubmit(onLoginPhone)}
               noValidate
             >
-              <div className="flex flex-col gap-1.5">
+              <div className="flex min-w-0 flex-col gap-1.5">
                 <Controller
                   control={phoneForm.control}
                   name="phone"
@@ -235,11 +235,11 @@ export function AuthCredentialsForm({
             </form>
           ) : (
             <form
-              className="flex flex-col gap-5"
+              className="flex min-w-0 flex-col gap-5"
               onSubmit={emailForm.handleSubmit(onLoginEmail)}
               noValidate
             >
-              <div className="flex flex-col gap-1.5">
+              <div className="flex min-w-0 flex-col gap-1.5">
                 <Controller
                   control={emailForm.control}
                   name="email"
@@ -301,7 +301,7 @@ export function AuthCredentialsForm({
         </div>
       ) : (
         <form
-          className="mt-4 flex flex-col gap-3"
+          className="mt-4 flex min-w-0 flex-col gap-3"
           onSubmit={registerForm.handleSubmit(onRegister)}
           noValidate
         >
@@ -324,8 +324,8 @@ export function AuthCredentialsForm({
               message={fieldMessage(tErrors, registerForm.formState.errors.name)}
             />
           </div>
-          <div className="grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
-            <div className="flex flex-col gap-1.5">
+          <div className="grid min-w-0 grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <Controller
                 control={registerForm.control}
                 name="dateOfBirth"
@@ -351,7 +351,7 @@ export function AuthCredentialsForm({
                 )}
               />
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <Controller
                 control={registerForm.control}
                 name="nationality"
@@ -368,7 +368,7 @@ export function AuthCredentialsForm({
                     options={nationalityOptions}
                     value={field.value}
                     onChange={field.onChange}
-                    menuMinWidth={320}
+                    menuMinWidth={260}
                   />
                 )}
               />
@@ -484,11 +484,11 @@ export function AuthCredentialsForm({
 
       <div
         className={cn(
-          "flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between",
+          "flex min-w-0 flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between",
           isRegister ? "mt-4" : "mt-6",
         )}
       >
-        <p className="text-sm">
+        <p className="min-w-0 text-sm">
           {mode === "login" ? (
             <Link
               href="/register"
@@ -505,9 +505,9 @@ export function AuthCredentialsForm({
             </Link>
           )}
         </p>
-        <p className="text-prose-muted flex items-center justify-center gap-2 text-xs">
-          <Info className="h-4 w-4 shrink-0" />
-          <span className="text-prose-muted text-xs">
+        <p className="text-prose-muted flex min-w-0 items-start gap-2 text-xs sm:items-center">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 sm:mt-0" />
+          <span className="text-prose-muted min-w-0 text-xs leading-snug">
             {t("providerNote")}{" "}
             <Link
               href="/provider/register"

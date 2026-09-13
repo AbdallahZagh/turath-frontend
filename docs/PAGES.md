@@ -353,9 +353,10 @@ Category-specific form on a glass sheet:
 ### `/user`
 
 - Avatar/initials, full name, phone, email
-- Language, currency display preference
+- Language, currency display preference (SYP primary or USD primary; amounts stay SYP)
 - Reliability score (0–100) + tier label (VIP / Standard / Restricted / Suspended)
 - Link to bookings
+- Old `/account` and `/account/*` URLs redirect here (do not keep a parallel account tree)
 
 ### `/user/bookings`
 

@@ -24,9 +24,9 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 
 type HotelDetailProps = {
@@ -53,6 +53,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
 
   if (hotelQuery.isPending) return <HotelDetailSkeleton />;
@@ -95,7 +96,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
         openImageLabel={(number) => tDetail("openImage", { number })}
       />
 
-      <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="mt-7 grid items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_22rem] lg:pb-0">
         <div className="space-y-7">
           <section>
             <div className="flex flex-wrap items-center gap-2">
@@ -148,7 +149,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
                     </p>
                   </div>
                   <div className="sm:text-end">
-                    <p className="text-prose font-semibold">{formatSyp(room.priceSyp, loc)}</p>
+                    <p className="text-prose font-semibold">{formatMoney(room.priceSyp)}</p>
                     <p className="text-prose-muted text-xs">{t("perNight")}</p>
                   </div>
                 </div>
@@ -210,9 +211,9 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
           </GlassPanel>
         </div>
 
-        <GlassPanel className="p-6 lg:sticky lg:top-28">
+        <GlassPanel className="hidden p-6 lg:sticky lg:top-28 lg:block">
           <p className="text-prose-muted text-sm">{t("from")}</p>
-          <p className="text-prose mt-1 text-xl font-semibold">{formatSyp(lowestPrice, loc)}</p>
+          <p className="text-prose mt-1 text-xl font-semibold">{formatMoney(lowestPrice)}</p>
           <p className="text-prose-muted text-xs">{t("perNight")}</p>
           <div className="border-border my-5 border-t" />
           <p className="text-prose-muted text-sm leading-relaxed">{tDetail("cashOnArrival")}</p>
@@ -221,6 +222,22 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
             {tDetail("book")}
           </Button>
         </GlassPanel>
+      </div>
+
+      <div className="border-border bg-surface/95 supports-[backdrop-filter]:bg-surface/80 fixed inset-x-0 bottom-0 z-40 border-t px-4 py-3 backdrop-blur-md lg:hidden">
+        <div className="mx-auto flex max-w-[98rem] items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-prose-muted text-xs">{t("from")}</p>
+            <p className="text-prose text-sm leading-tight font-semibold">
+              {formatMoney(lowestPrice)}
+              <span className="text-prose-muted ms-1 font-normal">{t("perNight")}</span>
+            </p>
+          </div>
+          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} size="sm" className="shrink-0">
+            <CalendarCheck className="size-4" aria-hidden />
+            {tDetail("book")}
+          </Button>
+        </div>
       </div>
     </>
   );

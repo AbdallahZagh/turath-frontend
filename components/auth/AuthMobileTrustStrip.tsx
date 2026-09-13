@@ -20,11 +20,11 @@ export function AuthMobileTrustStrip(): ReactNode {
 
   return (
     <div
-      className="mt-6 w-full max-w-2xl lg:hidden"
+      className="mt-6 w-full min-w-0 max-w-md sm:max-w-xl lg:hidden"
       role="group"
       aria-label={tAuth("trustStripLabel")}
     >
-      <ul className="glass-surface glass-frost backdrop-blur-sm rounded-glass flex flex-col gap-2.5 p-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-3.5">
+      <ul className="glass-surface glass-frost auth-glass-card isolate overflow-hidden rounded-glass flex min-w-0 flex-col gap-2.5 p-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-3.5">
         {TRUST_ITEMS.map(({ key, icon: Icon }) => (
           <li
             key={key}

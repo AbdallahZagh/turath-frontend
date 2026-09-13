@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Currency = "SYP" | "USD";
+import type { DisplayCurrency } from "@/lib/format/money";
+
+export type Currency = DisplayCurrency;
 
 type CurrencyStore = {
   currency: Currency;

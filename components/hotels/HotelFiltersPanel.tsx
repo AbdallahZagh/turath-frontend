@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
+import { cn } from "@/lib/cn";
 import { GOVERNORATES } from "@/lib/mock/landing";
 import type {
   HotelAmenityId,
@@ -24,12 +25,17 @@ type HotelFiltersPanelProps = {
   filters: HotelFilters;
   onChange: (filters: HotelFilters) => void;
   onReset: () => void;
+  /** Skip outer GlassPanel / sticky chrome (e.g. inside a mobile Drawer). */
+  embedded?: boolean;
+  className?: string;
 };
 
 export function HotelFiltersPanel({
   filters,
   onChange,
   onReset,
+  embedded = false,
+  className,
 }: HotelFiltersPanelProps): ReactNode {
   const t = useTranslations("hotels.filters");
   const tGov = useTranslations("landing.governorates");
@@ -61,20 +67,22 @@ export function HotelFiltersPanel({
     onChange({ ...filters, amenities });
   }
 
-  return (
-    <GlassPanel className="p-5 lg:sticky lg:top-28">
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="font-heading text-prose flex items-center gap-2 text-lg font-semibold">
-          <SlidersHorizontal className="text-accent size-5" aria-hidden />
-          {t("title")}
-        </h2>
-        <Button variant="glass" size="sm" onClick={onReset}>
-          <RotateCcw className="size-3.5" aria-hidden />
-          {t("reset")}
-        </Button>
-      </div>
+  const body = (
+    <>
+      {!embedded ? (
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="font-heading text-prose flex items-center gap-2 text-lg font-semibold">
+            <SlidersHorizontal className="text-accent size-5" aria-hidden />
+            {t("title")}
+          </h2>
+          <Button variant="glass" size="sm" onClick={onReset}>
+            <RotateCcw className="size-3.5" aria-hidden />
+            {t("reset")}
+          </Button>
+        </div>
+      ) : null}
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+      <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-1", !embedded && "mt-5")}>
         <Select
           variant="main"
           size="sm"
@@ -139,6 +147,16 @@ export function HotelFiltersPanel({
           ))}
         </div>
       </fieldset>
+    </>
+  );
+
+  if (embedded) {
+    return <div className={className}>{body}</div>;
+  }
+
+  return (
+    <GlassPanel className={cn("p-5 lg:sticky lg:top-28", className)}>
+      {body}
     </GlassPanel>
   );
 }

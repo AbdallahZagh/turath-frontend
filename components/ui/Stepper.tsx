@@ -124,7 +124,7 @@ export function Stepper({
 
   const style = controlStyle({
     size,
-    paddingX,
+    paddingX: paddingX ?? "1.15em",
     paddingY,
     rounded,
     minHeight,
@@ -200,7 +200,7 @@ export function Stepper({
         FIELD_BASE,
         FIELD_VARIANT[variant],
         FOCUS_WITHIN[variant],
-        "flex items-center gap-3",
+        "flex min-w-0 max-w-full items-center gap-2",
         disabled && "pointer-events-none opacity-40",
       )}
     >
@@ -219,6 +219,7 @@ export function Stepper({
         name={name}
         required={required}
         disabled={disabled}
+        size={maxDigits}
         value={shown}
         aria-label={variant === "main" ? undefined : namedLabel}
         aria-labelledby={variant === "main" && label ? labelId : undefined}

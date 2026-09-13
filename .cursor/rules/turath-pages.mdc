@@ -1,0 +1,17 @@
+---
+description: Turath page map, portals, and product rules — read PAGES.md.
+alwaysApply: true
+---
+
+# Pages and product
+
+Follow `docs/PAGES.md` for every route, screen contents, and implementation order.
+
+User-facing copy (nav, titles, subtitles) stays everyday language even when `docs/PAGES.md` uses a domain word (KYC, ledger, taxonomy). URLs follow the names people see. Admin slugs: `config/adminRoutes.ts`.
+
+- `(auth)` — no app chrome. `(public)` tourist. `(provider)` ops. `(admin)` command center.
+- Unapproved providers stay on onboarding/pending.
+- Staff cannot see owner nav: profile, inventory, ledger, staff, settings.
+- Booking is cash-on-arrival. Voucher = QR + 6-char backup code (`reciept-logo.png`).
+- Reviews only after check-in. Web check-in is backup code (camera is Flutter).
+- Do not skip the order in `docs/PAGES.md` §10 unless the user asks.

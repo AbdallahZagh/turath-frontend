@@ -11,12 +11,12 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBooking } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 
 export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode {
@@ -29,6 +29,7 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
   const tZones = useTranslations("restaurants.zones");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const bookingQuery = useTouristBooking(bookingId);
   const booking = bookingQuery.data;
   const hotelQuery = useHotel(booking?.type === "hotel" ? booking.hotelId : "");
@@ -42,7 +43,28 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
 
   const discountLabel = booking.couponCode ? `${t("discount")} (${booking.couponCode})` : t("discount");
   const shared = {
-    pageEyebrow: t("voucher.eyebrow"), pageTitle: t("voucher.title"), pageDescription: t("voucher.subtitle"), passLabel: t("voucher.passLabel"), downloadLabel: t("voucher.downloadQr"), printLabel: t("voucher.print"), logoAlt: t("voucher.logoAlt"), statusLabel: t(`voucher.status.${booking.status}`), referenceLabel: t("voucher.reference"), reference: booking.reference, listPriceLabel: t("listPrice"), listPrice: formatSyp(booking.listPriceSyp, loc), discount: booking.discountSyp > 0 ? { label: discountLabel, value: formatSyp(booking.discountSyp, loc) } : undefined, totalLabel: t("cashDue"), total: formatSyp(booking.cashDueSyp, loc), totalHint: t("cashDueHint"), qrValue: booking.qrPayload, qrTitle: t("voucher.showOnArrival"), qrHint: t("voucher.qrHint"), backupLabel: t("voucher.backupTitle"), backupCode: booking.backupCode, backupHint: t("voucher.backupHint"),
+    pageEyebrow: t("voucher.eyebrow"),
+    pageTitle: t("voucher.title"),
+    pageDescription: t("voucher.subtitle"),
+    passLabel: t("voucher.passLabel"),
+    downloadLabel: t("voucher.downloadQr"),
+    printLabel: t("voucher.print"),
+    logoAlt: t("voucher.logoAlt"),
+    statusLabel: t(`voucher.status.${booking.status}`),
+    referenceLabel: t("voucher.reference"),
+    reference: booking.reference,
+    listPriceLabel: t("listPrice"),
+    listPrice: formatMoney(booking.listPriceSyp),
+    discount: booking.discountSyp > 0 ? { label: discountLabel, value: formatMoney(booking.discountSyp) } : undefined,
+    totalLabel: t("cashDue"),
+    total: formatMoney(booking.cashDueSyp),
+    totalHint: t("cashDueHint"),
+    qrValue: booking.qrPayload,
+    qrTitle: t("voucher.showOnArrival"),
+    qrHint: t("voucher.qrHint"),
+    backupLabel: t("voucher.backupTitle"),
+    backupCode: booking.backupCode,
+    backupHint: t("voucher.backupHint"),
   };
 
   let pass: ReactNode;

@@ -24,7 +24,9 @@
 .DS_Store
 *.pem
 .idea/
-.cursor/
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 
 # debug
 npm-debug.log*

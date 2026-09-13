@@ -13,13 +13,13 @@ import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBookings } from "@/hooks/useBookings";
 import { useEvents } from "@/hooks/useEvents";
+import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotels } from "@/hooks/useHotels";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import { useTrips } from "@/hooks/useTrips";
 import { USER_PATHS } from "@/config/userRoutes";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBooking } from "@/lib/mock/bookings";
 
@@ -43,6 +43,7 @@ export function AccountBookings(): ReactNode {
   const tStatus = useTranslations("bookings.voucher.status");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
+  const formatMoney = useFormatSyp();
   const [tab, setTab] = useState<BookingTab>("upcoming");
   const bookingsQuery = useTouristBookings();
   const hotelsQuery = useHotels({});
@@ -89,7 +90,7 @@ export function AccountBookings(): ReactNode {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2"><h2 className="font-heading text-prose text-xl font-semibold">{provider ? localizedName(provider.name, loc) : booking.reference}</h2><Badge variant="outline">{tStatus(booking.status)}</Badge></div>
                     <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${booking.timeSlot}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : ` · ${t("tickets", { count: booking.quantity })}`}</p>
-                    <p className="text-prose mt-2 text-sm font-semibold">{formatSyp(booking.cashDueSyp, loc)}</p>
+                    <p className="text-prose mt-2 text-sm font-semibold">{formatMoney(booking.cashDueSyp)}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {booking.status === "CHECKED_IN" ? <Button href={`/user/bookings/${booking.id}/review`} variant="glass" size="sm"><MessageSquareQuote className="size-4" aria-hidden />{t("review")}</Button> : null}

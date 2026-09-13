@@ -8,6 +8,8 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      { source: "/account", destination: "/user", permanent: true },
+      { source: "/account/:path*", destination: "/user/:path*", permanent: true },
       { source: "/admin/users", destination: ADMIN_PATHS.guests, permanent: true },
       { source: "/admin/users/:id", destination: `${ADMIN_PATHS.guests}/:id`, permanent: true },
       { source: "/admin/providers", destination: ADMIN_PATHS.businesses, permanent: true },

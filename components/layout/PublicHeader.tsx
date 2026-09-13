@@ -95,6 +95,7 @@ function HeaderNav({ items }: { items: NavItem[] }): ReactNode {
 
 type HeaderMobileNavProps = {
   items: NavItem[];
+  showGuestAuth: boolean;
   currencyOptions: SelectOption[];
   currency: string;
   onCurrencyChange: (value: string) => void;
@@ -102,6 +103,7 @@ type HeaderMobileNavProps = {
 
 function HeaderMobileNav({
   items,
+  showGuestAuth,
   currencyOptions,
   currency,
   onCurrencyChange,
@@ -126,11 +128,12 @@ function HeaderMobileNav({
       }
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 12 + items.length * 40 + 120,
+          estimatedHeight: 12 + items.length * 40 + 160,
           maxHeightCap: 420,
           width: "max-content",
           minWidth: Math.max(trigger.getBoundingClientRect().width, MOBILE_MENU_MIN_WIDTH_PX),
-          align: "end",
+          // Open from trigger start so the panel stays on-screen on ~375.
+          align: "start",
         }),
       );
     }
@@ -225,6 +228,40 @@ function HeaderMobileNav({
               );
             })}
 
+            {showGuestAuth ? (
+              <div
+                role="none"
+                className="border-glass-border mt-1 flex flex-col gap-1 border-t px-3 py-3 sm:hidden"
+              >
+                <Link
+                  href="/login"
+                  role="menuitem"
+                  className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
+                  onClick={() => setOpen(false)}
+                >
+                  {t("login")}
+                </Link>
+                <Link
+                  href="/register"
+                  role="menuitem"
+                  className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
+                  onClick={() => setOpen(false)}
+                >
+                  {t("register")}
+                </Link>
+              </div>
+            ) : null}
+
+            <div
+              role="none"
+              className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 lg:hidden"
+            >
+              <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
+                {t("languageMenu")}
+              </p>
+              <LocaleSwitcher compact className="w-full" />
+            </div>
+
             <div
               role="none"
               className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 sm:hidden"
@@ -310,18 +347,19 @@ export function PublicHeader(): ReactNode {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-x-0 top-4 z-50 overflow-x-clip px-3 sm:px-6"
+      className="fixed inset-x-0 top-4 z-50 overflow-x-clip px-2 sm:px-6"
     >
-      <div className="glass-surface glass-frost backdrop-blur-md rounded-glass mx-auto flex max-w-7xl min-w-0 items-center justify-between gap-2 px-3 py-2 sm:gap-3 sm:px-5 sm:py-2.5">
-        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2 p-1.5 sm:p-2">
-          <Logo variant="main" className="h-9 sm:h-9" priority />
+      <div className="glass-surface glass-frost backdrop-blur-md rounded-glass mx-auto flex max-w-7xl min-w-0 items-center justify-between gap-1.5 px-2 py-1.5 sm:gap-3 sm:px-5 sm:py-2.5">
+        <Link href="/" className="flex min-w-0 shrink items-center gap-2 p-1 sm:p-2">
+          <Logo variant="main" className="h-7 sm:h-9" priority />
         </Link>
 
         <HeaderNav items={navItems} />
 
-        <div className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-3">
+        <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-3">
           <HeaderMobileNav
             items={touristSignedIn ? [...navItems, { href: "/user", labelKey: "profile" }] : navItems}
+            showGuestAuth={!touristSignedIn}
             currencyOptions={currencyOptions}
             currency={currency}
             onCurrencyChange={onCurrencyChange}
@@ -341,18 +379,39 @@ export function PublicHeader(): ReactNode {
             onChange={onCurrencyChange}
             label={t("currencyLabel")}
           />
-          <LocaleSwitcher compact />
+          <div className="hidden lg:block">
+            <LocaleSwitcher compact />
+          </div>
           {touristSignedIn ? (
-            <Button variant="solid" size="sm" href="/user" className="shrink-0" aria-label={t("profile")}>
+            <Button
+              variant="solid"
+              size="sm"
+              href="/user"
+              paddingX="0.85em"
+              className="shrink-0"
+              aria-label={t("profile")}
+            >
               <UserRound className="size-4" aria-hidden />
               <span className="hidden xl:inline">{t("profile")}</span>
             </Button>
           ) : (
             <>
-              <Button variant="outline" size="sm" href="/login" className="shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                href="/login"
+                paddingX="0.85em"
+                className="shrink-0 max-sm:hidden"
+              >
                 {t("login")}
               </Button>
-              <Button variant="solid" size="sm" href="/register" className="shrink-0">
+              <Button
+                variant="solid"
+                size="sm"
+                href="/register"
+                paddingX="0.85em"
+                className="shrink-0"
+              >
                 {t("register")}
               </Button>
             </>

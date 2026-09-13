@@ -4,7 +4,7 @@
  */
 import { ADMIN_PATHS, isAdminDetailPath } from "@/config/adminRoutes";
 
-export type PageHeaderNamespace = "admin.headers";
+export type PageHeaderNamespace = "admin.headers" | "hotels.headers" | "account.headers";
 
 export type AdminHeaderPage =
   | "overview"
@@ -45,13 +45,17 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage;
+  page: AdminHeaderPage | "index" | "profile" | "reliability";
   /** Pin the header and let the page body fill leftover viewport height. */
   fillViewport?: boolean;
   actions?: PageHeaderActionSpec[];
 };
 
 const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
+  "/hotels": { namespace: "hotels.headers", page: "index" },
+  "/user": { namespace: "account.headers", page: "profile" },
+  "/user/bookings": { namespace: "account.headers", page: "bookings" },
+  "/user/reliability": { namespace: "account.headers", page: "reliability" },
   [ADMIN_PATHS.home]: { namespace: "admin.headers", page: "overview" },
   [ADMIN_PATHS.guests]: { namespace: "admin.headers", page: "users", fillViewport: true },
   guestDetail: { namespace: "admin.headers", page: "userDetail" },

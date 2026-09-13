@@ -17,7 +17,8 @@ It is the source of truth for **routes and screen contents** until the backend R
 | Group | Audience | Layout | Sidebar |
 |---|---|---|---|
 | `app/(auth)` | Unauthenticated | Centered glass card, no app chrome | None |
-| `app/(public)` | Tourist (and anyone browsing) | Public header + optional tourist bottom/side nav | Tourist nav |
+| `app/(public)` | Tourist (and anyone browsing) | Public header + footer | None |
+| `app/(user)` | Signed-in `TOURIST` | User shell with top header, sidebar, and no public footer | User nav |
 | `app/(provider)` | `PROVIDER_OWNER`, `PROVIDER_STAFF` | Provider shell | Provider nav (filtered by mock role) |
 | `app/(admin)` | `SUPER_ADMIN` | Admin shell | Admin nav |
 
@@ -68,7 +69,7 @@ Pick by **theme** (light vs dark) and **space** (full lockup vs compact mark). N
 - Guides `/guides`
 - Contact `/contact` (footer Company → Contact; also the Home **Contact Us** band)
 
-Logged-in extras: My bookings `/account/bookings`, Profile `/account`.
+Logged-in extras: My bookings `/user/bookings`, Profile `/user`.
 
 Dev-only (not in tourist nav): theme lab `/theme` (same screen as `/` until the tourist home exists).
 
@@ -322,26 +323,26 @@ Category-specific form on a glass sheet:
 - Download / print
 - If `CHECKED_IN`: CTA to write a review
 
-### `/bookings/[id]/review`
+### `/user/bookings/[id]/review`
 
 - Only after check-in (UI gated; API later)
 - Tourist: 1–5 stars + comment about the provider
 - Submit → thank you
 - The provider’s rating of this guest is a separate post-check-in review (not this tourist page)
 
-### `/account`
+### `/user`
 
 - Avatar/initials, full name, phone, email
 - Language, currency display preference
 - Reliability score (0–100) + tier label (VIP / Standard / Restricted / Suspended)
 - Link to bookings
 
-### `/account/bookings`
+### `/user/bookings`
 
 - Tabs: Upcoming / Past / Cancelled
 - Row: provider, date, status, amount, “Open voucher”
 
-### `/account/reliability`
+### `/user/reliability`
 
 - Score, history of check-ins vs no-shows (−30 copy)
 - What each tier allows (instant booking, concurrent caps)
@@ -655,7 +656,7 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 2. Auth screens  
 3. Public home, listings, details (static mock data)  
 4. Booking + voucher  
-5. Tourist account  
+5. User shell and tourist account
 6. Provider dashboard → inventory → check-in → ledger  
 7. Admin license review → heritage catalog → finance (including `/admin/discount-codes`)  
 

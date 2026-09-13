@@ -50,7 +50,7 @@ export const FIELD_VARIANT: Record<FieldVariant, string> = {
 };
 
 export const FIELD_GROUP_MAIN = [
-  "flex w-full flex-col-reverse items-stretch gap-(--control-gap)",
+  "flex w-full min-w-0 flex-col-reverse items-stretch gap-(--control-gap)",
   "has-[:focus]:[&_label]:text-prose",
   "has-[:focus]:[&_label]:[text-shadow:var(--label-glow)]",
   "has-[[aria-expanded=true]]:[&_label]:text-prose",

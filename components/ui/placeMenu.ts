@@ -47,19 +47,20 @@ export function placeAnchoredMenu(
     maxHeight,
   };
 
-  if (width === "max-content" && align === "end") {
-    box.left = "auto";
-    box.right = Math.max(viewportWidth - rect.right, margin);
-  } else {
-    let left = align === "end" ? rect.right - sizedWidth : rect.left;
-    if (left + sizedWidth > viewportWidth - margin) {
-      left = viewportWidth - margin - sizedWidth;
-    }
-    if (left < margin) {
-      left = margin;
-    }
-    box.left = left;
+  // Prefer concrete `left` (never `right: auto`) so wide max-content menus cannot
+  // clip off the start edge. On narrow screens, prefer opening from the trigger
+  // start so the panel shifts to the end side of the trigger.
+  let left = align === "end" ? rect.right - sizedWidth : rect.left;
+  if (left < margin) {
+    left = rect.left;
   }
+  if (left + sizedWidth > viewportWidth - margin) {
+    left = viewportWidth - margin - sizedWidth;
+  }
+  if (left < margin) {
+    left = margin;
+  }
+  box.left = left;
 
   if (openUp) {
     return {

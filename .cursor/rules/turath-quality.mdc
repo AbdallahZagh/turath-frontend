@@ -1,0 +1,45 @@
+---
+description: Senior-level TypeScript/React quality — no dead code, no sloppy leftovers.
+alwaysApply: true
+---
+
+# Code quality
+
+Write this as a senior production frontend: clear, typed, boring in the best way.
+Readable at 2 a.m. No cleverness. No leftover experiments.
+
+## Dead code — zero tolerance
+
+- Delete unused variables, imports, exports, types, files, and dependencies in the same change that makes them unused.
+- No commented-out code. Git has history.
+- No `console.log`, `debugger`, or leftover `TODO`/`FIXME` unless the user asked to track it.
+- No unreachable branches, empty catch blocks, or `eslint-disable` without a one-line reason.
+- No duplicate components or parallel helpers that do the same thing — extend the existing one.
+
+## TypeScript
+
+- No `any`. Prefer precise types, unions, and `unknown` only at boundaries.
+- No non-null assertions (`!`) unless a narrow, documented invariant exists.
+- Components and public functions have explicit props/return types.
+- Do not use `@ts-ignore` / `@ts-expect-error` to hide mistakes.
+
+## React / Next
+
+- Server Components by default. `"use client"` only for interactivity, stores, or browser APIs.
+- Keep components small: one job, one file. Extract when a block has its own state or is reused.
+- No giant `page.tsx` files full of markup — compose `components/`.
+- Derived values: compute, do not store. Effects only for syncing with the outside world.
+- Keys: stable ids, never array index if the list can reorder.
+
+## Structure
+
+- Names say what they are: `formatSyp`, `BookingStatusBadge`, `useProviderBookings` — not `data`, `tmp`, `handleClick2`.
+- Early return over deep nesting.
+- Magic numbers/strings → named constants or tokens.
+- Copy lives in `messages/`. Formatters live in `lib/format/`.
+
+## Before finishing a pass
+
+1. Would I approve this in a staff-engineer review?
+2. Is every file in the diff still needed?
+3. Did I leave the tree cleaner than I found it?

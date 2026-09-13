@@ -1,0 +1,181 @@
+---
+description: Turath frontend conventions — stack, folders, UI, i18n, data fetching.
+alwaysApply: true
+---
+
+# Turath — Project Conventions
+
+Next.js web for **Turath (تراث)**: Syria tourism, heritage, and hospitality.
+Not Flutter. Not NestJS. UI is custom glassmorphism — no component kit.
+
+**Every pass:** read `docs/PAGES.md` before adding or changing routes, layouts, or nav.
+Do not invent pages. If a route changes, update `docs/PAGES.md` first.
+UI copy in `messages/` stays user-friendly even when `PAGES.md` uses a different domain name.
+Admin URLs: `config/adminRoutes.ts` — do not hardcode `/admin/...` slugs.
+
+## Domain
+
+Multi-tenant platform: tourists discover heritage + book hotels, restaurants, trips,
+events, and guides (cash on arrival). Providers run inventory and check-in.
+Super admin vets KYC, CMS, commissions. Web shows QR + backup code; camera scan is Flutter.
+
+Mock roles now: `TOURIST` | `PROVIDER_STAFF` | `PROVIDER_OWNER` | `SUPER_ADMIN`.
+Real JWT/RBAC only when the API exists — do not build a permission engine first.
+
+## Stack
+
+- Next.js 16 App Router + React 19 + TypeScript
+- Tailwind CSS v4 — no MUI, Emotion, styled-components, shadcn, Radix, Headless UI
+- `next-intl` — i18n/RTL. Messages in `messages/{locale}.json` (en + ar only)
+- `zustand` — client state (auth mock, sidebar, filters, toasts). No React Context
+  for global state. No Redux.
+- `fetch` + `@tanstack/react-query` — every API call. No axios. No `useEffect` +
+  `useState` fetch flags. Server data lives in Query, never duplicated in zustand
+- `react-hook-form` + `zod` + `@hookform/resolvers` — every form. One zod file per
+  domain in `lib/validation/`
+- `next-themes` — light/dark (class strategy). Not a second theme store in zustand
+- `date-fns` — the only date library (no moment, no dayjs)
+- `lucide-react` — icons. Custom SVG only if lucide cannot provide it
+- `clsx` + `tailwind-merge` — className composition
+- `next/font` — English matches the lockup serif (Playfair Display). Arabic matches the lockup Naskh (Cairo).
+  No Google Fonts CDN in CSS. No `@fontsource`
+
+- `framer-motion` — client-only motion (viewport reveals, layout transitions,
+  drag reels, springs). Shared variants live in `lib/motion/variants.ts`.
+  Server Components stay motion-free; isolate `motion.*` usage behind a
+  `'use client'` leaf component.
+
+When those pages exist: `maplibre-gl` for `/explore` (not Google/Mapbox);
+`qrcode.react` for vouchers; `nuqs` for search URL state.
+
+Do not add: axios, Redux, JWT client libs, Stripe, Firebase,
+socket.io, chart kits until admin analytics is real, any UI component package
+(`react-select`, `react-table`, `react-switch`, etc.).
+
+## No UI libraries — build our own
+
+Every primitive (Button, Input, Select, Table, Modal, Tabs, Tooltip, Dropdown,
+DatePicker, GlassPanel, EmptyState, ErrorState, PageHeader, Logo) lives in
+`components/ui/`, Tailwind only. Check `components/ui/` before adding a new one.
+
+## Typography
+
+Exposed as tokens in `app/globals.css`: `--font-heading` → `font-heading` (h1–h6
+default) and `--font-sans` → `font-sans` (body). Never hardcode `font-family`
+in a component. Arabic needs ~+25% line-height vs Latin (set on `html[lang="ar"]`).
+
+## Colors & tokens
+
+All colors, gradients, and glass surfaces are CSS variables in `app/globals.css`
+(light and dark). Tailwind theme maps to those variables. Never hardcode hex/rgb
+in a component — use tokens (`bg-app`, `text-prose`, `border-glass`, `bg-glass`, …).
+New color from design → add the token first, then use it.
+
+## Glass UI
+
+Tailwind only, no glass library. Reuse `GlassPanel` / tokens, do not paste
+`backdrop-blur-xl bg-white/10 border border-white/15` on every card.
+Typical: frost, 1px light border, large radius (~20–32px), soft shadow.
+
+## Light / dark
+
+Support both from the start. `next-themes` + Tailwind `dark:`. Every new
+component must look correct in both modes. `Logo` switches assets by theme
+(see logos below). Never ship a one-mode-only component.
+
+## Logos (`public/`)
+
+- Light full lockup → `/main-logo.png`
+- Dark full lockup → `/dark-main-logo.png`
+- Light compact / collapsed sidebar → `/simple-logo.png`
+- Dark compact → `/dark-simple-logo.png`
+- Favicon / PWA only → `/app-logo.png`
+- Receipts / invoices / vouchers only → `/reciept-logo.png` (keep this filename)
+
+Never put a light logo on a dark surface or the reverse.
+
+## Internationalization — en / ar
+
+Every new UI string goes in **both** `messages/en.json` and `messages/ar.json`
+from the start. Never hardcode user-facing text. Never leave Arabic for later.
+
+RTL/LTR from day one: logical Tailwind (`ps-`, `pe-`, `ms-`, `me-`, `start-`,
+`end-`), never physical `left`/`right` for direction-sensitive layout.
+Verify both directions. `html` `lang` + `dir` come from `next-intl`.
+
+Money: display `150,000 SYP (~$10.50)` via a shared formatter. Amounts are SYP.
+
+## Layouts & page headers
+
+Pages do not rebuild chrome. `(auth)` uses `AuthLayout`. `(public)` / `(provider)` /
+`(admin)` each have their own shell in `components/layout/` (header/sidebar +
+content), wired in that route group's `layout.tsx`. Never one sidebar with all
+roles. Staff nav hides owner-only items even with mock auth.
+
+Titles/breadcrumbs/actions: `config/pageHeaders.ts` + shared `PageHeader`.
+Nav: `config/nav.ts` with `roles` arrays. Pages do not hardcode header markup.
+
+## Error, loaders, empty
+
+Every data view must handle Query states: loading (shared skeleton), error
+(shared `ErrorState` + retry), empty (shared `EmptyState`). Build once in
+`components/ui/`. No one-off loaders per page.
+
+## Performance
+
+- Query `staleTime` / `gcTime` — Query is source of truth for server data
+- Next.js `dynamic()` for heavy maps / QR
+- Memoize only where re-renders are costly
+- No duplicate libraries for the same job
+- Tree-shake lucide imports
+
+## Code cleanliness
+
+Follow `.cursor/rules/turath-quality.mdc`. Senior-level, typed, no dead code.
+
+## Folder structure
+
+```
+app/
+  (auth)/                 # login, register, otp, password
+  (public)/               # tourist discovery, booking, account
+  (provider)/
+  (admin)/
+  layout.tsx
+  globals.css             # Tailwind + design tokens
+components/
+  ui/                     # Button, Input, GlassPanel, Modal, EmptyState...
+  layout/                 # AuthLayout, PublicShell, ProviderShell, AdminShell
+  logo/
+config/
+  nav.ts
+  pageHeaders.ts
+  adminRoutes.ts
+lib/
+  api/client.ts           # fetch wrapper
+  auth/session.ts         # mock session now; JWT later
+  format/                 # money, dates
+  validation/             # zod schemas
+  motion/                 # shared framer-motion variants
+  mock/                   # static mock content until the API exists
+hooks/
+services/                 # one file per REST resource
+store/                    # zustand stores
+messages/
+  en.json
+  ar.json
+public/                   # logos only as specified
+docs/PAGES.md
+```
+
+## Conventions
+
+- Stick to this folder structure. Do not invent parallel homes for services,
+  stores, or UI primitives.
+- One service file per REST resource in `services/`. Pages/hooks call services,
+  never `fetch` directly.
+- One zustand store per concern (`authStore`, `uiStore`, `toastStore`, …).
+- Types live next to the domain (`*.types.ts` or in the service), not one
+  giant global types file.
+- Prefer extending `components/ui/` over a new npm UI dependency.
+- Mock API/data is fine until NestJS exists; still go through services + Query.

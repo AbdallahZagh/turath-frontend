@@ -29,7 +29,7 @@ type PhoneFieldProps = ControlScaleProps & {
 };
 
 const PHONE_WRAPPER = [
-  "border-field-main-border bg-field-main flex items-stretch overflow-hidden",
+  "border-field-main-border bg-field-main flex min-w-0 items-stretch overflow-hidden",
   "rounded-(--control-radius) border-2 transition-[border-color,box-shadow] duration-300",
   "has-focus:border-primary has-focus:shadow-field dark:has-focus:border-foam",
   "has-[[aria-expanded=true]]:border-primary has-[[aria-expanded=true]]:shadow-field",

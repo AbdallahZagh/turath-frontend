@@ -1,0 +1,17 @@
+---
+description: User-facing copy stays everyday language even when PAGES.md uses domain terms.
+alwaysApply: true
+---
+
+# User-facing copy
+
+`docs/PAGES.md` is the route and screen map. It may use product words (KYC, ledger, taxonomy, provider, tourist, CMS, coupon).
+
+**People never see those names unless they are the natural everyday word.**
+
+- Nav, titles, subtitles, buttons, empty/error/toast text live in `messages/en.json` and `messages/ar.json`. Ship both locales together.
+- Write for a guest, a hotel owner, or ops at 2 a.m. Prefer Guest, Business, Heritage sites, Accounts, Lists, Fees, Featured, Discount codes, No-shows — not Users, Providers, Taxonomy, Ledger, Promotions, Coupons.
+- URLs match the user-facing names. Admin paths live in `config/adminRoutes.ts`. Do not hardcode `/admin/users` or similar in components.
+- Do not rename message keys just to match the URL. Keys may stay `users` / `providers` internally.
+
+If PAGES.md says “taxonomy” and the screen is Lists, the UI still says Lists / القوائم.

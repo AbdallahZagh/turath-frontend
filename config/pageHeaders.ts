@@ -46,7 +46,7 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "inventory" | "checkIn" | "staff" | "reliability" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
+  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
   /** Pin the header and let the page body fill leftover viewport height. */
   fillViewport?: boolean;
   actions?: PageHeaderActionSpec[];
@@ -58,6 +58,7 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   providerBookingDetail: { namespace: "provider.headers", page: "bookingDetail" },
   "/provider/check-in": { namespace: "provider.headers", page: "checkIn" },
   "/provider/reviews": { namespace: "provider.headers", page: "reviews" },
+  "/provider/my-profile": { namespace: "provider.headers", page: "myProfile" },
   "/provider/profile": { namespace: "provider.headers", page: "profile" },
   "/provider/inventory": { namespace: "provider.headers", page: "inventory" },
   "/provider/ledger": { namespace: "provider.headers", page: "ledger" },
@@ -74,7 +75,8 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/legal/terms": { namespace: "legal.headers", page: "terms" },
   "/legal/privacy": { namespace: "legal.headers", page: "privacy" },
   "/legal/provider-licensing": { namespace: "legal.headers", page: "providerLicensing" },
-  "/user": { namespace: "account.headers", page: "profile" },
+  "/user": { namespace: "account.headers", page: "dashboard" },
+  "/user/profile": { namespace: "account.headers", page: "profile" },
   "/user/hotels": { namespace: "hotels.headers", page: "index" },
   "/user/restaurants": { namespace: "restaurants.headers", page: "index" },
   "/user/trips": { namespace: "trips.headers", page: "index" },

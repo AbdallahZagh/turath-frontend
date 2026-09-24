@@ -18,7 +18,17 @@ export type ProviderGuestReview = {
   comment: { en: string; ar: string };
 };
 
+export type TouristSignupProfile = {
+  name: string;
+  dateOfBirth: string;
+  nationality: string;
+  phone: string;
+  phoneCountry: string;
+  email: string;
+};
+
 export type TouristAccount = {
+  profile: TouristSignupProfile;
   reliabilityScore: number;
   tier: ReliabilityTier;
   completedCheckIns: number;
@@ -34,6 +44,14 @@ export type TouristAccount = {
 };
 
 export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
+  profile: {
+    name: "Rami Haddad",
+    dateOfBirth: "1992-06-14",
+    nationality: "SY",
+    phone: "+963 944 123 456",
+    phoneCountry: "SY",
+    email: "rami.haddad@example.com",
+  },
   reliabilityScore: 100,
   tier: "VIP",
   completedCheckIns: 7,
@@ -82,3 +100,23 @@ export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
     ],
   },
 };
+
+export function getMockTouristAccount(): TouristAccount {
+  return {
+    ...MOCK_TOURIST_ACCOUNT,
+    profile: { ...MOCK_TOURIST_ACCOUNT.profile },
+    history: MOCK_TOURIST_ACCOUNT.history.map((event) => ({ ...event })),
+    providerRating: {
+      ...MOCK_TOURIST_ACCOUNT.providerRating,
+      reviews: MOCK_TOURIST_ACCOUNT.providerRating.reviews.map((review) => ({
+        ...review,
+        providerName: { ...review.providerName },
+        comment: { ...review.comment },
+      })),
+    },
+  };
+}
+
+export function setMockTouristSignupProfile(profile: TouristSignupProfile): void {
+  MOCK_TOURIST_ACCOUNT.profile = { ...profile };
+}

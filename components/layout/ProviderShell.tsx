@@ -1,19 +1,19 @@
 "use client";
 
-import { Building2, Menu } from "lucide-react";
+import { Building2, Menu, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
-import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
+import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
+import { ProviderGlobalSearch } from "@/components/layout/ProviderGlobalSearch";
 import { ProviderSidebar } from "@/components/layout/ProviderSidebar";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useIsClient } from "@/hooks/useIsClient";
-import { initialsFromName } from "@/lib/format/initials";
 import { useAuthStore } from "@/store/authStore";
 
 type ProviderShellProps = {
@@ -27,6 +27,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const completeSession = useAuthStore((state) => state.completeSession);
+  const signOut = useAuthStore((state) => state.signOut);
   const setRole = useAuthStore((state) => state.setRole);
 
   if (!mounted) {
@@ -91,7 +92,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
 
       <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
         <header className="glass-surface absolute start-2 end-2 top-2 z-30 flex items-center justify-between gap-3 rounded-xl px-3 py-2 backdrop-blur-sm sm:start-4 sm:end-4 sm:top-3 sm:px-4">
-          <div className="flex min-w-0 items-center gap-2">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
             <button
               type="button"
               className="text-prose-muted hover:bg-option-hover grid size-10 place-items-center rounded-full lg:hidden"
@@ -100,14 +101,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
             >
               <Menu className="size-5" aria-hidden />
             </button>
-            <div className="hidden min-w-0 sm:block">
-              <p className="text-prose truncate text-sm font-semibold">
-                {t("business.name")}
-              </p>
-              <p className="text-prose-muted truncate text-xs">
-                {t("business.category")}
-              </p>
-            </div>
+            <ProviderGlobalSearch />
           </div>
 
           <div className="flex min-w-0 items-center gap-2">
@@ -127,17 +121,20 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
                 label={t("roles.label")}
               />
             ) : null}
-            <div className="hidden xl:block">
-              <ThemeToggle />
-            </div>
-            <LocaleSwitcher compact />
-            <span
-              className="bg-primary text-primary-foreground grid size-9 shrink-0 place-items-center rounded-full text-xs font-bold"
-              aria-label={user.name}
-              title={user.name}
-            >
-              {initialsFromName(user.name)}
-            </span>
+            <HeaderProfileMenu
+              name={user.name}
+              email={user.email}
+              openLabel={t("shell.profileMenu.open")}
+              signOutLabel={t("nav.signOut")}
+              signOutHref="/login"
+              items={[
+                { href: PROVIDER_PATHS.myProfile, label: t("shell.profileMenu.myProfile"), icon: UserRound },
+                ...(user.role === "PROVIDER_OWNER"
+                  ? [{ href: PROVIDER_PATHS.profile, label: t("shell.profileMenu.businessProfile"), icon: Building2 }]
+                  : []),
+              ]}
+              onSignOut={signOut}
+            />
           </div>
         </header>
 
@@ -151,4 +148,3 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
     </div>
   );
 }
-

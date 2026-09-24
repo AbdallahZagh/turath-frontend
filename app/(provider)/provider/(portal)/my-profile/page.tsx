@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
-import { UserDashboard } from "@/components/account/UserDashboard";
+import { ProviderPersonalProfileScreen } from "@/components/provider/ProviderPersonalProfileScreen";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("account.headers.dashboard");
+  const t = await getTranslations("provider.headers.myProfile");
   return { title: `${t("title")} | Turath`, description: t("description") };
 }
 
-export default function UserPage(): ReactNode {
-  return <UserDashboard />;
+export default function ProviderMyProfilePage(): ReactNode {
+  return <ProviderPersonalProfileScreen />;
 }

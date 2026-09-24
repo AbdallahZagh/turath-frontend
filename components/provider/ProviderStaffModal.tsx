@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, UserPlus } from "lucide-react";
+import { Save, Send, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, type ReactNode } from "react";
 import { Controller, useForm, type FieldError } from "react-hook-form";
@@ -10,16 +10,18 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
-import { useInviteProviderStaff } from "@/hooks/useProviderStaff";
+import { useInviteProviderStaff, useUpdateProviderStaff } from "@/hooks/useProviderStaff";
+import type { ProviderStaffMember } from "@/lib/mock/providerStaff";
 import {
   providerStaffInviteSchema,
   type ProviderStaffInviteValues,
 } from "@/lib/validation/providerStaff";
 import { toast } from "@/store/toastStore";
 
-type ProviderStaffInviteModalProps = {
+type ProviderStaffModalProps = {
   open: boolean;
   onClose: () => void;
+  member?: ProviderStaffMember | null;
 };
 
 function Field({
@@ -45,22 +47,49 @@ function Field({
   );
 }
 
-export function ProviderStaffInviteModal({
+export function ProviderStaffModal({
   open,
   onClose,
-}: ProviderStaffInviteModalProps): ReactNode {
+  member = null,
+}: ProviderStaffModalProps): ReactNode {
   const t = useTranslations("provider.staff");
   const invite = useInviteProviderStaff();
+  const update = useUpdateProviderStaff();
+  const editing = member !== null;
   const form = useForm<ProviderStaffInviteValues>({
     resolver: zodResolver(providerStaffInviteSchema),
     defaultValues: { name: "", phone: "", role: "scanner" },
   });
 
   useEffect(() => {
-    if (!open) form.reset({ name: "", phone: "", role: "scanner" });
-  }, [form, open]);
+    if (!open) return;
+    form.reset(member
+      ? { name: member.name, phone: member.phone, role: member.role }
+      : { name: "", phone: "", role: "scanner" });
+  }, [form, member, open]);
 
   function submit(values: ProviderStaffInviteValues): void {
+    if (member) {
+      update.mutate(
+        { id: member.id, values },
+        {
+          onSuccess: (saved) => {
+            toast.success(t("edit.successTitle"), t("edit.successDescription", { name: saved.name }));
+            onClose();
+          },
+          onError: (error) => {
+            if (error.message === "duplicatePhone") {
+              form.setError("phone", { message: "phone" });
+              toast.error(t("invite.duplicateTitle"), t("invite.duplicateDescription"));
+              return;
+            }
+            toast.error(t("edit.failureTitle"), t("edit.failureDescription"));
+          },
+        },
+      );
+      return;
+    }
+
     invite.mutate(values, {
       onSuccess: (member) => {
         toast.success(t("invite.successTitle"), t("invite.successDescription", { name: member.name }));
@@ -78,11 +107,11 @@ export function ProviderStaffInviteModal({
   }
 
   return (
-    <Modal open={open} onClose={onClose} title={t("invite.title")}>
+    <Modal open={open} onClose={onClose} title={editing ? t("edit.title") : t("invite.title")}>
       <div className="bg-primary/10 text-primary mb-5 flex size-11 items-center justify-center rounded-2xl">
-        <UserPlus className="size-5" aria-hidden />
+        {editing ? <Save className="size-5" aria-hidden /> : <UserPlus className="size-5" aria-hidden />}
       </div>
-      <p className="text-prose-muted mb-6 text-sm leading-relaxed">{t("invite.description")}</p>
+      <p className="text-prose-muted mb-6 text-sm leading-relaxed">{editing ? t("edit.description") : t("invite.description")}</p>
       <form className="space-y-4" noValidate onSubmit={form.handleSubmit(submit)}>
         <Field label={t("invite.fields.name")} error={form.formState.errors.name}>
           <Input variant="glass" autoComplete="name" {...form.register("name")} />
@@ -108,12 +137,14 @@ export function ProviderStaffInviteModal({
           )}
         />
         <div className="grid grid-cols-2 gap-2 pt-2">
-          <Button variant="outline" size="sm" onClick={onClose} disabled={invite.isPending}>
+          <Button variant="outline" size="sm" onClick={onClose} disabled={invite.isPending || update.isPending}>
             {t("invite.cancel")}
           </Button>
-          <Button type="submit" size="sm" disabled={invite.isPending}>
-            <Send className="size-4" aria-hidden />
-            {invite.isPending ? t("invite.sending") : t("invite.send")}
+          <Button type="submit" size="sm" disabled={invite.isPending || update.isPending}>
+            {editing ? <Save className="size-4" aria-hidden /> : <Send className="size-4" aria-hidden />}
+            {editing
+              ? update.isPending ? t("edit.saving") : t("edit.save")
+              : invite.isPending ? t("invite.sending") : t("invite.send")}
           </Button>
         </div>
       </form>

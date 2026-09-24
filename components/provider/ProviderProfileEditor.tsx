@@ -3,7 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BadgeCheck,
+  Building2,
   Clock3,
+  FileCheck2,
   ImagePlus,
   Mail,
   MapPin,
@@ -231,6 +233,46 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
     <form className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]" noValidate onSubmit={form.handleSubmit(onSubmit)}>
       <div className="flex min-w-0 flex-col gap-5">
         <GlassPanel className="gap-6 p-5 sm:p-6">
+          <SectionHeading
+            title={t("registration.title")}
+            description={t("registration.description")}
+          />
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="border-border bg-glass-control rounded-2xl border p-4">
+              <Building2 className="text-primary size-5" aria-hidden />
+              <p className="text-prose-muted mt-3 text-xs">{t("registration.category")}</p>
+              <p className="text-prose mt-1 text-sm font-semibold">
+                {t(`registration.categories.${profile.category}`)}
+              </p>
+            </div>
+            {([
+              ["commercialRegistration", profile.registration.commercialRegistration.filename],
+              ["ministryLicense", profile.registration.ministryLicense.filename],
+              ["ownerId", profile.registration.ownerId.filename],
+            ] as const).map(([key, filename]) => (
+              <div key={key} className="border-border bg-glass-control min-w-0 rounded-2xl border p-4">
+                <FileCheck2 className="text-primary size-5" aria-hidden />
+                <p className="text-prose-muted mt-3 text-xs">
+                  {t(`registration.documents.${key}`)}
+                </p>
+                <p className="text-prose mt-1 truncate text-sm font-semibold" dir="ltr" title={filename}>
+                  {filename}
+                </p>
+              </div>
+            ))}
+            {profile.category === "guides" ? (
+              <div className="border-border bg-glass-control rounded-2xl border p-4">
+                <FileCheck2 className="text-primary size-5" aria-hidden />
+                <p className="text-prose-muted mt-3 text-xs">{t("registration.guideLicense")}</p>
+                <p className="text-prose mt-1 text-sm font-semibold" dir="ltr">
+                  {profile.registration.guideLicenseNumber}
+                </p>
+              </div>
+            ) : null}
+          </div>
+        </GlassPanel>
+
+        <GlassPanel className="gap-6 p-5 sm:p-6">
           <SectionHeading title={t("identity.title")} description={t("identity.description")} />
           <div className="grid gap-4 md:grid-cols-2">
             <FormField label={t("fields.nameEn")} error={form.formState.errors.nameEn}>
@@ -334,6 +376,9 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
           <SectionHeading title={t("media.title")} description={t("media.description")} />
           <div>
             <p className="text-prose-muted mb-2 text-xs font-semibold">{t("media.logo")}</p>
+            <p className="text-prose-muted mb-3 truncate text-xs" dir="ltr">
+              {profile.registration.logoFilename}
+            </p>
             <div className="flex flex-wrap items-center gap-4">
               <div className="relative size-24 overflow-hidden rounded-2xl border border-border bg-app-muted">
                 <Image src={previewValues.logo} alt={t("media.logoAlt")} fill unoptimized sizes="6rem" className="object-cover" />
@@ -350,6 +395,9 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               <div>
                 <p className="text-prose text-sm font-semibold">{t("media.gallery")}</p>
                 <p className="text-prose-muted mt-1 text-xs">{t("media.galleryHint", { count: gallery.length })}</p>
+                <p className="text-prose-muted mt-1 text-xs" dir="ltr">
+                  {profile.registration.galleryFilenames.join(", ")}
+                </p>
               </div>
               <Button type="button" variant="outline" size="sm" disabled={gallery.length >= 6} onClick={() => galleryInput.current?.click()}>
                 <ImagePlus className="size-4" aria-hidden />

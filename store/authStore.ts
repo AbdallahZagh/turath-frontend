@@ -18,6 +18,7 @@ type AuthStore = {
   isAuthenticated: boolean;
   pendingVerify: PendingVerify | null;
   setRole: (role: AppRole) => void;
+  updateCurrentUser: (values: Pick<MockUser, "name" | "email" | "phone">) => void;
   setPendingVerify: (pending: PendingVerify | null) => void;
   completeSession: (role?: AppRole) => void;
   signOut: () => void;
@@ -30,6 +31,8 @@ export const useAuthStore = create<AuthStore>()(
       isAuthenticated: false,
       pendingVerify: null,
       setRole: (role) => set({ user: MOCK_USERS[role] }),
+      updateCurrentUser: (values) =>
+        set((state) => ({ user: { ...state.user, ...values } })),
       setPendingVerify: (pendingVerify) => set({ pendingVerify }),
       completeSession: (role) =>
         set((state) => ({

@@ -7,11 +7,15 @@ import {
 } from "@tanstack/react-query";
 
 import type { ProviderStaffMember } from "@/lib/mock/providerStaff";
-import type { ProviderStaffInviteValues } from "@/lib/validation/providerStaff";
+import type {
+  ProviderStaffInviteValues,
+  ProviderStaffUpdateValues,
+} from "@/lib/validation/providerStaff";
 import {
   inviteProviderStaff,
   listProviderStaff,
   setProviderStaffActive,
+  updateProviderStaff,
 } from "@/services/providerStaff";
 
 const providerStaffKey = ["provider", "staff"] as const;
@@ -53,6 +57,28 @@ export function useSetProviderStaffActive(): UseMutationResult<
       client.setQueryData<ProviderStaffMember[]>(providerStaffKey, (current) =>
         current?.map((item) => (item.id === member.id ? member : item)),
       );
+      if (member.id === "staff-hala") {
+        void client.invalidateQueries({ queryKey: ["provider", "personal-profile", "PROVIDER_STAFF"] });
+      }
+    },
+  });
+}
+
+export function useUpdateProviderStaff(): UseMutationResult<
+  ProviderStaffMember,
+  Error,
+  { id: string; values: ProviderStaffUpdateValues }
+> {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: updateProviderStaff,
+    onSuccess: (member) => {
+      client.setQueryData<ProviderStaffMember[]>(providerStaffKey, (current) =>
+        current?.map((item) => (item.id === member.id ? member : item)),
+      );
+      if (member.id === "staff-hala") {
+        void client.invalidateQueries({ queryKey: ["provider", "personal-profile", "PROVIDER_STAFF"] });
+      }
     },
   });
 }

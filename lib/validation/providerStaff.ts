@@ -9,3 +9,4 @@ export const providerStaffInviteSchema = z.object({
 });
 
 export type ProviderStaffInviteValues = z.infer<typeof providerStaffInviteSchema>;
+export type ProviderStaffUpdateValues = ProviderStaffInviteValues;

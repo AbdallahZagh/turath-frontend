@@ -1,3 +1,9 @@
+import { MOCK_USERS } from "@/lib/auth/session";
+import { setMockProviderOwnerSignupProfile } from "@/lib/mock/providerPersonalProfile";
+import { setMockProviderSignupProfile } from "@/lib/mock/providerProfile";
+import { setMockTouristSignupProfile } from "@/lib/mock/touristAccount";
+import type { ProviderCategory } from "@/lib/validation/auth";
+
 export type AuthChannel = "phone" | "email";
 
 export type SendCodeInput = {
@@ -66,6 +72,16 @@ export async function registerTourist(input: RegisterInput): Promise<void> {
   if (!input.email.trim() || !input.phone.trim() || !input.name.trim()) {
     throw new Error("invalidRegister");
   }
+  const profile = {
+    name: input.name,
+    dateOfBirth: input.dateOfBirth,
+    nationality: input.nationality,
+    phone: input.phone,
+    phoneCountry: input.phoneCountry,
+    email: input.email,
+  };
+  setMockTouristSignupProfile(profile);
+  MOCK_USERS.TOURIST = { ...MOCK_USERS.TOURIST, name: profile.name, phone: profile.phone, email: profile.email };
 }
 
 /** Mock: any 6-digit code succeeds. */
@@ -126,7 +142,7 @@ export type ProviderRegisterInput = {
   password: string;
   businessNameEn: string;
   businessNameAr: string;
-  category: string;
+  category: ProviderCategory;
   governorate: string;
   addressEn: string;
   addressAr: string;
@@ -180,4 +196,19 @@ export async function registerProvider(input: ProviderRegisterInput): Promise<vo
   ) {
     throw new Error("invalidProviderRegister");
   }
+
+  setMockProviderOwnerSignupProfile({
+    name: input.ownerName,
+    dateOfBirth: input.dateOfBirth,
+    nationality: input.nationality,
+    phone: input.phone,
+    email: input.email,
+  });
+  setMockProviderSignupProfile(input);
+  MOCK_USERS.PROVIDER_OWNER = {
+    ...MOCK_USERS.PROVIDER_OWNER,
+    name: input.ownerName,
+    phone: input.phone,
+    email: input.email,
+  };
 }

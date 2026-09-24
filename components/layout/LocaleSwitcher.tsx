@@ -13,11 +13,13 @@ import { cn } from "@/lib/cn";
 type LocaleSwitcherProps = {
   compact?: boolean;
   className?: string;
+  onLocaleChange?: () => void;
 };
 
 export function LocaleSwitcher({
   compact = false,
   className,
+  onLocaleChange,
 }: LocaleSwitcherProps): ReactNode {
   const t = useTranslations("chrome");
   const locale = useLocale();
@@ -27,6 +29,7 @@ export function LocaleSwitcher({
 
   function onSelect(next: string): void {
     const nextLocale: Locale = next === "ar" ? "ar" : "en";
+    onLocaleChange?.();
     startTransition(async () => {
       await setLocaleCookie(nextLocale);
       router.refresh();

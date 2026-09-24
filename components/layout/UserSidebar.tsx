@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   Languages,
   Landmark,
-  LogOut,
   MapPinned,
   ShieldCheck,
   Utensils,
@@ -19,10 +18,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
-import { Button } from "@/components/ui/Button";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { USER_PATHS } from "@/config/userRoutes";
 import { cn } from "@/lib/cn";
-import { useAuthStore } from "@/store/authStore";
 
 type UserSidebarProps = {
   mobileOpen: boolean;
@@ -57,8 +55,8 @@ function isActive(pathname: string, href: string): boolean {
 
 export function UserSidebar({ mobileOpen, onClose }: UserSidebarProps): ReactNode {
   const t = useTranslations("account");
+  const tChrome = useTranslations("chrome");
   const pathname = usePathname();
-  const signOut = useAuthStore((state) => state.signOut);
 
   return (
     <>
@@ -124,10 +122,10 @@ export function UserSidebar({ mobileOpen, onClose }: UserSidebarProps): ReactNod
         </nav>
 
         <div className="border-glass-border border-t p-3">
-          <Button href="/" variant="destructive" size="sm" className="w-full" onClick={signOut}>
-            <LogOut className="size-4" aria-hidden />
-            {t("nav.signOut")}
-          </Button>
+          <p className="text-prose-muted mb-2 px-1 text-[0.65rem] font-bold uppercase tracking-[0.14em]">
+            {tChrome("theme")}
+          </p>
+          <ThemeToggle className="w-full" />
         </div>
       </aside>
     </>

@@ -1,7 +1,9 @@
 import {
   PROVIDER_STAFF_ROLES,
   type ProviderStaffInviteValues,
+  type ProviderStaffUpdateValues,
 } from "@/lib/validation/providerStaff";
+import { MOCK_USERS } from "@/lib/auth/session";
 
 export type ProviderStaffRole = (typeof PROVIDER_STAFF_ROLES)[number];
 export type ProviderStaffStatus = "active" | "invited" | "inactive";
@@ -92,5 +94,30 @@ export function setProviderStaffActive(id: string, active: boolean): ProviderSta
     status: active ? "active" : "inactive",
   };
   staff[index] = updated;
+  return cloneMember(updated);
+}
+
+export function updateProviderStaff(
+  id: string,
+  values: ProviderStaffUpdateValues,
+): ProviderStaffMember {
+  const index = staff.findIndex((member) => member.id === id);
+  const current = staff[index];
+  if (index < 0 || !current) throw new Error(`Unknown provider staff member: ${id}`);
+
+  const duplicate = staff.some(
+    (member) => member.id !== id && member.phone.replace(/\s|-/g, "") === values.phone.replace(/\s|-/g, ""),
+  );
+  if (duplicate) throw new Error("duplicatePhone");
+
+  const updated: ProviderStaffMember = { ...current, ...values };
+  staff[index] = updated;
+  if (id === "staff-hala") {
+    MOCK_USERS.PROVIDER_STAFF = {
+      ...MOCK_USERS.PROVIDER_STAFF,
+      name: updated.name,
+      phone: updated.phone,
+    };
+  }
   return cloneMember(updated);
 }

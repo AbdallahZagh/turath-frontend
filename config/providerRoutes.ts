@@ -1,5 +1,6 @@
 export const PROVIDER_PATHS = {
   home: "/provider",
+  myProfile: "/provider/my-profile",
   bookings: "/provider/bookings",
   checkIn: "/provider/check-in",
   reviews: "/provider/reviews",

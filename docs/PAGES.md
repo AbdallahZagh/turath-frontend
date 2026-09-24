@@ -24,6 +24,11 @@ It is the source of truth for **routes and screen contents** until the backend R
 
 Mock roles: `TOURIST` | `PROVIDER_STAFF` | `PROVIDER_OWNER` | `SUPER_ADMIN`.
 
+**Signed-in portal chrome:** Tourist and provider shells use the same compact
+global-search command palette pattern as Admin. Their theme selector lives at
+the bottom of the sidebar. Language selection and sign out live in the header
+avatar menu, together with the role-appropriate profile links.
+
 **Coarse access (now):** each portal is a separate layout. Visiting another group's URL in dev is allowed.
 
 **Fine access (later):** backend + middleware. Staff never sees ledger in the sidebar even now (nav `roles` array).
@@ -78,7 +83,8 @@ Signed-in tourist navigation uses the same discovery screens inside the user she
 - Guides `/user/guides`
 - Attractions `/user/attractions`
 - My bookings `/user/bookings`
-- Dashboard / profile `/user`
+- Dashboard `/user`
+- Profile `/user/profile` (header avatar menu, not the sidebar)
 
 Public routes remain available for visitors. Signed-in discovery routes reuse the same
 catalog/detail components and data layer, but keep the user header and sidebar and do
@@ -92,10 +98,11 @@ Dev-only (not in tourist nav): theme lab `/theme` (same screen as `/` until the 
 - Bookings `/provider/bookings`
 - Check-in `/provider/check-in`
 - Reviews `/provider/reviews`
+- My profile `/provider/my-profile` (header avatar menu; owner can edit, staff is read-only)
 
 ### Provider — `PROVIDER_OWNER` only
 
-- Profile `/provider/profile`
+- Business profile `/provider/profile` (header avatar menu, not the sidebar)
 - Inventory `/provider/inventory`
 - Ledger `/provider/ledger`
 - Staff `/provider/staff`
@@ -353,11 +360,18 @@ Category-specific form on a glass sheet:
 
 ### `/user`
 
-- Avatar/initials, full name, phone, email
+- Dashboard summary: upcoming bookings, completed visits, reliability, and booking access
+- Next arrival / booking shortcut
+- Discovery shortcuts
+
+### `/user/profile`
+
+- Avatar/initials and the tourist signup data: full name, date of birth, nationality, phone country, phone, and email
 - Language, currency display preference (SYP primary or USD primary; amounts stay SYP)
 - Reliability score (0–100) + tier label (VIP / Standard / Restricted / Suspended)
 - Link to bookings
-- Old `/account` and `/account/*` URLs redirect here (do not keep a parallel account tree)
+- Opened from the header avatar menu, not the sidebar
+- Old `/account` and `/account/*` URLs redirect into the user area (do not keep a parallel account tree)
 
 ### `/user/bookings`
 
@@ -373,7 +387,7 @@ Category-specific form on a glass sheet:
 
 ## 6. Provider pages — `app/(provider)`
 
-**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, owner-only `/provider/staff` access management, and owner-only `/provider/settings` preferences are implemented with owner/staff mock previews. The planned provider frontend pages below are complete.
+**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, role-aware `/provider/my-profile`, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, owner-only `/provider/staff` access management, and owner-only `/provider/settings` preferences are implemented with owner/staff mock previews. The planned provider frontend pages below are complete.
 
 ### `/provider/register`
 
@@ -405,11 +419,19 @@ Category-specific form on a glass sheet:
 - Cancellations / no-shows
 - Commission owed vs credit ceiling (owner)
 
+### `/provider/my-profile`
+
+- Owner profile mirrors the provider signup owner-account step: full name, date of birth, nationality, phone, and email
+- Staff profile mirrors the staff invitation record: full name, phone, and scanner/read-only role
+- Owner: editable
+- Staff: read-only
+- Opened from the header avatar menu
+
 ### `/provider/profile`
 
-- Names AR/EN, descriptions AR/EN
-- Location, hours, contact
-- Gallery, logo
+- Provider signup business data: names AR/EN, category, descriptions AR/EN, location, hours, contact, map pin, and guide license when relevant
+- Submitted document names: commercial registration, ministry license, and owner ID
+- Provider signup media: gallery and logo
 - Amenities (electricity/generator, Wi-Fi, AC, …)
 
 ### `/provider/inventory`
@@ -459,7 +481,7 @@ Staff: **read-only**. Owner: full edit.
 ### `/provider/staff` (owner only)
 
 - List staff (name, phone, role scanner/read-only)
-- Invite / deactivate
+- Invite / edit / deactivate
 
 ### `/provider/settings`
 

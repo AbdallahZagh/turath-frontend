@@ -2250,6 +2250,10 @@
   },
   "account": {
     "headers": {
+      "dashboard": {
+        "title": "Dashboard",
+        "description": "See your next booking, travel activity, and guest standing at a glance."
+      },
       "profile": {
         "title": "Your account",
         "description": "Manage your details, preferences, bookings, and guest standing in one place."
@@ -2268,8 +2272,16 @@
       "searchLabel": "Search pages and experiences",
       "searchEmpty": "No matching destination found.",
       "searchAll": "Search Turath for “{query}”",
+      "paletteNavigate": "Navigate",
+      "paletteSelect": "Select",
+      "paletteClose": "Close",
+      "paletteShortcut": "Ctrl+K",
       "openMenu": "Open user navigation",
-      "closeMenu": "Close user navigation"
+      "closeMenu": "Close user navigation",
+      "profileMenu": {
+        "open": "Open account menu",
+        "profile": "My profile"
+      }
     },
     "access": {
       "title": "Sign in to your account",
@@ -2295,7 +2307,64 @@
       "signOut": "Sign out"
     },
     "profile": {
-      "guest": "Turath guest"
+      "guest": "Turath guest",
+      "dateOfBirth": "Date of birth",
+      "nationality": "Nationality",
+      "phoneCountry": "Phone country"
+    },
+    "dashboard": {
+      "hero": {
+        "eyebrow": "Your Turath journey",
+        "title": "Everything for your next experience, ready in one place",
+        "description": "Keep your arrivals, booking access, and trusted places close while you discover more of Syria.",
+        "explore": "Explore hotels",
+        "bookings": "View my bookings"
+      },
+      "next": {
+        "title": "Next booking",
+        "open": "Open voucher",
+        "emptyTitle": "No upcoming booking",
+        "emptyDescription": "Your next confirmed experience will appear here with its arrival details."
+      },
+      "stats": {
+        "upcoming": "Upcoming bookings",
+        "completed": "Completed visits",
+        "reliability": "Reliability score",
+        "available": "Booking spaces available"
+      },
+      "bookingTypes": {
+        "hotel": "Hotel stay",
+        "restaurant": "Dining reservation",
+        "trip": "Guided trip",
+        "event": "Event booking",
+        "guide": "Tour guide"
+      },
+      "standing": {
+        "eyebrow": "Your guest standing",
+        "tiers": {
+          "VIP": "Excellent booking access",
+          "STANDARD": "Standard booking access",
+          "RESTRICTED": "Limited booking access",
+          "SUSPENDED": "Booking access paused"
+        },
+        "description": "Your current standing allows up to {count} active bookings at the same time. Completed arrivals help protect this access.",
+        "open": "View reliability details"
+      },
+      "discover": {
+        "eyebrow": "Discover",
+        "title": "Choose your next experience",
+        "description": "Browse verified places and experiences without leaving your account.",
+        "hotels": "Hotels",
+        "restaurants": "Dining",
+        "trips": "Trips",
+        "events": "Events",
+        "guides": "Guides"
+      },
+      "error": {
+        "title": "We couldn't load your dashboard",
+        "description": "Your bookings and guest standing are safe. Try loading the dashboard again.",
+        "retry": "Try again"
+      }
     },
     "preferences": {
       "title": "Preferences",
@@ -2499,6 +2568,7 @@
       "bookingDetail": { "title": "Booking details", "description": "Confirm the guest, arrival, cash amount, and desk pass before taking action." },
       "checkIn": { "title": "Guest check-in", "description": "Validate a guest's backup code and confirm the cash amount due on arrival." },
       "reviews": { "title": "Guest reviews", "description": "Read verified feedback and understand how guests rate their experience." },
+      "myProfile": { "title": "My profile", "description": "Review your personal account details and access within this business." },
       "profile": { "title": "Business profile", "description": "Keep your bilingual description, location, hours, contact details, and gallery current." },
       "inventory": { "title": "Inventory", "description": "Manage rooms, tables, schedules, capacity, prices, and availability for your business." },
       "ledger": { "title": "Account balance", "description": "Follow commission, settlements, statements, and credit-ceiling usage." },
@@ -2507,7 +2577,19 @@
     },
     "shell": {
       "openMenu": "Open business navigation",
-      "closeMenu": "Close business navigation"
+      "closeMenu": "Close business navigation",
+      "searchPlaceholder": "Quick navigate or search (Ctrl+K)",
+      "searchLabel": "Search business pages",
+      "searchEmpty": "No matching business page found.",
+      "paletteNavigate": "Navigate",
+      "paletteSelect": "Select",
+      "paletteClose": "Close",
+      "paletteShortcut": "Ctrl+K",
+      "profileMenu": {
+        "open": "Open business account menu",
+        "myProfile": "My profile",
+        "businessProfile": "Business profile"
+      }
     },
     "access": {
       "title": "Sign in to your business account",
@@ -2531,7 +2613,6 @@
       "bookings": "Bookings",
       "checkIn": "Check-in",
       "reviews": "Reviews",
-      "profile": "Business profile",
       "inventory": "Inventory",
       "ledger": "Account balance",
       "staff": "Staff",
@@ -2541,6 +2622,54 @@
     "workspace": {
       "title": "This workspace is ready for its workflow",
       "description": "The provider shell and navigation are connected. We will build this page's complete data, actions, validation, and states in the next provider milestones."
+    },
+    "personalProfile": {
+      "roles": {
+        "PROVIDER_OWNER": "Business owner",
+        "PROVIDER_STAFF": "Staff member"
+      },
+      "fields": {
+        "name": "Full name",
+        "email": "Email address",
+        "phone": "Phone number",
+        "nationality": "Nationality",
+        "dateOfBirth": "Date of birth",
+        "accessRole": "Staff access"
+      },
+      "accessRoles": {
+        "scanner": "Scanner",
+        "readOnly": "Read only"
+      },
+      "joined": "Joined Turath",
+      "edit": {
+        "title": "Edit your personal profile",
+        "description": "Keep the owner contact information accurate. Business listing details are managed separately."
+      },
+      "readOnly": {
+        "title": "Your profile is read-only",
+        "description": "These details come from your staff invitation. Ask the business owner to correct your name, phone number, or access role."
+      },
+      "errors": {
+        "name": "Enter your full name.",
+        "email": "Enter a valid email address.",
+        "phone": "Enter a valid phone number.",
+        "nationality": "Enter your nationality.",
+        "dateOfBirth": "Enter a valid date of birth."
+      },
+      "save": "Save personal profile",
+      "saving": "Saving…",
+      "saved": {
+        "title": "Personal profile saved",
+        "description": "Your owner account details have been updated for this frontend session."
+      },
+      "saveError": {
+        "title": "Could not save your profile",
+        "description": "Review your personal details and try again."
+      },
+      "empty": {
+        "title": "Personal profile unavailable",
+        "description": "The account details linked to this provider could not be found."
+      }
     },
     "reviews": {
       "summary": {
@@ -2578,6 +2707,24 @@
       "empty": {
         "title": "Business profile unavailable",
         "description": "The approved business information could not be found."
+      },
+      "registration": {
+        "title": "Provider registration record",
+        "description": "These business, license, and identity details come from the provider signup submission.",
+        "category": "Business category",
+        "categories": {
+          "hotels": "Hotel",
+          "dining": "Restaurant",
+          "trips": "Trip operator",
+          "events": "Event provider",
+          "guides": "Tour guide"
+        },
+        "documents": {
+          "commercialRegistration": "Commercial registration",
+          "ministryLicense": "Ministry license",
+          "ownerId": "Owner ID"
+        },
+        "guideLicense": "Guide license number"
       },
       "identity": {
         "title": "Business identity",
@@ -2733,8 +2880,19 @@
         "failureTitle": "Could not send the invitation",
         "failureDescription": "Review the staff details and try again."
       },
+      "edit": {
+        "title": "Edit team member",
+        "description": "Update this person's contact information or change their access role.",
+        "save": "Save changes",
+        "saving": "Saving…",
+        "successTitle": "Team member updated",
+        "successDescription": "{name}'s details and access role have been updated.",
+        "failureTitle": "Could not update team member",
+        "failureDescription": "Review the team member's details and try again."
+      },
       "actions": {
         "menu": "Access actions for {name}",
+        "edit": "Edit team member",
         "deactivate": "Deactivate access",
         "reactivate": "Reactivate access",
         "cancel": "Keep current access",

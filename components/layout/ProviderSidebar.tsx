@@ -1,13 +1,13 @@
 "use client";
 
-import { LogOut, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
-import { Button } from "@/components/ui/Button";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { PROVIDER_NAV } from "@/config/nav";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { cn } from "@/lib/cn";
@@ -29,9 +29,9 @@ export function ProviderSidebar({
   onClose,
 }: ProviderSidebarProps): ReactNode {
   const t = useTranslations("provider");
+  const tChrome = useTranslations("chrome");
   const pathname = usePathname();
   const role = useAuthStore((state) => state.user.role);
-  const signOut = useAuthStore((state) => state.signOut);
   const items = PROVIDER_NAV.filter((item) => item.roles.includes(role));
 
   return (
@@ -96,16 +96,10 @@ export function ProviderSidebar({
         </nav>
 
         <div className="border-glass-border border-t p-3">
-          <Button
-            href="/login"
-            variant="destructive"
-            size="sm"
-            className="w-full"
-            onClick={signOut}
-          >
-            <LogOut className="size-4" aria-hidden />
-            {t("nav.signOut")}
-          </Button>
+          <p className="text-prose-muted mb-2 px-1 text-[0.65rem] font-bold uppercase tracking-[0.14em]">
+            {tChrome("theme")}
+          </p>
+          <ThemeToggle className="w-full" />
         </div>
       </aside>
     </>

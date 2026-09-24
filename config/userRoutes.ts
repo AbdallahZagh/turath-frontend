@@ -1,5 +1,6 @@
 export const USER_PATHS = {
   home: "/user",
+  profile: "/user/profile",
   bookings: "/user/bookings",
   reliability: "/user/reliability",
   review: (bookingId: string): string => `/user/bookings/${bookingId}/review`,

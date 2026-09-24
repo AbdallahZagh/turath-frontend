@@ -2,11 +2,9 @@
 
 import { Coins, Menu, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
-import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
 import { UserSidebar } from "@/components/layout/UserSidebar";
 import { UserGlobalSearch } from "@/components/layout/UserGlobalSearch";
 import { Button } from "@/components/ui/Button";
@@ -16,7 +14,6 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { USER_PATHS } from "@/config/userRoutes";
 import { useIsClient } from "@/hooks/useIsClient";
-import { initialsFromName } from "@/lib/format/initials";
 import { useAuthStore } from "@/store/authStore";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
 
@@ -29,6 +26,7 @@ export function UserShell({ children }: UserShellProps): ReactNode {
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const completeSession = useAuthStore((state) => state.completeSession);
+  const signOut = useAuthStore((state) => state.signOut);
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
 
@@ -82,12 +80,16 @@ export function UserShell({ children }: UserShellProps): ReactNode {
           </div>
 
           <div className="flex min-w-0 items-center gap-2">
-            <div className="hidden xl:block"><ThemeToggle /></div>
             <Select compact className="hidden lg:block" size="sm" variant="plain" icon={<Coins className="size-3.5" />} options={currencyOptions} value={currency} onChange={(value) => { if (isCurrency(value)) setCurrency(value); }} label={t("preferences.currency")} />
-            <LocaleSwitcher compact />
-            <Link href={USER_PATHS.home} className="bg-primary text-primary-foreground grid size-9 shrink-0 place-items-center rounded-full text-xs font-bold" aria-label={user.name}>
-              {initialsFromName(user.name)}
-            </Link>
+            <HeaderProfileMenu
+              name={user.name}
+              email={user.email}
+              openLabel={t("shell.profileMenu.open")}
+              signOutLabel={t("nav.signOut")}
+              signOutHref="/login"
+              items={[{ href: USER_PATHS.profile, label: t("shell.profileMenu.profile"), icon: UserRound }]}
+              onSignOut={signOut}
+            />
           </div>
         </header>
 

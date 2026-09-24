@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, Mail, Phone, ShieldCheck } from "lucide-react";
+import { CalendarDays, Cake, Flag, Globe2, Mail, Phone, ShieldCheck } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
@@ -16,14 +16,13 @@ import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
 import { localizedName } from "@/lib/i18n/localized";
-import { useAuthStore } from "@/store/authStore";
+import { countryName } from "@/lib/geo/countries";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
 
-export function AccountOverview(): ReactNode {
+export function AccountProfile(): ReactNode {
   const t = useTranslations("account");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
-  const user = useAuthStore((state) => state.user);
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
   const accountQuery = useTouristAccount();
@@ -34,6 +33,7 @@ export function AccountOverview(): ReactNode {
   }
 
   const account = accountQuery.data;
+  const profile = account.profile;
   const currencyOptions: SelectOption[] = [
     { value: "SYP", label: t("preferences.syp") },
     { value: "USD", label: t("preferences.usd") },
@@ -45,17 +45,30 @@ export function AccountOverview(): ReactNode {
         <GlassPanel className="p-6 sm:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
             <span className="bg-primary text-primary-foreground grid size-20 shrink-0 place-items-center rounded-3xl text-2xl font-bold">
-              {initialsFromName(user.name)}
+              {initialsFromName(profile.name)}
             </span>
             <div className="min-w-0">
               <p className="text-primary text-xs font-bold uppercase tracking-[0.15em]">{t("profile.guest")}</p>
-              <h2 className="font-heading text-prose mt-1 text-3xl font-semibold">{user.name}</h2>
+              <h2 className="font-heading text-prose mt-1 text-3xl font-semibold">{profile.name}</h2>
               <div className="text-prose-muted mt-3 flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5">
-                <span className="inline-flex items-center gap-2"><Mail className="size-4" aria-hidden />{user.email}</span>
-                <span className="inline-flex items-center gap-2"><Phone className="size-4" aria-hidden />{user.phone}</span>
+                <span className="inline-flex items-center gap-2"><Mail className="size-4" aria-hidden />{profile.email}</span>
+                <span className="inline-flex items-center gap-2" dir="ltr"><Phone className="size-4" aria-hidden />{profile.phone}</span>
               </div>
             </div>
           </div>
+          <dl className="border-border mt-6 grid gap-3 border-t pt-6 sm:grid-cols-2 xl:grid-cols-3">
+            {[
+              { label: t("profile.dateOfBirth"), value: formatMediumDate(profile.dateOfBirth, loc), icon: Cake },
+              { label: t("profile.nationality"), value: countryName(profile.nationality, loc), icon: Flag },
+              { label: t("profile.phoneCountry"), value: countryName(profile.phoneCountry, loc), icon: Globe2 },
+            ].map(({ label, value, icon: Icon }) => (
+              <div key={label} className="bg-glass-control rounded-2xl p-4">
+                <Icon className="text-primary size-4" aria-hidden />
+                <dt className="text-prose-muted mt-3 text-xs">{label}</dt>
+                <dd className="text-prose mt-1 text-sm font-semibold">{value}</dd>
+              </div>
+            ))}
+          </dl>
         </GlassPanel>
 
         <GlassPanel className="p-6 sm:p-8">

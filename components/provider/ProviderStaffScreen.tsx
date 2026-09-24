@@ -2,6 +2,7 @@
 
 import {
   Eye,
+  Pencil,
   QrCode,
   RotateCcw,
   ShieldCheck,
@@ -13,7 +14,7 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
-import { ProviderStaffInviteModal } from "@/components/provider/ProviderStaffInviteModal";
+import { ProviderStaffModal } from "@/components/provider/ProviderStaffModal";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -54,6 +55,7 @@ export function ProviderStaffScreen(): ReactNode {
   const query = useProviderStaff();
   const changeAccess = useSetProviderStaffActive();
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [editingMember, setEditingMember] = useState<ProviderStaffMember | null>(null);
   const [pendingChange, setPendingChange] = useState<PendingAccessChange | null>(null);
 
   const summary = useMemo(() => {
@@ -151,18 +153,26 @@ export function ProviderStaffScreen(): ReactNode {
         <Menu
           label={t("actions.menu", { name: member.name })}
           disabled={changeAccess.isPending}
-          items={member.status === "inactive" ? [{
-            id: "reactivate",
-            label: t("actions.reactivate"),
-            icon: <RotateCcw className="size-4" />,
-            onSelect: () => setPendingChange({ member, active: true }),
-          }] : [{
-            id: "deactivate",
-            label: t("actions.deactivate"),
-            icon: <UserMinus className="size-4" />,
-            tone: "destructive",
-            onSelect: () => setPendingChange({ member, active: false }),
-          }]}
+          items={[
+            {
+              id: "edit",
+              label: t("actions.edit"),
+              icon: <Pencil className="size-4" />,
+              onSelect: () => setEditingMember(member),
+            },
+            member.status === "inactive" ? {
+              id: "reactivate",
+              label: t("actions.reactivate"),
+              icon: <RotateCcw className="size-4" />,
+              onSelect: () => setPendingChange({ member, active: true }),
+            } : {
+              id: "deactivate",
+              label: t("actions.deactivate"),
+              icon: <UserMinus className="size-4" />,
+              tone: "destructive" as const,
+              onSelect: () => setPendingChange({ member, active: false }),
+            },
+          ]}
         />
       ),
     },
@@ -212,7 +222,8 @@ export function ProviderStaffScreen(): ReactNode {
         emptyMessage={t("empty.description")}
       />
 
-      <ProviderStaffInviteModal open={inviteOpen} onClose={() => setInviteOpen(false)} />
+      <ProviderStaffModal open={inviteOpen} onClose={() => setInviteOpen(false)} />
+      <ProviderStaffModal open={editingMember !== null} member={editingMember} onClose={() => setEditingMember(null)} />
       <ConfirmDialog
         open={pendingChange !== null}
         onClose={() => setPendingChange(null)}

@@ -373,7 +373,7 @@ Category-specific form on a glass sheet:
 
 ## 6. Provider pages — `app/(provider)`
 
-**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, and owner-only `/provider/staff` access management are implemented with owner/staff mock previews. `/provider/settings` is the remaining provider milestone.
+**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, owner-only `/provider/staff` access management, and owner-only `/provider/settings` preferences are implemented with owner/staff mock previews. The planned provider frontend pages below are complete.
 
 ### `/provider/register`
 

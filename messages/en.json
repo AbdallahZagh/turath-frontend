@@ -2750,6 +2750,82 @@
         "failureDescription": "The team member's access was not changed. Try again."
       }
     },
+    "settings": {
+      "ownerOnly": {
+        "title": "Business settings are managed by the owner",
+        "description": "Staff can use their assigned daily tools, while the owner controls business-wide preferences."
+      },
+      "empty": {
+        "title": "Settings unavailable",
+        "description": "The business preferences could not be found."
+      },
+      "notifications": {
+        "title": "Operational notifications",
+        "description": "Choose which business updates should reach the owner. These preferences do not affect messages sent to guests.",
+        "items": {
+          "newBookings": {
+            "title": "New bookings",
+            "description": "Receive an alert when a guest completes a booking."
+          },
+          "bookingChanges": {
+            "title": "Booking changes and cancellations",
+            "description": "Know when a booking is changed, cancelled, or marked as a no-show."
+          },
+          "arrivalReminders": {
+            "title": "Arrival reminders",
+            "description": "Receive a summary before the day's expected arrivals."
+          },
+          "guestReviews": {
+            "title": "New guest reviews",
+            "description": "Get notified when a verified guest submits feedback."
+          },
+          "financeReminders": {
+            "title": "Payment and credit reminders",
+            "description": "Receive statement reminders and warnings as the credit limit approaches."
+          }
+        }
+      },
+      "language": {
+        "title": "Workspace language",
+        "description": "Set the default language for this owner workspace.",
+        "label": "Workspace language",
+        "english": "English",
+        "arabic": "Arabic",
+        "hint": "The page will refresh in the selected language after you save."
+      },
+      "timezone": {
+        "title": "Business timezone",
+        "description": "Use one timezone for bookings, arrivals, statements, and staff activity.",
+        "label": "Business timezone",
+        "hint": "Booking times remain attached to the business timezone when viewed elsewhere.",
+        "options": {
+          "damascus": "Damascus — Syria time",
+          "riyadh": "Riyadh — Saudi Arabia time",
+          "utc": "UTC — Coordinated Universal Time"
+        }
+      },
+      "currency": {
+        "title": "Currency display",
+        "description": "All bookings remain priced and collected in Syrian pounds. Choose whether to show a reference US dollar estimate.",
+        "label": "Currency display",
+        "options": {
+          "sypWithUsd": "SYP with USD estimate",
+          "sypOnly": "SYP only"
+        },
+        "preview": "Amount preview",
+        "cashHint": "Cash is still collected in SYP when the guest arrives."
+      },
+      "save": "Save preferences",
+      "saving": "Saving…",
+      "saved": {
+        "title": "Preferences saved",
+        "description": "The business workspace preferences have been updated for this frontend session."
+      },
+      "saveError": {
+        "title": "Could not save preferences",
+        "description": "Review the business settings and try again."
+      }
+    },
     "inventory": {
       "previewEyebrow": "Frontend preview",
       "previewTitle": "View each business inventory",

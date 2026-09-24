@@ -240,7 +240,8 @@ Public contact page (inside `(public)` shell):
 ### `/legal/[slug]`
 
 Static content pages linked from the public footer (`terms`, `privacy`,
-`provider-licensing`). Not yet built.
+`provider-licensing`). Each page uses the public shell, a shared page header,
+the latest-update notice, and readable section cards sourced from AR / EN messages.
 
 ### `/explore`
 
@@ -371,6 +372,8 @@ Category-specific form on a glass sheet:
 ---
 
 ## 6. Provider pages — `app/(provider)`
+
+**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, and owner-only `/provider/staff` access management are implemented with owner/staff mock previews. `/provider/settings` is the remaining provider milestone.
 
 ### `/provider/register`
 

@@ -233,6 +233,7 @@
       "bosra": "Bosra"
     },
     "header": {
+      "navExplore": "Explore",
       "navHotels": "Hotels",
       "navDining": "Dining",
       "navTrips": "Trips",
@@ -1857,6 +1858,111 @@
       "book": "Reserve tickets"
     }
   },
+  "discovery": {
+    "headers": {
+      "explore": { "title": "Explore Syria on the map", "description": "Find heritage sites, stays, tables, trips, events, and local guides across Syria." },
+      "search": { "title": "Search all of Turath", "description": "Compare places and experiences with one set of filters." }
+    },
+    "categories": { "attraction": "Attraction", "hotel": "Hotel", "restaurant": "Restaurant", "trip": "Trip", "event": "Event", "guide": "Guide" },
+    "resultCount": "{count} results found",
+    "heritageSite": "Heritage site",
+    "free": "Free",
+    "priceUnits": { "attraction": "entry", "hotel": "per night", "restaurant": "per guest", "trip": "per seat", "event": "per ticket", "guide": "per hour" },
+    "filters": {
+      "title": "Explore filters", "reset": "Reset", "query": "Search", "queryPlaceholder": "Place, experience, or region",
+      "category": "Category", "allCategories": "All categories", "governorate": "Governorate", "allGovernorates": "All governorates",
+      "radius": "Search radius", "anyRadius": "Any distance", "radiusKm": "Within {value} km", "price": "Maximum price", "anyPrice": "Any price", "priceUpTo": "Up to {value} SYP",
+      "amenities": "Amenities", "amenityOptions": { "generator": "Generator", "wifi": "Wi-Fi", "ac": "Air conditioning" },
+      "access": "Access and preferences", "smoking": "Smoking area", "accessible": "Accessible",
+      "showList": "Show list results", "showMap": "Show on map"
+    },
+    "map": { "label": "Interactive map of Turath places", "empty": "No map pins match these filters." },
+    "states": { "errorTitle": "We couldn't load Explore", "errorDescription": "Please check your connection and try again.", "retry": "Try again", "emptyTitle": "No results match your search", "emptyDescription": "Try a broader region, a different category, or fewer filters." }
+  },
+  "attractions": {
+    "headers": { "index": { "title": "Walk through Syria's living history", "description": "Explore published heritage sites from the Turath catalog, compare opening hours and entry fees, and plan what to visit nearby." } },
+    "resultCount": "{count} attractions found",
+    "hours": "Opening hours",
+    "entryFee": "Entry fee",
+    "free": "Free entry",
+    "allDay": "Open all day",
+    "filters": { "title": "Filter attractions", "reset": "Reset", "governorate": "Governorate", "allGovernorates": "All governorates", "openNow": "Open now" },
+    "states": {
+      "errorTitle": "We couldn't load these attractions", "detailErrorTitle": "We couldn't load this attraction", "errorDescription": "Please check your connection and try again.", "retry": "Try again",
+      "emptyTitle": "No attractions match these filters", "emptyDescription": "Try another governorate or include sites that are currently closed.", "clearFilters": "Clear filters",
+      "notFoundTitle": "Attraction not found", "notFoundDescription": "This site may be unpublished, unavailable, or the link may be incorrect."
+    },
+    "detail": {
+      "back": "Back to attractions", "galleryImage": "View of {attraction}", "openImage": "Open photo {number}", "heritageSite": "Heritage site",
+      "story": "The story of this place", "location": "Location and directions", "navigate": "Navigate with Google Maps",
+      "visitInformation": "Plan your visit", "hoursNotice": "Opening hours and entry fees may change locally. Confirm them before making a long journey.",
+      "nearbyEyebrow": "Continue exploring", "nearbyTitle": "Stay, eat, and explore nearby", "nearbyDescription": "Published Turath recommendations in {governorate}.",
+      "hotels": "Nearby hotels", "restaurants": "Nearby restaurants", "guides": "Local guides",
+      "nearbyErrorTitle": "We couldn't load nearby recommendations", "nearbyErrorBody": "The heritage site is still available. Try loading nearby places again."
+    }
+  },
+  "guides": {
+    "headers": { "index": { "title": "See Syria with a local expert", "description": "Compare verified guides, languages, specialties, and rates, then reserve a private experience with cash due on arrival." } },
+    "verified": "Licensed guide",
+    "ratingLabel": "Rated {rating} out of 5",
+    "reviewsCount": "{count} reviews",
+    "resultCount": "{count} guides found",
+    "from": "From",
+    "perHour": "per hour",
+    "experience": "{count, plural, one {# year experience} other {# years experience}}",
+    "languages": { "arabic": "Arabic", "english": "English", "french": "French", "german": "German" },
+    "specialties": { "history": "History", "architecture": "Architecture", "food": "Food and markets", "photography": "Photography", "hiking": "Hiking and nature" },
+    "durations": { "hourly": "Hourly", "halfDay": "Half day", "fullDay": "Full day" },
+    "filters": {
+      "title": "Filter guides", "reset": "Reset", "governorate": "Governorate", "allGovernorates": "All governorates",
+      "language": "Language", "allLanguages": "All languages", "specialty": "Specialty", "allSpecialties": "All specialties",
+      "duration": "Duration", "allDurations": "All durations", "price": "Rate", "allPrices": "All prices",
+      "prices": { "under100": "Under 100,000 SYP", "100to250": "100,000–250,000 SYP", "over250": "Over 250,000 SYP" }
+    },
+    "states": {
+      "errorTitle": "We couldn't load these guides", "detailErrorTitle": "We couldn't load this guide", "errorDescription": "Please check your connection and try again.", "retry": "Try again",
+      "emptyTitle": "No guides match these filters", "emptyDescription": "Try another governorate, language, specialty, or rate.", "clearFilters": "Clear filters",
+      "notFoundTitle": "Guide not found", "notFoundDescription": "This guide may no longer be available or the link may be incorrect."
+    },
+    "detail": {
+      "back": "Back to guides", "galleryImage": "Experience with {guide}", "openImage": "Open photo {number}", "license": "License {number}",
+      "about": "About this guide", "languages": "Languages", "specialties": "Specialties", "rates": "Private guide rates", "meetingArea": "Meeting area and directions",
+      "navigate": "Open directions", "reviews": "Verified guest reviews", "noReviews": "No verified reviews yet.",
+      "cashOnArrival": "Reserve now and pay the final amount directly to your guide when the experience begins.", "book": "Book this guide"
+    }
+  },
+  "bookingCoupon": {
+    "hint": "Enter a current Turath discount code. Eligibility is checked for this booking.",
+    "applied": "{discount} discount applied.",
+    "percentValue": "{value}%",
+    "errors": {
+      "empty": "Enter a discount code first.",
+      "notFound": "We couldn't find this discount code.",
+      "disabled": "This discount code is currently disabled.",
+      "scheduled": "This discount code is not active yet.",
+      "expired": "This discount code has expired.",
+      "wrongScope": "This discount code does not apply to this booking.",
+      "limitReached": "This discount code has reached its redemption limit.",
+      "guestLimitReached": "You have already used this discount code the maximum number of times."
+    }
+  },
+  "bookingReliability": {
+    "title": "This booking needs provider approval",
+    "description": "Your reliability score is below 50, so the provider will review this request before confirming it."
+  },
+  "guideBooking": {
+    "eyebrow": "Private guided experience", "title": "Book your guide", "details": "Experience details",
+    "date": "Date", "datePlaceholder": "Choose an available date", "duration": "Duration", "hours": "Hours",
+    "language": "Language", "languagePlaceholder": "Choose a language", "focusArea": "Focus area", "focusPlaceholder": "Choose your focus",
+    "holdTitle": "Your selection is held for 10 minutes", "holdBody": "Complete confirmation within this window. Live guide availability will be connected when the booking API is ready.",
+    "discountTitle": "Discount code", "discountCode": "Code", "discountPlaceholder": "Enter a code", "apply": "Apply", "applying": "Applying…",
+    "summary": "Booking summary", "notSelected": "Not selected", "listPrice": "List price", "discount": "Discount", "cashDue": "Cash due on arrival",
+    "cashDueHint": "No online payment is collected. Pay this amount directly to your guide.", "confirm": "Confirm booking", "confirming": "Confirming…",
+    "backToGuide": "Back to guide", "backToGuides": "Browse guides", "toastErrorTitle": "Booking not completed", "toastErrorBody": "Please review the details and try again.",
+    "voucher": { "date": "Experience date", "duration": "Duration", "experience": "Experience focus", "hours": "{count, plural, one {# hour} other {# hours}}" },
+    "errors": { "dateRequired": "Choose an available date.", "durationRequired": "Choose a duration.", "hoursMin": "Choose at least one hour.", "hoursMax": "Choose no more than eight hours.", "languageRequired": "Choose a language.", "focusRequired": "Choose a focus area." },
+    "states": { "loadErrorTitle": "We couldn't prepare this booking", "loadErrorBody": "Please check your connection and try again.", "retry": "Try again", "unavailableTitle": "Guide unavailable", "unavailableBody": "The booking link may be incomplete, or this guide may no longer be listed." }
+  },
   "bookings": {
     "metaDescription": "Review your details and confirm your Turath reservation.",
     "eyebrow": "Secure reservation",
@@ -1876,13 +1982,8 @@
     "discountPlaceholder": "Enter a code",
     "apply": "Apply",
     "applying": "Checking…",
-    "discountApplied": "{percent}% discount applied.",
-    "discountInvalid": "This code is not valid for this booking.",
-    "discountDemoHint": "For this frontend demo, try TURATH10.",
     "holdTitle": "Your selection is held for 10 minutes",
     "holdBody": "Complete confirmation within this window. A live availability lock will be connected when the booking API is ready.",
-    "reliabilityWarningTitle": "This booking may need hotel approval",
-    "reliabilityWarningBody": "Your guest standing is below 50, so the hotel may need to accept this reservation before it is confirmed.",
     "dates": "Dates",
     "room": "Room",
     "nights": "Nights",
@@ -1965,9 +2066,6 @@
     "discountPlaceholder": "Enter a code",
     "apply": "Apply",
     "applying": "Checking…",
-    "discountApplied": "{percent}% discount applied.",
-    "discountInvalid": "This code is not valid for this reservation.",
-    "discountDemoHint": "For this frontend demo, try TURATH10.",
     "holdTitle": "Your table is held for 10 minutes",
     "holdBody": "Complete confirmation within this window. Live table availability will be connected when the booking API is ready.",
     "notSelected": "Not selected",
@@ -2022,9 +2120,6 @@
     "discountPlaceholder": "Enter a code",
     "apply": "Apply",
     "applying": "Checking…",
-    "discountApplied": "{percent}% discount applied.",
-    "discountInvalid": "This code is not valid for this trip.",
-    "discountDemoHint": "For this frontend demo, try TURATH10.",
     "holdTitle": "Your seats are held for 10 minutes",
     "holdBody": "Complete confirmation within this window. Live seat availability will be connected when the booking API is ready.",
     "summary": "Reservation summary",
@@ -2077,9 +2172,6 @@
     "discountPlaceholder": "Enter a code",
     "apply": "Apply",
     "applying": "Checking…",
-    "discountApplied": "{percent}% discount applied.",
-    "discountInvalid": "This code is not valid for this event.",
-    "discountDemoHint": "For this frontend demo, try TURATH10.",
     "holdTitle": "Your tickets are held for 10 minutes",
     "holdBody": "Complete confirmation within this window. Live ticket availability will be connected when the booking API is ready.",
     "summary": "Reservation summary",
@@ -2115,6 +2207,47 @@
       "tickets": "{count, plural, one {# ticket} other {# tickets}}"
     }
   },
+  "legal": {
+    "headers": {
+      "terms": { "title": "Terms of use", "description": "The basic rules for using Turath, reserving experiences, and presenting your booking pass." },
+      "privacy": { "title": "Privacy", "description": "How Turath handles the information needed for accounts, bookings, safety, and support." },
+      "providerLicensing": { "title": "Business verification", "description": "How hotels, restaurants, trip organizers, event managers, and guides are reviewed before appearing on Turath." }
+    },
+    "updatedLabel": "Latest update",
+    "contactNotice": "Questions about these pages can be sent through the Turath contact page. Final policies may be updated before the live service launches.",
+    "pages": {
+      "terms": {
+        "updated": "September 20, 2026",
+        "introduction": "These terms describe the frontend MVP experience. Completing a reservation means you agree to provide accurate details, respect the provider's published rules, and pay the displayed amount in cash on arrival.",
+        "sections": {
+          "agreement": { "title": "Using Turath", "body": "You may browse public listings without an account. An account is required to keep bookings, vouchers, preferences, and reliability history together. Account details must be accurate and must not be used to impersonate another person." },
+          "bookings": { "title": "Bookings and cash on arrival", "body": "Turath shows the list price, any valid discount, and the final cash amount due on arrival. A booking pass contains a QR code and backup code. Availability is held briefly during checkout and is confirmed only when the reservation succeeds." },
+          "responsibilities": { "title": "Cancellations and guest conduct", "body": "Cancel as early as possible when plans change. Missing a confirmed arrival without cancelling may reduce your reliability score and booking access. Guests must follow reasonable safety, venue, capacity, and cultural-site rules." },
+          "changes": { "title": "Service changes", "body": "Listing details, opening hours, schedules, prices, and local entry requirements may change. Turath and verified providers should keep information current, but guests should confirm time-sensitive details before a long journey." }
+        }
+      },
+      "privacy": {
+        "updated": "September 20, 2026",
+        "introduction": "Turath collects only the information needed to provide accounts, reservations, arrival verification, support, and platform safety. This frontend currently uses mock data and does not send booking details to a production backend.",
+        "sections": {
+          "collection": { "title": "Information we use", "body": "Account information may include your name, phone number, email, nationality, date of birth, language, and currency preference. A booking may also include dates, party size, pickup choice, accessibility requests, special notes, or an emergency contact when the experience requires it." },
+          "use": { "title": "Why the information is needed", "body": "Information is used to create and manage reservations, prepare booking passes, confirm arrival, calculate reliability, unlock verified reviews, prevent misuse, and help Turath or the provider respond to support requests." },
+          "sharing": { "title": "What providers can see", "body": "The booked provider receives only the details needed to serve the reservation, such as guest name, verified phone number, party size, schedule, relevant notes, discount code, and cash due. Providers should not receive unrelated identity or account information." },
+          "choices": { "title": "Your choices", "body": "You can change language and currency display preferences from your account. When the production service launches, account access, correction, deletion, and retention requests will be handled through verified support procedures." }
+        }
+      },
+      "providerLicensing": {
+        "updated": "September 20, 2026",
+        "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a guest's own travel judgment.",
+        "sections": {
+          "verification": { "title": "Who is reviewed", "body": "Hotels, restaurants, trip agencies, event managers, and independent tour guides submit an owner account and bilingual business information. Tour guides also provide their professional license number." },
+          "documents": { "title": "Documents and listing evidence", "body": "Applicants provide commercial registration, ministry or professional licensing, owner identification, operating details, location, contact information, a logo, and listing photographs. Documents are reviewed privately and are not displayed as public downloads." },
+          "standards": { "title": "Publishing standards", "body": "A published business must present accurate prices, capacity, schedules, amenities, location details, and booking policies. Verified status may be withheld when information is incomplete or cannot be confirmed." },
+          "status": { "title": "Suspension and re-verification", "body": "Turath may suspend or remove a listing when licensing expires, information becomes misleading, serious safety concerns arise, or platform obligations remain unresolved. Reinstatement requires a new review by the Turath team." }
+        }
+      }
+    }
+  },
   "account": {
     "headers": {
       "profile": {
@@ -2134,6 +2267,7 @@
       "searchPlaceholder": "Search Turath...",
       "searchLabel": "Search pages and experiences",
       "searchEmpty": "No matching destination found.",
+      "searchAll": "Search Turath for “{query}”",
       "openMenu": "Open user navigation",
       "closeMenu": "Close user navigation"
     },
@@ -2171,6 +2305,12 @@
       "syp": "Syrian pound (SYP)",
       "usd": "US dollar estimate (USD)"
     },
+    "providerRating": {
+      "title": "Your guest rating",
+      "description": "Verified businesses can rate you after check-in. This is separate from your reliability score.",
+      "count": "{count, plural, one {# provider review} other {# provider reviews}}",
+      "ratingLabel": "Rated {rating} out of 5"
+    },
     "states": {
       "errorTitle": "We couldn't load your account",
       "errorBody": "Please try again in a moment.",
@@ -2193,6 +2333,7 @@
       "browse": "Browse hotels",
       "travelers": "{count, plural, one {# traveler} other {# travelers}}",
       "tickets": "{count, plural, one {# ticket} other {# tickets}}",
+      "guideHours": "{count, plural, one {# guided hour} other {# guided hours}}",
       "errorTitle": "We couldn't load your bookings",
       "errorBody": "Please try again. Your saved vouchers have not been changed.",
       "retry": "Try again",
@@ -2347,6 +2488,502 @@
     "stepNotify": "We email you when the listing is approved or needs changes.",
     "backHome": "Back to home",
     "toLogin": "Sign in"
+  },
+  "provider": {
+    "headers": {
+      "dashboard": {
+        "title": "Business dashboard",
+        "description": "Keep arrivals, collected cash, availability, and account standing in view."
+      },
+      "bookings": { "title": "Bookings", "description": "Prepare for guests, review reservation details, and manage booking status." },
+      "bookingDetail": { "title": "Booking details", "description": "Confirm the guest, arrival, cash amount, and desk pass before taking action." },
+      "checkIn": { "title": "Guest check-in", "description": "Validate a guest's backup code and confirm the cash amount due on arrival." },
+      "reviews": { "title": "Guest reviews", "description": "Read verified feedback and understand how guests rate their experience." },
+      "profile": { "title": "Business profile", "description": "Keep your bilingual description, location, hours, contact details, and gallery current." },
+      "inventory": { "title": "Inventory", "description": "Manage rooms, tables, schedules, capacity, prices, and availability for your business." },
+      "ledger": { "title": "Account balance", "description": "Follow commission, settlements, statements, and credit-ceiling usage." },
+      "staff": { "title": "Staff", "description": "Invite team members and manage their access to daily operations." },
+      "settings": { "title": "Business settings", "description": "Choose notification, language, timezone, and currency display preferences." }
+    },
+    "shell": {
+      "openMenu": "Open business navigation",
+      "closeMenu": "Close business navigation"
+    },
+    "access": {
+      "title": "Sign in to your business account",
+      "description": "Approved businesses and their staff manage arrivals, availability, and guest bookings here.",
+      "signIn": "Sign in",
+      "previewOwner": "Preview as owner",
+      "previewStaff": "Preview as staff"
+    },
+    "roles": {
+      "label": "Business role",
+      "owner": "Owner",
+      "staff": "Staff"
+    },
+    "business": {
+      "name": "Dar Al Yasmin",
+      "category": "Hotel · Damascus"
+    },
+    "nav": {
+      "label": "Business navigation",
+      "dashboard": "Dashboard",
+      "bookings": "Bookings",
+      "checkIn": "Check-in",
+      "reviews": "Reviews",
+      "profile": "Business profile",
+      "inventory": "Inventory",
+      "ledger": "Account balance",
+      "staff": "Staff",
+      "settings": "Settings",
+      "signOut": "Sign out"
+    },
+    "workspace": {
+      "title": "This workspace is ready for its workflow",
+      "description": "The provider shell and navigation are connected. We will build this page's complete data, actions, validation, and states in the next provider milestones."
+    },
+    "reviews": {
+      "summary": {
+        "count": "Based on {count, plural, one {# verified guest review} other {# verified guest reviews}}",
+        "verifiedOnly": "Verified arrivals only"
+      },
+      "breakdown": {
+        "title": "Rating breakdown",
+        "description": "How verified guests rated their completed stays.",
+        "rowLabel": "{stars}-star reviews"
+      },
+      "list": {
+        "title": "Guest feedback",
+        "description": "Reviews become available only after the guest's arrival is checked in."
+      },
+      "filter": {
+        "label": "Filter by rating",
+        "all": "All ratings",
+        "stars": "{count, plural, one {# star} other {# stars}}"
+      },
+      "verified": "Verified stay",
+      "stayed": "Stayed {date}",
+      "empty": {
+        "title": "No verified reviews yet",
+        "description": "Guest feedback will appear here after completed arrivals and submitted reviews.",
+        "filteredTitle": "No reviews at this rating",
+        "filteredDescription": "Choose another star rating to see more guest feedback."
+      }
+    },
+    "profile": {
+      "ownerOnly": {
+        "title": "The business profile is managed by the owner",
+        "description": "Staff can handle bookings, arrivals, and reviews. Ask the business owner to update public listing information."
+      },
+      "empty": {
+        "title": "Business profile unavailable",
+        "description": "The approved business information could not be found."
+      },
+      "identity": {
+        "title": "Business identity",
+        "description": "Keep the public name and full description accurate in both languages."
+      },
+      "location": {
+        "title": "Location, contact, and hours",
+        "description": "These details help guests find the property and prepare for arrival.",
+        "pinTitle": "Public map pin"
+      },
+      "amenities": {
+        "title": "Guest amenities",
+        "description": "Select the facilities guests can reliably expect during their stay.",
+        "options": {
+          "generator": "Generator electricity",
+          "wifi": "Wi-Fi",
+          "ac": "Air conditioning",
+          "breakfast": "Breakfast",
+          "airportTransfer": "Airport transfer",
+          "accessible": "Accessible facilities",
+          "parking": "Parking",
+          "terrace": "Terrace or courtyard"
+        }
+      },
+      "media": {
+        "title": "Logo and gallery",
+        "description": "Use clear, current images that accurately represent the property.",
+        "logo": "Business logo",
+        "logoAlt": "Business logo preview",
+        "replaceLogo": "Replace logo",
+        "gallery": "Property gallery",
+        "galleryHint": "{count} of 6 photos added",
+        "addPhotos": "Add photos",
+        "galleryAlt": "Property gallery photo {number}",
+        "removePhoto": "Remove gallery photo {number}"
+      },
+      "preview": {
+        "eyebrow": "Public listing preview",
+        "verified": "Verified business",
+        "nameFallback": "Business name",
+        "descriptionFallback": "The public description will appear here.",
+        "publicContact": "Public contact email"
+      },
+      "fields": {
+        "nameEn": "English business name",
+        "nameAr": "Arabic business name",
+        "descriptionEn": "English description",
+        "descriptionAr": "Arabic description",
+        "governorate": "Governorate",
+        "addressEn": "English address",
+        "addressAr": "Arabic address",
+        "phone": "Business phone",
+        "email": "Business email",
+        "opensAt": "Opens at",
+        "closesAt": "Closes at",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      },
+      "governorates": {
+        "damascus": "Damascus",
+        "aleppo": "Aleppo",
+        "homs": "Homs",
+        "hama": "Hama",
+        "latakia": "Latakia",
+        "tartus": "Tartus",
+        "bosra": "Bosra",
+        "palmyra": "Palmyra"
+      },
+      "errors": {
+        "required": "Enter the required information.",
+        "description": "Write at least 20 characters.",
+        "phone": "Enter a valid phone number.",
+        "email": "Enter a valid email address.",
+        "time": "Enter a valid time.",
+        "coordinate": "Enter a valid map coordinate.",
+        "gallery": "Keep between 1 and 6 gallery photos."
+      },
+      "save": "Save profile",
+      "saving": "Saving…",
+      "saved": {
+        "title": "Business profile saved",
+        "description": "The public listing information has been updated for this frontend session."
+      },
+      "saveError": {
+        "title": "Could not save the profile",
+        "description": "Review the business information and try again."
+      }
+    },
+    "staff": {
+      "ownerOnly": {
+        "title": "Team access is managed by the owner",
+        "description": "Staff accounts cannot invite colleagues or change another team member's access."
+      },
+      "summary": {
+        "active": "Active team members",
+        "invited": "Pending invitations",
+        "scanners": "Check-in access"
+      },
+      "access": {
+        "title": "Give each person only the access they need",
+        "description": "Scanner staff can verify guest arrivals and work with daily bookings. Read-only staff can follow operations without changing records. Owner-only finance, inventory, profile, and team controls remain protected."
+      },
+      "roles": {
+        "scanner": {
+          "title": "Scanner",
+          "short": "Bookings and guest check-in"
+        },
+        "readOnly": {
+          "title": "Read-only",
+          "short": "View daily operations"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "invited": "Invited",
+        "inactive": "Inactive"
+      },
+      "columns": {
+        "member": "Team member",
+        "role": "Access role",
+        "status": "Status",
+        "invited": "Invited",
+        "lastActive": "Last active",
+        "actions": "Actions"
+      },
+      "neverActive": "Not signed in yet",
+      "caption": "Provider team members and their access",
+      "empty": {
+        "title": "No team members yet",
+        "description": "Invite the first team member to help with daily operations."
+      },
+      "invite": {
+        "button": "Invite team member",
+        "title": "Invite a team member",
+        "description": "The invitation will be linked to this phone number. Choose the smallest role that covers the person's daily work.",
+        "fields": {
+          "name": "Full name",
+          "phone": "Phone number",
+          "role": "Access role"
+        },
+        "errors": {
+          "name": "Enter the team member's full name.",
+          "phone": "Enter a valid phone number that is not already on the team.",
+          "role": "Choose an access role."
+        },
+        "cancel": "Cancel",
+        "send": "Send invitation",
+        "sending": "Sending…",
+        "successTitle": "Invitation sent",
+        "successDescription": "{name} can now accept the invitation and join this business.",
+        "duplicateTitle": "Phone number already in use",
+        "duplicateDescription": "This phone number is already linked to a team member.",
+        "failureTitle": "Could not send the invitation",
+        "failureDescription": "Review the staff details and try again."
+      },
+      "actions": {
+        "menu": "Access actions for {name}",
+        "deactivate": "Deactivate access",
+        "reactivate": "Reactivate access",
+        "cancel": "Keep current access",
+        "deactivateTitle": "Deactivate team access?",
+        "deactivateDescription": "{name} will no longer be able to open this provider workspace. Their previous activity will stay in the records.",
+        "reactivateTitle": "Reactivate team access?",
+        "reactivateDescription": "{name} will regain access using their assigned role.",
+        "deactivatedTitle": "Access deactivated",
+        "deactivatedDescription": "{name} can no longer use this provider workspace.",
+        "reactivatedTitle": "Access restored",
+        "reactivatedDescription": "{name} can use the provider workspace again.",
+        "failureTitle": "Could not update access",
+        "failureDescription": "The team member's access was not changed. Try again."
+      }
+    },
+    "inventory": {
+      "previewEyebrow": "Frontend preview",
+      "previewTitle": "View each business inventory",
+      "previewDescription": "The live portal will use the approved business category automatically. Switch categories here to review every supported workflow.",
+      "categoryLabel": "Business category",
+      "categories": { "hotels": "Hotel", "restaurants": "Restaurant", "trips": "Trip agency", "events": "Event manager", "guides": "Tour guide" },
+      "ownerOnlyTitle": "Inventory is managed by the owner",
+      "ownerOnlyDescription": "Staff accounts focus on bookings, check-in, and reviews. Ask the business owner to change prices, capacity, or availability.",
+      "sections": {
+        "hotels": { "title": "Room types", "description": "Set nightly prices, occupancy, quantity, and included amenities." },
+        "restaurants": { "title": "Tables and reservation times", "description": "Keep table capacity, seating zones, and bookable times current." },
+        "trips": { "title": "Published trips", "description": "Manage departure dates, pickup points, itinerary, seats, and price." },
+        "events": { "title": "Event sessions", "description": "Manage sessions, ticket tiers, capacity, availability, and guest limits." },
+        "guides": { "title": "Guide availability and rates", "description": "Keep license details, languages, specialties, rates, and blocked dates current." }
+      },
+      "columns": { "room": "Room type", "occupancy": "Guests", "quantity": "Rooms", "price": "Price", "amenities": "Amenities", "table": "Table", "capacity": "Capacity", "zone": "Zone", "trip": "Trip", "event": "Event", "date": "When", "seats": "Seats", "available": "Available", "actions": "Actions" },
+      "addRoom": "Add room type", "addTable": "Add table", "addTrip": "Add trip", "addSession": "Add session", "editGuide": "Edit guide offering",
+      "slotsTitle": "Reservation times", "editSlots": "Edit times", "seatsValue": "{left} of {total}",
+      "specialties": "Specialties", "blockedDates": "Blocked dates", "none": "None",
+      "edit": "Edit", "delete": "Delete", "deleteTitle": "Delete inventory item", "deleteDescription": "Delete {name}? Existing frontend bookings are kept, but this item will no longer be offered.",
+      "emptyTitle": "No inventory added", "emptyDescription": "Add the first item to make this category ready for bookings.", "addFirst": "Add first item",
+      "savedTitle": "Inventory saved", "savedBody": "The business inventory has been updated for this frontend session.",
+      "deletedTitle": "Inventory item deleted", "deletedBody": "The item was removed from this frontend session.",
+      "saveFailedTitle": "Could not update inventory", "saveFailedBody": "Review the details and try again.",
+      "form": {
+        "addTitle": "Add inventory", "editTitle": "Edit inventory", "save": "Save changes", "saving": "Saving…", "cancel": "Cancel", "invalid": "Review the required information.",
+        "nameEn": "English name", "nameAr": "Arabic name", "titleEn": "English title", "titleAr": "Arabic title",
+        "occupancy": "Maximum guests", "quantity": "Available quantity", "priceSyp": "Price in SYP", "amenities": "Amenities",
+        "amenity": { "generator": "Generator", "wifi": "Wi-Fi", "ac": "Air conditioning" },
+        "tableLabel": "Table label", "capacity": "Capacity", "zone": "Seating zone",
+        "zoneOptions": { "indoor": "Indoor", "terrace": "Terrace", "vip": "VIP", "smoking": "Smoking" },
+        "slots": "Reservation times", "slotsHint": "Use 24-hour times separated by commas.",
+        "date": "Date", "time": "Time", "pickupEn": "English pickup point", "pickupAr": "Arabic pickup point", "seatsLeft": "Seats available",
+        "itineraryEn": "English itinerary", "itineraryAr": "Arabic itinerary", "tier": "Ticket tier", "standard": "Standard", "vip": "VIP", "available": "Tickets available", "maxPerUser": "Maximum per guest",
+        "licenseNumber": "License number", "languages": "Languages", "language": { "ar": "Arabic", "en": "English", "fr": "French" },
+        "hourlySyp": "Hourly rate in SYP", "fullDaySyp": "Full-day rate in SYP", "specialtiesEn": "English specialties", "specialtiesAr": "Arabic specialties",
+        "blockedDates": "Blocked dates", "blockedDatesHint": "Enter ISO dates separated by commas."
+      }
+    },
+    "checkIn": {
+      "form": {
+        "title": "Enter the guest's backup code",
+        "description": "Use the six-character code printed beside the guest's QR pass. A successful check-in records the arrival and the cash amount collected.",
+        "codeLabel": "Six-character backup code",
+        "codeError": "Enter exactly six letters or numbers.",
+        "verify": "Verify and check in",
+        "verifying": "Verifying…",
+        "demoHint": "Frontend demo: try Y4DYRZ for success or USED24 for an already-used pass."
+      },
+      "ready": {
+        "title": "Ready to verify an arrival",
+        "description": "The guest details and exact amount due will appear here before the desk completes the arrival."
+      },
+      "success": {
+        "eyebrow": "Verified arrival",
+        "title": "Guest checked in",
+        "description": "The pass is now marked as used and cannot be accepted again."
+      },
+      "alreadyUsed": {
+        "eyebrow": "Duplicate pass",
+        "title": "This code was already used",
+        "description": "Do not collect the amount again. Review the original check-in time and staff member below."
+      },
+      "invalid": {
+        "title": "Code not recognized",
+        "description": "Check every character on the guest's pass. Cancelled, expired, or unrelated booking codes cannot be checked in here."
+      },
+      "result": {
+        "guest": "Guest", "phone": "Verified phone", "party": "Party size", "schedule": "Scheduled arrival",
+        "collectCash": "Cash due on arrival", "listPrice": "List price", "discount": "Discount ({code})",
+        "checkedNow": "Checked in now", "checkedAt": "Original check-in", "byStaff": "Handled by {staff}", "unknownStaff": "Previous staff member"
+      },
+      "party": "{count, plural, one {# guest} other {# guests}}",
+      "categories": { "hotel": "Hotel", "restaurant": "Dining", "trip": "Trip", "event": "Event", "guide": "Guide" },
+      "arrivals": {
+        "title": "Today's remaining arrivals",
+        "description": "Select a confirmed guest to load and verify their backup code.",
+        "checkIn": "Check in guest",
+        "emptyTitle": "All arrivals are checked in",
+        "emptyDescription": "There are no remaining confirmed arrivals for today."
+      }
+    },
+    "bookings": {
+      "filters": { "date": "Arrival date", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
+      "columns": { "guest": "Guest", "arrival": "Arrival", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
+      "status": { "PENDING": "Needs acceptance", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "CANCELLED": "Cancelled", "NO_SHOW": "No-show" },
+      "party": "{count, plural, one {# guest} other {# guests}}",
+      "caption": "Business bookings",
+      "results": "{count, plural, one {# booking shown} other {# bookings shown}}",
+      "empty": {
+        "title": "No bookings yet",
+        "description": "New reservations will appear here when guests book this business.",
+        "filtered": "No bookings match the selected date and status."
+      },
+      "detail": {
+        "back": "Back to bookings",
+        "notFoundTitle": "Booking not found",
+        "notFoundDescription": "This booking may have been removed or the link may be incorrect.",
+        "guest": "Guest",
+        "arrival": "Check-in",
+        "departure": "Check-out",
+        "room": "Room",
+        "party": "Party size",
+        "notes": "Guest notes",
+        "paymentTitle": "Cash on arrival",
+        "listPrice": "List price",
+        "discount": "Discount code {code}",
+        "cashDue": "Exact cash due",
+        "cashHint": "Collect this amount from the guest at arrival.",
+        "deskPass": "Front desk pass",
+        "scanHint": "Scan this code at the desk or use the backup code below.",
+        "backupCode": "Six-character backup code",
+        "copyCode": "Copy backup code",
+        "checkIn": "Open guest check-in",
+        "ownerActions": "Owner actions",
+        "ownerActionsHint": "These status changes are recorded immediately in this frontend preview.",
+        "markNoShow": "Mark as no-show",
+        "cancelBooking": "Cancel booking",
+        "keepBooking": "Keep booking",
+        "noShowDialog": { "title": "Mark this guest as a no-show?", "description": "This records that the guest did not arrive. The later backend flow will notify the guest and start the required handshake." },
+        "cancelDialog": { "title": "Cancel this booking?", "description": "The reservation will no longer be active. The later backend flow will notify the guest and request confirmation." },
+        "updatedTitle": "Booking updated",
+        "updated": { "NO_SHOW": "The booking is now marked as a no-show.", "CANCELLED": "The booking has been cancelled." }
+      }
+    },
+    "ledger": {
+      "ownerOnly": {
+        "title": "Account balance is owner-only",
+        "description": "Staff can manage bookings, arrivals, and reviews. Ask the business owner to review commission and settlement details."
+      },
+      "empty": {
+        "title": "No account activity yet",
+        "description": "Commission and settlement details will appear after the first completed guest arrival."
+      },
+      "summary": {
+        "accrued": "Commission accrued",
+        "accruedHint": "Total commission recorded from completed bookings",
+        "paid": "Commission paid",
+        "paidHint": "Settlements received and confirmed by Turath",
+        "outstanding": "Outstanding balance",
+        "outstandingHint": "Amount still due to Turath"
+      },
+      "credit": {
+        "eyebrow": "Account standing",
+        "of": "of a {amount} credit ceiling",
+        "tier": "Account tier",
+        "cadence": "Statement schedule",
+        "nextStatement": "Next statement",
+        "state": {
+          "healthy": {
+            "title": "Your account is in good standing",
+            "description": "Your outstanding commission remains below the warning level. Keep following the regular settlement schedule."
+          },
+          "warning": {
+            "title": "Your balance has passed the 75% warning level",
+            "description": "Settle the outstanding commission soon to keep instant bookings available and avoid reaching the credit ceiling."
+          },
+          "grace": {
+            "title": "Your 48-hour settlement period has started",
+            "description": "The credit ceiling has been reached. Existing confirmed bookings stay valid, but instant bookings are paused until the balance is settled."
+          }
+        }
+      },
+      "tier": { "established": "Established business" },
+      "cadence": { "weekly": "Weekly", "biweekly": "Every two weeks", "monthly": "Monthly" },
+      "statements": {
+        "title": "Statements",
+        "description": "Each statement shows commission recorded and settlements received during its account period.",
+        "period": "Period",
+        "statusLabel": "Status",
+        "status": { "paid": "Paid", "due": "Due", "overdue": "Overdue" },
+        "empty": "No statements are available yet."
+      },
+      "activity": {
+        "title": "Recent account activity",
+        "description": "Commission is calculated from the discounted cash collected at the guest's arrival.",
+        "date": "Date",
+        "typeLabel": "Activity",
+        "reference": "Reference",
+        "amount": "Amount",
+        "type": { "commission": "Commission", "settlement": "Settlement" },
+        "empty": "No account activity is available yet."
+      }
+    },
+    "dashboard": {
+      "welcome": "Today at Dar Al Yasmin",
+      "periodLabel": "Dashboard period",
+      "periodHint": "Activity from the last {days} days",
+      "days7": "7 days",
+      "days30": "30 days",
+      "days90": "90 days",
+      "empty": "Business activity will appear here after the first booking.",
+      "metrics": {
+        "revenue": "Cash collected",
+        "revenueHint": "Completed guest arrivals",
+        "upcoming": "Upcoming guests",
+        "upcomingHint": "Across confirmed reservations",
+        "occupancy": "Room occupancy",
+        "occupancyHint": "Current bookable inventory",
+        "checkIns": "Check-ins today",
+        "checkInsHint": "Verified at the front desk",
+        "cancellations": "Cancellations",
+        "noShows": "No-shows"
+      },
+      "bookingActivity": "Booking activity",
+      "finance": {
+        "eyebrow": "Owner view",
+        "title": "Commission account",
+        "accrued": "Commission accrued",
+        "paid": "Commission paid",
+        "outstanding": "Outstanding",
+        "creditUsed": "Credit ceiling used",
+        "ceiling": "Current credit ceiling: {amount}"
+      },
+      "staffFocus": {
+        "eyebrow": "Staff view",
+        "title": "Front desk focus",
+        "description": "Use Bookings to prepare for arriving guests and Check-in to validate each six-character backup code. Financial account details remain owner-only."
+      },
+      "arrivals": {
+        "title": "Today's arrivals",
+        "description": "Confirmed guests and reservations awaiting acceptance.",
+        "party": "{count, plural, one {# guest} other {# guests}}",
+        "status": {
+          "CONFIRMED": "Confirmed",
+          "NEEDS_ACCEPTANCE": "Needs acceptance"
+        }
+      },
+      "recent": {
+        "title": "Recent check-ins",
+        "description": "Latest verified arrivals and cash collection.",
+        "checkedInBy": "Checked in by {staff}"
+      }
+    }
   },
   "contact": {
     "title": "Contact us",

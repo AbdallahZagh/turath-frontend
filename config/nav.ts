@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
+import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import type { AppRole } from "@/lib/auth/roles";
 
 export type NavLabelKey =
@@ -162,3 +163,39 @@ export function flattenAdminNav(): NavItem[] {
   }
   return items;
 }
+
+export type ProviderNavLabelKey =
+  | "dashboard"
+  | "bookings"
+  | "checkIn"
+  | "reviews"
+  | "profile"
+  | "inventory"
+  | "ledger"
+  | "staff"
+  | "settings";
+
+export type ProviderNavItem = {
+  href: string;
+  labelKey: ProviderNavLabelKey;
+  icon: LucideIcon;
+  roles: AppRole[];
+};
+
+const PROVIDER_TEAM: AppRole[] = [
+  "PROVIDER_OWNER",
+  "PROVIDER_STAFF",
+];
+const PROVIDER_OWNER: AppRole[] = ["PROVIDER_OWNER"];
+
+export const PROVIDER_NAV: ProviderNavItem[] = [
+  { href: PROVIDER_PATHS.home, labelKey: "dashboard", icon: LayoutDashboard, roles: PROVIDER_TEAM },
+  { href: PROVIDER_PATHS.bookings, labelKey: "bookings", icon: CalendarCheck, roles: PROVIDER_TEAM },
+  { href: PROVIDER_PATHS.checkIn, labelKey: "checkIn", icon: ShieldCheck, roles: PROVIDER_TEAM },
+  { href: PROVIDER_PATHS.reviews, labelKey: "reviews", icon: MessageSquareQuote, roles: PROVIDER_TEAM },
+  { href: PROVIDER_PATHS.profile, labelKey: "profile", icon: Building2, roles: PROVIDER_OWNER },
+  { href: PROVIDER_PATHS.inventory, labelKey: "inventory", icon: Tags, roles: PROVIDER_OWNER },
+  { href: PROVIDER_PATHS.ledger, labelKey: "ledger", icon: Wallet, roles: PROVIDER_OWNER },
+  { href: PROVIDER_PATHS.staff, labelKey: "staff", icon: Users, roles: PROVIDER_OWNER },
+  { href: PROVIDER_PATHS.settings, labelKey: "settings", icon: Settings, roles: PROVIDER_OWNER },
+];

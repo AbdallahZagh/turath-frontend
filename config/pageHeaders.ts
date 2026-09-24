@@ -3,8 +3,9 @@
  * Add a row here when a route gets a real screen — pages do not hardcode headers.
  */
 import { ADMIN_PATHS, isAdminDetailPath } from "@/config/adminRoutes";
+import { PROVIDER_PATHS } from "@/config/providerRoutes";
 
-export type PageHeaderNamespace = "admin.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "account.headers";
+export type PageHeaderNamespace = "admin.headers" | "provider.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "guides.headers" | "attractions.headers" | "discovery.headers" | "account.headers" | "legal.headers";
 
 export type AdminHeaderPage =
   | "overview"
@@ -45,22 +46,41 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage | "index" | "profile" | "reliability";
+  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "inventory" | "checkIn" | "staff" | "reliability" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
   /** Pin the header and let the page body fill leftover viewport height. */
   fillViewport?: boolean;
   actions?: PageHeaderActionSpec[];
 };
 
 const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
+  "/provider": { namespace: "provider.headers", page: "dashboard" },
+  "/provider/bookings": { namespace: "provider.headers", page: "bookings" },
+  providerBookingDetail: { namespace: "provider.headers", page: "bookingDetail" },
+  "/provider/check-in": { namespace: "provider.headers", page: "checkIn" },
+  "/provider/reviews": { namespace: "provider.headers", page: "reviews" },
+  "/provider/profile": { namespace: "provider.headers", page: "profile" },
+  "/provider/inventory": { namespace: "provider.headers", page: "inventory" },
+  "/provider/ledger": { namespace: "provider.headers", page: "ledger" },
+  "/provider/staff": { namespace: "provider.headers", page: "staff" },
+  "/provider/settings": { namespace: "provider.headers", page: "settings" },
   "/hotels": { namespace: "hotels.headers", page: "index" },
   "/restaurants": { namespace: "restaurants.headers", page: "index" },
   "/trips": { namespace: "trips.headers", page: "index" },
   "/events": { namespace: "events.headers", page: "index" },
+  "/guides": { namespace: "guides.headers", page: "index" },
+  "/attractions": { namespace: "attractions.headers", page: "index" },
+  "/explore": { namespace: "discovery.headers", page: "explore" },
+  "/search": { namespace: "discovery.headers", page: "search" },
+  "/legal/terms": { namespace: "legal.headers", page: "terms" },
+  "/legal/privacy": { namespace: "legal.headers", page: "privacy" },
+  "/legal/provider-licensing": { namespace: "legal.headers", page: "providerLicensing" },
   "/user": { namespace: "account.headers", page: "profile" },
   "/user/hotels": { namespace: "hotels.headers", page: "index" },
   "/user/restaurants": { namespace: "restaurants.headers", page: "index" },
   "/user/trips": { namespace: "trips.headers", page: "index" },
   "/user/events": { namespace: "events.headers", page: "index" },
+  "/user/guides": { namespace: "guides.headers", page: "index" },
+  "/user/attractions": { namespace: "attractions.headers", page: "index" },
   "/user/bookings": { namespace: "account.headers", page: "bookings" },
   "/user/reliability": { namespace: "account.headers", page: "reliability" },
   [ADMIN_PATHS.home]: { namespace: "admin.headers", page: "overview" },
@@ -182,6 +202,9 @@ export function getPageHeader(pathname: string): PageHeaderSpec | undefined {
   }
   if (isAdminDetailPath(pathname, ADMIN_PATHS.heritageSites)) {
     return PAGE_HEADERS.heritageSiteDetail;
+  }
+  if (pathname.startsWith(`${PROVIDER_PATHS.bookings}/`)) {
+    return PAGE_HEADERS.providerBookingDetail;
   }
   return undefined;
 }

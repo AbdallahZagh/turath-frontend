@@ -8,14 +8,17 @@ import {
 
 import type {
   CouponResult,
+  CouponValidationInput,
   CreateHotelBookingInput,
   CreateRestaurantBookingInput,
   CreateTripBookingInput,
   CreateEventBookingInput,
+  CreateGuideBookingInput,
   HotelBooking,
   RestaurantBooking,
   TripBooking,
   EventBooking,
+  GuideBooking,
   TouristBooking,
   TouristBookingReview,
 } from "@/lib/mock/bookings";
@@ -24,6 +27,7 @@ import {
   createRestaurantBooking,
   createTripBooking,
   createEventBooking,
+  createGuideBooking,
   getTouristBooking,
   listTouristBookings,
   submitTouristBookingReview,
@@ -81,6 +85,11 @@ export function useCreateEventBooking(): UseMutationResult<EventBooking, Error, 
   });
 }
 
+export function useCreateGuideBooking(): UseMutationResult<GuideBooking, Error, CreateGuideBookingInput> {
+  const queryClient = useQueryClient();
+  return useMutation({ mutationFn: createGuideBooking, onSuccess: (booking) => { queryClient.setQueryData(["tourist", "bookings", booking.id], booking); queryClient.setQueryData<TouristBooking[]>(["tourist", "bookings"], (current = []) => [booking, ...current.filter((item) => item.id !== booking.id)]); } });
+}
+
 export function useCreateHotelBooking(): UseMutationResult<
   HotelBooking,
   Error,
@@ -99,7 +108,7 @@ export function useCreateHotelBooking(): UseMutationResult<
   });
 }
 
-export function useValidateBookingCoupon(): UseMutationResult<CouponResult, Error, string> {
+export function useValidateBookingCoupon(): UseMutationResult<CouponResult, Error, CouponValidationInput> {
   return useMutation({ mutationFn: validateBookingCoupon });
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDays, Mail, Phone, ShieldCheck } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
@@ -10,13 +10,19 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { StarRating } from "@/components/ui/StarRating";
 import { useTouristAccount } from "@/hooks/useTouristAccount";
+import type { Locale } from "@/i18n/config";
+import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
+import { localizedName } from "@/lib/i18n/localized";
 import { useAuthStore } from "@/store/authStore";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
 
 export function AccountOverview(): ReactNode {
   const t = useTranslations("account");
+  const locale = useLocale();
+  const loc: Locale = locale === "ar" ? "ar" : "en";
   const user = useAuthStore((state) => state.user);
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
@@ -83,6 +89,34 @@ export function AccountOverview(): ReactNode {
           <div className="bg-border mt-5 h-2 overflow-hidden rounded-full"><div className="bg-primary h-full rounded-full" style={{ width: `${account.reliabilityScore}%` }} /></div>
           <p className="text-prose-muted mt-4 text-sm leading-relaxed">{t("reliability.summary")}</p>
           <Button href="/user/reliability" variant="outline" className="mt-5 w-full"><ShieldCheck className="size-4" aria-hidden />{t("reliability.open")}</Button>
+        </GlassPanel>
+
+        <GlassPanel className="p-6 sm:p-7">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-heading text-prose text-xl font-semibold">{t("providerRating.title")}</h2>
+              <p className="text-prose-muted mt-1 text-sm">{t("providerRating.description")}</p>
+            </div>
+            <div className="text-end">
+              <p className="font-heading text-prose text-3xl font-semibold">{account.providerRating.average.toFixed(1)}</p>
+              <p className="text-prose-muted text-xs">{t("providerRating.count", { count: account.providerRating.count })}</p>
+            </div>
+          </div>
+          <StarRating className="mt-4" value={account.providerRating.average} size="md" label={t("providerRating.ratingLabel", { rating: account.providerRating.average })} />
+          <div className="border-border mt-5 space-y-4 border-t pt-5">
+            {account.providerRating.reviews.map((review) => (
+              <article key={review.id}>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-prose text-sm font-semibold">{localizedName(review.providerName, loc)}</p>
+                    <time className="text-prose-muted text-xs" dateTime={review.date}>{formatMediumDate(review.date, loc)}</time>
+                  </div>
+                  <StarRating value={review.rating} label={t("providerRating.ratingLabel", { rating: review.rating })} />
+                </div>
+                <p className="text-prose-muted mt-2 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p>
+              </article>
+            ))}
+          </div>
         </GlassPanel>
 
         <GlassPanel className="p-6 sm:p-7">

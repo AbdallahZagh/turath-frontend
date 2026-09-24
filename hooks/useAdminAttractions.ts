@@ -68,6 +68,7 @@ export function useCreateAdminAttraction(): UseMutationResult<
     mutationFn: createAdminAttraction,
     onSuccess: (created) => {
       syncAttractionCaches(client, created);
+      void client.invalidateQueries({ queryKey: ["public", "attractions"] });
     },
   });
 }
@@ -88,6 +89,7 @@ export function useUpdateAdminAttraction(): UseMutationResult<
     mutationFn: ({ id, input }) => updateAdminAttraction(id, input),
     onSuccess: (attraction) => {
       syncAttractionCaches(client, attraction);
+      void client.invalidateQueries({ queryKey: ["public", "attractions"] });
     },
   });
 }
@@ -102,6 +104,7 @@ export function useDeleteAdminAttraction(): UseMutationResult<void, Error, strin
         current ? current.filter((row) => row.id !== deletedId) : [],
       );
       client.removeQueries({ queryKey: adminAttractionQueryKey(deletedId) });
+      void client.invalidateQueries({ queryKey: ["public", "attractions"] });
     },
   });
 }

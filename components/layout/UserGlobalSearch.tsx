@@ -51,10 +51,12 @@ export function UserGlobalSearch(): ReactNode {
 
   const results = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
-    return needle
-      ? items.filter((item) => item.label.toLocaleLowerCase().includes(needle))
-      : items;
-  }, [items, query]);
+    if (!needle) return items;
+    return [
+      { href: `/search?q=${encodeURIComponent(query.trim())}`, label: t("shell.searchAll", { query: query.trim() }), icon: Search },
+      ...items.filter((item) => item.label.toLocaleLowerCase().includes(needle)),
+    ];
+  }, [items, query, t]);
 
   useEffect(() => {
     function onPointerDown(event: PointerEvent): void {

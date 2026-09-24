@@ -17,6 +17,7 @@ import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
 import { ListingGallery } from "@/components/listings/ListingGallery";
+import { ListingLocationMap } from "@/components/maps/ListingLocationMap";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -178,10 +179,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
 
             <GlassPanel className="p-6">
               <h2 className="font-heading text-prose text-xl font-semibold">{tDetail("location")}</h2>
-              <div className="bg-glass-control relative mt-4 grid min-h-36 place-items-center overflow-hidden rounded-2xl">
-                <div aria-hidden className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:24px_24px]" />
-                <MapPin className="text-primary relative size-9 drop-shadow" aria-hidden />
-              </div>
+              <ListingLocationMap latitude={hotel.coordinates.latitude} longitude={hotel.coordinates.longitude} label={`${tDetail("location")}: ${name}`} />
               <p className="text-prose-muted mt-3 text-sm">{localizedName(hotel.address, loc)}</p>
               <a href={mapHref} target="_blank" rel="noreferrer" className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline">
                 <Navigation className="size-4" aria-hidden />

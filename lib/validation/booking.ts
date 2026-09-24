@@ -104,3 +104,16 @@ export type EventBookingValues = z.infer<typeof eventBookingSchema>;
 export function isEventBookingErrorKey(value: string): value is EventBookingErrorKey {
   return (EVENT_BOOKING_ERROR_KEYS as readonly string[]).includes(value);
 }
+
+export const GUIDE_BOOKING_ERROR_KEYS = ["dateRequired", "durationRequired", "hoursMin", "hoursMax", "languageRequired", "focusRequired"] as const;
+export type GuideBookingErrorKey = (typeof GUIDE_BOOKING_ERROR_KEYS)[number];
+export const guideBookingSchema = z.object({
+  date: z.string().min(1, "dateRequired"),
+  duration: z.enum(["hourly", "halfDay", "fullDay"], { error: "durationRequired" }),
+  hours: z.number().int().min(1, "hoursMin").max(8, "hoursMax"),
+  language: z.enum(["arabic", "english", "french", "german"], { error: "languageRequired" }),
+  focusArea: z.enum(["history", "architecture", "food", "photography", "hiking"], { error: "focusRequired" }),
+  couponCode: z.string().trim().max(32),
+});
+export type GuideBookingValues = z.infer<typeof guideBookingSchema>;
+export function isGuideBookingErrorKey(value: string): value is GuideBookingErrorKey { return (GUIDE_BOOKING_ERROR_KEYS as readonly string[]).includes(value); }

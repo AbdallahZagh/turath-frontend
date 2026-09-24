@@ -6,6 +6,7 @@ import { HotelBookingCheckout } from "@/components/bookings/HotelBookingCheckout
 import { RestaurantBookingCheckout } from "@/components/bookings/RestaurantBookingCheckout";
 import { TripBookingCheckout } from "@/components/bookings/TripBookingCheckout";
 import { EventBookingCheckout } from "@/components/bookings/EventBookingCheckout";
+import { GuideBookingCheckout } from "@/components/bookings/GuideBookingCheckout";
 
 type BookingSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -41,6 +42,8 @@ export default async function NewBookingPage({ searchParams }: { searchParams: B
         <TripBookingCheckout tripId={id} initialDate={firstValue(params.date)} initialSeats={guests} />
       ) : type === "event" ? (
         <EventBookingCheckout eventId={id} initialSessionId={firstValue(params.session)} initialQuantity={parseTicketQuantity(firstValue(params.quantity))} />
+      ) : type === "guide" ? (
+        <GuideBookingCheckout guideId={id} initialDate={firstValue(params.date)} />
       ) : (
         <HotelBookingCheckout hotelId={type === "hotel" ? id : ""} initialCheckIn={firstValue(params.checkIn)} initialCheckOut={firstValue(params.checkOut)} initialGuests={guests} />
       )}

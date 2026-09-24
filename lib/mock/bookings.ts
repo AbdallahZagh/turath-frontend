@@ -1,6 +1,7 @@
 import { addDays, subDays } from "date-fns";
 
 import { toIsoDate } from "@/lib/format/datetime";
+import type { CouponBookingType } from "@/lib/mock/couponTargets";
 
 export type TouristBookingStatus =
   | "PENDING"
@@ -12,7 +13,7 @@ export type TouristBookingStatus =
 type BookingReceipt = {
   id: string;
   reference: string;
-  type: "hotel" | "restaurant" | "trip" | "event";
+  type: "hotel" | "restaurant" | "trip" | "event" | "guide";
   listPriceSyp: number;
   discountSyp: number;
   cashDueSyp: number;
@@ -21,6 +22,8 @@ type BookingReceipt = {
   backupCode: string;
   qrPayload: string;
   createdAt: string;
+  checkedInAt?: string;
+  checkedInBy?: string;
 };
 
 export type HotelBooking = BookingReceipt & {
@@ -63,7 +66,17 @@ export type EventBooking = BookingReceipt & {
   startsAt: string;
 };
 
-export type TouristBooking = HotelBooking | RestaurantBooking | TripBooking | EventBooking;
+export type GuideBooking = BookingReceipt & {
+  type: "guide";
+  guideId: string;
+  date: string;
+  duration: "hourly" | "halfDay" | "fullDay";
+  hours: number;
+  language: "arabic" | "english" | "french" | "german";
+  focusArea: "history" | "architecture" | "food" | "photography" | "hiking";
+};
+
+export type TouristBooking = HotelBooking | RestaurantBooking | TripBooking | EventBooking | GuideBooking;
 
 export type CreateHotelBookingInput = Omit<
   HotelBooking,
@@ -85,9 +98,47 @@ export type CreateEventBookingInput = Omit<
   "id" | "reference" | "type" | "status" | "backupCode" | "qrPayload" | "createdAt"
 >;
 
+export type CreateGuideBookingInput = Omit<
+  GuideBooking,
+  "id" | "reference" | "type" | "status" | "backupCode" | "qrPayload" | "createdAt"
+>;
+
 export type CouponResult =
-  | { valid: true; code: string; percent: number }
-  | { valid: false; reason: "empty" | "invalid" };
+  | {
+      valid: true;
+      code: string;
+      discountKind: "percent" | "fixed";
+      discountValue: number;
+    }
+  | {
+      valid: false;
+      reason:
+        | "empty"
+        | "notFound"
+        | "disabled"
+        | "scheduled"
+        | "expired"
+        | "wrongScope"
+        | "limitReached"
+        | "guestLimitReached";
+    };
+
+export type CouponValidationInput = {
+  code: string;
+  bookingType: CouponBookingType;
+  listingId: string;
+};
+
+export function calculateCouponDiscountSyp(
+  coupon: Extract<CouponResult, { valid: true }> | null,
+  listPriceSyp: number,
+): number {
+  if (!coupon || listPriceSyp <= 0) return 0;
+  const discount = coupon.discountKind === "percent"
+    ? Math.round((listPriceSyp * coupon.discountValue) / 100)
+    : coupon.discountValue;
+  return Math.min(listPriceSyp, discount);
+}
 
 export type TouristBookingReview = {
   bookingId: string;
@@ -213,8 +264,14 @@ function demoEventBooking(): EventBooking {
   };
 }
 
+function demoGuideBooking(): GuideBooking {
+  const now = new Date(); const id = "demo-guide"; const reference = "TRH-GUIDED"; const backupCode = "GUIDED";
+  return { id, reference, type: "guide", guideId: "layla-al-hakim", date: toIsoDate(addDays(now, 4)), duration: "halfDay", hours: 4, language: "english", focusArea: "history", listPriceSyp: 260000, discountSyp: 0, cashDueSyp: 260000, couponCode: null, status: "CONFIRMED", backupCode, qrPayload: JSON.stringify({ bookingId: id, reference, backupCode }), createdAt: subDays(now, 1).toISOString() };
+}
+
 export function listMockTouristBookings(): TouristBooking[] {
   return [
+    demoGuideBooking(),
     demoEventBooking(),
     demoTripBooking(),
     demoRestaurantBooking(),
@@ -222,11 +279,4 @@ export function listMockTouristBookings(): TouristBooking[] {
     demoBooking("demo-checked", "citadel-stone-house", "citadel-double", -18, 2, "CHECKED_IN", 420000),
     demoBooking("demo-cancel", "blue-coast-terrace", "coast-double", -42, 1, "CANCELLED", 195000),
   ];
-}
-
-export function validateMockBookingCoupon(code: string): CouponResult {
-  const normalized = code.trim().toUpperCase();
-  if (!normalized) return { valid: false, reason: "empty" };
-  if (normalized === "TURATH10") return { valid: true, code: normalized, percent: 10 };
-  return { valid: false, reason: "invalid" };
 }

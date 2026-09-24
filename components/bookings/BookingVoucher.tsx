@@ -1,6 +1,6 @@
 "use client";
 
-import { BedDouble, Bus, CalendarDays, Clock3, MapPin, Moon, Ticket, Users } from "lucide-react";
+import { BedDouble, Bus, CalendarDays, Clock3, Languages, MapPin, Moon, Sparkles, Ticket, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBooking } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
+import { useGuide } from "@/hooks/useGuides";
 import { useHotel } from "@/hooks/useHotels";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { useTrip } from "@/hooks/useTrips";
@@ -24,6 +25,8 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
   const tr = useTranslations("restaurantBooking");
   const tt = useTranslations("tripBooking");
   const te = useTranslations("eventBooking");
+  const tg = useTranslations("guideBooking");
+  const tGuides = useTranslations("guides");
   const tEventTiers = useTranslations("events.tiers");
   const tRooms = useTranslations("hotels.roomTypes");
   const tZones = useTranslations("restaurants.zones");
@@ -36,6 +39,7 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
   const restaurantQuery = useRestaurant(booking?.type === "restaurant" ? booking.restaurantId : "");
   const tripQuery = useTrip(booking?.type === "trip" ? booking.tripId : "");
   const eventQuery = useEvent(booking?.type === "event" ? booking.eventId : "");
+  const guideQuery = useGuide(booking?.type === "guide" ? booking.guideId : "");
 
   if (bookingQuery.isPending) return <Skeleton className="mx-auto h-[40rem] max-w-6xl" />;
   if (bookingQuery.isError) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void bookingQuery.refetch()} />;
@@ -85,11 +89,16 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
     const trip = tripQuery.data;
     const pickup = trip.pickupPoints.find((item) => item.id === booking.pickupPointId);
     pass = <UniversalBookingPass {...shared} providerName={localizedName(trip.name, loc)} providerAddress={localizedName(trip.address, loc)} start={{ label: tt("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tt("voucher.pickupTime"), value: pickup?.time ?? "—" }} routeLabel={tt("voucher.journey")} routeValue={localizedName(trip.durationDetail, loc)} facts={[{ icon: MapPin, label: tt("pickup"), value: pickup ? localizedName(pickup.name, loc) : t("notSelected") }, { icon: Users, label: tt("seats"), value: tt("voucher.travelers", { count: booking.seats }) }, { icon: Bus, label: tt("voucher.operator"), value: localizedName(trip.providerName, loc) }]} />;
-  } else {
+  } else if (booking.type === "event") {
     if (eventQuery.isPending) return <Skeleton className="mx-auto h-[40rem] max-w-6xl" />;
     if (eventQuery.isError || !eventQuery.data) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void eventQuery.refetch()} />;
     const event = eventQuery.data;
     pass = <UniversalBookingPass {...shared} providerName={localizedName(event.name, loc)} providerAddress={localizedName(event.address, loc)} start={{ label: te("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: te("voucher.doors"), value: booking.startsAt }} routeLabel={te("voucher.admission")} routeValue={tEventTiers(booking.ticketTier)} facts={[{ icon: MapPin, label: te("voucher.venue"), value: localizedName(event.venue, loc) }, { icon: Ticket, label: te("tier"), value: tEventTiers(booking.ticketTier) }, { icon: CalendarDays, label: te("quantity"), value: te("voucher.tickets", { count: booking.quantity }) }]} />;
+  } else {
+    if (guideQuery.isPending) return <Skeleton className="mx-auto h-[40rem] max-w-6xl" />;
+    if (guideQuery.isError || !guideQuery.data) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void guideQuery.refetch()} />;
+    const guide = guideQuery.data;
+    pass = <UniversalBookingPass {...shared} providerName={localizedName(guide.name, loc)} providerAddress={localizedName(guide.address, loc)} start={{ label: tg("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tg("voucher.duration"), value: tGuides(`durations.${booking.duration}`) }} routeLabel={tg("voucher.experience")} routeValue={tGuides(`specialties.${booking.focusArea}`)} facts={[{ icon: Languages, label: tg("language"), value: tGuides(`languages.${booking.language}`) }, { icon: Sparkles, label: tg("focusArea"), value: tGuides(`specialties.${booking.focusArea}`) }, { icon: Clock3, label: tg("hours"), value: tg("voucher.hours", { count: booking.hours }) }]} />;
   }
 
   return <>{pass}{booking.status === "CHECKED_IN" ? <div className="mx-auto mt-6 flex max-w-6xl justify-center"><Button href={`/user/bookings/${booking.id}/review`}>{t("voucher.writeReview")}</Button></div> : null}</>;

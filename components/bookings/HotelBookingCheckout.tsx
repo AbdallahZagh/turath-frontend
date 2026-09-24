@@ -2,13 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, format, parseISO } from "date-fns";
-import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, TriangleAlert, Users } from "lucide-react";
+import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
+import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -22,12 +24,10 @@ import { Textarea } from "@/components/ui/Textarea";
 import { useCreateHotelBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
-import { useTouristAccount } from "@/hooks/useTouristAccount";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
-import type { CouponResult } from "@/lib/mock/bookings";
-import { RELIABILITY_PROVIDER_ACCEPTANCE_BELOW } from "@/lib/mock/touristAccount";
+import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import {
   hotelBookingSchema,
   isHotelBookingErrorKey,
@@ -65,13 +65,9 @@ export function HotelBookingCheckout({
   const router = useRouter();
   const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
-  const accountQuery = useTouristAccount();
   const createBooking = useCreateHotelBooking();
   const couponMutation = useValidateBookingCoupon();
   const [coupon, setCoupon] = useState<CouponResult | null>(null);
-  const needsProviderAcceptance =
-    typeof accountQuery.data?.reliabilityScore === "number" &&
-    accountQuery.data.reliabilityScore < RELIABILITY_PROVIDER_ACCEPTANCE_BELOW;
 
   const today = format(new Date(), "yyyy-MM-dd");
   const defaultCheckIn = initialCheckIn ?? format(addDays(new Date(), 1), "yyyy-MM-dd");
@@ -100,12 +96,8 @@ export function HotelBookingCheckout({
     return differenceInCalendarDays(parseISO(checkOut), parseISO(checkIn));
   }, [checkIn, checkOut]);
   const listPriceSyp = (selectedRoom?.priceSyp ?? 0) * nights;
-  const activeCoupon = coupon?.valid && coupon.code === couponCode.trim().toUpperCase()
-    ? coupon
-    : null;
-  const discountSyp = activeCoupon
-    ? Math.round((listPriceSyp * activeCoupon.percent) / 100)
-    : 0;
+  const activeCoupon = coupon?.valid ? coupon : null;
+  const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = Math.max(0, listPriceSyp - discountSyp);
 
   if (hotelQuery.isPending) {
@@ -127,7 +119,11 @@ export function HotelBookingCheckout({
   }));
 
   async function applyCoupon(): Promise<void> {
-    const result = await couponMutation.mutateAsync(couponCode);
+    const result = await couponMutation.mutateAsync({
+      code: couponCode,
+      bookingType: "hotel",
+      listingId: availableHotel.id,
+    });
     setCoupon(result);
   }
 
@@ -201,18 +197,10 @@ export function HotelBookingCheckout({
               <Input variant="main" label={t("discountCode")} placeholder={t("discountPlaceholder")} className="flex-1" {...form.register("couponCode", { onChange: () => setCoupon(null) })} />
               <Button type="button" variant="outline" className="sm:mt-0.5" disabled={!couponCode.trim() || couponMutation.isPending} onClick={() => void applyCoupon()}><Tag className="size-4" aria-hidden />{couponMutation.isPending ? t("applying") : t("apply")}</Button>
             </div>
-            {coupon ? <p className={coupon.valid ? "text-primary mt-2 text-sm" : "text-destructive mt-2 text-sm"}>{coupon.valid ? t("discountApplied", { percent: coupon.percent }) : t("discountInvalid")}</p> : <p className="text-prose-muted mt-2 text-xs">{t("discountDemoHint")}</p>}
+            <BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} />
           </section>
 
-          {needsProviderAcceptance ? (
-            <div className="bg-warning/12 flex gap-3 rounded-2xl p-4 text-sm">
-              <TriangleAlert className="text-warning mt-0.5 size-5 shrink-0" aria-hidden />
-              <div>
-                <p className="text-prose font-semibold">{t("reliabilityWarningTitle")}</p>
-                <p className="text-prose-muted mt-1 leading-relaxed">{t("reliabilityWarningBody")}</p>
-              </div>
-            </div>
-          ) : null}
+          <BookingReliabilityNotice />
 
           <div className="bg-glass-control flex gap-3 rounded-2xl p-4 text-sm">
             <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />

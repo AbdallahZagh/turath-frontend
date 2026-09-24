@@ -35,10 +35,11 @@ import { ThemeToggle } from "./ThemeToggle";
 
 type NavItem = {
   href: string;
-  labelKey: "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks" | "myBookings" | "profile";
+  labelKey: "navExplore" | "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks" | "myBookings" | "profile";
 };
 
 const NAV_ITEMS: NavItem[] = [
+  { href: "/explore", labelKey: "navExplore" },
   { href: "/hotels", labelKey: "navHotels" },
   { href: "/restaurants", labelKey: "navDining" },
   { href: "/trips", labelKey: "navTrips" },

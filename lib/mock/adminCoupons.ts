@@ -3,7 +3,10 @@ import { isAfter, isBefore, startOfDay } from "date-fns";
 import { parseIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import { COMMISSION_PILLARS } from "@/lib/mock/adminCommissions";
-import { listAdminProviders } from "@/lib/mock/adminProviders";
+import {
+  listCouponTargetProviders,
+  listCouponTargets,
+} from "@/lib/mock/couponTargets";
 import type { LandingPillarId } from "@/lib/mock/landing";
 
 export const COUPON_SCOPES = ["provider", "listing", "pillar", "platform"] as const;
@@ -23,28 +26,10 @@ export type CouponListing = {
   name: LocalizedName;
 };
 
-export const COUPON_LISTINGS: CouponListing[] = [
-  {
-    id: "lst_01",
-    name: { en: "Dar Al-Qamar courtyard suite", ar: "جناح صحن دار القمر" },
-  },
-  {
-    id: "lst_02",
-    name: { en: "Souq Spice Table terrace", ar: "تراس مائدة سوق التوابل" },
-  },
-  {
-    id: "lst_03",
-    name: { en: "Citadel dusk walk", ar: "مشوار غروب القلعة" },
-  },
-  {
-    id: "lst_04",
-    name: { en: "Krak night concert", ar: "حفل ليل الحصن" },
-  },
-  {
-    id: "lst_05",
-    name: { en: "Palmyra dawn walk", ar: "مشوار فجر تدمر" },
-  },
-];
+export const COUPON_LISTINGS: CouponListing[] = listCouponTargets().map((target) => ({
+  id: target.listingId,
+  name: { ...target.listingName },
+}));
 
 export type AdminCoupon = {
   id: string;
@@ -111,7 +96,7 @@ let coupons: AdminCoupon[] = [
     discountKind: "percent",
     discountValue: 10,
     scope: "provider",
-    scopeId: "prv_01",
+    scopeId: "hotel:dar-al-yasmin",
     startAt: "2026-09-20",
     endAt: "2026-10-12",
     maxRedemptions: 80,
@@ -125,7 +110,7 @@ let coupons: AdminCoupon[] = [
     discountKind: "percent",
     discountValue: 20,
     scope: "listing",
-    scopeId: "lst_03",
+    scopeId: "aleppo-citadel-kitchens",
     startAt: "2026-09-01",
     endAt: "2026-09-30",
     maxRedemptions: 120,
@@ -153,7 +138,7 @@ let coupons: AdminCoupon[] = [
     discountKind: "fixed",
     discountValue: 50_000,
     scope: "listing",
-    scopeId: "lst_04",
+    scopeId: "bosra-stone-theatre-night",
     startAt: "2026-07-01",
     endAt: "2026-08-15",
     maxRedemptions: 60,
@@ -190,12 +175,12 @@ let coupons: AdminCoupon[] = [
   },
   {
     id: "cpn_08",
-    title: { en: "Palmyra dawn cash off", ar: "خصم نقدي لفجر تدمر" },
+    title: { en: "Damascus story walk cash off", ar: "خصم نقدي لجولة حكايات دمشق" },
     code: "PALMYRA30K",
     discountKind: "fixed",
     discountValue: 30_000,
     scope: "provider",
-    scopeId: "prv_03",
+    scopeId: "trip:damascus-story-walks",
     startAt: "2026-09-04",
     endAt: "2026-09-18",
     maxRedemptions: 40,
@@ -209,10 +194,7 @@ export function listCouponListings(): CouponListing[] {
 }
 
 export function couponProviderOptions(): { id: string; name: LocalizedName }[] {
-  return listAdminProviders().map((row) => ({
-    id: row.id,
-    name: { ...row.name },
-  }));
+  return listCouponTargetProviders();
 }
 
 export function normalizeCouponCode(code: string): string {
@@ -269,7 +251,7 @@ function resolveScopeId(scope: CouponScope, scopeId: string | null): string | nu
   if (scope === "pillar" && !isLandingPillarId(scopeId)) {
     throw new Error("missing-scope");
   }
-  if (scope === "provider" && !listAdminProviders().some((row) => row.id === scopeId)) {
+  if (scope === "provider" && !listCouponTargetProviders().some((row) => row.id === scopeId)) {
     throw new Error("missing-scope");
   }
   if (scope === "listing" && !COUPON_LISTINGS.some((row) => row.id === scopeId)) {

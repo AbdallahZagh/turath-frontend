@@ -1,6 +1,7 @@
 import { Cairo, Manrope, Playfair_Display } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -57,12 +58,14 @@ export default async function RootLayout({
       <body className="text-prose relative min-h-full font-sans">
         <div aria-hidden className="app-glow-layer" />
         <NextIntlClientProvider>
-          <ThemeProvider>
-            <QueryProvider>
-              {children}
-              <Toaster />
-            </QueryProvider>
-          </ThemeProvider>
+          <NuqsAdapter>
+            <ThemeProvider>
+              <QueryProvider>
+                {children}
+                <Toaster />
+              </QueryProvider>
+            </ThemeProvider>
+          </NuqsAdapter>
         </NextIntlClientProvider>
       </body>
     </html>

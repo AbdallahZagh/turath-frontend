@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { useSubmitTouristBookingReview, useTouristBooking } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
 import { useHotel } from "@/hooks/useHotels";
+import { useGuide } from "@/hooks/useGuides";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
@@ -47,6 +48,7 @@ export function BookingReviewForm({ bookingId }: BookingReviewFormProps): ReactN
   const restaurantQuery = useRestaurant(booking?.type === "restaurant" ? booking.restaurantId : "");
   const tripQuery = useTrip(booking?.type === "trip" ? booking.tripId : "");
   const eventQuery = useEvent(booking?.type === "event" ? booking.eventId : "");
+  const guideQuery = useGuide(booking?.type === "guide" ? booking.guideId : "");
   const submitReview = useSubmitTouristBookingReview();
   const [submitted, setSubmitted] = useState(false);
   const form = useForm<BookingReviewValues>({ resolver: zodResolver(bookingReviewSchema), defaultValues: { rating: 0, comment: "" } });
@@ -56,7 +58,7 @@ export function BookingReviewForm({ bookingId }: BookingReviewFormProps): ReactN
   if (!booking) {
     return <EmptyState icon={MessageSquareQuote} title={t("unavailableTitle")} description={t("unavailableBody")} action={<Button href="/user/bookings" variant="outline">{t("back")}</Button>} />;
   }
-  const providerQuery = booking.type === "restaurant" ? restaurantQuery : booking.type === "trip" ? tripQuery : booking.type === "event" ? eventQuery : hotelQuery;
+  const providerQuery = booking.type === "restaurant" ? restaurantQuery : booking.type === "trip" ? tripQuery : booking.type === "event" ? eventQuery : booking.type === "guide" ? guideQuery : hotelQuery;
   if (providerQuery.isPending) return <Skeleton className="mx-auto h-[30rem] max-w-2xl" />;
   if (providerQuery.isError) return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => void providerQuery.refetch()} />;
   const provider = providerQuery.data;

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ListingGallery } from "@/components/listings/ListingGallery";
+import { ListingLocationMap } from "@/components/maps/ListingLocationMap";
 import { TripGearList } from "@/components/trips/TripGearList";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -64,7 +65,7 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
 
           <div className="grid gap-7 md:grid-cols-2">
             <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("included")}</h2><div className="mt-4"><TripGearList gear={trip.gear} /></div></GlassPanel>
-            <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("meetingPoint")}</h2><div className="bg-glass-control relative mt-4 grid min-h-36 place-items-center overflow-hidden rounded-2xl"><div aria-hidden className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] [background-size:24px_24px]" /><MapPin className="text-primary relative size-9" aria-hidden /></div><p className="text-prose-muted mt-3 text-sm">{localizedName(trip.address, loc)}</p><a href={mapHref} target="_blank" rel="noreferrer" className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"><Navigation className="size-4" aria-hidden />{td("navigate")}</a></GlassPanel>
+            <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("meetingPoint")}</h2><ListingLocationMap latitude={trip.coordinates.latitude} longitude={trip.coordinates.longitude} label={`${td("meetingPoint")}: ${name}`} /><p className="text-prose-muted mt-3 text-sm">{localizedName(trip.address, loc)}</p><a href={mapHref} target="_blank" rel="noreferrer" className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"><Navigation className="size-4" aria-hidden />{td("navigate")}</a></GlassPanel>
           </div>
 
           <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("reviews")}</h2>{trip.reviews.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2">{trip.reviews.map((review) => <article key={review.id} className="bg-glass-control rounded-2xl p-4"><div className="flex items-center justify-between gap-3"><p className="text-prose font-semibold">{review.guestName}</p><StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} /></div><p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p><time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{review.date}</time></article>)}</div> : <p className="text-prose-muted mt-3 text-sm">{td("noReviews")}</p>}</GlassPanel>

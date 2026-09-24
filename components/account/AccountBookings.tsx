@@ -1,6 +1,6 @@
 "use client";
 
-import { Bus, CalendarDays, CalendarHeart, MessageSquareQuote, TicketCheck, UtensilsCrossed } from "lucide-react";
+import { Bus, CalendarDays, CalendarHeart, MessageSquareQuote, TicketCheck, UserRoundSearch, UtensilsCrossed } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBookings } from "@/hooks/useBookings";
 import { useEvents } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
+import { useGuides } from "@/hooks/useGuides";
 import { useHotels } from "@/hooks/useHotels";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import { useTrips } from "@/hooks/useTrips";
@@ -50,10 +51,11 @@ export function AccountBookings(): ReactNode {
   const restaurantsQuery = useRestaurants({});
   const tripsQuery = useTrips({});
   const eventsQuery = useEvents({});
+  const guidesQuery = useGuides({});
 
-  if (bookingsQuery.isPending || hotelsQuery.isPending || restaurantsQuery.isPending || tripsQuery.isPending || eventsQuery.isPending) return <Skeleton className="h-[30rem]" />;
-  if (bookingsQuery.isError || hotelsQuery.isError || restaurantsQuery.isError || tripsQuery.isError || eventsQuery.isError) {
-    return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => { void bookingsQuery.refetch(); void hotelsQuery.refetch(); void restaurantsQuery.refetch(); void tripsQuery.refetch(); void eventsQuery.refetch(); }} />;
+  if (bookingsQuery.isPending || hotelsQuery.isPending || restaurantsQuery.isPending || tripsQuery.isPending || eventsQuery.isPending || guidesQuery.isPending) return <Skeleton className="h-[30rem]" />;
+  if (bookingsQuery.isError || hotelsQuery.isError || restaurantsQuery.isError || tripsQuery.isError || eventsQuery.isError || guidesQuery.isError) {
+    return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => { void bookingsQuery.refetch(); void hotelsQuery.refetch(); void restaurantsQuery.refetch(); void tripsQuery.refetch(); void eventsQuery.refetch(); void guidesQuery.refetch(); }} />;
   }
 
   const today = toIsoDate(new Date());
@@ -81,15 +83,17 @@ export function AccountBookings(): ReactNode {
                 ? restaurantsQuery.data.find((item) => item.id === booking.restaurantId)
                 : booking.type === "trip"
                   ? tripsQuery.data.find((item) => item.id === booking.tripId)
-                  : eventsQuery.data.find((item) => item.id === booking.eventId);
-            const ProviderIcon = booking.type === "restaurant" ? UtensilsCrossed : booking.type === "trip" ? Bus : booking.type === "event" ? CalendarHeart : TicketCheck;
+                  : booking.type === "event"
+                    ? eventsQuery.data.find((item) => item.id === booking.eventId)
+                    : guidesQuery.data.find((item) => item.id === booking.guideId);
+            const ProviderIcon = booking.type === "restaurant" ? UtensilsCrossed : booking.type === "trip" ? Bus : booking.type === "event" ? CalendarHeart : booking.type === "guide" ? UserRoundSearch : TicketCheck;
             return (
               <GlassPanel key={booking.id} className="p-5 sm:p-6">
                 <div className="flex flex-col gap-5 md:flex-row md:items-center">
                   <span className="bg-primary/12 text-primary grid size-12 shrink-0 place-items-center rounded-2xl"><ProviderIcon className="size-5" aria-hidden /></span>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2"><h2 className="font-heading text-prose text-xl font-semibold">{provider ? localizedName(provider.name, loc) : booking.reference}</h2><Badge variant="outline">{tStatus(booking.status)}</Badge></div>
-                    <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${booking.timeSlot}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : ` · ${t("tickets", { count: booking.quantity })}`}</p>
+                    <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${booking.timeSlot}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : booking.type === "event" ? ` · ${t("tickets", { count: booking.quantity })}` : ` · ${t("guideHours", { count: booking.hours })}`}</p>
                     <p className="text-prose mt-2 text-sm font-semibold">{formatMoney(booking.cashDueSyp)}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">

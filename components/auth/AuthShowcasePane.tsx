@@ -5,6 +5,7 @@ import { QrCode, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
@@ -19,8 +20,19 @@ export type AuthMode =
   | "providerRegister";
 
 type AuthShowcasePaneProps = {
-  mode: AuthMode;
+  mode?: AuthMode;
 };
+
+/** `app/(auth)` routes share one layout, so the showcase reads its mode from the URL. */
+const MODE_BY_PATH: Record<string, AuthMode> = {
+  "/login": "login",
+  "/register": "register",
+  "/verify-otp": "verify",
+  "/forgot-password": "forgot",
+  "/reset-password": "reset",
+};
+
+const DEFAULT_MODE: AuthMode = "login";
 
 const IMAGE_SRC: Record<AuthMode, string> = {
   login: "/images/landing/site-umayyad-mosque.png",
@@ -57,7 +69,9 @@ const TRUST_ITEMS: {
   { key: "licensedProvidersTitle", icon: ShieldCheck },
 ];
 
-export function AuthShowcasePane({ mode }: AuthShowcasePaneProps): ReactNode {
+export function AuthShowcasePane({ mode: modeProp }: AuthShowcasePaneProps): ReactNode {
+  const pathname = usePathname();
+  const mode = modeProp ?? MODE_BY_PATH[pathname] ?? DEFAULT_MODE;
   const t = useTranslations("auth");
   const tHero = useTranslations("landing.hero");
   const tTrust = useTranslations("landing.trustBar");
@@ -92,6 +106,7 @@ export function AuthShowcasePane({ mode }: AuthShowcasePaneProps): ReactNode {
         </Link>
 
         <motion.div
+          key={mode}
           initial="hidden"
           animate="visible"
           variants={fadeUp}

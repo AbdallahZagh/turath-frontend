@@ -12,6 +12,18 @@ It is the source of truth for **routes and screen contents** until the backend R
 
 ---
 
+## 0. Locked product decisions
+
+These are settled. Code, copy, and later phases follow them.
+
+- **After sign-in:** the user returns to the page they came from, or to `/` if there is none. The `/user` dashboard stays one click away in the header. (The current mock OTP stub still routes to the role home — see §4 — until the return-to flow is built.)
+- **Business staff and inventory:** `PROVIDER_STAFF` sees `/provider/inventory` **read-only** — rooms, tables, sessions, stock, and prices are visible; add, edit, delete, price, and stock controls are not. Owners keep full edit.
+- **Commission:** the default commission is **10%**. The admin can change it per business (`/admin/businesses/[id]` → Finance). The Fees mock data (§7 `/admin/fees`) still shows the older tier figures until that screen is updated.
+- **Admin route names:** the admin URLs are the ones in `config/adminRoutes.ts` and §3 (for example `/admin/discount-codes` and `/admin/featured`, not `/admin/coupons` or `/admin/promotions`). **Note:** the SRS and Architecture Word documents still use the old route names and a 12% commission figure. This file and `config/adminRoutes.ts` win; the Word files are not edited from this repo.
+- **People words in copy:** customer-facing text calls the person booking a **user** (Arabic **مستخدم**). **Business** stays the word for providers. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Existing strings that still say “guest” are renamed in a later pass.
+
+---
+
 ## 1. Route groups (do this from day one)
 
 | Group | Audience | Layout | Sidebar |
@@ -103,13 +115,13 @@ Dev-only (not in tourist nav): theme lab `/theme` (same screen as `/` until the 
 - Bookings `/provider/bookings`
 - Check-in `/provider/check-in`
 - Reviews `/provider/reviews`
+- Inventory `/provider/inventory` (owner can edit, staff is read-only)
 - My profile `/provider/my-profile` (header avatar menu; owner can edit, staff is read-only)
 - Notifications `/provider/notifications` (header bell, not the sidebar)
 
 ### Provider — `PROVIDER_OWNER` only
 
 - Business profile `/provider/profile` (header avatar menu, not the sidebar)
-- Inventory `/provider/inventory`
 - Ledger `/provider/ledger`
 - Staff `/provider/staff`
 - Settings `/provider/settings`
@@ -142,7 +154,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
-**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and currently routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). The locked target (§0) is to return to the page the user came from, or `/`. Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
 
 ### `/login`
 
@@ -168,7 +180,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 - Masked destination (phone / WhatsApp)
 - 6-digit OTP inputs
 - Countdown + resend
-- Success → role home (`/` tourist, `/provider` provider, `/admin` admin)
+- Success → the page the user came from, or `/` (§0). Current stub: role home (`/` tourist, `/provider` provider, `/admin` admin)
 
 ### `/forgot-password`
 
@@ -266,6 +278,7 @@ the latest-update notice, and readable section cards sourced from AR / EN messag
 
 ### `/search`
 
+- Entry point: “See all results” link under the Home omni-search (carries the chosen governorate)
 - Query + the same filters as explore (list, not map)
 - Result cards: photo, AR/EN name, governorate, price SYP (~USD), rating
 - Empty / loading / error states
@@ -463,7 +476,7 @@ Switch body by `provider.category`:
 **Event:** sessions, ticket tiers, capacity, max 6/user  
 **Guide:** license number, languages, hourly/full-day rates, specialties, calendar blocks
 
-Staff: **read-only**. Owner: full edit.
+Staff: **read-only** — the same lists and details, with no add / edit / delete, price, or stock controls. Owner: full edit.
 
 ### `/provider/bookings`
 
@@ -618,7 +631,7 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 ### `/admin/fees`
 
 - Table of default % per booking category
-- Preferred / standard / high-risk tier chips (8.5% / 12% / 18%)
+- Preferred / standard / high-risk tier chips (8.5% / 12% / 18% in the current mock). Locked default commission is 10%, changeable per business (§0)
 - Platform SYP-per-USD rate field + save (mock)
 
 ### `/admin/accounts`

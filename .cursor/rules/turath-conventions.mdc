@@ -107,9 +107,11 @@ Money: display `150,000 SYP (~$10.50)` via a shared formatter. Amounts are SYP.
 
 ## Layouts & page headers
 
-Pages do not rebuild chrome. `(auth)` uses `AuthLayout`. `(public)` / `(provider)` /
-`(admin)` each have their own shell in `components/layout/` (header/sidebar +
-content), wired in that route group's `layout.tsx`. Never one sidebar with all
+Pages do not rebuild chrome. `(auth)` uses `AuthLayout` from `app/(auth)/layout.tsx`.
+`(public)` / `(user)` / `(provider)` / `(admin)` each have their own shell in
+`components/layout/` (header/sidebar + content), wired in that route group's
+`layout.tsx`. `(user)`, `(provider)`, and `(admin)` shells gate on
+`isAuthenticated` plus the matching role. Never one sidebar with all
 roles. Staff nav hides owner-only items even with mock auth.
 
 Titles/breadcrumbs/actions: `config/pageHeaders.ts` + shared `PageHeader`.
@@ -138,14 +140,15 @@ Follow `.cursor/rules/turath-quality.mdc`. Senior-level, typed, no dead code.
 ```
 app/
   (auth)/                 # login, register, otp, password
-  (public)/               # tourist discovery, booking, account
+  (public)/               # tourist discovery, booking
+  (user)/                 # signed-in user area: /user dashboard, bookings, saved, profile (UserShell)
   (provider)/
   (admin)/
   layout.tsx
   globals.css             # Tailwind + design tokens
 components/
   ui/                     # Button, Input, GlassPanel, Modal, EmptyState...
-  layout/                 # AuthLayout, PublicShell, ProviderShell, AdminShell
+  layout/                 # AuthLayout, PublicShell, UserShell, ProviderShell, AdminShell
   logo/
 config/
   nav.ts

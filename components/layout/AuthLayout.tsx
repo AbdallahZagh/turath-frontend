@@ -9,7 +9,8 @@ import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
 type AuthLayoutProps = {
-  mode: AuthMode;
+  /** Omit inside `app/(auth)`; the showcase then follows the current route. */
+  mode?: AuthMode;
   children: ReactNode;
   contentSize?: "default" | "wide";
 };

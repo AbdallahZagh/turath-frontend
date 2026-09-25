@@ -239,6 +239,7 @@
     },
     "header": {
       "navExplore": "Explore",
+      "navAttractions": "Attractions",
       "navHotels": "Hotels",
       "navDining": "Dining",
       "navTrips": "Trips",
@@ -290,7 +291,8 @@
       "languageFrench": "French",
       "languageKurdish": "Kurdish",
       "languageTurkish": "Turkish",
-      "submit": "Search"
+      "submit": "Search",
+      "seeAllResults": "See all results"
     },
     "personas": {
       "eyebrow": "Choose your journey",
@@ -554,7 +556,13 @@
       "paletteNavigate": "Navigate",
       "paletteSelect": "Select",
       "paletteClose": "Close",
-      "paletteShortcut": "Ctrl+K"
+      "paletteShortcut": "Ctrl+K",
+      "access": {
+        "title": "Sign in to the admin portal",
+        "description": "Only Turath admins can open this area. Sign in with an admin account to continue.",
+        "signIn": "Sign in",
+        "preview": "Preview as admin"
+      }
     },
     "roles": {
       "label": "Preview as",
@@ -2641,10 +2649,6 @@
       "settings": "Settings",
       "signOut": "Sign out"
     },
-    "workspace": {
-      "title": "This workspace is ready for its workflow",
-      "description": "The provider shell and navigation are connected. We will build this page's complete data, actions, validation, and states in the next provider milestones."
-    },
     "personalProfile": {
       "roles": {
         "PROVIDER_OWNER": "Business owner",
@@ -3012,8 +3016,8 @@
       "previewDescription": "The live portal will use the approved business category automatically. Switch categories here to review every supported workflow.",
       "categoryLabel": "Business category",
       "categories": { "hotels": "Hotel", "restaurants": "Restaurant", "trips": "Trip agency", "events": "Event manager", "guides": "Tour guide" },
-      "ownerOnlyTitle": "Inventory is managed by the owner",
-      "ownerOnlyDescription": "Staff accounts focus on bookings, check-in, and reviews. Ask the business owner to change prices, capacity, or availability.",
+      "readOnlyTitle": "View only",
+      "readOnlyDescription": "You can see rooms, tables, sessions, and availability. Ask the business owner to change prices, capacity, or availability.",
       "sections": {
         "hotels": { "title": "Room types", "description": "Set nightly prices, occupancy, quantity, and included amenities." },
         "restaurants": { "title": "Tables and reservation times", "description": "Keep table capacity, seating zones, and bookable times current." },

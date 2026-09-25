@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   useState,
@@ -70,6 +71,8 @@ const SEARCH_FIELD = {
   rounded: SEARCH_FIELD_RADIUS,
   minHeight: SEARCH_CONTROL_MIN_HEIGHT,
 };
+
+const SEARCH_PATH = "/search";
 
 type Ripple = { id: number; x: number; y: number };
 
@@ -361,6 +364,16 @@ export function OmniSearchWidget(): ReactNode {
           </motion.div>
         </AnimatePresence>
       </form>
+
+      <div className="mt-4 flex justify-end">
+        <Link
+          href={governorate ? `${SEARCH_PATH}?governorate=${governorate}` : SEARCH_PATH}
+          className="text-primary hover:text-prose inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
+        >
+          {t("seeAllResults")}
+          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+        </Link>
+      </div>
     </GlassPanel>
   );
 }

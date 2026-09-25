@@ -192,7 +192,7 @@ export const PROVIDER_NAV: ProviderNavItem[] = [
   { href: PROVIDER_PATHS.bookings, labelKey: "bookings", icon: CalendarCheck, roles: PROVIDER_TEAM },
   { href: PROVIDER_PATHS.checkIn, labelKey: "checkIn", icon: ShieldCheck, roles: PROVIDER_TEAM },
   { href: PROVIDER_PATHS.reviews, labelKey: "reviews", icon: MessageSquareQuote, roles: PROVIDER_TEAM },
-  { href: PROVIDER_PATHS.inventory, labelKey: "inventory", icon: Tags, roles: PROVIDER_OWNER },
+  { href: PROVIDER_PATHS.inventory, labelKey: "inventory", icon: Tags, roles: PROVIDER_TEAM },
   { href: PROVIDER_PATHS.ledger, labelKey: "ledger", icon: Wallet, roles: PROVIDER_OWNER },
   { href: PROVIDER_PATHS.staff, labelKey: "staff", icon: Users, roles: PROVIDER_OWNER },
   { href: PROVIDER_PATHS.settings, labelKey: "settings", icon: Settings, roles: PROVIDER_OWNER },

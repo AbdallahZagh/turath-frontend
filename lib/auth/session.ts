@@ -39,4 +39,5 @@ export const MOCK_USERS: Record<AppRole, MockUser> = {
   },
 };
 
-export const DEFAULT_MOCK_USER: MockUser = MOCK_USERS.SUPER_ADMIN;
+/** Signed-out placeholder. Never a privileged role; portals also check `isAuthenticated`. */
+export const DEFAULT_MOCK_USER: MockUser = MOCK_USERS.TOURIST;

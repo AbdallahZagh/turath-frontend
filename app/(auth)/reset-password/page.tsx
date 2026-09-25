@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
-import { AuthLayout } from "@/components/layout/AuthLayout";
 
 type ResetPasswordPageProps = {
   searchParams: Promise<{ token?: string | string[] }>;
@@ -20,9 +19,5 @@ export default async function ResetPasswordPage({
   const params = await searchParams;
   const token = firstParam(params.token);
 
-  return (
-    <AuthLayout mode="reset">
-      <ResetPasswordForm token={token} />
-    </AuthLayout>
-  );
+  return <ResetPasswordForm token={token} />;
 }

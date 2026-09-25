@@ -35,11 +35,12 @@ import { ThemeToggle } from "./ThemeToggle";
 
 type NavItem = {
   href: string;
-  labelKey: "navExplore" | "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks" | "myBookings" | "profile";
+  labelKey: "navExplore" | "navAttractions" | "navHotels" | "navDining" | "navTrips" | "navEvents" | "navGuides" | "navHowItWorks" | "myBookings" | "profile";
 };
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/explore", labelKey: "navExplore" },
+  { href: "/attractions", labelKey: "navAttractions" },
   { href: "/hotels", labelKey: "navHotels" },
   { href: "/restaurants", labelKey: "navDining" },
   { href: "/trips", labelKey: "navTrips" },
@@ -49,7 +50,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const NAV_LINK_CLASS =
-  "text-prose-muted hover:text-prose relative px-3 py-2 text-sm font-medium transition-colors";
+  "text-prose-muted hover:text-prose relative whitespace-nowrap px-2 py-2 text-sm font-medium transition-colors";
 
 const MOBILE_MENU_MIN_WIDTH_PX = 220;
 
@@ -65,7 +66,7 @@ function HeaderNav({ items }: { items: NavItem[] }): ReactNode {
           hovered === item.href ? (
             <motion.span
               layoutId="header-nav-underline"
-              className="bg-accent absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full"
+              className="bg-accent absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full"
               transition={{ type: "spring", stiffness: 420, damping: 32 }}
             />
           ) : null;

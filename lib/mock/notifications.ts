@@ -1,3 +1,5 @@
+import { ADMIN_PATHS } from "@/config/adminRoutes";
+
 export type NotificationAudience = "tourist" | "provider" | "admin";
 export type NotificationKind = "booking" | "approval" | "review" | "reminder" | "system";
 export type NotificationTitleKey =
@@ -31,9 +33,9 @@ const notifications: PortalNotification[] = [
   { id: "provider-1", audience: "provider", kind: "booking", titleKey: "providerBooking", bodyKey: "providerBookingBody", timeKey: "minutes", href: "/provider/bookings", read: false },
   { id: "provider-2", audience: "provider", kind: "reminder", titleKey: "providerArrival", bodyKey: "providerArrivalBody", timeKey: "hours", href: "/provider/check-in", read: false },
   { id: "provider-3", audience: "provider", kind: "review", titleKey: "providerReview", bodyKey: "providerReviewBody", timeKey: "yesterday", href: "/provider/reviews", read: true },
-  { id: "admin-1", audience: "admin", kind: "approval", titleKey: "adminApproval", bodyKey: "adminApprovalBody", timeKey: "minutes", href: "/admin/businesses", read: false },
-  { id: "admin-2", audience: "admin", kind: "system", titleKey: "adminNoShow", bodyKey: "adminNoShowBody", timeKey: "hours", href: "/admin/no-shows", read: false },
-  { id: "admin-3", audience: "admin", kind: "review", titleKey: "adminReview", bodyKey: "adminReviewBody", timeKey: "yesterday", href: "/admin/reviews", read: true },
+  { id: "admin-1", audience: "admin", kind: "approval", titleKey: "adminApproval", bodyKey: "adminApprovalBody", timeKey: "minutes", href: ADMIN_PATHS.businesses, read: false },
+  { id: "admin-2", audience: "admin", kind: "system", titleKey: "adminNoShow", bodyKey: "adminNoShowBody", timeKey: "hours", href: ADMIN_PATHS.noShows, read: false },
+  { id: "admin-3", audience: "admin", kind: "review", titleKey: "adminReview", bodyKey: "adminReviewBody", timeKey: "yesterday", href: ADMIN_PATHS.reviews, read: true },
 ];
 
 function clone(item: PortalNotification): PortalNotification {

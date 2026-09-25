@@ -12,9 +12,9 @@ Repository: [AbdallahZagh/turath-frontend](https://github.com/AbdallahZagh/turat
 | --- | --- |
 | `main` | **This README only.** GitHub landing page. No app source, no `app/`, no `components/`. |
 | `frontend` | Shared product branch. Do not push here unless a human asked. |
-| `chester` | **Current product work.** Hotels, booking, `/user`, auth, admin. |
+| `chester` | **Agent branch.** Fast-forwarded from `frontend`, then bot work is committed on top. Current product work. |
 
-Merges into this repo go onto **`frontend`** after review. Do not merge the app into `main`. Never push application work onto `main` or `frontend` from a bot workspace unless a human asked.
+Merges into this repo go onto **`frontend`** after review. Before new agent work, `chester` is fast-forwarded to `frontend` (no rebase, no force-push). Do not merge the app into `main`. Never push application work onto `main` or `frontend` from a bot workspace unless a human asked.
 
 ## For Grok / coding bots
 
@@ -55,10 +55,14 @@ Open [http://localhost:3000](http://localhost:3000).
 | `/login`, `/register`, `/verify-otp`, `/forgot-password`, `/reset-password` | Auth stubs (mock OTP / reset) |
 | `/hotels`, `/hotels/[id]` | Stay catalog and detail |
 | `/bookings/new`, `/bookings/[id]` | Hotel checkout and voucher |
-| `/user`, `/user/bookings`, `/user/reliability` | Tourist account (old `/account` redirects here) |
+| `/explore`, `/search`, `/attractions` | Map, search, and heritage directory |
+| `/restaurants`, `/trips`, `/events`, `/guides` | Other catalogs and details |
+| `/legal/terms`, `/legal/privacy`, `/legal/provider-licensing` | Legal pages |
+| `/user`, `/user/bookings`, `/user/saved`, `/user/profile` | Signed-in user area (old `/account` redirects here) |
 | `/contact` | Public contact |
-| `/admin` | Admin (mock role switcher in the shell) |
+| `/admin` | Admin. Needs a signed-in admin; in `npm run dev` the sign-in card offers “Preview as admin” |
 | `/provider/register`, `/provider/pending` | Provider signup |
+| `/provider` | Business portal (dashboard, bookings, check-in, inventory, ledger, staff, settings). Dev preview as owner or staff |
 | `/theme` | Token lab |
 
 ## What’s on `chester` today
@@ -67,8 +71,11 @@ Open [http://localhost:3000](http://localhost:3000).
 - Auth layout + login / register / verify-otp / forgot-password / reset-password (mock services + authStore)
 - Stays: `/hotels` catalog, `/hotels/[id]` detail
 - Booking: `/bookings/new` checkout, `/bookings/[id]` voucher (QR + 6-character backup code)
-- Tourist account: `/user` (language + SYP/USD display preference), `/user/bookings`, `/user/reliability`
+- Discovery: `/explore` map, `/search`, `/attractions`, and the dining / trips / events / guides catalogs with details
+- Legal: `/legal/terms`, `/legal/privacy`, `/legal/provider-licensing`
+- User area: `/user` dashboard, `/user/bookings`, `/user/saved`, `/user/profile`, `/user/reliability`, notifications
 - Admin: guests, businesses, bookings, reviews, no-shows, accounts, heritage sites, fees, lists, featured, discount codes, audit logs, settings
 - Provider signup: `/provider/register` and `/provider/pending`
+- Provider portal: dashboard, bookings, check-in, reviews, inventory (staff read-only), ledger, staff, settings, profiles
 
-Not built yet (see `docs/PAGES.md` §10): `/explore`, `/attractions`, dining / trips / events / guides catalogs, `/legal/*`, and the full provider portal (dashboard, inventory, check-in, ledger). Those routes 404 on purpose — do not invent pages.
+Routes follow `docs/PAGES.md`. Do not invent pages.

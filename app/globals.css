@@ -3,6 +3,34 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.toast-progress {
+  animation-name: toast-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  transform-origin: left center;
+}
+
+[dir="rtl"] .toast-progress {
+  transform-origin: right center;
+}
+
+.group:hover .toast-progress,
+.group:focus-within .toast-progress {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-progress {
+    animation: none;
+    transform: scaleX(0);
+  }
+}
+
 /* -------------------------------------------------------------------------- */
 /* Tokens. Hex and mixes live here only. Components use Tailwind theme names. */
 /* -------------------------------------------------------------------------- */

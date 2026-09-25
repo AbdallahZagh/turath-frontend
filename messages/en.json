@@ -204,7 +204,7 @@
     "steppersHint": "Same three variants as inputs, with size and radius. Type a number or use minus and plus. Arrows step the value.",
     "stepperGuests": "Guests",
     "toasts": "Toasts",
-    "toastsHint": "Success after a save. Info for an admin note. Warn at a plan limit. Error when a request fails. Neutral for everything else.",
+    "toastsHint": "Preview every top-center toast in light and dark mode, then test stacking, long copy, pausing, and dismissal.",
     "toastSuccess": "Success",
     "toastInfo": "Info",
     "toastWarn": "Warn",
@@ -219,7 +219,12 @@
     "toastErrorTitle": "Could not save",
     "toastErrorBody": "The request failed. Check the form and try again.",
     "toastNeutralTitle": "Draft kept locally",
-    "toastNeutralBody": "This notice is for anything that is not a success, admin note, warning, or error."
+    "toastNeutralBody": "This notice is for anything that is not a success, admin note, warning, or error.",
+    "toastStack": "Test stack",
+    "toastLong": "Test long copy",
+    "toastDismissAll": "Dismiss all",
+    "toastLongTitle": "Your changes are ready for review",
+    "toastLongBody": "This longer message checks wrapping, spacing, and readability without covering the page controls underneath it."
   },
   "landing": {
     "governorates": {

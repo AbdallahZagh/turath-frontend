@@ -23,6 +23,7 @@ type ToastStore = {
   toasts: ToastItem[];
   push: (input: PushToastInput) => string;
   dismiss: (id: string) => void;
+  dismissAll: () => void;
 };
 
 function toastId(): string {
@@ -42,6 +43,7 @@ export const useToastStore = create<ToastStore>((set) => ({
     set((state) => ({
       toasts: state.toasts.filter((item) => item.id !== id),
     })),
+  dismissAll: () => set({ toasts: [] }),
 }));
 
 function show(kind: ToastKind, title: string, description?: string): string {
@@ -55,4 +57,5 @@ export const toast = {
   error: (title: string, description?: string) => show("error", title, description),
   neutral: (title: string, description?: string) => show("neutral", title, description),
   dismiss: (id: string) => useToastStore.getState().dismiss(id),
+  dismissAll: () => useToastStore.getState().dismissAll(),
 };

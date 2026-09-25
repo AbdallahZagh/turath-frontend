@@ -24,8 +24,7 @@ export function AttractionCover({
 }: AttractionCoverProps): ReactNode {
   if (isLocalFileSrc(src)) {
     return (
-      // Local file preview from the add-attraction picker; next/image cannot optimize blob URLs.
-      // eslint-disable-next-line @next/next/no-img-element
+      // eslint-disable-next-line @next/next/no-img-element -- blob: preview of a local upload, which next/image cannot load
       <img src={src} alt={alt} className={cn("object-cover", className)} />
     );
   }

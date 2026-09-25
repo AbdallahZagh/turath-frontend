@@ -87,7 +87,7 @@ export function AdminAttractionHero({ attraction }: AdminAttractionHeroProps): R
         </div>
 
         <div className="border-glass-border relative aspect-video w-full shrink-0 overflow-hidden rounded-2xl border bg-ink/10 shadow-lg sm:max-w-xs lg:w-72">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- may be a blob: URL from the admin image picker, which next/image cannot load */}
           <img
             src={attraction.imageSrc}
             alt={primaryName}

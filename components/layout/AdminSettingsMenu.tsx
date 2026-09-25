@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/Button";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { useIsClient } from "@/hooks/useIsClient";
 import { cn } from "@/lib/cn";
+import { useAuthStore } from "@/store/authStore";
 
 type AdminSettingsMenuProps = {
   className?: string;
@@ -27,6 +28,7 @@ export function AdminSettingsMenu({ className }: AdminSettingsMenuProps): ReactN
   const t = useTranslations("admin.shell");
   const tChrome = useTranslations("chrome");
   const mounted = useIsClient();
+  const signOut = useAuthStore((state) => state.signOut);
   const menuId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,10 @@ export function AdminSettingsMenu({ className }: AdminSettingsMenuProps): ReactN
                 size="sm"
                 href="/login"
                 className="w-full"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  signOut();
+                }}
               >
                 <LogOut className="size-3.5" aria-hidden />
                 {t("logout")}

@@ -1,7 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, CalendarDays, Clock3, Languages, MapPin, ShieldCheck, Sparkles, Tag, UserRoundSearch } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  Clock3,
+  Languages,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  Tag,
+  UserRoundSearch,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -25,24 +35,353 @@ import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
-import { guideBookingSchema, isGuideBookingErrorKey, type GuideBookingErrorKey, type GuideBookingValues } from "@/lib/validation/booking";
+import {
+  guideBookingSchema,
+  isGuideBookingErrorKey,
+  type GuideBookingErrorKey,
+  type GuideBookingValues,
+} from "@/lib/validation/booking";
 import { toast } from "@/store/toastStore";
 
-function errorMessage(t: (key: GuideBookingErrorKey) => string, error: FieldError | undefined): string | undefined { if (!error?.message) return undefined; return isGuideBookingErrorKey(error.message) ? t(error.message) : error.message; }
+function errorMessage(
+  t: (key: GuideBookingErrorKey) => string,
+  error: FieldError | undefined,
+): string | undefined {
+  if (!error?.message) return undefined;
+  return isGuideBookingErrorKey(error.message) ? t(error.message) : error.message;
+}
 
-export function GuideBookingCheckout({ guideId, initialDate }: { guideId: string; initialDate?: string }): ReactNode {
-  const t = useTranslations("guideBooking"); const te = useTranslations("guideBooking.errors"); const tg = useTranslations("guides");
-  const locale = useLocale(); const loc: Locale = locale === "ar" ? "ar" : "en"; const router = useRouter(); const formatMoney = useFormatSyp();
-  const guideQuery = useGuide(guideId); const createBooking = useCreateGuideBooking(); const couponMutation = useValidateBookingCoupon(); const [coupon, setCoupon] = useState<CouponResult | null>(null);
-  const form = useForm<GuideBookingValues>({ resolver: zodResolver(guideBookingSchema), defaultValues: { date: initialDate ?? "", duration: "halfDay", hours: 2, language: undefined, focusArea: undefined, couponCode: "" } });
-  const date = useWatch({ control: form.control, name: "date" }); const duration = useWatch({ control: form.control, name: "duration" }); const hours = useWatch({ control: form.control, name: "hours" }); const language = useWatch({ control: form.control, name: "language" }); const focusArea = useWatch({ control: form.control, name: "focusArea" }); const couponCode = useWatch({ control: form.control, name: "couponCode" });
-  const guide = guideQuery.data; const listPriceSyp = guide ? (duration === "hourly" ? guide.rates.hourly * hours : guide.rates[duration]) : 0; const activeCoupon = coupon?.valid ? coupon : null; const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp); const cashDueSyp = listPriceSyp - discountSyp;
-  if (guideQuery.isPending) return <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]"><Skeleton className="h-[40rem]" /><Skeleton className="h-96" /></div>;
-  if (guideQuery.isError) return <ErrorState title={t("states.loadErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void guideQuery.refetch()} />;
-  if (!guide) return <EmptyState icon={UserRoundSearch} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href="/guides" variant="outline">{t("backToGuides")}</Button>} />;
+export function GuideBookingCheckout({
+  guideId,
+  initialDate,
+}: {
+  guideId: string;
+  initialDate?: string;
+}): ReactNode {
+  const t = useTranslations("guideBooking");
+  const te = useTranslations("guideBooking.errors");
+  const tg = useTranslations("guides");
+  const locale = useLocale();
+  const loc: Locale = locale === "ar" ? "ar" : "en";
+  const router = useRouter();
+  const formatMoney = useFormatSyp();
+  const guideQuery = useGuide(guideId);
+  const createBooking = useCreateGuideBooking();
+  const couponMutation = useValidateBookingCoupon();
+  const [coupon, setCoupon] = useState<CouponResult | null>(null);
+  const form = useForm<GuideBookingValues>({
+    resolver: zodResolver(guideBookingSchema),
+    defaultValues: {
+      date: initialDate ?? "",
+      duration: "halfDay",
+      hours: 2,
+      language: undefined,
+      focusArea: undefined,
+      couponCode: "",
+    },
+  });
+  const date = useWatch({ control: form.control, name: "date" });
+  const duration = useWatch({ control: form.control, name: "duration" });
+  const hours = useWatch({ control: form.control, name: "hours" });
+  const language = useWatch({ control: form.control, name: "language" });
+  const focusArea = useWatch({ control: form.control, name: "focusArea" });
+  const couponCode = useWatch({ control: form.control, name: "couponCode" });
+  const guide = guideQuery.data;
+  const listPriceSyp = guide
+    ? duration === "hourly"
+      ? guide.rates.hourly * hours
+      : guide.rates[duration]
+    : 0;
+  const activeCoupon = coupon?.valid ? coupon : null;
+  const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
+  const cashDueSyp = listPriceSyp - discountSyp;
+  if (guideQuery.isPending)
+    return (
+      <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
+        <Skeleton className="h-[40rem]" />
+        <Skeleton className="h-96" />
+      </div>
+    );
+  if (guideQuery.isError)
+    return (
+      <ErrorState
+        title={t("states.loadErrorTitle")}
+        description={t("states.loadErrorBody")}
+        retryLabel={t("states.retry")}
+        onRetry={() => void guideQuery.refetch()}
+      />
+    );
+  if (!guide)
+    return (
+      <EmptyState
+        icon={UserRoundSearch}
+        title={t("states.unavailableTitle")}
+        description={t("states.unavailableBody")}
+        action={
+          <Button href="/guides" variant="outline">
+            {t("backToGuides")}
+          </Button>
+        }
+      />
+    );
   const availableGuide = guide;
-  const dates: SelectOption[] = guide.availability.map((value) => ({ value, label: formatMediumDate(value, loc) })); const durations: SelectOption[] = (["hourly", "halfDay", "fullDay"] as const).map((value) => ({ value, label: tg(`durations.${value}`), hint: formatMoney(guide.rates[value]) })); const languages: SelectOption[] = guide.languages.map((value) => ({ value, label: tg(`languages.${value}`) })); const focuses: SelectOption[] = guide.specialties.map((value) => ({ value, label: tg(`specialties.${value}`) }));
-  async function applyCoupon(): Promise<void> { setCoupon(await couponMutation.mutateAsync({ code: couponCode, bookingType: "guide", listingId: availableGuide.id })); }
-  async function onSubmit(values: GuideBookingValues): Promise<void> { try { const booking = await createBooking.mutateAsync({ guideId: availableGuide.id, date: values.date, duration: values.duration, hours: values.duration === "hourly" ? values.hours : values.duration === "halfDay" ? 4 : 8, language: values.language, focusArea: values.focusArea, listPriceSyp, discountSyp, cashDueSyp, couponCode: activeCoupon?.code ?? null }); router.push(`/bookings/${booking.id}`); } catch { toast.error(t("toastErrorTitle"), t("toastErrorBody")); } }
-  return <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]"><GlassPanel className="p-6 sm:p-8 lg:p-9"><div className="border-border border-b pb-6"><p className="text-primary text-sm font-semibold">{t("eyebrow")}</p><h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">{t("title")}</h1><p className="text-prose-muted mt-2">{localizedName(guide.name, loc)}</p></div><form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}><section><h2 className="font-heading text-prose text-xl font-semibold">{t("details")}</h2><div className="mt-4 grid gap-4 sm:grid-cols-2"><div className="space-y-1.5"><Controller control={form.control} name="date" render={({ field }) => <Select variant="main" required label={t("date")} placeholder={t("datePlaceholder")} options={dates} value={field.value} onChange={field.onChange} icon={<CalendarDays className="size-4" />} />} /><AuthFieldError message={errorMessage(te, form.formState.errors.date)} /></div><div className="space-y-1.5"><Controller control={form.control} name="duration" render={({ field }) => <Select variant="main" required label={t("duration")} options={durations} value={field.value} onChange={field.onChange} icon={<Clock3 className="size-4" />} />} /><AuthFieldError message={errorMessage(te, form.formState.errors.duration)} /></div>{duration === "hourly" ? <div className="space-y-1.5"><Controller control={form.control} name="hours" render={({ field }) => <Stepper variant="main" required label={t("hours")} min={1} max={8} value={field.value} onChange={field.onChange} icon={<Clock3 className="size-4" />} />} /><AuthFieldError message={errorMessage(te, form.formState.errors.hours)} /></div> : null}<div className="space-y-1.5"><Controller control={form.control} name="language" render={({ field }) => <Select variant="main" required label={t("language")} placeholder={t("languagePlaceholder")} options={languages} value={field.value} onChange={field.onChange} icon={<Languages className="size-4" />} />} /><AuthFieldError message={errorMessage(te, form.formState.errors.language)} /></div><div className="space-y-1.5"><Controller control={form.control} name="focusArea" render={({ field }) => <Select variant="main" required label={t("focusArea")} placeholder={t("focusPlaceholder")} options={focuses} value={field.value} onChange={field.onChange} icon={<Sparkles className="size-4" />} />} /><AuthFieldError message={errorMessage(te, form.formState.errors.focusArea)} /></div></div></section><section className="bg-glass-control rounded-2xl p-5"><div className="flex gap-3"><Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden /><div><h2 className="text-prose font-semibold">{t("holdTitle")}</h2><p className="text-prose-muted mt-1 text-sm">{t("holdBody")}</p></div></div></section><BookingReliabilityNotice /><section><h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2><div className="mt-4 flex flex-col gap-3 sm:flex-row"><Input variant="main" label={t("discountCode")} placeholder={t("discountPlaceholder")} className="flex-1" {...form.register("couponCode", { onChange: () => setCoupon(null) })} /><Button type="button" variant="outline" disabled={couponMutation.isPending || !couponCode.trim()} onClick={() => void applyCoupon()}><Tag className="size-4" aria-hidden />{couponMutation.isPending ? t("applying") : t("apply")}</Button></div><BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} /></section></form></GlassPanel><GlassPanel className="p-6 lg:sticky lg:top-28"><p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p><h2 className="font-heading text-prose mt-2 text-2xl font-semibold">{localizedName(guide.name, loc)}</h2><p className="text-prose-muted mt-1 flex items-center gap-2 text-sm"><MapPin className="size-4" aria-hidden />{localizedName(guide.address, loc)}</p><dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("date")}</dt><dd className="text-prose font-medium">{date ? formatMediumDate(date, loc) : t("notSelected")}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("duration")}</dt><dd className="text-prose font-medium">{tg(`durations.${duration}`)}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("language")}</dt><dd className="text-prose font-medium">{language ? tg(`languages.${language}`) : t("notSelected")}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("focusArea")}</dt><dd className="text-prose font-medium">{focusArea ? tg(`specialties.${focusArea}`) : t("notSelected")}</dd></div></dl><dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd></div>{discountSyp ? <div className="text-primary flex justify-between"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}<div className="border-border flex justify-between border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose font-semibold">{formatMoney(cashDueSyp)}</dd></div></dl><p className="text-prose-muted mt-4 flex gap-2 text-xs"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p><Button type="submit" className="mt-6 w-full" disabled={createBooking.isPending || !date || !language || !focusArea} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button><Button href={`/guides/${guide.id}`} variant="glass" className="mt-3 w-full"><ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />{t("backToGuide")}</Button></GlassPanel></div>;
+  const dates: SelectOption[] = guide.availability.map((value) => ({
+    value,
+    label: formatMediumDate(value, loc),
+  }));
+  const durations: SelectOption[] = (["hourly", "halfDay", "fullDay"] as const).map((value) => ({
+    value,
+    label: tg(`durations.${value}`),
+    hint: formatMoney(guide.rates[value]),
+  }));
+  const languages: SelectOption[] = guide.languages.map((value) => ({
+    value,
+    label: tg(`languages.${value}`),
+  }));
+  const focuses: SelectOption[] = guide.specialties.map((value) => ({
+    value,
+    label: tg(`specialties.${value}`),
+  }));
+  async function applyCoupon(): Promise<void> {
+    setCoupon(
+      await couponMutation.mutateAsync({
+        code: couponCode,
+        bookingType: "guide",
+        listingId: availableGuide.id,
+      }),
+    );
+  }
+  async function onSubmit(values: GuideBookingValues): Promise<void> {
+    try {
+      const booking = await createBooking.mutateAsync({
+        guideId: availableGuide.id,
+        date: values.date,
+        duration: values.duration,
+        hours: values.duration === "hourly" ? values.hours : values.duration === "halfDay" ? 4 : 8,
+        language: values.language,
+        focusArea: values.focusArea,
+        listPriceSyp,
+        discountSyp,
+        cashDueSyp,
+        couponCode: activeCoupon?.code ?? null,
+      });
+      router.push(`/bookings/${booking.id}`);
+    } catch {
+      toast.error(t("toastErrorTitle"), t("toastErrorBody"));
+    }
+  }
+  return (
+    <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
+      <GlassPanel className="p-6 sm:p-8 lg:p-9">
+        <div className="border-border border-b pb-6">
+          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
+          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
+            {t("title")}
+          </h1>
+          <p className="text-prose-muted mt-2">{localizedName(guide.name, loc)}</p>
+        </div>
+        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+          <section>
+            <h2 className="font-heading text-prose text-xl font-semibold">{t("details")}</h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="space-y-1.5">
+                <Controller
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <Select
+                      variant="main"
+                      required
+                      label={t("date")}
+                      placeholder={t("datePlaceholder")}
+                      options={dates}
+                      value={field.value}
+                      onChange={field.onChange}
+                      icon={<CalendarDays className="size-4" />}
+                    />
+                  )}
+                />
+                <AuthFieldError message={errorMessage(te, form.formState.errors.date)} />
+              </div>
+              <div className="space-y-1.5">
+                <Controller
+                  control={form.control}
+                  name="duration"
+                  render={({ field }) => (
+                    <Select
+                      variant="main"
+                      required
+                      label={t("duration")}
+                      options={durations}
+                      value={field.value}
+                      onChange={field.onChange}
+                      icon={<Clock3 className="size-4" />}
+                    />
+                  )}
+                />
+                <AuthFieldError message={errorMessage(te, form.formState.errors.duration)} />
+              </div>
+              {duration === "hourly" ? (
+                <div className="space-y-1.5">
+                  <Controller
+                    control={form.control}
+                    name="hours"
+                    render={({ field }) => (
+                      <Stepper
+                        variant="main"
+                        required
+                        label={t("hours")}
+                        min={1}
+                        max={8}
+                        value={field.value}
+                        onChange={field.onChange}
+                        icon={<Clock3 className="size-4" />}
+                      />
+                    )}
+                  />
+                  <AuthFieldError message={errorMessage(te, form.formState.errors.hours)} />
+                </div>
+              ) : null}
+              <div className="space-y-1.5">
+                <Controller
+                  control={form.control}
+                  name="language"
+                  render={({ field }) => (
+                    <Select
+                      variant="main"
+                      required
+                      label={t("language")}
+                      placeholder={t("languagePlaceholder")}
+                      options={languages}
+                      value={field.value}
+                      onChange={field.onChange}
+                      icon={<Languages className="size-4" />}
+                    />
+                  )}
+                />
+                <AuthFieldError message={errorMessage(te, form.formState.errors.language)} />
+              </div>
+              <div className="space-y-1.5">
+                <Controller
+                  control={form.control}
+                  name="focusArea"
+                  render={({ field }) => (
+                    <Select
+                      variant="main"
+                      required
+                      label={t("focusArea")}
+                      placeholder={t("focusPlaceholder")}
+                      options={focuses}
+                      value={field.value}
+                      onChange={field.onChange}
+                      icon={<Sparkles className="size-4" />}
+                    />
+                  )}
+                />
+                <AuthFieldError message={errorMessage(te, form.formState.errors.focusArea)} />
+              </div>
+            </div>
+          </section>
+          <section className="bg-glass-control rounded-2xl p-5">
+            <div className="flex gap-3">
+              <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
+              <div>
+                <h2 className="text-prose font-semibold">{t("holdTitle")}</h2>
+                <p className="text-prose-muted mt-1 text-sm">{t("holdBody")}</p>
+              </div>
+            </div>
+          </section>
+          <BookingReliabilityNotice />
+          <section>
+            <h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <Input
+                variant="main"
+                label={t("discountCode")}
+                placeholder={t("discountPlaceholder")}
+                className="flex-1"
+                {...form.register("couponCode", { onChange: () => setCoupon(null) })}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                disabled={couponMutation.isPending || !couponCode.trim()}
+                onClick={() => void applyCoupon()}
+              >
+                <Tag className="size-4" aria-hidden />
+                {couponMutation.isPending ? t("applying") : t("apply")}
+              </Button>
+            </div>
+            <BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} />
+          </section>
+        </form>
+      </GlassPanel>
+      <GlassPanel className="p-6 lg:sticky lg:top-28">
+        <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p>
+        <h2 className="font-heading text-prose mt-2 text-2xl font-semibold">
+          {localizedName(guide.name, loc)}
+        </h2>
+        <p className="text-prose-muted mt-1 flex items-center gap-2 text-sm">
+          <MapPin className="size-4" aria-hidden />
+          {localizedName(guide.address, loc)}
+        </p>
+        <dl className="mt-5 space-y-3 text-sm">
+          <div className="flex justify-between gap-3">
+            <dt className="text-prose-muted">{t("date")}</dt>
+            <dd className="text-prose font-medium">
+              {date ? formatMediumDate(date, loc) : t("notSelected")}
+            </dd>
+          </div>
+          <div className="flex justify-between gap-3">
+            <dt className="text-prose-muted">{t("duration")}</dt>
+            <dd className="text-prose font-medium">{tg(`durations.${duration}`)}</dd>
+          </div>
+          <div className="flex justify-between gap-3">
+            <dt className="text-prose-muted">{t("language")}</dt>
+            <dd className="text-prose font-medium">
+              {language ? tg(`languages.${language}`) : t("notSelected")}
+            </dd>
+          </div>
+          <div className="flex justify-between gap-3">
+            <dt className="text-prose-muted">{t("focusArea")}</dt>
+            <dd className="text-prose font-medium">
+              {focusArea ? tg(`specialties.${focusArea}`) : t("notSelected")}
+            </dd>
+          </div>
+        </dl>
+        <dl className="mt-5 space-y-3 text-sm">
+          <div className="flex justify-between">
+            <dt className="text-prose-muted">{t("listPrice")}</dt>
+            <dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd>
+          </div>
+          {discountSyp ? (
+            <div className="text-primary flex justify-between">
+              <dt>{t("discount")}</dt>
+              <dd>− {formatMoney(discountSyp)}</dd>
+            </div>
+          ) : null}
+          <div className="border-border flex justify-between border-t pt-4">
+            <dt className="text-prose font-semibold">{t("cashDue")}</dt>
+            <dd className="text-prose font-semibold">{formatMoney(cashDueSyp)}</dd>
+          </div>
+        </dl>
+        <p className="text-prose-muted mt-4 flex gap-2 text-xs">
+          <ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />
+          {t("cashDueHint")}
+        </p>
+        <Button
+          type="submit"
+          className="mt-6 w-full"
+          disabled={createBooking.isPending || !date || !language || !focusArea}
+          onClick={() => void form.handleSubmit(onSubmit)()}
+        >
+          {createBooking.isPending ? t("confirming") : t("confirm")}
+        </Button>
+        <Button href={`/guides/${guide.id}`} variant="glass" className="mt-3 w-full">
+          <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
+          {t("backToGuide")}
+        </Button>
+      </GlassPanel>
+    </div>
+  );
 }

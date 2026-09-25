@@ -18,7 +18,7 @@ These are settled. Code, copy, and later phases follow them.
 
 - **After sign-in:** the user returns to the page they came from, or to `/` if there is none. The `/user` dashboard stays one click away in the header. (The current mock OTP stub still routes to the role home — see §4 — until the return-to flow is built.)
 - **Business staff and inventory:** `PROVIDER_STAFF` sees `/provider/inventory` **read-only** — rooms, tables, sessions, stock, and prices are visible; add, edit, delete, price, and stock controls are not. Owners keep full edit.
-- **Commission:** the default commission is **10%**. The admin can change it per business (`/admin/businesses/[id]` → Finance). The Fees mock data (§7 `/admin/fees`) still shows the older tier figures until that screen is updated.
+- **Commission:** the default commission is **10%**. The admin can change it per business (`/admin/businesses/[id]` → Finance). In the mock, the standard tier and the hotel / dining / trip / event category defaults are 10%; guides keep 8.5%.
 - **Admin route names:** the admin URLs are the ones in `config/adminRoutes.ts` and §3 (for example `/admin/discount-codes` and `/admin/featured`, not `/admin/coupons` or `/admin/promotions`). **Note:** the SRS and Architecture Word documents still use the old route names and a 12% commission figure. This file and `config/adminRoutes.ts` win; the Word files are not edited from this repo.
 - **People words in copy:** customer-facing text calls the person booking a **user** (Arabic **مستخدم**). **Business** stays the word for providers. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Existing strings that still say “guest” are renamed in a later pass.
 
@@ -631,7 +631,7 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 ### `/admin/fees`
 
 - Table of default % per booking category
-- Preferred / standard / high-risk tier chips (8.5% / 12% / 18% in the current mock). Locked default commission is 10%, changeable per business (§0)
+- Preferred / standard / high-risk tier chips (8.5% / 10% / 18%). Default commission is 10%, changeable per business (§0)
 - Platform SYP-per-USD rate field + save (mock)
 
 ### `/admin/accounts`

@@ -40,12 +40,14 @@ When you are told to work on Turath frontend:
 
 ## Run the app
 
-Checkout **`chester`**, then:
+Checkout **`chester`**, use Node 22 (`.nvmrc`; Node 20.19+ also works), then:
 
 ```bash
 npm install
 npm run dev
 ```
+
+Checks: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. Prettier is adopted file by file: `npm run format -- <files>` and `npm run format:check -- <files>`.
 
 Open [http://localhost:3000](http://localhost:3000).
 

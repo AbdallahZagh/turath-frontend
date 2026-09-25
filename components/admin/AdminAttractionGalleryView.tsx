@@ -46,7 +46,7 @@ export function AdminAttractionGalleryView({
       </div>
 
       <div className="border-glass-border relative aspect-video w-full overflow-hidden rounded-2xl border bg-ink/15 shadow-inner">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- may be a blob: URL from the admin image picker, which next/image cannot load */}
         <img
           src={currentPhoto}
           alt={siteName}
@@ -71,7 +71,7 @@ export function AdminAttractionGalleryView({
                 )}
                 aria-label={t("detail.photoLabel", { n: index + 1 })}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {/* eslint-disable-next-line @next/next/no-img-element -- may be a blob: URL from the admin image picker, which next/image cannot load */}
                 <img src={photo} alt="" className="h-full w-full object-cover" />
                 {index === 0 ? (
                   <span className="bg-ink/80 text-foam absolute bottom-1 inset-s-1 rounded px-1.5 py-0.5 text-[10px] font-medium">

@@ -62,7 +62,7 @@ export function AdminAttractionDeleteDialog({
     >
       {attraction ? (
         <div className="border-glass-border bg-glass-control flex items-center gap-3 rounded-2xl border p-2.5">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- may be a blob: URL from the admin image picker, which next/image cannot load */}
           <img
             src={attraction.imageSrc}
             alt=""

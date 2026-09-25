@@ -50,8 +50,7 @@ export function ImageField({
       <span className="text-prose-muted text-xs font-medium">{label}</span>
       {value ? (
         <div className="border-glass-border relative overflow-hidden rounded-2xl border">
-          {/* Blob previews and public CMS images share this frame. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- shows blob: previews of local uploads (and saved CMS images), which next/image cannot load */}
           <img src={value} alt="" className="h-40 w-full object-cover" />
           <button
             type="button"

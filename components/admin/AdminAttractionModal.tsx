@@ -207,7 +207,7 @@ export function AdminAttractionModal({
                     key={`${src}-${index}`}
                     className="border-glass-border relative aspect-video overflow-hidden rounded-xl border bg-ink/10"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* eslint-disable-next-line @next/next/no-img-element -- blob: preview of a local upload, which next/image cannot load */}
                     <img
                       src={src}
                       alt=""

@@ -19,6 +19,7 @@ import {
   useSetAdminProviderStatus,
 } from "@/hooks/useAdminProviders";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
+import { DEFAULT_COMMISSION_RATE } from "@/lib/mock/adminCommissions";
 import type { ProviderStatus } from "@/lib/mock/adminProviders";
 import { reviewSummary } from "@/lib/mock/adminReviews";
 import { toast } from "@/store/toastStore";
@@ -74,7 +75,7 @@ export function AdminProviderDetail({ providerId }: AdminProviderDetailProps): R
   const { provider, ledger, activity, reviews } = data;
   const rating = reviewSummary(reviews);
   const pillarRate =
-    commissions?.rows.find((row) => row.category === provider.category)?.rate ?? 0.12;
+    commissions?.rows.find((row) => row.category === provider.category)?.rate ?? DEFAULT_COMMISSION_RATE;
   const tierCeilingSyp = settings?.creditCeilingsSyp[provider.creditTier] ?? 5_000_000;
 
   function onStatus(status: ProviderStatus): void {

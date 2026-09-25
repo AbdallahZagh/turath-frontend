@@ -4,9 +4,12 @@ export const COMMISSION_TIERS = ["preferred", "standard", "highRisk"] as const;
 
 export type CommissionTierId = (typeof COMMISSION_TIERS)[number];
 
+/** Platform default commission (docs/PAGES.md §0). Admins can override it per business. */
+export const DEFAULT_COMMISSION_RATE = 0.1;
+
 export const COMMISSION_TIER_RATES: Record<CommissionTierId, number> = {
   preferred: 0.085,
-  standard: 0.12,
+  standard: DEFAULT_COMMISSION_RATE,
   highRisk: 0.18,
 };
 
@@ -39,10 +42,10 @@ export type SaveAdminCommissionsInput = {
 let commissions: AdminCommissions = {
   sypPerUsd: DEFAULT_SYP_PER_USD,
   rows: [
-    { category: "hotels", rate: 0.12 },
-    { category: "dining", rate: 0.12 },
-    { category: "trips", rate: 0.1 },
-    { category: "events", rate: 0.12 },
+    { category: "hotels", rate: DEFAULT_COMMISSION_RATE },
+    { category: "dining", rate: DEFAULT_COMMISSION_RATE },
+    { category: "trips", rate: DEFAULT_COMMISSION_RATE },
+    { category: "events", rate: DEFAULT_COMMISSION_RATE },
     { category: "guides", rate: 0.085 },
   ],
 };

@@ -799,8 +799,7 @@ export function ProviderRegisterForm(): ReactNode {
                     key={src}
                     className="border-glass-border relative aspect-video overflow-hidden rounded-xl border"
                   >
-                    {/* Blob previews for local uploads. */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* eslint-disable-next-line @next/next/no-img-element -- blob: preview of a local upload, which next/image cannot load */}
                     <img src={src} alt="" className="h-full w-full object-cover" />
                     <button
                       type="button"

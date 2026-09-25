@@ -19,9 +19,7 @@ export type AdminDispute = {
   status: DisputeStatus;
 };
 
-const DISPUTE_RESOLUTIONS = ["resolvedGuest", "resolvedProvider"] as const;
-
-export type DisputeResolution = (typeof DISPUTE_RESOLUTIONS)[number];
+export type DisputeResolution = "resolvedGuest" | "resolvedProvider";
 
 const DISPUTE_SEED: AdminDispute[] = [
   {

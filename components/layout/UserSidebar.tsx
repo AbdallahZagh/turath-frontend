@@ -4,6 +4,7 @@ import {
   BedDouble,
   CalendarDays,
   CalendarHeart,
+  Heart,
   LayoutDashboard,
   Languages,
   Landmark,
@@ -33,6 +34,7 @@ const USER_NAV = [
     items: [
       { href: USER_PATHS.home, key: "dashboard", icon: LayoutDashboard },
       { href: USER_PATHS.bookings, key: "bookings", icon: CalendarDays },
+      { href: USER_PATHS.saved, key: "saved", icon: Heart },
       { href: USER_PATHS.reliability, key: "reliability", icon: ShieldCheck },
     ],
   },

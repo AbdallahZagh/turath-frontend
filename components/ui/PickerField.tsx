@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import {
+  useCallback,
   useEffect,
   useId,
   useRef,
@@ -111,7 +112,7 @@ export function PickerField({
     gap: variant === "main" ? (gap ?? "0.625rem") : gap,
   });
 
-  function syncMenuBox(): void {
+  const syncMenuBox = useCallback((): void => {
     const trigger = triggerRef.current;
     if (!trigger) {
       return;
@@ -125,7 +126,7 @@ export function PickerField({
         shrinkToFit: false,
       }),
     );
-  }
+  }, [estimatedHeight, maxHeightCap, menuWidth, triggerRef]);
 
   function openMenu(): void {
     if (disabled) {
@@ -136,10 +137,7 @@ export function PickerField({
   }
 
   useEffect(() => {
-    if (!open) {
-      setMenuBox(null);
-      return;
-    }
+    if (!open) return;
 
     function onScroll(event: Event): void {
       const target = event.target;
@@ -156,7 +154,7 @@ export function PickerField({
       window.removeEventListener("resize", syncMenuBox);
       window.removeEventListener("scroll", onScroll, true);
     };
-  }, [open, estimatedHeight, maxHeightCap, menuWidth, menuRef]);
+  }, [open, menuRef, syncMenuBox]);
 
   useEffect(() => {
     if (!open) {
@@ -236,7 +234,6 @@ export function PickerField({
       aria-expanded={open}
       aria-controls={listId}
       aria-label={label ?? placeholder}
-      aria-required={required}
       onClick={() => (open ? onOpenChange(false) : openMenu())}
       onKeyDown={onTriggerKeyDown}
     >

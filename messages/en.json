@@ -653,6 +653,10 @@
       "settings": {
         "title": "Settings",
         "description": "Credit limits, guest show-up bands, and on/off switches for the platform."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "Review pending businesses, no-shows, moderation, and important platform activity."
       }
     },
     "users": {
@@ -2265,6 +2269,14 @@
       "reliability": {
         "title": "Reliability",
         "description": "See how completed arrivals and no-shows affect your booking access."
+      },
+      "saved": {
+        "title": "Saved places",
+        "description": "Keep the places you want to revisit together in one collection."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "See booking updates, arrival reminders, and important account news."
       }
     },
     "shell": {
@@ -2304,6 +2316,7 @@
       "dashboard": "Dashboard",
       "bookings": "My bookings",
       "reliability": "Reliability",
+      "saved": "Saved places",
       "signOut": "Sign out"
     },
     "profile": {
@@ -2573,7 +2586,8 @@
       "inventory": { "title": "Inventory", "description": "Manage rooms, tables, schedules, capacity, prices, and availability for your business." },
       "ledger": { "title": "Account balance", "description": "Follow commission, settlements, statements, and credit-ceiling usage." },
       "staff": { "title": "Staff", "description": "Invite team members and manage their access to daily operations." },
-      "settings": { "title": "Business settings", "description": "Choose notification, language, timezone, and currency display preferences." }
+      "settings": { "title": "Business settings", "description": "Choose notification, language, timezone, and currency display preferences." },
+      "notifications": { "title": "Notifications", "description": "Follow booking activity, guest arrivals, reviews, and business updates." }
     },
     "shell": {
       "openMenu": "Open business navigation",
@@ -2606,6 +2620,9 @@
     "business": {
       "name": "Dar Al Yasmin",
       "category": "Hotel · Damascus"
+    },
+    "sidebarBusiness": {
+      "current": "Current business"
     },
     "nav": {
       "label": "Business navigation",
@@ -3218,6 +3235,66 @@
         "checkedInBy": "Checked in by {staff}"
       }
     }
+  },
+  "providerOnboarding": {
+    "title": "Complete your business listing",
+    "lead": "Add the missing operating details, documents, and photos so the Turath team can review your listing.",
+    "locationTitle": "Address and opening hours",
+    "locationBody": "Tell guests where to find you and when your business welcomes visitors.",
+    "documentsTitle": "Business documents",
+    "documentsBody": "Upload clear copies of the registration, ministry license, and owner identification.",
+    "photosTitle": "Logo and gallery",
+    "photosBody": "Use clear, recent images that accurately represent the business.",
+    "saveLater": "Finish later",
+    "submit": "Send for review",
+    "successTitle": "Listing sent for review",
+    "successBody": "Your completed business information is now ready for the Turath team."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "open": "Open notifications",
+    "unreadCount": "{count, plural, =0 {No unread notifications} one {One unread notification} other {# unread notifications}}",
+    "viewAll": "View all notifications",
+    "markAll": "Mark all as read",
+    "markRead": "Mark as read",
+    "openItem": "Open details",
+    "filterLabel": "Filter notifications",
+    "all": "All",
+    "unread": "Unread",
+    "emptyTitle": "No notifications yet",
+    "emptyBody": "Important activity will appear here.",
+    "emptyUnreadTitle": "You're all caught up",
+    "emptyUnreadBody": "There are no unread notifications.",
+    "times": { "minutes": "12 minutes ago", "hours": "2 hours ago", "yesterday": "Yesterday" },
+    "items": {
+      "touristBooking": "Booking confirmed",
+      "touristBookingBody": "Your stay at Dar Al Yasmin is confirmed and your booking pass is ready.",
+      "touristReminder": "Arrival reminder",
+      "touristReminderBody": "Your experience begins tomorrow. Keep your QR pass or backup code ready.",
+      "touristReview": "Share your experience",
+      "touristReviewBody": "Your completed visit is ready for a verified review.",
+      "providerBooking": "New booking received",
+      "providerBookingBody": "A guest reserved a double room for tomorrow night.",
+      "providerArrival": "Guest arriving soon",
+      "providerArrivalBody": "One confirmed guest is expected within the next two hours.",
+      "providerReview": "New verified review",
+      "providerReviewBody": "A checked-in guest left feedback for your business.",
+      "adminApproval": "Business ready for review",
+      "adminApprovalBody": "A new business submitted its details and documents for approval.",
+      "adminNoShow": "No-show case opened",
+      "adminNoShowBody": "A business reported a missed arrival that needs review.",
+      "adminReview": "Review needs moderation",
+      "adminReviewBody": "A newly submitted review was flagged for an administrative check."
+    }
+  },
+  "savedPlaces": {
+    "save": "Save this place",
+    "remove": "Remove from saved places",
+    "removeNamed": "Remove {name} from saved places",
+    "filterLabel": "Filter saved places",
+    "emptyTitle": "No saved places here",
+    "emptyBody": "Save places while exploring and they will appear here.",
+    "categories": { "all": "All", "hotels": "Hotels", "restaurants": "Dining", "trips": "Trips", "events": "Events", "guides": "Guides", "attractions": "Attractions" }
   },
   "contact": {
     "title": "Contact us",

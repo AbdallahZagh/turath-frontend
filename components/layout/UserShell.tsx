@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { UserSidebar } from "@/components/layout/UserSidebar";
 import { UserGlobalSearch } from "@/components/layout/UserGlobalSearch";
 import { Button } from "@/components/ui/Button";
@@ -80,7 +81,7 @@ export function UserShell({ children }: UserShellProps): ReactNode {
           </div>
 
           <div className="flex min-w-0 items-center gap-2">
-            <Select compact className="hidden lg:block" size="sm" variant="plain" icon={<Coins className="size-3.5" />} options={currencyOptions} value={currency} onChange={(value) => { if (isCurrency(value)) setCurrency(value); }} label={t("preferences.currency")} />
+            <NotificationBell audience="tourist" href={USER_PATHS.notifications} />
             <HeaderProfileMenu
               name={user.name}
               email={user.email}
@@ -88,6 +89,25 @@ export function UserShell({ children }: UserShellProps): ReactNode {
               signOutLabel={t("nav.signOut")}
               signOutHref="/login"
               items={[{ href: USER_PATHS.profile, label: t("shell.profileMenu.profile"), icon: UserRound }]}
+              additionalControls={
+                <div>
+                  <p className="text-prose-muted mb-2 px-1 text-[0.65rem] font-bold uppercase tracking-[0.12em]">
+                    {t("preferences.currency")}
+                  </p>
+                  <Select
+                    className="w-full"
+                    size="sm"
+                    variant="plain"
+                    icon={<Coins className="size-3.5" />}
+                    options={currencyOptions}
+                    value={currency}
+                    onChange={(value) => {
+                      if (isCurrency(value)) setCurrency(value);
+                    }}
+                    label={t("preferences.currency")}
+                  />
+                </div>
+              }
               onSignOut={signOut}
             />
           </div>

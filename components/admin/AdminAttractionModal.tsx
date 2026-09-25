@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { Plus, X } from "lucide-react";
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { FIELD_BASE, FIELD_VARIANT, SELECT_TRIGGER } from "@/components/ui/controlClasses";
@@ -44,59 +44,22 @@ export function AdminAttractionModal({
   const createAttraction = useCreateAdminAttraction();
   const updateAttraction = useUpdateAdminAttraction();
 
-  const [nameEn, setNameEn] = useState("");
-  const [nameAr, setNameAr] = useState("");
-  const [narrativeEn, setNarrativeEn] = useState("");
-  const [narrativeAr, setNarrativeAr] = useState("");
-  const [governorate, setGovernorate] = useState<GovernorateSlug>(DEFAULT_GOVERNORATE);
-  const [imageSrc, setImageSrc] = useState<string>();
-  const [gallery, setGallery] = useState<string[]>([]);
-  const [opensAt, setOpensAt] = useState("09:00");
-  const [closesAt, setClosesAt] = useState("17:00");
-  const [entryFeeSyp, setEntryFeeSyp] = useState("0");
-  const [latitude, setLatitude] = useState("33.5138");
-  const [longitude, setLongitude] = useState("36.2765");
-  const [published, setPublished] = useState(true);
+  const [nameEn, setNameEn] = useState(attraction?.name.en ?? "");
+  const [nameAr, setNameAr] = useState(attraction?.name.ar ?? "");
+  const [narrativeEn, setNarrativeEn] = useState(attraction?.narrative.en ?? "");
+  const [narrativeAr, setNarrativeAr] = useState(attraction?.narrative.ar ?? "");
+  const [governorate, setGovernorate] = useState<GovernorateSlug>(attraction?.governorate ?? DEFAULT_GOVERNORATE);
+  const [imageSrc, setImageSrc] = useState<string | undefined>(attraction?.imageSrc);
+  const [gallery, setGallery] = useState<string[]>(() => attraction?.gallery ? [...attraction.gallery] : []);
+  const [opensAt, setOpensAt] = useState(attraction?.opensAt ?? "09:00");
+  const [closesAt, setClosesAt] = useState(attraction?.closesAt ?? "17:00");
+  const [entryFeeSyp, setEntryFeeSyp] = useState(() => String(attraction?.entryFeeSyp ?? 0));
+  const [latitude, setLatitude] = useState(() => String(attraction?.latitude ?? 33.5138));
+  const [longitude, setLongitude] = useState(() => String(attraction?.longitude ?? 36.2765));
+  const [published, setPublished] = useState(attraction?.published ?? true);
   const [imageError, setImageError] = useState(false);
 
   const galleryInputRef = useRef<HTMLInputElement>(null);
-
-  // Sync state whenever attraction or open status changes
-  useEffect(() => {
-    if (!open) return;
-
-    if (attraction) {
-      setNameEn(attraction.name.en);
-      setNameAr(attraction.name.ar);
-      setNarrativeEn(attraction.narrative.en);
-      setNarrativeAr(attraction.narrative.ar);
-      setGovernorate(attraction.governorate);
-      setImageSrc(attraction.imageSrc);
-      setGallery(attraction.gallery ? [...attraction.gallery] : []);
-      setOpensAt(attraction.opensAt);
-      setClosesAt(attraction.closesAt);
-      setEntryFeeSyp(String(attraction.entryFeeSyp));
-      setLatitude(String(attraction.latitude));
-      setLongitude(String(attraction.longitude));
-      setPublished(attraction.published);
-      setImageError(false);
-    } else {
-      setNameEn("");
-      setNameAr("");
-      setNarrativeEn("");
-      setNarrativeAr("");
-      setGovernorate(DEFAULT_GOVERNORATE);
-      setImageSrc(undefined);
-      setGallery([]);
-      setOpensAt("09:00");
-      setClosesAt("17:00");
-      setEntryFeeSyp("0");
-      setLatitude("33.5138");
-      setLongitude("36.2765");
-      setPublished(true);
-      setImageError(false);
-    }
-  }, [open, attraction]);
 
   function dismiss(): void {
     if (!attraction) {

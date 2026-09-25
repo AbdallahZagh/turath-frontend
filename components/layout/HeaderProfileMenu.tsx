@@ -2,6 +2,7 @@
 
 import { ChevronDown, LogOut, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   useEffect,
   useId,
@@ -12,6 +13,7 @@ import {
 import { createPortal } from "react-dom";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { useIsClient } from "@/hooks/useIsClient";
 import { cn } from "@/lib/cn";
@@ -31,6 +33,8 @@ type HeaderProfileMenuProps = {
   signOutHref: string;
   items: HeaderProfileMenuItem[];
   onSignOut: () => void;
+  showThemeToggle?: boolean;
+  additionalControls?: ReactNode;
   className?: string;
 };
 
@@ -42,8 +46,11 @@ export function HeaderProfileMenu({
   signOutHref,
   items,
   onSignOut,
+  showThemeToggle = false,
+  additionalControls,
   className,
 }: HeaderProfileMenuProps): ReactNode {
+  const tChrome = useTranslations("chrome");
   const mounted = useIsClient();
   const menuId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -59,8 +66,12 @@ export function HeaderProfileMenu({
       if (!trigger) return;
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 208 + items.length * 44,
-          maxHeightCap: 360,
+          estimatedHeight:
+            208 +
+            items.length * 44 +
+            (showThemeToggle ? 70 : 0) +
+            (additionalControls ? 70 : 0),
+          maxHeightCap: 440,
           minWidth: 240,
           width: 280,
           align: "end",
@@ -75,7 +86,7 @@ export function HeaderProfileMenu({
       window.removeEventListener("resize", sync);
       window.removeEventListener("scroll", sync, true);
     };
-  }, [items.length, open]);
+  }, [additionalControls, items.length, open, showThemeToggle]);
 
   useEffect(() => {
     if (!open) return;
@@ -142,6 +153,21 @@ export function HeaderProfileMenu({
           <div className="border-glass-border border-t px-2 py-2">
             <LocaleSwitcher className="w-full" onLocaleChange={() => setOpen(false)} />
           </div>
+
+          {additionalControls ? (
+            <div className="border-glass-border border-t px-2 py-2">
+              {additionalControls}
+            </div>
+          ) : null}
+
+          {showThemeToggle ? (
+            <div className="border-glass-border border-t px-2 py-2">
+              <p className="text-prose-muted mb-2 px-1 text-[0.65rem] font-bold uppercase tracking-[0.12em]">
+                {tChrome("theme")}
+              </p>
+              <ThemeToggle className="w-full" />
+            </div>
+          ) : null}
 
           <div className="border-glass-border border-t pt-2">
             <Link

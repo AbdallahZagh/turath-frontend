@@ -7,6 +7,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { TripGearList } from "@/components/trips/TripGearList";
+import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
@@ -24,7 +25,7 @@ export function TripCard({ trip, detailBasePath = "/trips" }: { trip: Trip; deta
   const nextDeparture = trip.departures[0];
 
   return (
-    <article className="group h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
+    <article className="group relative h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
       <Link href={`${detailBasePath}/${trip.id}`} className="block h-full min-w-0">
         <GlassPanel frost={false} className="h-full transition duration-300 group-hover:ring-1 group-hover:ring-primary/40">
           <div className="relative aspect-4/3 overflow-hidden rounded-t-[inherit]">
@@ -50,6 +51,7 @@ export function TripCard({ trip, detailBasePath = "/trips" }: { trip: Trip; deta
           </div>
         </GlassPanel>
       </Link>
+      {detailBasePath.startsWith("/user") ? <SavePlaceButton className="absolute end-3 top-3 z-10" place={{ id: trip.id, category: "trips", name: trip.name, governorate: trip.governorate, imageSrc: trip.imageSrc, href: `${detailBasePath}/${trip.id}` }} /> : null}
     </article>
   );
 }

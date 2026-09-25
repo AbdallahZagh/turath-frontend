@@ -26,7 +26,8 @@ export type AdminHeaderPage =
   | "coupons"
   | "reviews"
   | "auditLogs"
-  | "settings";
+  | "settings"
+  | "notifications";
 
 export type PageHeaderActionKind = "add";
 
@@ -46,7 +47,7 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
+  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
   /** Pin the header and let the page body fill leftover viewport height. */
   fillViewport?: boolean;
   actions?: PageHeaderActionSpec[];
@@ -64,6 +65,7 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/provider/ledger": { namespace: "provider.headers", page: "ledger" },
   "/provider/staff": { namespace: "provider.headers", page: "staff" },
   "/provider/settings": { namespace: "provider.headers", page: "settings" },
+  "/provider/notifications": { namespace: "provider.headers", page: "notifications" },
   "/hotels": { namespace: "hotels.headers", page: "index" },
   "/restaurants": { namespace: "restaurants.headers", page: "index" },
   "/trips": { namespace: "trips.headers", page: "index" },
@@ -85,6 +87,8 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/user/attractions": { namespace: "attractions.headers", page: "index" },
   "/user/bookings": { namespace: "account.headers", page: "bookings" },
   "/user/reliability": { namespace: "account.headers", page: "reliability" },
+  "/user/saved": { namespace: "account.headers", page: "saved" },
+  "/user/notifications": { namespace: "account.headers", page: "notifications" },
   [ADMIN_PATHS.home]: { namespace: "admin.headers", page: "overview" },
   [ADMIN_PATHS.guests]: { namespace: "admin.headers", page: "users", fillViewport: true },
   guestDetail: { namespace: "admin.headers", page: "userDetail" },
@@ -182,6 +186,10 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   [ADMIN_PATHS.settings]: {
     namespace: "admin.headers",
     page: "settings",
+  },
+  [ADMIN_PATHS.notifications]: {
+    namespace: "admin.headers",
+    page: "notifications",
   },
 };
 

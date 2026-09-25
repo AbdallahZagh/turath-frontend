@@ -12,7 +12,8 @@ export const usePageHeaderStore = create<PageHeaderStore>((set) => ({
     set((state) => ({ handlers: { ...state.handlers, [id]: onClick } })),
   unregister: (id) =>
     set((state) => {
-      const { [id]: _removed, ...handlers } = state.handlers;
+      const handlers = { ...state.handlers };
+      delete handlers[id];
       return { handlers };
     }),
 }));

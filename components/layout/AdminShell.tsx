@@ -7,8 +7,10 @@ import type { ReactNode } from "react";
 
 import { AdminSidebar } from "@/components/layout/AdminSidebar";
 import { AdminCommandPalette } from "@/components/layout/AdminCommandPalette";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getPageHeader } from "@/config/pageHeaders";
+import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { useUiStore } from "@/store/uiStore";
 
 type AdminShellProps = {
@@ -47,8 +49,9 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
         >
           <Menu className="size-5" aria-hidden />
         </button>
-        <div className="absolute inset-e-6 top-5 z-30 hidden sm:block">
-          <AdminCommandPalette />
+        <div className="absolute inset-e-6 top-5 z-30 hidden w-[min(32rem,calc(100%-6rem))] items-center gap-2 sm:flex">
+          <div className="min-w-0 flex-1"><AdminCommandPalette /></div>
+          <NotificationBell audience="admin" href={ADMIN_PATHS.notifications} />
         </div>
         <main
           className={

@@ -201,6 +201,7 @@ export function AdminAttractions(): ReactNode {
   const editors = (
     <>
       <AdminAttractionModal
+        key={editTarget?.id ?? (createOpen ? "create-open" : "create-closed")}
         open={createOpen || Boolean(editTarget)}
         onClose={() => {
           setCreateOpen(false);

@@ -76,12 +76,12 @@ export async function PublicFooter(): Promise<ReactNode> {
             <h3 className="text-prose text-sm font-semibold">{t("companyHeading")}</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a
+                <Link
                   href="/#grow-with-turath"
                   className="text-prose-muted hover:text-prose text-sm transition-colors"
                 >
                   {t("companyPartner")}
-                </a>
+                </Link>
               </li>
               <li>
                 <Link

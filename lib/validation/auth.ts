@@ -216,6 +216,20 @@ export type ForgotEmailValues = z.infer<typeof forgotEmailSchema>;
 export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 export type ProviderRegisterValues = z.infer<typeof providerRegisterSchema>;
 
+export const providerOnboardingSchema = z.object({
+  addressEn: z.string().trim().min(4, "addressEnRequired"),
+  addressAr: z.string().trim().min(4, "addressArRequired"),
+  opensAt: hhmmSchema,
+  closesAt: hhmmSchema,
+  commercialRegistration: documentFileSchema,
+  ministryLicense: documentFileSchema,
+  ownerId: documentFileSchema,
+  logo: imageFileSchema,
+  gallery: z.array(imageFileSchema).min(1, "galleryRequired").max(GALLERY_MAX, "galleryMax"),
+});
+
+export type ProviderOnboardingValues = z.infer<typeof providerOnboardingSchema>;
+
 export const PROVIDER_REGISTER_STEP_FIELDS: Record<
   ProviderRegisterStepId,
   readonly (keyof ProviderRegisterValues)[]

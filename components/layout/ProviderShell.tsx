@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { ProviderGlobalSearch } from "@/components/layout/ProviderGlobalSearch";
 import { ProviderSidebar } from "@/components/layout/ProviderSidebar";
 import { Button } from "@/components/ui/Button";
@@ -105,6 +106,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
           </div>
 
           <div className="flex min-w-0 items-center gap-2">
+            <NotificationBell audience="provider" href={PROVIDER_PATHS.notifications} />
             {process.env.NODE_ENV === "development" ? (
               <Select
                 compact
@@ -133,6 +135,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
                   ? [{ href: PROVIDER_PATHS.profile, label: t("shell.profileMenu.businessProfile"), icon: Building2 }]
                   : []),
               ]}
+              showThemeToggle
               onSignOut={signOut}
             />
           </div>

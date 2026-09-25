@@ -9,6 +9,9 @@ export const PROVIDER_PATHS = {
   ledger: "/provider/ledger",
   staff: "/provider/staff",
   settings: "/provider/settings",
+  notifications: "/provider/notifications",
+  onboarding: "/provider/onboarding",
+  pending: "/provider/pending",
 } as const;
 
 export function providerBookingPath(id: string): string {

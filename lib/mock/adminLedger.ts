@@ -8,9 +8,7 @@ export const LEDGER_STANDINGS = ["healthy", "watch", "grace", "suspended"] as co
 
 export type LedgerStanding = (typeof LEDGER_STANDINGS)[number];
 
-const SETTLEMENT_CADENCES = ["weekly", "biweekly", "monthly"] as const;
-
-export type SettlementCadence = (typeof SETTLEMENT_CADENCES)[number];
+export type SettlementCadence = "weekly" | "biweekly" | "monthly";
 
 export type AdminLedgerRow = {
   id: string;
@@ -28,9 +26,7 @@ export type AdminLedgerRow = {
 export const CREDIT_WATCH_RATIO = 0.75;
 export const CREDIT_GRACE_RATIO = 1;
 
-const SETTLEMENT_STATUSES = ["paid", "due", "overdue"] as const;
-
-export type SettlementStatus = (typeof SETTLEMENT_STATUSES)[number];
+export type SettlementStatus = "paid" | "due" | "overdue";
 
 export type AdminLedgerStatement = {
   id: string;

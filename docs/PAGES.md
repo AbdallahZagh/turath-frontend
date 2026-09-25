@@ -24,10 +24,13 @@ It is the source of truth for **routes and screen contents** until the backend R
 
 Mock roles: `TOURIST` | `PROVIDER_STAFF` | `PROVIDER_OWNER` | `SUPER_ADMIN`.
 
-**Signed-in portal chrome:** Tourist and provider shells use the same compact
-global-search command palette pattern as Admin. Their theme selector lives at
-the bottom of the sidebar. Language selection and sign out live in the header
-avatar menu, together with the role-appropriate profile links.
+**Signed-in portal chrome:** Admin, tourist, and provider shells use the same
+prominent, consistently sized global-search command palette. The tourist theme
+selector lives at the bottom of its sidebar; its currency selector lives in the
+header avatar menu. The provider theme selector also lives in the avatar menu.
+Language selection, sign out, and role-appropriate profile links remain in that
+menu. The provider sidebar footer identifies the active business using the
+current business-profile name, category, and verification status.
 
 **Coarse access (now):** each portal is a separate layout. Visiting another group's URL in dev is allowed.
 
@@ -83,6 +86,8 @@ Signed-in tourist navigation uses the same discovery screens inside the user she
 - Guides `/user/guides`
 - Attractions `/user/attractions`
 - My bookings `/user/bookings`
+- Saved places `/user/saved`
+- Notifications `/user/notifications` (header bell, not the sidebar)
 - Dashboard `/user`
 - Profile `/user/profile` (header avatar menu, not the sidebar)
 
@@ -99,6 +104,7 @@ Dev-only (not in tourist nav): theme lab `/theme` (same screen as `/` until the 
 - Check-in `/provider/check-in`
 - Reviews `/provider/reviews`
 - My profile `/provider/my-profile` (header avatar menu; owner can edit, staff is read-only)
+- Notifications `/provider/notifications` (header bell, not the sidebar)
 
 ### Provider — `PROVIDER_OWNER` only
 
@@ -128,6 +134,7 @@ Nav labels and URLs use everyday names. Domain terms in §7 describe the same sc
 - Discount codes `/admin/discount-codes`
 - Audit logs `/admin/audit-logs`
 - Settings `/admin/settings`
+- Notifications `/admin/notifications` (header bell, not the sidebar)
 
 Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger`, `/admin/attractions`, `/admin/taxonomy`, `/admin/commissions`, `/admin/promotions`, `/admin/coupons`) redirect to the names above.
 
@@ -403,6 +410,18 @@ Category-specific form on a glass sheet:
 
 - Same papers, photos, address, and hours if a listing was started without them (not a separate signup). New applications use `/provider/register`.
 - Submit → `/provider/pending`
+
+### Portal notification centers
+
+- The tourist, provider, and admin headers each show a notification bell with an unread count and a short recent-items preview.
+- `/user/notifications`, `/provider/notifications`, and `/admin/notifications` show the full role-appropriate inbox with All / Unread filters and mock mark-as-read actions.
+- Notification data remains frontend mock data until the API exists.
+
+### `/user/saved`
+
+- Saved hotels, restaurants, trips, events, guides, and attractions in one collection.
+- Category filters, direct links back to each signed-in detail page, and remove-from-saved actions.
+- Saved-place data remains frontend mock data until the API exists.
 
 ### `/provider/pending`
 

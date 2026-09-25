@@ -107,7 +107,7 @@ export function GlobalSearchPalette({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="glass-surface border-glass-border text-prose-muted hover:text-prose hover:border-primary/40 hidden max-w-xs cursor-pointer items-center justify-between gap-3 rounded-xl border px-3.5 py-1.5 text-xs shadow-xs transition-colors duration-150 sm:flex"
+        className="glass-surface border-glass-border text-prose-muted hover:text-prose hover:border-primary/40 hidden h-10 w-full max-w-md cursor-pointer items-center justify-between gap-4 rounded-xl border px-4 text-sm shadow-xs transition-colors duration-150 sm:flex"
         aria-label={labels.dialog}
       >
         <span className="flex items-center gap-2">

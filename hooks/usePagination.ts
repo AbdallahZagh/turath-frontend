@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 export const TABLE_PAGE_SIZES = [5, 10, 25, 50] as const;
 const TABLE_PAGE_SIZE = 5;
@@ -17,20 +17,12 @@ export function usePagination<T>(
   items: T[],
   resetKey = "",
 ): PaginationResult<T> {
-  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({ resetKey, page: 1 });
   const [pageSize, setPageSizeState] = useState(TABLE_PAGE_SIZE);
   const total = items.length;
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
 
-  useEffect(() => {
-    setPage(1);
-  }, [resetKey]);
-
-  useEffect(() => {
-    if (page > pageCount) {
-      setPage(pageCount);
-    }
-  }, [page, pageCount]);
+  const page = pagination.resetKey === resetKey ? Math.min(pagination.page, pageCount) : 1;
 
   const rows = useMemo(() => {
     const current = Math.min(page, pageCount);
@@ -40,11 +32,15 @@ export function usePagination<T>(
 
   function setPageSize(next: number): void {
     setPageSizeState(next);
-    setPage(1);
+    setPagination({ resetKey, page: 1 });
+  }
+
+  function setPage(next: number): void {
+    setPagination({ resetKey, page: Math.min(Math.max(1, next), pageCount) });
   }
 
   return {
-    page: Math.min(page, pageCount),
+    page,
     pageCount,
     pageSize,
     total,

@@ -50,13 +50,13 @@ export function AdminUsers(): ReactNode {
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const { data, isPending, isError, refetch } = useAdminUsers();
   const { data: settings } = useAdminSettings();
-  const cutoffs = settings
+  const cutoffs = useMemo(() => settings
     ? {
         vipAtOrAbove: settings.reliability.vipAtOrAbove,
         standardAtOrAbove: settings.reliability.standardAtOrAbove,
         restrictedAtOrAbove: settings.reliability.restrictedAtOrAbove,
       }
-    : DEFAULT_RELIABILITY_CUTOFFS;
+    : DEFAULT_RELIABILITY_CUTOFFS, [settings]);
   const [query, setQuery] = useState("");
   const [account, setAccount] = useState(ALL);
   const [reliability, setReliability] = useState(ALL);

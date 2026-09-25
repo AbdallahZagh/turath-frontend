@@ -7,6 +7,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
+import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
@@ -30,7 +31,7 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
   const maxGuests = Math.max(...hotel.rooms.map((room) => room.maxGuests));
 
   return (
-    <article className="group h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
+    <article className="group relative h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
       <Link href={`${detailBasePath}/${hotel.id}`} className="block h-full min-w-0">
         <GlassPanel
           frost={false}
@@ -98,6 +99,12 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
           </div>
         </GlassPanel>
       </Link>
+      {detailBasePath.startsWith("/user") ? (
+        <SavePlaceButton
+          className="absolute end-3 top-3 z-10"
+          place={{ id: hotel.id, category: "hotels", name: hotel.name, governorate: hotel.governorate, imageSrc: hotel.imageSrc, href: `${detailBasePath}/${hotel.id}` }}
+        />
+      ) : null}
     </article>
   );
 }

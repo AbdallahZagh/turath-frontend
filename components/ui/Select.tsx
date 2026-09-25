@@ -476,9 +476,7 @@ export function Select({
       aria-haspopup="listbox"
       aria-expanded={open}
       aria-controls={listId}
-      aria-activedescendant={open ? `${listId}-option-${activeIndex}` : undefined}
       aria-label={label ?? placeholder}
-      aria-required={required}
       onClick={() => (open ? closeMenu() : openMenu())}
       onKeyDown={onTriggerKeyDown}
     >

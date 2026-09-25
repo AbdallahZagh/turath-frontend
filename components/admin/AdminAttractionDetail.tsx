@@ -125,6 +125,7 @@ export function AdminAttractionDetail({
       <AdminAttractionLocationView attraction={attraction} />
 
       <AdminAttractionModal
+        key={`${attraction.id}-${editOpen ? "open" : "closed"}`}
         open={editOpen}
         onClose={() => setEditOpen(false)}
         attraction={attraction}

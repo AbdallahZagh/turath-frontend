@@ -3,6 +3,7 @@
 import { ListFilter, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
+  useCallback,
   useEffect,
   useId,
   useRef,
@@ -70,7 +71,7 @@ export function AdminFilterBar({
   const active = filters.filter(isActive);
   const activeCount = active.length;
 
-  function syncMenuBox(): void {
+  const syncMenuBox = useCallback((): void => {
     const trigger = triggerRef.current;
     if (!trigger) {
       return;
@@ -83,13 +84,10 @@ export function AdminFilterBar({
         minWidth: 288,
       }),
     );
-  }
+  }, [filters.length]);
 
   useEffect(() => {
-    if (!open) {
-      setMenuBox(null);
-      return;
-    }
+    if (!open) return;
 
     syncMenuBox();
     window.addEventListener("resize", syncMenuBox);
@@ -98,7 +96,7 @@ export function AdminFilterBar({
       window.removeEventListener("resize", syncMenuBox);
       window.removeEventListener("scroll", syncMenuBox, true);
     };
-  }, [open, filters.length]);
+  }, [open, syncMenuBox]);
 
   useEffect(() => {
     if (!open) {

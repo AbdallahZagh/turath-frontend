@@ -22,6 +22,7 @@ export const ADMIN_PATHS = {
   reviews: "/admin/reviews",
   auditLogs: "/admin/audit-logs",
   settings: "/admin/settings",
+  notifications: "/admin/notifications",
 } as const;
 
 export function isAdminDetailPath(pathname: string, listPath: string): boolean {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 const CARD_PAGE_SIZE = 9;
 
@@ -13,18 +13,19 @@ export function useInfiniteReveal<T>(
   resetKey = "",
   pageSize = CARD_PAGE_SIZE,
 ): InfiniteRevealResult<T> {
-  const [count, setCount] = useState(pageSize);
-
-  useEffect(() => {
-    setCount(pageSize);
-  }, [resetKey, pageSize]);
+  const stateKey = `${resetKey}:${pageSize}`;
+  const [reveal, setReveal] = useState({ key: stateKey, count: pageSize });
+  const count = reveal.key === stateKey ? reveal.count : pageSize;
 
   const visible = items.slice(0, count);
   const hasMore = count < items.length;
 
   const loadMore = useCallback(() => {
-    setCount((current) => Math.min(current + pageSize, items.length));
-  }, [items.length, pageSize]);
+    setReveal((current) => ({
+      key: stateKey,
+      count: Math.min((current.key === stateKey ? current.count : pageSize) + pageSize, items.length),
+    }));
+  }, [items.length, pageSize, stateKey]);
 
   return { visible, hasMore, loadMore };
 }

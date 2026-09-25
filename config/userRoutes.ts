@@ -3,6 +3,8 @@ export const USER_PATHS = {
   profile: "/user/profile",
   bookings: "/user/bookings",
   reliability: "/user/reliability",
+  saved: "/user/saved",
+  notifications: "/user/notifications",
   review: (bookingId: string): string => `/user/bookings/${bookingId}/review`,
   hotels: "/user/hotels",
   restaurants: "/user/restaurants",

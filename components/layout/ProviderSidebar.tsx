@@ -1,15 +1,16 @@
 "use client";
 
-import { X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { BadgeCheck, Building2, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_NAV } from "@/config/nav";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { useProviderProfile } from "@/hooks/useProviderProfile";
 import { cn } from "@/lib/cn";
 import { useAuthStore } from "@/store/authStore";
 
@@ -29,10 +30,20 @@ export function ProviderSidebar({
   onClose,
 }: ProviderSidebarProps): ReactNode {
   const t = useTranslations("provider");
-  const tChrome = useTranslations("chrome");
+  const locale = useLocale();
   const pathname = usePathname();
   const role = useAuthStore((state) => state.user.role);
+  const profileQuery = useProviderProfile();
   const items = PROVIDER_NAV.filter((item) => item.roles.includes(role));
+  const profile = profileQuery.data;
+  const businessName = profile
+    ? locale === "ar"
+      ? profile.nameAr
+      : profile.nameEn
+    : t("business.name");
+  const businessCategory = profile
+    ? t(`profile.registration.categories.${profile.category}`)
+    : t("business.category");
 
   return (
     <>
@@ -96,10 +107,37 @@ export function ProviderSidebar({
         </nav>
 
         <div className="border-glass-border border-t p-3">
-          <p className="text-prose-muted mb-2 px-1 text-[0.65rem] font-bold uppercase tracking-[0.14em]">
-            {tChrome("theme")}
-          </p>
-          <ThemeToggle className="w-full" />
+          {profileQuery.isPending ? (
+            <Skeleton className="h-[5.5rem] rounded-2xl" />
+          ) : (
+            <section className="border-glass-border bg-glass-control rounded-2xl border p-3">
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="bg-primary/12 text-primary grid size-10 shrink-0 place-items-center rounded-xl">
+                  <Building2 className="size-5" aria-hidden />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.12em]">
+                    {t("sidebarBusiness.current")}
+                  </p>
+                  <p className="text-prose mt-0.5 truncate text-sm font-semibold" title={businessName}>
+                    {businessName}
+                  </p>
+                </div>
+              </div>
+              <div className="text-prose-muted mt-3 flex items-center justify-between gap-2 text-xs">
+                <span className="truncate">{businessCategory}</span>
+                {profile?.verified ? (
+                  <span
+                    className="text-primary inline-flex shrink-0 items-center gap-1"
+                    title={t("profile.preview.verified")}
+                  >
+                    <BadgeCheck className="size-3.5" aria-hidden />
+                    <span className="sr-only">{t("profile.preview.verified")}</span>
+                  </span>
+                ) : null}
+              </div>
+            </section>
+          )}
         </div>
       </aside>
     </>

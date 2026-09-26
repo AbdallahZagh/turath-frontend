@@ -5,7 +5,7 @@
 import { ADMIN_PATHS, isAdminDetailPath } from "@/config/adminRoutes";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 
-export type PageHeaderNamespace = "admin.headers" | "provider.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "guides.headers" | "attractions.headers" | "discovery.headers" | "account.headers" | "legal.headers";
+export type PageHeaderNamespace = "admin.headers" | "provider.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "guides.headers" | "attractions.headers" | "discovery.headers" | "account.headers" | "legal.headers" | "contact.headers";
 
 export type AdminHeaderPage =
   | "overview"
@@ -48,6 +48,8 @@ export type PageHeaderActionSpec = {
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
   page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
+  /** List page one level up; renders a breadcrumb (its title, then this page's). */
+  parent?: string;
   /** Pin the header and let the page body fill leftover viewport height. */
   fillViewport?: boolean;
   actions?: PageHeaderActionSpec[];
@@ -56,7 +58,11 @@ export type PageHeaderSpec = {
 const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/provider": { namespace: "provider.headers", page: "dashboard" },
   "/provider/bookings": { namespace: "provider.headers", page: "bookings" },
-  providerBookingDetail: { namespace: "provider.headers", page: "bookingDetail" },
+  providerBookingDetail: {
+    namespace: "provider.headers",
+    page: "bookingDetail",
+    parent: PROVIDER_PATHS.bookings,
+  },
   "/provider/check-in": { namespace: "provider.headers", page: "checkIn" },
   "/provider/reviews": { namespace: "provider.headers", page: "reviews" },
   "/provider/my-profile": { namespace: "provider.headers", page: "myProfile" },
@@ -77,6 +83,7 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/legal/terms": { namespace: "legal.headers", page: "terms" },
   "/legal/privacy": { namespace: "legal.headers", page: "privacy" },
   "/legal/provider-licensing": { namespace: "legal.headers", page: "providerLicensing" },
+  "/contact": { namespace: "contact.headers", page: "index" },
   "/user": { namespace: "account.headers", page: "dashboard" },
   "/user/profile": { namespace: "account.headers", page: "profile" },
   "/user/hotels": { namespace: "hotels.headers", page: "index" },
@@ -91,13 +98,21 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/user/notifications": { namespace: "account.headers", page: "notifications" },
   [ADMIN_PATHS.home]: { namespace: "admin.headers", page: "overview" },
   [ADMIN_PATHS.guests]: { namespace: "admin.headers", page: "users", fillViewport: true },
-  guestDetail: { namespace: "admin.headers", page: "userDetail" },
+  guestDetail: {
+    namespace: "admin.headers",
+    page: "userDetail",
+    parent: ADMIN_PATHS.guests,
+  },
   [ADMIN_PATHS.businesses]: {
     namespace: "admin.headers",
     page: "providers",
     fillViewport: true,
   },
-  businessDetail: { namespace: "admin.headers", page: "providerDetail" },
+  businessDetail: {
+    namespace: "admin.headers",
+    page: "providerDetail",
+    parent: ADMIN_PATHS.businesses,
+  },
   [ADMIN_PATHS.bookings]: {
     namespace: "admin.headers",
     page: "bookings",
@@ -108,13 +123,21 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
     page: "disputes",
     fillViewport: true,
   },
-  noShowDetail: { namespace: "admin.headers", page: "disputeDetail" },
+  noShowDetail: {
+    namespace: "admin.headers",
+    page: "disputeDetail",
+    parent: ADMIN_PATHS.noShows,
+  },
   [ADMIN_PATHS.accounts]: {
     namespace: "admin.headers",
     page: "ledger",
     fillViewport: true,
   },
-  accountDetail: { namespace: "admin.headers", page: "ledgerDetail" },
+  accountDetail: {
+    namespace: "admin.headers",
+    page: "ledgerDetail",
+    parent: ADMIN_PATHS.accounts,
+  },
   [ADMIN_PATHS.heritageSites]: {
     namespace: "admin.headers",
     page: "attractions",
@@ -128,7 +151,11 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
       },
     ],
   },
-  heritageSiteDetail: { namespace: "admin.headers", page: "attractionDetail" },
+  heritageSiteDetail: {
+    namespace: "admin.headers",
+    page: "attractionDetail",
+    parent: ADMIN_PATHS.heritageSites,
+  },
   [ADMIN_PATHS.fees]: {
     namespace: "admin.headers",
     page: "commissions",

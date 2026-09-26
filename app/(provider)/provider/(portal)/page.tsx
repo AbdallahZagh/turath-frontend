@@ -6,7 +6,7 @@ import { ProviderDashboard } from "@/components/provider/ProviderDashboard";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("provider.headers.dashboard");
-  return { title: `${t("title")} | Turath`, description: t("description") };
+  return { title: t("title"), description: t("description") };
 }
 
 export default function ProviderDashboardPage(): ReactNode {

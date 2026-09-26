@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Coins, Menu as MenuIcon, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   useEffect,
   useId,
@@ -26,6 +27,7 @@ import { controlStyle } from "@/components/ui/controlScale";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { useIsClient } from "@/hooks/useIsClient";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
 import { useAuthStore } from "@/store/authStore";
@@ -59,7 +61,7 @@ function HeaderNav({ items }: { items: NavItem[] }): ReactNode {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <nav className="hidden items-center gap-1 lg:flex" aria-label={t("navLabel")}>
+    <nav className="hidden items-center gap-1 xl:flex" aria-label={t("navLabel")}>
       {items.map((item) => {
         const label = t(item.labelKey);
         const underline =
@@ -95,9 +97,15 @@ function HeaderNav({ items }: { items: NavItem[] }): ReactNode {
   );
 }
 
+type AuthHrefs = {
+  login: string;
+  register: string;
+};
+
 type HeaderMobileNavProps = {
   items: NavItem[];
   showGuestAuth: boolean;
+  authHrefs: AuthHrefs;
   currencyOptions: SelectOption[];
   currency: string;
   onCurrencyChange: (value: string) => void;
@@ -106,6 +114,7 @@ type HeaderMobileNavProps = {
 function HeaderMobileNav({
   items,
   showGuestAuth,
+  authHrefs,
   currencyOptions,
   currency,
   onCurrencyChange,
@@ -236,7 +245,7 @@ function HeaderMobileNav({
                 className="border-glass-border mt-1 flex flex-col gap-1 border-t px-3 py-3 sm:hidden"
               >
                 <Link
-                  href="/login"
+                  href={authHrefs.login}
                   role="menuitem"
                   className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
                   onClick={() => setOpen(false)}
@@ -244,7 +253,7 @@ function HeaderMobileNav({
                   {t("login")}
                 </Link>
                 <Link
-                  href="/register"
+                  href={authHrefs.register}
                   role="menuitem"
                   className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
                   onClick={() => setOpen(false)}
@@ -256,7 +265,7 @@ function HeaderMobileNav({
 
             <div
               role="none"
-              className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 lg:hidden"
+              className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 xl:hidden"
             >
               <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
                 {t("languageMenu")}
@@ -302,7 +311,7 @@ function HeaderMobileNav({
       : null;
 
   return (
-    <div className="relative shrink-0 lg:hidden">
+    <div className="relative shrink-0 xl:hidden">
       <button
         ref={triggerRef}
         type="button"
@@ -329,6 +338,13 @@ export function PublicHeader(): ReactNode {
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
   const touristSignedIn = mounted && isAuthenticated && user.role === "TOURIST";
+  const pathname = usePathname();
+  // Sign-in from any page but home brings the user back to it (see lib/auth/returnTo).
+  const returnTo = pathname === "/" ? undefined : pathname;
+  const authHrefs: AuthHrefs = {
+    login: withReturnTo("/login", returnTo),
+    register: withReturnTo("/register", returnTo),
+  };
   const navItems: NavItem[] = touristSignedIn
     ? [...NAV_ITEMS, { href: "/user/bookings", labelKey: "myBookings" }]
     : NAV_ITEMS;
@@ -362,6 +378,7 @@ export function PublicHeader(): ReactNode {
           <HeaderMobileNav
             items={touristSignedIn ? [...navItems, { href: "/user", labelKey: "profile" }] : navItems}
             showGuestAuth={!touristSignedIn}
+            authHrefs={authHrefs}
             currencyOptions={currencyOptions}
             currency={currency}
             onCurrencyChange={onCurrencyChange}
@@ -381,7 +398,7 @@ export function PublicHeader(): ReactNode {
             onChange={onCurrencyChange}
             label={t("currencyLabel")}
           />
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <LocaleSwitcher compact />
           </div>
           {touristSignedIn ? (
@@ -401,7 +418,7 @@ export function PublicHeader(): ReactNode {
               <Button
                 variant="outline"
                 size="sm"
-                href="/login"
+                href={authHrefs.login}
                 paddingX="0.85em"
                 className="shrink-0 max-sm:hidden"
               >
@@ -410,7 +427,7 @@ export function PublicHeader(): ReactNode {
               <Button
                 variant="solid"
                 size="sm"
-                href="/register"
+                href={authHrefs.register}
                 paddingX="0.85em"
                 className="shrink-0"
               >

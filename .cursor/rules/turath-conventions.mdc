@@ -115,6 +115,9 @@ Pages do not rebuild chrome. `(auth)` uses `AuthLayout` from `app/(auth)/layout.
 roles. Staff nav hides owner-only items even with mock auth.
 
 Titles/breadcrumbs/actions: `config/pageHeaders.ts` + shared `PageHeader`.
+Detail pages with a hero keep their own title but use `PAGE_TITLE_CLASS`
+(`components/ui/pageTitle.ts`). Unknown URLs use the shared `NotFoundPanel`
+(`app/not-found.tsx` publicly; segment `not-found.tsx` + `[...missing]` in portals).
 Nav: `config/nav.ts` with `roles` arrays. Pages do not hardcode header markup.
 
 ## Error, loaders, empty

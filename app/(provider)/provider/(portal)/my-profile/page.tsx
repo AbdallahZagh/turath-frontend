@@ -6,7 +6,7 @@ import { ProviderPersonalProfileScreen } from "@/components/provider/ProviderPer
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("provider.headers.myProfile");
-  return { title: `${t("title")} | Turath`, description: t("description") };
+  return { title: t("title"), description: t("description") };
 }
 
 export default function ProviderMyProfilePage(): ReactNode {

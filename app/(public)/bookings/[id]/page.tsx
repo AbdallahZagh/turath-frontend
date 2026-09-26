@@ -8,7 +8,7 @@ type BookingPageProps = { params: Promise<{ id: string }> };
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("bookings.voucher");
-  return { title: `${t("title")} | Turath`, description: t("subtitle") };
+  return { title: t("title"), description: t("subtitle") };
 }
 
 export default async function BookingPage({ params }: BookingPageProps): Promise<ReactNode> {

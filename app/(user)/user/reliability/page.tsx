@@ -6,7 +6,7 @@ import { ReliabilityOverview } from "@/components/account/ReliabilityOverview";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("account.headers.reliability");
-  return { title: `${t("title")} | Turath`, description: t("description") };
+  return { title: t("title"), description: t("description") };
 }
 
 export default function UserReliabilityPage(): ReactNode {

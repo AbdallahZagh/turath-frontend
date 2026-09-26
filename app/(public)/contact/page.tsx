@@ -4,29 +4,20 @@ import type { ReactNode } from "react";
 
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactInfo } from "@/components/contact/ContactInfo";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("contact");
+  const t = await getTranslations("contact.headers.index");
   return {
-    title: `${t("title")} | Turath`,
-    description: t("lead"),
+    title: t("title"),
+    description: t("description"),
   };
 }
 
-export default async function ContactPage(): Promise<ReactNode> {
-  const t = await getTranslations("contact");
-
+export default function ContactPage(): ReactNode {
   return (
     <div className="mx-auto max-w-4/5 px-4 pt-32 pb-20 sm:px-6 sm:pt-36 sm:pb-24 lg:px-8">
-      {/* Page Title & Subtitle */}
-      <div className="mb-8 text-center sm:mb-12">
-        <h1 className="font-heading text-prose text-3xl font-semibold sm:text-4xl lg:text-5xl">
-          {t("title")}
-        </h1>
-        <p className="text-prose-muted mx-auto mt-3 max-w-xl text-base sm:text-lg">
-          {t("lead")}
-        </p>
-      </div>
+      <PageHeader />
 
       {/* Side-by-Side: Info Card + Contact Form */}
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-8">

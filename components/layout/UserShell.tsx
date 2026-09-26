@@ -2,6 +2,7 @@
 
 import { Coins, Menu, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
@@ -15,6 +16,7 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { USER_PATHS } from "@/config/userRoutes";
 import { useIsClient } from "@/hooks/useIsClient";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
 
@@ -30,6 +32,7 @@ export function UserShell({ children }: UserShellProps): ReactNode {
   const signOut = useAuthStore((state) => state.signOut);
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
+  const pathname = usePathname();
 
   if (!mounted) {
     return <div className="p-6"><Skeleton className="h-[calc(100svh-3rem)]" /></div>;
@@ -45,7 +48,7 @@ export function UserShell({ children }: UserShellProps): ReactNode {
           <h1 className="font-heading text-prose mt-5 text-3xl font-semibold">{t("access.title")}</h1>
           <p className="text-prose-muted mt-2 max-w-md text-sm leading-relaxed">{t("access.description")}</p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button href="/login">{t("access.signIn")}</Button>
+            <Button href={withReturnTo("/login", pathname)}>{t("access.signIn")}</Button>
             {process.env.NODE_ENV === "development" ? (
               <Button variant="outline" onClick={() => completeSession("TOURIST")}>
                 {t("access.preview")}

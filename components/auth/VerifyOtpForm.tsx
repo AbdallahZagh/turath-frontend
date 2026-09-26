@@ -13,7 +13,7 @@ import { OtpInput } from "@/components/auth/OtpInput";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { useSendLoginCode, useVerifyOtp } from "@/hooks/useAuth";
-import { homePathForRole } from "@/lib/auth/home";
+import { postSignInPath } from "@/lib/auth/home";
 import { fadeUp } from "@/lib/motion/variants";
 import { verifyOtpSchema, type VerifyOtpValues } from "@/lib/validation/auth";
 import { fieldMessage } from "@/lib/validation/fieldMessage";
@@ -76,7 +76,7 @@ export function VerifyOtpForm(): ReactNode {
       const role = pending.flow === "register" || !isAuthenticated ? "TOURIST" : userRole;
       completeSession(role);
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
-      router.replace(homePathForRole(role));
+      router.replace(postSignInPath(role, pending.returnTo));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }

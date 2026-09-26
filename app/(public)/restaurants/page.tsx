@@ -8,7 +8,7 @@ import type { ListingSearchParams } from "@/lib/search/listingParams";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("restaurants.headers.index");
-  return { title: `${t("title")} | Turath`, description: t("description") };
+  return { title: t("title"), description: t("description") };
 }
 
 export default function RestaurantsPage({ searchParams }: { searchParams: ListingSearchParams }): ReactNode {

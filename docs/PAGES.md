@@ -16,11 +16,12 @@ It is the source of truth for **routes and screen contents** until the backend R
 
 These are settled. Code, copy, and later phases follow them.
 
-- **After sign-in:** the user returns to the page they came from, or to `/` if there is none. The `/user` dashboard stays one click away in the header. (The current mock OTP stub still routes to the role home — see §4 — until the return-to flow is built.)
+- **After sign-in:** a user returns to the page they came from, or to `/` if there is none. Sign-in links from the public header and the `/user` sign-in card carry the page as `?next=` (validated as a same-origin relative path in `lib/auth/returnTo.ts`); the param survives the OTP step. Business and admin accounts always land on their own portal home. The `/user` dashboard stays one click away in the header.
 - **Business staff and inventory:** `PROVIDER_STAFF` sees `/provider/inventory` **read-only** — rooms, tables, sessions, stock, and prices are visible; add, edit, delete, price, and stock controls are not. Owners keep full edit.
-- **Commission:** the default commission is **10%**. The admin can change it per business (`/admin/businesses/[id]` → Finance). In the mock, the standard tier and the hotel / dining / trip / event category defaults are 10%; guides keep 8.5%.
+- **Commission:** the default commission is **10%**, Guides are **8.5%**, and the admin can override either per business (`/admin/businesses/[id]` → Finance).
 - **Admin route names:** the admin URLs are the ones in `config/adminRoutes.ts` and §3 (for example `/admin/discount-codes` and `/admin/featured`, not `/admin/coupons` or `/admin/promotions`). **Note:** the SRS and Architecture Word documents still use the old route names and a 12% commission figure. This file and `config/adminRoutes.ts` win; the Word files are not edited from this repo.
-- **People words in copy:** customer-facing text calls the person booking a **user** (Arabic **مستخدم**). **Business** stays the word for providers. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Existing strings that still say “guest” are renamed in a later pass.
+- **People words in copy:** customer-facing text calls the person booking a **user** (Arabic **مستخدم**) and the other side a **business** (Arabic **المنشأة**), not guest, tourist, or provider. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Party counts (“2 guests”, “per guest”) stay as natural occupancy wording. Admin and business-portal screens still say “guest” for the person being served; renaming those is a separate decision.
+- **Unknown URLs:** `app/not-found.tsx` shows the branded `NotFoundPanel` (logo, title, one sentence, Back to home, Search) inside the public header and footer. `/user/…`, `/provider/…`, and `/admin/…` have a catch-all `[...missing]` page plus a segment `not-found.tsx`, so the same panel renders inside that portal shell and Back to home goes to the portal home. No `error.tsx` or `loading.tsx` yet.
 
 ---
 
@@ -154,7 +155,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
-**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in and currently routes to the role home (`/` tourist, `/provider` provider, `/admin` admin). The locked target (§0) is to return to the page the user came from, or `/`. Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in; a user goes to the validated `?next=` page they signed in from, or `/` (§0). Business and admin accounts go to their portal home (`/provider`, `/admin`). Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
 
 ### `/login`
 
@@ -170,7 +171,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 - Full name, date of birth, nationality (searchable list of every country; flag + localized AR/EN name)
 - Phone: searchable country list with flags and localized names; any country calling code
 - Email, password
-- Terms checkbox
+- Terms checkbox; “Terms of Service” and “Privacy Policy” link to `/legal/terms` and `/legal/privacy` in a new tab (same on `/provider/register`)
 - Submit → OTP
 - Link back to login
 - Note: this is **tourist** signup. Providers use `/provider/register`
@@ -180,7 +181,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 - Masked destination (phone / WhatsApp)
 - 6-digit OTP inputs
 - Countdown + resend
-- Success → the page the user came from, or `/` (§0). Current stub: role home (`/` tourist, `/provider` provider, `/admin` admin)
+- Success → a user returns to the `?next=` page they came from, or `/` (§0). Business → `/provider`, admin → `/admin`
 
 ### `/forgot-password`
 
@@ -243,7 +244,10 @@ arrival, licensed providers, dual currency (SYP + USD), glass UI, AR/EN RTL.
 
 `PublicHeader` / `PublicFooter` (`components/layout/`) provide the shared
 `(public)` chrome; pages under this route group don't rebuild it.
-Tourist **Log in** and **Register** live in the header. Providers join from
+Tourist **Log in** and **Register** live in the header. The full inline nav shows
+from `xl` (1280px) up; below that the menu button opens the drawer with the same
+links in the same order (Explore, Attractions, Hotels, …), plus language, and
+Log in / Register on phones. Providers join from
 `#grow-with-turath` (footer “Partner” and the Grow with Turath band), not the header.
 Footer **Contact** links to `/contact` — **not** `mailto:hello@turath.sy`.
 
@@ -255,7 +259,7 @@ Same theme lab as `/`.
 
 Public contact page (inside `(public)` shell):
 
-- Centered page header (title & subtitle)
+- Shared `PageHeader` (title & subtitle from `config/pageHeaders.ts`)
 - Side-by-side layout:
   - Contact Information card: Direct phone, email, office location (Bab Sharqi, Old Damascus), and working hours (no placeholder WhatsApp until a real number exists)
   - Contact Form: Clean glass form with name, email, phone, topic, and message

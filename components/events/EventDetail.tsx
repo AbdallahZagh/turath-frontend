@@ -25,8 +25,10 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
 import { useEvent } from "@/hooks/useEvents";
 import type { Locale } from "@/i18n/config";
+import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
@@ -111,9 +113,7 @@ export function EventDetail({
               </Badge>
               <Badge>{t(`categories.${event.category}`)}</Badge>
             </div>
-            <h1 className="font-heading text-prose mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">
-              {name}
-            </h1>
+            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
             <p className="text-primary mt-2 text-sm font-semibold">
               {localizedName(event.providerName, loc)}
             </p>

@@ -33,7 +33,7 @@ const manrope = Manrope({
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("chrome");
   return {
-    title: t("siteTitle"),
+    title: { default: t("siteTitle"), template: `%s | ${t("brand")}` },
     description: t("siteDescription"),
     icons: {
       icon: "/app-logo.png",

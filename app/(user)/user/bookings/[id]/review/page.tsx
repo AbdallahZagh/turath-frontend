@@ -8,7 +8,7 @@ type ReviewPageProps = { params: Promise<{ id: string }> };
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("bookingReview");
-  return { title: `${t("title")} | Turath`, description: t("metaDescription") };
+  return { title: t("title"), description: t("metaDescription") };
 }
 
 export default async function UserBookingReviewPage({ params }: ReviewPageProps): Promise<ReactNode> {

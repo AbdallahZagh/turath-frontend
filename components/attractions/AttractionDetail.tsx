@@ -15,12 +15,14 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
 import { useAttraction } from "@/hooks/useAttractions";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useGuides } from "@/hooks/useGuides";
 import { useHotels } from "@/hooks/useHotels";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
+import { cn } from "@/lib/cn";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 
@@ -107,9 +109,7 @@ export function AttractionDetail({
               {tGov(attraction.governorate)}
             </Badge>
           </div>
-          <h1 className="font-heading text-prose mt-4 text-4xl font-semibold lg:text-5xl">
-            {name}
-          </h1>
+          <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
           {otherName !== name ? <p className="text-prose-muted mt-2 text-lg">{otherName}</p> : null}
         </section>
         <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">

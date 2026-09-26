@@ -26,7 +26,7 @@ function parseTicketQuantity(value: string | undefined): number {
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("bookings");
-  return { title: `${t("title")} | Turath`, description: t("metaDescription") };
+  return { title: t("title"), description: t("metaDescription") };
 }
 
 export default async function NewBookingPage({ searchParams }: { searchParams: BookingSearchParams }): Promise<ReactNode> {

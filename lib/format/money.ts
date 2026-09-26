@@ -6,8 +6,13 @@ function numberLocaleFor(locale: string): string {
   return locale === "ar" ? "ar-SY" : "en-US";
 }
 
-function formatSypLabel(amountSyp: number, locale: string): string {
-  return `${new Intl.NumberFormat(numberLocaleFor(locale)).format(amountSyp)} SYP`;
+/** Matches `landing.header.currencySyp` in each locale's messages. */
+function sypSymbolFor(locale: string): string {
+  return locale === "ar" ? "ل.س" : "SYP";
+}
+
+export function formatSypLabel(amountSyp: number, locale: string): string {
+  return `${new Intl.NumberFormat(numberLocaleFor(locale)).format(amountSyp)} ${sypSymbolFor(locale)}`;
 }
 
 function formatUsdLabel(amountSyp: number, locale: string): string {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { HotelDetail } from "@/components/hotels/HotelDetail";
+import { detailMetadata } from "@/lib/i18n/detailMetadata";
 import { getMockHotelIds } from "@/lib/mock/hotels";
 import { getHotel } from "@/services/hotels";
 
@@ -12,7 +13,7 @@ export function generateStaticParams(): Array<{ id: string }> {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const hotel = await getHotel(id);
-  return hotel ? { title: `${hotel.name.en} | Turath`, description: hotel.shortDescription.en } : { title: "Hotel | Turath" };
+  return detailMetadata(hotel && { name: hotel.name, description: hotel.shortDescription });
 }
 
 export default async function UserHotelDetailPage({ params }: { params: Promise<{ id: string }> }): Promise<ReactNode> {

@@ -11,6 +11,8 @@ export type PendingVerify = {
   channel: AuthChannel;
   destination: string;
   flow: AuthFlow;
+  /** Safe relative path a user returns to after verifying (see `lib/auth/returnTo`). */
+  returnTo?: string;
 };
 
 type AuthStore = {

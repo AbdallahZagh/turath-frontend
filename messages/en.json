@@ -33,7 +33,7 @@
     "dateOfBirth": "Date of birth",
     "nationality": "Nationality",
     "nationalityPlaceholder": "Select a country",
-    "termsLabel": "I agree to Turath's Terms of Service and Privacy Policy.",
+    "termsLabel": "I agree to Turath's <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
     "forgotPassword": "Forgot password?",
     "sendCode": "Send code",
     "submitLogin": "Continue",
@@ -318,7 +318,7 @@
         "familyStays": "Family-friendly Stays",
         "familyDayTrips": "Group Day Trips",
         "familyFestivals": "Cultural Festivals",
-        "familySupport": "24/7 Guest Support",
+        "familySupport": "24/7 User Support",
         "providerListBusiness": "List Your Hotel or Venue",
         "providerScannerApp": "Offline QR Scanner App",
         "providerLedger": "Clear Payout Records",
@@ -442,7 +442,7 @@
     "testimonials": {
       "eyebrow": "Only after they arrived",
       "title": "What travelers are saying.",
-      "subtitle": "A guest can review only after check-in. These notes are from people who showed up.",
+      "subtitle": "A user can review only after check-in. These notes are from people who showed up.",
       "verifiedBadge": "Checked in",
       "ratingLabel": "{count} out of 5 stars",
       "items": {
@@ -538,7 +538,8 @@
     "ratingEmpty": "No ratings yet",
     "ratingLabel": "{value} out of 5 from {count, plural, one {# review} other {# reviews}}",
     "ratingCount": "{count, plural, one {# review} other {# reviews}}",
-    "ratingOutOf": "{value} out of 5"
+    "ratingOutOf": "{value} out of 5",
+    "breadcrumb": "Breadcrumb"
   },
   "admin": {
     "shell": {
@@ -710,7 +711,7 @@
         "noShows": "No-shows",
         "reliabilityHint": {
           "vip": "Instant booking; up to 4 concurrent bookings.",
-          "standard": "Standard access; max 2 concurrent. High-value stays need provider approval.",
+          "standard": "Standard access; max 2 concurrent. High-value stays need business approval.",
           "restricted": "Instant booking off; max 1 active booking. Secondary OTP required.",
           "suspended": "Cannot create new bookings until support verifies identity."
         },
@@ -1638,7 +1639,7 @@
       "generatorHours": "Generator hours",
       "location": "Location",
       "navigate": "Open directions",
-      "reviews": "Verified guest reviews",
+      "reviews": "Verified user reviews",
       "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve now and pay the final amount in cash when you arrive.",
       "book": "Book this hotel"
@@ -1712,7 +1713,7 @@
       "availableTimes": "Available reservation times",
       "location": "Location",
       "navigate": "Open directions",
-      "reviews": "Verified guest reviews",
+      "reviews": "Verified user reviews",
       "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve your table now and pay the final amount directly at the restaurant.",
       "book": "Reserve a table"
@@ -1867,7 +1868,7 @@
       "experience": "What to expect",
       "venue": "Venue and directions",
       "navigate": "Open directions",
-      "reviews": "Verified guest reviews",
+      "reviews": "Verified user reviews",
       "noReviews": "No verified reviews yet.",
       "nextDate": "Next date",
       "time": "Starts at",
@@ -1944,7 +1945,7 @@
     "detail": {
       "back": "Back to guides", "galleryImage": "Experience with {guide}", "openImage": "Open photo {number}", "license": "License {number}",
       "about": "About this guide", "languages": "Languages", "specialties": "Specialties", "rates": "Private guide rates", "meetingArea": "Meeting area and directions",
-      "navigate": "Open directions", "reviews": "Verified guest reviews", "noReviews": "No verified reviews yet.",
+      "navigate": "Open directions", "reviews": "Verified user reviews", "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve now and pay the final amount directly to your guide when the experience begins.", "book": "Book this guide"
     }
   },
@@ -1964,8 +1965,8 @@
     }
   },
   "bookingReliability": {
-    "title": "This booking needs provider approval",
-    "description": "Your reliability score is below 50, so the provider will review this request before confirming it."
+    "title": "This booking needs business approval",
+    "description": "Your reliability score is below 50, so the business will review this request before confirming it."
   },
   "guideBooking": {
     "eyebrow": "Private guided experience", "title": "Book your guide", "details": "Experience details",
@@ -2235,12 +2236,12 @@
     "pages": {
       "terms": {
         "updated": "September 20, 2026",
-        "introduction": "These terms describe the frontend MVP experience. Completing a reservation means you agree to provide accurate details, respect the provider's published rules, and pay the displayed amount in cash on arrival.",
+        "introduction": "These terms describe the frontend MVP experience. Completing a reservation means you agree to provide accurate details, respect the business's published rules, and pay the displayed amount in cash on arrival.",
         "sections": {
           "agreement": { "title": "Using Turath", "body": "You may browse public listings without an account. An account is required to keep bookings, vouchers, preferences, and reliability history together. Account details must be accurate and must not be used to impersonate another person." },
           "bookings": { "title": "Bookings and cash on arrival", "body": "Turath shows the list price, any valid discount, and the final cash amount due on arrival. A booking pass contains a QR code and backup code. Availability is held briefly during checkout and is confirmed only when the reservation succeeds." },
-          "responsibilities": { "title": "Cancellations and guest conduct", "body": "Cancel as early as possible when plans change. Missing a confirmed arrival without cancelling may reduce your reliability score and booking access. Guests must follow reasonable safety, venue, capacity, and cultural-site rules." },
-          "changes": { "title": "Service changes", "body": "Listing details, opening hours, schedules, prices, and local entry requirements may change. Turath and verified providers should keep information current, but guests should confirm time-sensitive details before a long journey." }
+          "responsibilities": { "title": "Cancellations and user conduct", "body": "Cancel as early as possible when plans change. Missing a confirmed arrival without cancelling may reduce your reliability score and booking access. Users must follow reasonable safety, venue, capacity, and cultural-site rules." },
+          "changes": { "title": "Service changes", "body": "Listing details, opening hours, schedules, prices, and local entry requirements may change. Turath and verified businesses should keep information current, but users should confirm time-sensitive details before a long journey." }
         }
       },
       "privacy": {
@@ -2248,14 +2249,14 @@
         "introduction": "Turath collects only the information needed to provide accounts, reservations, arrival verification, support, and platform safety. This frontend currently uses mock data and does not send booking details to a production backend.",
         "sections": {
           "collection": { "title": "Information we use", "body": "Account information may include your name, phone number, email, nationality, date of birth, language, and currency preference. A booking may also include dates, party size, pickup choice, accessibility requests, special notes, or an emergency contact when the experience requires it." },
-          "use": { "title": "Why the information is needed", "body": "Information is used to create and manage reservations, prepare booking passes, confirm arrival, calculate reliability, unlock verified reviews, prevent misuse, and help Turath or the provider respond to support requests." },
-          "sharing": { "title": "What providers can see", "body": "The booked provider receives only the details needed to serve the reservation, such as guest name, verified phone number, party size, schedule, relevant notes, discount code, and cash due. Providers should not receive unrelated identity or account information." },
+          "use": { "title": "Why the information is needed", "body": "Information is used to create and manage reservations, prepare booking passes, confirm arrival, calculate reliability, unlock verified reviews, prevent misuse, and help Turath or the business respond to support requests." },
+          "sharing": { "title": "What businesses can see", "body": "The booked business receives only the details needed to serve the reservation, such as your name, verified phone number, party size, schedule, relevant notes, discount code, and cash due. Businesses should not receive unrelated identity or account information." },
           "choices": { "title": "Your choices", "body": "You can change language and currency display preferences from your account. When the production service launches, account access, correction, deletion, and retention requests will be handled through verified support procedures." }
         }
       },
       "providerLicensing": {
         "updated": "September 20, 2026",
-        "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a guest's own travel judgment.",
+        "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a user's own travel judgment.",
         "sections": {
           "verification": { "title": "Who is reviewed", "body": "Hotels, restaurants, trip agencies, event managers, and independent tour guides submit an owner account and bilingual business information. Tour guides also provide their professional license number." },
           "documents": { "title": "Documents and listing evidence", "body": "Applicants provide commercial registration, ministry or professional licensing, owner identification, operating details, location, contact information, a logo, and listing photographs. Documents are reviewed privately and are not displayed as public downloads." },
@@ -2269,11 +2270,11 @@
     "headers": {
       "dashboard": {
         "title": "Dashboard",
-        "description": "See your next booking, travel activity, and guest standing at a glance."
+        "description": "See your next booking, travel activity, and user standing at a glance."
       },
       "profile": {
         "title": "Your account",
-        "description": "Manage your details, preferences, bookings, and guest standing in one place."
+        "description": "Manage your details, preferences, bookings, and user standing in one place."
       },
       "bookings": {
         "title": "My bookings",
@@ -2310,9 +2311,9 @@
     },
     "access": {
       "title": "Sign in to your account",
-      "description": "Your bookings, vouchers, preferences, and reliability score are kept with your tourist account.",
+      "description": "Your bookings, vouchers, preferences, and reliability score are kept with your user account.",
       "signIn": "Sign in",
-      "preview": "Preview tourist account"
+      "preview": "Preview user account"
     },
     "nav": {
       "label": "Account navigation",
@@ -2333,7 +2334,7 @@
       "signOut": "Sign out"
     },
     "profile": {
-      "guest": "Turath guest",
+      "guest": "Turath user",
       "dateOfBirth": "Date of birth",
       "nationality": "Nationality",
       "phoneCountry": "Phone country"
@@ -2366,7 +2367,7 @@
         "guide": "Tour guide"
       },
       "standing": {
-        "eyebrow": "Your guest standing",
+        "eyebrow": "Your user standing",
         "tiers": {
           "VIP": "Excellent booking access",
           "STANDARD": "Standard booking access",
@@ -2388,7 +2389,7 @@
       },
       "error": {
         "title": "We couldn't load your dashboard",
-        "description": "Your bookings and guest standing are safe. Try loading the dashboard again.",
+        "description": "Your bookings and user standing are safe. Try loading the dashboard again.",
         "retry": "Try again"
       }
     },
@@ -2401,9 +2402,9 @@
       "usd": "US dollar estimate (USD)"
     },
     "providerRating": {
-      "title": "Your guest rating",
+      "title": "Your rating as a user",
       "description": "Verified businesses can rate you after check-in. This is separate from your reliability score.",
-      "count": "{count, plural, one {# provider review} other {# provider reviews}}",
+      "count": "{count, plural, one {# business review} other {# business reviews}}",
       "ratingLabel": "Rated {rating} out of 5"
     },
     "states": {
@@ -2493,12 +2494,12 @@
     "rating": "Your rating",
     "star": "{count, plural, one {# star} other {# stars}}",
     "comment": "Your review",
-    "commentPlaceholder": "Tell other guests what stood out about your experience",
+    "commentPlaceholder": "Tell other users what stood out about your experience",
     "submit": "Submit review",
     "submitting": "Submitting…",
     "back": "Back to voucher",
     "thanksTitle": "Thank you for your review",
-    "thanksBody": "Your verified feedback has been received and will help future guests.",
+    "thanksBody": "Your verified feedback has been received and will help future users.",
     "backToBookings": "Back to my bookings",
     "unavailableTitle": "Review not available yet",
     "unavailableBody": "You can review this booking only after your arrival has been confirmed.",
@@ -2560,7 +2561,7 @@
     "galleryHint": "At least one, up to {max}",
     "addPhoto": "Add photo",
     "removeFile": "Remove",
-    "termsLabel": "I agree to Turath’s partner terms and privacy policy.",
+    "termsLabel": "I agree to Turath’s <terms>terms of service</terms> and <privacy>privacy policy</privacy>.",
     "back": "Back",
     "next": "Continue",
     "submit": "Submit for review",
@@ -2596,7 +2597,7 @@
       "reviews": { "title": "Guest reviews", "description": "Read verified feedback and understand how guests rate their experience." },
       "myProfile": { "title": "My profile", "description": "Review your personal account details and access within this business." },
       "profile": { "title": "Business profile", "description": "Keep your bilingual description, location, hours, contact details, and gallery current." },
-      "inventory": { "title": "Inventory", "description": "Manage rooms, tables, schedules, capacity, prices, and availability for your business." },
+      "inventory": { "title": "Inventory", "description": "Rooms, tables, schedules, capacity, prices, and availability for your business." },
       "ledger": { "title": "Account balance", "description": "Follow commission, settlements, statements, and credit-ceiling usage." },
       "staff": { "title": "Staff", "description": "Invite team members and manage their access to daily operations." },
       "settings": { "title": "Business settings", "description": "Choose notification, language, timezone, and currency display preferences." },
@@ -2694,7 +2695,7 @@
       },
       "empty": {
         "title": "Personal profile unavailable",
-        "description": "The account details linked to this provider could not be found."
+        "description": "The account details linked to this business could not be found."
       }
     },
     "reviews": {
@@ -2735,14 +2736,14 @@
         "description": "The approved business information could not be found."
       },
       "registration": {
-        "title": "Provider registration record",
-        "description": "These business, license, and identity details come from the provider signup submission.",
+        "title": "Business registration record",
+        "description": "These business, license, and identity details come from the business signup submission.",
         "category": "Business category",
         "categories": {
           "hotels": "Hotel",
           "dining": "Restaurant",
           "trips": "Trip operator",
-          "events": "Event provider",
+          "events": "Event organizer",
           "guides": "Tour guide"
         },
         "documents": {
@@ -2877,7 +2878,7 @@
         "actions": "Actions"
       },
       "neverActive": "Not signed in yet",
-      "caption": "Provider team members and their access",
+      "caption": "Business team members and their access",
       "empty": {
         "title": "No team members yet",
         "description": "Invite the first team member to help with daily operations."
@@ -2923,13 +2924,13 @@
         "reactivate": "Reactivate access",
         "cancel": "Keep current access",
         "deactivateTitle": "Deactivate team access?",
-        "deactivateDescription": "{name} will no longer be able to open this provider workspace. Their previous activity will stay in the records.",
+        "deactivateDescription": "{name} will no longer be able to open this business workspace. Their previous activity will stay in the records.",
         "reactivateTitle": "Reactivate team access?",
         "reactivateDescription": "{name} will regain access using their assigned role.",
         "deactivatedTitle": "Access deactivated",
-        "deactivatedDescription": "{name} can no longer use this provider workspace.",
+        "deactivatedDescription": "{name} can no longer use this business workspace.",
         "reactivatedTitle": "Access restored",
-        "reactivatedDescription": "{name} can use the provider workspace again.",
+        "reactivatedDescription": "{name} can use the business workspace again.",
         "failureTitle": "Could not update access",
         "failureDescription": "The team member's access was not changed. Try again."
       }
@@ -3030,7 +3031,7 @@
       "slotsTitle": "Reservation times", "editSlots": "Edit times", "seatsValue": "{left} of {total}",
       "specialties": "Specialties", "blockedDates": "Blocked dates", "none": "None",
       "edit": "Edit", "delete": "Delete", "deleteTitle": "Delete inventory item", "deleteDescription": "Delete {name}? Existing frontend bookings are kept, but this item will no longer be offered.",
-      "emptyTitle": "No inventory added", "emptyDescription": "Add the first item to make this category ready for bookings.", "addFirst": "Add first item",
+      "emptyTitle": "No inventory added", "emptyDescription": "Add the first item to make this category ready for bookings.", "emptyDescriptionReadOnly": "The business owner has not added anything to this category yet.", "addFirst": "Add first item",
       "savedTitle": "Inventory saved", "savedBody": "The business inventory has been updated for this frontend session.",
       "deletedTitle": "Inventory item deleted", "deletedBody": "The item was removed from this frontend session.",
       "saveFailedTitle": "Could not update inventory", "saveFailedBody": "Review the details and try again.",
@@ -3306,8 +3307,12 @@
     "categories": { "all": "All", "hotels": "Hotels", "restaurants": "Dining", "trips": "Trips", "events": "Events", "guides": "Guides", "attractions": "Attractions" }
   },
   "contact": {
-    "title": "Contact us",
-    "lead": "Have a question or looking to collaborate? Reach out to our team.",
+    "headers": {
+      "index": {
+        "title": "Contact us",
+        "description": "Have a question or looking to collaborate? Reach out to our team."
+      }
+    },
     "info": {
       "title": "Contact Information",
       "lead": "Reach out directly by phone, email, or visit our office in Damascus.",
@@ -3359,5 +3364,11 @@
     },
     "toastErrorTitle": "Could not send",
     "toastErrorBody": "Check the form and try again."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The link may be broken, or the page may have moved.",
+    "home": "Back to home",
+    "search": "Search"
   }
 }

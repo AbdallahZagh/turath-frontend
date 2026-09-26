@@ -20,6 +20,7 @@ import { Controller, useForm, useWatch } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { ProviderRegisterProgress } from "@/components/auth/ProviderRegisterProgress";
+import { TERMS_LINK_TAGS } from "@/components/auth/termsLinkTags";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -855,7 +856,7 @@ export function ProviderRegisterForm(): ReactNode {
                     />
                   )}
                 />
-                {tProvider("termsLabel")}
+                <span>{tProvider.rich("termsLabel", TERMS_LINK_TAGS)}</span>
               </label>
               <AuthFieldError
                 message={fieldMessage(tErrors, form.formState.errors.terms)}

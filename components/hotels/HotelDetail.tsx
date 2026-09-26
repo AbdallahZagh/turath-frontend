@@ -25,9 +25,11 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
+import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
 
 type HotelDetailProps = {
@@ -110,7 +112,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
                 {tGov(hotel.governorate)}
               </Badge>
             </div>
-            <h1 className="font-heading text-prose mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>
               {hotelName}
             </h1>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">

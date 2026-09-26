@@ -24,10 +24,14 @@ import { Select } from "@/components/ui/Select";
 import { Switch } from "@/components/ui/Switch";
 import { useUpdateProviderSettings } from "@/hooks/useProviderSettings";
 import { setLocaleCookie } from "@/i18n/set-locale";
+import { formatSyp, formatSypLabel } from "@/lib/format/money";
 import type { ProviderSettings } from "@/lib/mock/providerSettings";
 import type { ProviderSettingsValues } from "@/lib/validation/providerSettings";
 import { providerSettingsSchema } from "@/lib/validation/providerSettings";
 import { toast } from "@/store/toastStore";
+
+/** Sample cash amount for the currency display preview. */
+const PREVIEW_AMOUNT_SYP = 240_000;
 
 type NotificationKey = keyof ProviderSettingsValues["notifications"];
 
@@ -211,8 +215,10 @@ export function ProviderSettingsForm({ settings }: { settings: ProviderSettings 
           </div>
           <div className="bg-glass-control border-border rounded-2xl border p-5">
             <p className="text-prose-muted text-xs font-semibold uppercase tracking-wide">{t("currency.preview")}</p>
-            <p className="font-heading text-prose mt-2 text-2xl font-semibold" dir="ltr">
-              {currencyDisplay === "sypWithUsd" ? "240,000 SYP (~$16.80)" : "240,000 SYP"}
+            <p className="font-heading text-prose mt-2 text-2xl font-semibold">
+              {currencyDisplay === "sypWithUsd"
+                ? formatSyp(PREVIEW_AMOUNT_SYP, currentLocale)
+                : formatSypLabel(PREVIEW_AMOUNT_SYP, currentLocale)}
             </p>
             <p className="text-prose-muted mt-2 text-xs leading-relaxed">{t("currency.cashHint")}</p>
           </div>

@@ -14,8 +14,10 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
+import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
@@ -46,7 +48,7 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
         <div className="space-y-7">
           <section>
             <div className="flex flex-wrap items-center gap-2">{trip.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(trip.governorate)}</Badge><Badge icon={<Clock3 className="size-3.5" aria-hidden />}>{t(`durations.${trip.duration}`)} · {localizedName(trip.durationDetail, loc)}</Badge></div>
-            <h1 className="font-heading text-prose mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">{name}</h1>
+            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
             <p className="text-primary mt-2 text-sm font-semibold">{localizedName(trip.providerName, loc)}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} size="md" label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{trip.rating.toFixed(1)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span><span className="text-prose-muted" aria-hidden>·</span><span className="text-prose-muted">{localizedName(trip.address, loc)}</span></div>
           </section>

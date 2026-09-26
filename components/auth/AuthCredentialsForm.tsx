@@ -11,6 +11,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
+import { TERMS_LINK_TAGS } from "@/components/auth/termsLinkTags";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -26,6 +27,7 @@ import {
   useSendLoginCode,
 } from "@/hooks/useAuth";
 import { isLocale } from "@/i18n/config";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
 import { toIsoDate } from "@/lib/format/datetime";
 import { SYRIA_ISO2 } from "@/lib/geo/countries";
@@ -44,6 +46,8 @@ import { useAuthStore } from "@/store/authStore";
 
 type AuthCredentialsFormProps = {
   mode: "login" | "register";
+  /** Validated `?next=` path; kept through the OTP step so a user lands back where they started. */
+  returnTo?: string;
 };
 
 type LoginMethod = "phone" | "email";
@@ -54,6 +58,7 @@ function isLoginMethod(value: string): value is LoginMethod {
 
 export function AuthCredentialsForm({
   mode,
+  returnTo,
 }: AuthCredentialsFormProps): ReactNode {
   const t = useTranslations("auth");
   const tErrors = useTranslations("auth.errors");
@@ -114,6 +119,7 @@ export function AuthCredentialsForm({
         channel: "phone",
         destination: values.phone,
         flow: "login",
+        returnTo,
       });
       toast.success(t("toastCodeSentTitle"), t("toastCodeSentBody"));
       router.push("/verify-otp");
@@ -129,6 +135,7 @@ export function AuthCredentialsForm({
         channel: "email",
         destination: values.email,
         flow: "login",
+        returnTo,
       });
       toast.success(t("toastCodeSentTitle"), t("toastCodeSentBody"));
       router.push("/verify-otp");
@@ -152,6 +159,7 @@ export function AuthCredentialsForm({
         channel: "phone",
         destination: values.phone,
         flow: "register",
+        returnTo,
       });
       toast.success(t("toastCodeSentTitle"), t("toastCodeSentBody"));
       router.push("/verify-otp");
@@ -465,7 +473,7 @@ export function AuthCredentialsForm({
                   />
                 )}
               />
-              {t("termsLabel")}
+              <span>{t.rich("termsLabel", TERMS_LINK_TAGS)}</span>
             </label>
             <AuthFieldError
               message={fieldMessage(tErrors, registerForm.formState.errors.terms)}
@@ -491,14 +499,14 @@ export function AuthCredentialsForm({
         <p className="min-w-0 text-sm">
           {mode === "login" ? (
             <Link
-              href="/register"
+              href={withReturnTo("/register", returnTo)}
               className="text-prose hover:text-prose-muted font-medium transition-colors"
             >
               {t("toRegister")}
             </Link>
           ) : (
             <Link
-              href="/login"
+              href={withReturnTo("/login", returnTo)}
               className="text-prose hover:text-prose-muted font-medium transition-colors"
             >
               {t("toLogin")}

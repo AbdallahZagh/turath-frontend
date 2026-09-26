@@ -60,11 +60,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  if (!isLegalSlug(slug)) return { title: "Turath" };
+  if (!isLegalSlug(slug)) notFound();
   const t = await getTranslations("legal");
   const pageKey = LEGAL_PAGES[slug].pageKey;
   return {
-    title: `${t(`headers.${pageKey}.title`)} | Turath`,
+    title: t(`headers.${pageKey}.title`),
     description: t(`headers.${pageKey}.description`),
   };
 }

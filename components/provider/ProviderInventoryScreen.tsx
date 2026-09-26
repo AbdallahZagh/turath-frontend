@@ -617,7 +617,7 @@ function InventoryEmpty({ action }: { action?: () => void }): ReactNode {
     <EmptyState
       icon={Plus}
       title={t("emptyTitle")}
-      description={t("emptyDescription")}
+      description={action ? t("emptyDescription") : t("emptyDescriptionReadOnly")}
       action={action ? <Button onClick={action}>{t("addFirst")}</Button> : undefined}
     />
   );

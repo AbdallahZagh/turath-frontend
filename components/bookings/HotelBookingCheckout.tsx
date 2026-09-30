@@ -102,6 +102,8 @@ export function HotelBookingCheckout({
   const activeCoupon = coupon?.valid ? coupon : null;
   const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = Math.max(0, listPriceSyp - discountSyp);
+  /** No price until a room is picked (a 0 SYP total reads as free). */
+  const price = (amountSyp: number): string => (selectedRoom ? formatMoney(amountSyp) : "—");
 
   if (hotelQuery.isPending) {
     return <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]"><Skeleton className="h-[42rem]" /><Skeleton className="h-96" /></div>;
@@ -162,17 +164,17 @@ export function HotelBookingCheckout({
 
   return (
     <div className="grid min-w-0 items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
-      <GlassPanel className="order-2 p-6 sm:p-8 lg:order-1 lg:p-9">
+      <GlassPanel className="p-6 sm:p-8 lg:p-9">
         <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
             <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkIn)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkOut)} />
               </div>
               <div className="min-w-0 space-y-1.5">
@@ -215,7 +217,7 @@ export function HotelBookingCheckout({
         </form>
       </GlassPanel>
 
-      <GlassPanel className="order-1 p-6 lg:sticky lg:top-28 lg:order-2">
+      <GlassPanel className="p-6 lg:sticky lg:top-28">
         <div className="flex items-center gap-3"><div className="bg-primary/12 text-primary grid size-11 place-items-center rounded-xl"><Hotel className="size-5" aria-hidden /></div><div><h2 className="text-prose font-semibold">{localizedName(hotel.name, loc)}</h2><p className="text-prose-muted text-xs">{localizedName(hotel.address, loc)}</p></div></div>
         <dl className="border-border mt-5 space-y-3 border-y py-5 text-sm">
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" />{t("dates")}</dt><dd className="text-prose text-end font-medium">{checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected")}</dd></div>
@@ -224,10 +226,11 @@ export function HotelBookingCheckout({
           <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{nights}</dd></div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>
           {discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}
-          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{formatMoney(cashDueSyp)}</dd></div>
+          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd></div>
         </dl>
+        {selectedRoom ? null : <p className="text-prose-muted mt-3 text-xs">{t("chooseRoomForPrice")}</p>}
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
         <Button type="submit" className="mt-6 hidden w-full lg:inline-flex" disabled={createBooking.isPending || !selectedRoom || nights < 1} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>
         <Button href={paths.listing("hotels", hotel.id)} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
@@ -237,7 +240,8 @@ export function HotelBookingCheckout({
         <div className="mx-auto flex max-w-[98rem] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-prose-muted text-xs">{t("cashDue")}</p>
-            <p className="text-prose text-sm leading-tight font-semibold">{formatMoney(cashDueSyp)}</p>
+            <p className="text-prose text-sm leading-tight font-semibold">{price(cashDueSyp)}</p>
+            {selectedRoom ? null : <p className="text-prose-muted text-xs">{t("chooseRoomForPrice")}</p>}
           </div>
           <Button
             type="submit"

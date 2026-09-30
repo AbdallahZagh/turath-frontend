@@ -197,6 +197,7 @@ export function RestaurantBookingCheckout({
                   render={({ field }) => (
                     <DatePicker
                       variant="main"
+                      dateStyle="short"
                       required
                       label={t("date")}
                       min={today}

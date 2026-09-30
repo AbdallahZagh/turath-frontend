@@ -93,8 +93,9 @@ export default async function LegalPage({
   const page = LEGAL_PAGES[slug];
   const Icon = page.icon;
 
+  // Reading width: ~720px of text on desktop, the same for every legal page.
   return (
-    <div className="mx-auto max-w-[78rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-24 sm:pt-32 lg:px-8">
+    <div className="mx-auto max-w-[calc(720px+4rem)] px-4 pb-20 pt-28 sm:px-6 sm:pb-24 sm:pt-32 lg:px-8">
       <PageHeader />
       <GlassPanel className="mb-6 flex items-start gap-4 p-5 sm:p-6">
         <span className="bg-primary/12 text-primary grid size-12 shrink-0 place-items-center rounded-2xl">
@@ -113,7 +114,7 @@ export default async function LegalPage({
             <h2 className="font-heading text-prose text-2xl font-semibold">
               {t(`${section}.title`)}
             </h2>
-            <p className="text-prose-muted mt-3 max-w-4xl text-sm leading-7 sm:text-base">
+            <p className="text-prose-muted mt-3 text-sm leading-7 sm:text-base">
               {t(`${section}.body`)}
             </p>
           </GlassPanel>

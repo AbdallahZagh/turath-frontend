@@ -21,6 +21,7 @@ import {
 import { cn } from "@/lib/cn";
 import {
   dateFnsLocale,
+  formatMediumDate,
   formatPickerDate,
   parseIsoDate,
   toIsoDate,
@@ -59,6 +60,8 @@ type DatePickerProps = {
   max?: string;
   showToday?: boolean;
   centerOn?: string;
+  /** `short` ("Oct 10, 2026" / "10 أكتوبر 2026") for narrow fields such as the checkout grid. */
+  dateStyle?: "long" | "short";
 };
 
 const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6] as const;
@@ -106,6 +109,7 @@ export function DatePicker({
   max,
   showToday = true,
   centerOn,
+  dateStyle = "long",
 }: DatePickerProps): ReactNode {
   const t = useTranslations("picker");
   const rawLocale = useLocale();
@@ -175,7 +179,11 @@ export function DatePicker({
         ? format(cursor, "yyyy", { locale: dfsLocale })
         : `${yearStart} – ${yearStart + 11}`;
 
-  const display = selectedIso ? formatPickerDate(selectedIso, locale) : "";
+  const display = !selectedIso
+    ? ""
+    : dateStyle === "short"
+      ? formatMediumDate(selectedIso, locale)
+      : formatPickerDate(selectedIso, locale);
 
   return (
     <PickerField

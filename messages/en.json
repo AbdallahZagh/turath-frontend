@@ -1983,6 +1983,7 @@
     "states": { "loadErrorTitle": "We couldn't prepare this booking", "loadErrorBody": "Please check your connection and try again.", "retry": "Try again", "unavailableTitle": "Guide unavailable", "unavailableBody": "The booking link may be incomplete, or this guide may no longer be listed." }
   },
   "bookings": {
+    "chooseRoomForPrice": "Choose a room to see the price",
     "headers": {
       "hotel": { "title": "Complete your booking", "description": "Pick your dates and room. You pay in cash when you arrive." },
       "restaurant": { "title": "Reserve your table", "description": "Choose a date, time, and seating area. You pay in cash at the restaurant." },

@@ -17,12 +17,24 @@ export function formatSypLabel(amountSyp: number, locale: string): string {
 
 function formatUsdLabel(amountSyp: number, locale: string): string {
   const sypPerUsd = getAdminCommissions().sypPerUsd;
-  return new Intl.NumberFormat(numberLocaleFor(locale), {
+  const parts = new Intl.NumberFormat(numberLocaleFor(locale), {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(sypPerUsd > 0 ? amountSyp / sypPerUsd : 0);
+  }).formatToParts(sypPerUsd > 0 ? amountSyp / sypPerUsd : 0);
+  // "US$" is Latin inside Arabic digits; isolate it left-to-right so it does not split into "$US".
+  return parts
+    .map((part) => (part.type === "currency" ? `\u2066${part.value}\u2069` : part.value))
+    .join("");
+}
+
+/**
+ * Unicode first-strong isolate (the text equivalent of `<bdi>`). Keeps "~US$ 16.80" in one
+ * piece inside Arabic text, and works in option hints and aria labels where JSX cannot go.
+ */
+function isolate(text: string): string {
+  return `\u2068${text}\u2069`;
 }
 
 export function formatSyp(
@@ -34,8 +46,8 @@ export function formatSyp(
   const usd = formatUsdLabel(amountSyp, locale);
 
   if (displayCurrency === "USD") {
-    return `${usd} (~${syp})`;
+    return `${isolate(usd)} (${isolate(`~${syp}`)})`;
   }
 
-  return `${syp} (~${usd})`;
+  return `${isolate(syp)} (${isolate(`~${usd}`)})`;
 }

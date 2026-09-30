@@ -26,8 +26,13 @@ type InputProps = Omit<
   rounded?: string;
   minHeight?: string;
   label?: string;
+  /** Leading icon (main variant). The text starts after it, lined up with Select and DatePicker. */
+  icon?: ReactNode;
   className?: string;
 };
+
+/** Room for a 1rem icon plus the control gap, same as the Select trigger. */
+const FIELD_ICON_PADDING = "ps-[calc(var(--control-px)+1rem+var(--control-gap))]";
 
 const VARIANT_RADIUS: Record<InputVariant, string> = {
   main: "0.625rem",
@@ -44,6 +49,7 @@ export function Input({
   rounded,
   minHeight,
   label,
+  icon,
   className,
   id,
   placeholder,
@@ -65,14 +71,24 @@ export function Input({
   if (variant === "main") {
     return (
       <div className={cn(FIELD_GROUP_MAIN, className)} style={style}>
-        <input
-          {...rest}
-          id={inputId}
-          className={cn(FIELD_BASE, FIELD_VARIANT.main)}
-          placeholder={placeholder}
-          disabled={disabled}
-          aria-label={label}
-        />
+        <div className="relative">
+          <input
+            {...rest}
+            id={inputId}
+            className={cn(FIELD_BASE, FIELD_VARIANT.main, icon && FIELD_ICON_PADDING)}
+            placeholder={placeholder}
+            disabled={disabled}
+            aria-label={label}
+          />
+          {icon ? (
+            <span
+              aria-hidden
+              className="text-prose-muted pointer-events-none absolute inset-y-0 start-(--control-px) z-[6] inline-flex items-center"
+            >
+              {icon}
+            </span>
+          ) : null}
+        </div>
         {label ? (
           <label className={FIELD_STACK_LABEL} htmlFor={inputId}>
             {label}

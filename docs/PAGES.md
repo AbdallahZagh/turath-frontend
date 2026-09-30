@@ -16,12 +16,17 @@ It is the source of truth for **routes and screen contents** until the backend R
 
 These are settled. Code, copy, and later phases follow them.
 
-- **After sign-in:** a user returns to the page they came from, or to `/` if there is none. Sign-in links from the public header and the `/user` sign-in card carry the page as `?next=` (validated as a same-origin relative path in `lib/auth/returnTo.ts`); the param survives the OTP step. Business and admin accounts always land on their own portal home. The `/user` dashboard stays one click away in the header.
+- **After sign-in:** a user returns to the page they came from, or to `/` if there is none. Sign-in links from the public header and the `/user` sign-in card carry the page as `?next=` (validated as a same-origin relative path in `lib/auth/returnTo.ts`); the param survives the OTP step. The `next` value is the full path **and query** (`hooks/useCurrentPath.ts`), so dates and filters survive sign-in; “Back to sign in” on `/verify-otp` keeps it. Business and admin accounts land on their own portal home, or on `next` when it is inside their own portal (`lib/auth/home.ts`). The `/user` dashboard stays one click away in the header.
+- **Role sign-in (mock):** the normal `/login` → `/verify-otp` flow picks the role from the demo accounts in `MOCK_USERS` (`lib/auth/session.ts`, `mockRoleForSignIn`, matched by email or by the last 9 phone digits). Any 6-digit code works. `lina.nasser@turath.sy` / +963 966 481 203 → admin; `samer.qabbani@example.com` / +963 955 367 890 → business owner; `hala.karam@example.com` / +963 933 245 678 → business staff; everything else → user. Sign-up always creates a user.
+- **Dates and people carry through:** Home and the catalogs/search write them to the URL and every card, detail page, and checkout passes them on (`lib/search/bookingSearch.ts`, read with nuqs in `hooks/useBookingSearch.ts`). Names: hotel `checkIn`, `checkOut`, `guests`; dining `date`, `time`, `partySize`; trips `date`, `seats`; events `date`, `qty` (optional `session`); guides `date`. Hand-typed values are cleaned: malformed, impossible, or past dates are dropped; a check-out on or before check-in is dropped; people outside 1–8 (hotel), 1–12 (dining, trips), 1–6 (events) fall back to the default. The checkout then uses its normal default or shows its normal field error (e.g. more seats than the departure has left); an invalid booking is never saved.
 - **Business staff and inventory:** `PROVIDER_STAFF` sees `/provider/inventory` **read-only** — rooms, tables, sessions, stock, and prices are visible; add, edit, delete, price, and stock controls are not. Owners keep full edit.
 - **Commission:** the default commission is **10%**, Guides are **8.5%**, and the admin can override either per business (`/admin/businesses/[id]` → Finance).
 - **Admin route names:** the admin URLs are the ones in `config/adminRoutes.ts` and §3 (for example `/admin/discount-codes` and `/admin/featured`, not `/admin/coupons` or `/admin/promotions`). **Note:** the SRS and Architecture Word documents still use the old route names and a 12% commission figure. This file and `config/adminRoutes.ts` win; the Word files are not edited from this repo.
-- **People words in copy:** customer-facing text calls the person booking a **user** (Arabic **مستخدم**) and the other side a **business** (Arabic **المنشأة**), not guest, tourist, or provider. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Party counts (“2 guests”, “per guest”) stay as natural occupancy wording. Admin and business-portal screens still say “guest” for the person being served; renaming those is a separate decision.
-- **Unknown URLs:** `app/not-found.tsx` shows the branded `NotFoundPanel` (logo, title, one sentence, Back to home, Search) inside the public header and footer. `/user/…`, `/provider/…`, and `/admin/…` have a catch-all `[...missing]` page plus a segment `not-found.tsx`, so the same panel renders inside that portal shell and Back to home goes to the portal home. No `error.tsx` or `loading.tsx` yet.
+- **People words in copy:** the person booking is a **user** only inside their own account area (`/user…`: “your reliability score”, “درجة الموثوقية”). Everywhere else — public pages, admin, and the business portal — they are a **guest**: Arabic **ضيف** in admin and general screens, **نزيل** in the hotel parts of the business portal (rooms, occupancy, hotel reviews). Never “tourist”. The other side is a **business** (Arabic **المنشأة**), not provider. This governs `messages/` copy only; code identifiers (types such as `TOURIST`, routes, folders, message keys) are not renamed. Party counts (“2 guests”, “per guest”) stay natural occupancy wording. Business-facing marketing, onboarding, and notifications that already say guest stay as they are.
+- **Unknown listings:** a detail URL whose id or slug does not exist (`/hotels/…`, `/restaurants/…`, `/trips/…`, `/events/…`, `/guides/…`, `/attractions/…`, and the `/user/…` twins) calls `notFound()` and shows the branded 404, not an in-page empty state.
+- **Booking status names:** one set everywhere, matching the SRS: `PENDING_CONFIRMATION`, `CONFIRMED`, `CHECKED_IN`, `CANCELLED`, `NO_SHOW` (labels “Pending confirmation / Confirmed / Checked in / Cancelled / No-show”). Admin rows also have `completed` and `disputed`, which the SRS does not list.
+- **Derived, not stored:** the user reliability tier comes from the score and the admin cutoffs in Settings; the business ledger warning comes from outstanding commission vs the credit ceiling (watch from 75%, 48h grace from 100%).
+- **Unknown URLs:** `app/not-found.tsx` shows the branded `NotFoundPanel` (logo, title, one sentence, Back to home, Search) inside the public header and footer; `app/(public)/not-found.tsx` renders the same panel inside the public group layout so a route renders exactly one shell. Every 404 tab reads “Page not found | Turath”. `/user/…`, `/provider/…`, and `/admin/…` have a catch-all `[...missing]` page plus a segment `not-found.tsx`, so the same panel renders inside that portal shell and Back to home goes to the portal home. No `error.tsx` or `loading.tsx` yet.
 
 ---
 
@@ -155,7 +160,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 
 ## 4. Auth pages — `app/(auth)`
 
-**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in; a user goes to the validated `?next=` page they signed in from, or `/` (§0). Business and admin accounts go to their portal home (`/provider`, `/admin`). Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
+**Stub status:** Login and register submit through mock `services/auth` → `/verify-otp` (phone or email kept in `authStore`). OTP success signs in; a user goes to the validated `?next=` page they signed in from, or `/` (§0). Business and admin accounts go to their portal home (`/provider`, `/admin`), or to `next` when it is inside that portal. The role comes from the demo accounts (§0 Role sign-in), so this works in the production build too. Provider signup lives at `/provider/register` (AuthLayout, four-step form including papers and photos) and mock-submits to `/provider/pending`. Forgot password → `/reset-password?token=…` (mock). Reset success → `/login`. No real SMS/email yet.
 
 ### `/login`
 
@@ -171,7 +176,7 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 - Full name, date of birth, nationality (searchable list of every country; flag + localized AR/EN name)
 - Phone: searchable country list with flags and localized names; any country calling code
 - Email, password
-- Terms checkbox; “Terms of Service” and “Privacy Policy” link to `/legal/terms` and `/legal/privacy` in a new tab (same on `/provider/register`)
+- Terms checkbox; “Terms of use” and “Privacy policy” link to `/legal/terms` and `/legal/privacy` in a new tab (same on `/provider/register`)
 - Submit → OTP
 - Link back to login
 - Note: this is **tourist** signup. Providers use `/provider/register`
@@ -181,7 +186,8 @@ Old slugs (`/admin/users`, `/admin/providers`, `/admin/disputes`, `/admin/ledger
 - Masked destination (phone / WhatsApp)
 - 6-digit OTP inputs
 - Countdown + resend
-- Success → a user returns to the `?next=` page they came from, or `/` (§0). Business → `/provider`, admin → `/admin`
+- Success → a user returns to the `?next=` page they came from, or `/` (§0). Business → `/provider`, admin → `/admin` (or `next` inside their own portal)
+- “Back to sign in” keeps `?next=`
 
 ### `/forgot-password`
 
@@ -269,8 +275,10 @@ Public contact page (inside `(public)` shell):
 
 ### `/legal/[slug]`
 
-Static content pages linked from the public footer (`terms`, `privacy`,
-`provider-licensing`). Each page uses the public shell, a shared page header,
+Static content pages linked from the public footer (`terms` “Terms of use”, `privacy`
+“Privacy policy”, `booking-policy` “Booking and no-show policy”, `provider-licensing`).
+The booking policy (holds, cash on arrival, cancelling, no-shows, reliability score, disputes)
+is also linked from every checkout (new tab). Each page uses the public shell, a shared page header,
 the latest-update notice, and readable section cards sourced from AR / EN messages.
 
 ### `/explore`
@@ -347,7 +355,9 @@ Shared:
 **Event extra:** session, ticket tiers (Standard / VIP), remaining, max 6 per user  
 **Guide extra:** languages, specialties, hourly / full-day rates, calendar
 
-### Booking — `/bookings/new` (query: `type` + `id`) or nested under the listing
+### Booking — `/bookings/new` (query: `type` + `id` + carried dates/people, §0)
+
+Signed-in twin: `/user/bookings/new` renders the same checkout inside the account shell and confirms to `/user/bookings/[id]`. Detail pages under `/user/…` link there. The title comes from `CHECKOUT_PAGE_HEADERS` in `config/pageHeaders.ts` (one per type).
 
 Category-specific form on a glass sheet:
 
@@ -363,11 +373,13 @@ Category-specific form on a glass sheet:
 - 10-minute hold copy (“room/seats held”)
 - Reliability warning if mock score &lt; 50 (needs provider acceptance)
 - Summary: list price SYP (~USD), discount if a coupon applied, **amount due cash on arrival**. Commission later accrues on the collected (discounted) total, not the pre-coupon price
-- Confirm → `/bookings/[id]`
+- Link to the booking and no-show policy (`/legal/booking-policy`, new tab)
+- Confirm → `/bookings/[id]` (or `/user/bookings/[id]` from the account)
 
-### `/bookings/[id]` Confirmation / voucher
+### `/bookings/[id]` and `/user/bookings/[id]` Confirmation / voucher
 
-- Status chip: Pending / Confirmed / Checked-in / Cancelled / No-show
+- Same voucher; the `/user` one sits in the account shell with a breadcrumb back to My bookings, and account links (dashboard, My bookings, review) open it
+- Status chip: Pending confirmation / Confirmed / Checked in / Cancelled / No-show
 - Provider name, when, guests
 - Total + COA notice. If a coupon was used: code, discount, amount due (that is what the desk collects)
 - **QR image** + **6-character backup code**

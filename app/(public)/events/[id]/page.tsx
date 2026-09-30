@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { EventDetail } from "@/components/events/EventDetail";
@@ -8,4 +9,4 @@ import { getEvent } from "@/services/events";
 
 export function generateStaticParams(): Array<{ id: string }> { return getMockEventIds().map((id) => ({ id })); }
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> { const { id } = await params; const event = await getEvent(id); return detailMetadata(event && { name: event.name, description: event.shortDescription }); }
-export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }): Promise<ReactNode> { const { id } = await params; return <div className="mx-auto max-w-[98rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-24 sm:pt-32 lg:px-8"><EventDetail eventId={id} /></div>; }
+export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }): Promise<ReactNode> { const { id } = await params; if (!(await getEvent(id))) notFound(); return <div className="mx-auto max-w-[98rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-24 sm:pt-32 lg:px-8"><EventDetail eventId={id} /></div>; }

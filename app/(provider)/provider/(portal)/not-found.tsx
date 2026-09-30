@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 
 import { NotFoundPanel } from "@/components/ui/NotFoundPanel";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { notFoundMetadata } from "@/lib/i18n/notFoundMetadata";
+
+export const generateMetadata = notFoundMetadata;
 
 /** Unknown links under /provider stay inside the portal shell. */
 export default function ProviderNotFound(): ReactNode {

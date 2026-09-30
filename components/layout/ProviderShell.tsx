@@ -14,7 +14,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 
 type ProviderShellProps = {
@@ -24,6 +26,7 @@ type ProviderShellProps = {
 export function ProviderShell({ children }: ProviderShellProps): ReactNode {
   const t = useTranslations("provider");
   const mounted = useIsClient();
+  const currentPath = useCurrentPath();
   const [mobileOpen, setMobileOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -56,7 +59,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
             {t("access.description")}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button href="/login">{t("access.signIn")}</Button>
+            <Button href={withReturnTo("/login", currentPath)}>{t("access.signIn")}</Button>
             {process.env.NODE_ENV === "development" ? (
               <>
                 <Button

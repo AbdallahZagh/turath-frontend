@@ -23,7 +23,7 @@ import type { ProviderBooking } from "@/lib/mock/providerBookings";
 
 const ALL_STATUSES = "all";
 const STATUSES: TouristBookingStatus[] = [
-  "PENDING",
+  "PENDING_CONFIRMATION",
   "CONFIRMED",
   "CHECKED_IN",
   "CANCELLED",
@@ -35,7 +35,7 @@ function statusBadge(status: TouristBookingStatus): {
   className?: string;
 } {
   if (status === "CHECKED_IN") return { variant: "solid" };
-  if (status === "PENDING" || status === "CONFIRMED") {
+  if (status === "PENDING_CONFIRMATION" || status === "CONFIRMED") {
     return { variant: "glass", className: "text-accent" };
   }
   return { variant: "outline", className: "border-destructive text-destructive" };

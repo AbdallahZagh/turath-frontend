@@ -8,9 +8,11 @@ import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 import type { DiscoveryResult } from "@/services/discovery";
 
 export function DiscoveryCard({
@@ -25,9 +27,14 @@ export function DiscoveryCard({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
+  const bookingSearch = useBookingSearch();
+  const href =
+    result.category === "attraction"
+      ? result.detailHref
+      : withBookingSearch(result.detailHref, bookingSearch, result.category);
   return (
     <article className="group h-full min-w-0">
-      <Link href={result.detailHref} className="block h-full">
+      <Link href={href} className="block h-full">
         <GlassPanel
           frost={false}
           className={`h-full overflow-hidden transition group-hover:ring-1 group-hover:ring-primary/40 ${compact ? "grid grid-cols-[7rem_minmax(0,1fr)]" : "flex flex-col"}`}

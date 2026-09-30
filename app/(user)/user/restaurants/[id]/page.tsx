@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { RestaurantDetail } from "@/components/restaurants/RestaurantDetail";
@@ -18,5 +19,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function UserRestaurantDetailPage({ params }: { params: Promise<{ id: string }> }): Promise<ReactNode> {
   const { id } = await params;
+  if (!(await getRestaurant(id))) notFound();
   return <RestaurantDetail restaurantId={id} basePath="/user/restaurants" />;
 }

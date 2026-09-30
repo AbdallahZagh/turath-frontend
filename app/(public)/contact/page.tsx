@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function ContactPage(): ReactNode {
   return (
-    <div className="mx-auto max-w-4/5 px-4 pt-32 pb-20 sm:px-6 sm:pt-36 sm:pb-24 lg:px-8">
+    <div className="mx-auto w-full max-w-[78rem] px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24 lg:px-8">
       <PageHeader />
 
       {/* Side-by-Side: Info Card + Contact Form */}

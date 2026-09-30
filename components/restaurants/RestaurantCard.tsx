@@ -12,12 +12,15 @@ import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
 import type { Locale } from "@/i18n/config";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
 import type { Restaurant } from "@/lib/mock/restaurants";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function RestaurantCard({ restaurant, detailBasePath = "/restaurants" }: { restaurant: Restaurant; detailBasePath?: string }): ReactNode {
   const t = useTranslations("restaurants");
+  const bookingSearch = useBookingSearch();
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
@@ -26,7 +29,7 @@ export function RestaurantCard({ restaurant, detailBasePath = "/restaurants" }: 
 
   return (
     <article className="group relative h-full min-w-0 transition duration-300 ease-out hover:-translate-y-1">
-      <Link href={`${detailBasePath}/${restaurant.id}`} className="block h-full min-w-0">
+      <Link href={withBookingSearch(`${detailBasePath}/${restaurant.id}`, bookingSearch, "restaurant")} className="block h-full min-w-0">
         <GlassPanel frost={false} className="h-full transition duration-300 group-hover:ring-1 group-hover:ring-primary/40">
           <div className="relative aspect-4/3 overflow-hidden rounded-t-[inherit]">
             <Image src={restaurant.imageSrc} alt={localizedName(restaurant.name, loc)} fill sizes="(min-width: 1280px) 29vw, (min-width: 768px) 45vw, 92vw" className="object-cover transition duration-500 group-hover:scale-105" />

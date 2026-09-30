@@ -208,7 +208,7 @@ export async function checkInTouristBookingByBackupCode(
   );
   if (!booking) return { kind: "notFound" };
   if (booking.status === "CHECKED_IN") return { kind: "alreadyUsed", booking };
-  if (booking.status !== "CONFIRMED" && booking.status !== "PENDING") {
+  if (booking.status !== "CONFIRMED" && booking.status !== "PENDING_CONFIRMATION") {
     return { kind: "notFound" };
   }
   const checkedIn: TouristBooking = {

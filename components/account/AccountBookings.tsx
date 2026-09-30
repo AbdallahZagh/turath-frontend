@@ -98,7 +98,7 @@ export function AccountBookings(): ReactNode {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {booking.status === "CHECKED_IN" ? <Button href={`/user/bookings/${booking.id}/review`} variant="glass" size="sm"><MessageSquareQuote className="size-4" aria-hidden />{t("review")}</Button> : null}
-                    <Button href={`/bookings/${booking.id}`} variant="outline" size="sm">{t("voucher")}</Button>
+                    <Button href={USER_PATHS.booking(booking.id)} variant="outline" size="sm">{t("voucher")}</Button>
                   </div>
                 </div>
               </GlassPanel>

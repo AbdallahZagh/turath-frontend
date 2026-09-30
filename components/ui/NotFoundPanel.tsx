@@ -36,3 +36,12 @@ export function NotFoundPanel({ homeHref = "/" }: NotFoundPanelProps): ReactNode
     </GlassPanel>
   );
 }
+
+/** The panel placed under the fixed public header. */
+export function PublicNotFoundSection(): ReactNode {
+  return (
+    <div className="flex min-h-[70svh] items-center px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24">
+      <NotFoundPanel />
+    </div>
+  );
+}

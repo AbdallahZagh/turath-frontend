@@ -7,8 +7,8 @@ import { BookingReviewForm } from "@/components/bookings/BookingReviewForm";
 type ReviewPageProps = { params: Promise<{ id: string }> };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("bookingReview");
-  return { title: t("title"), description: t("metaDescription") };
+  const t = await getTranslations("bookings.headers.review");
+  return { title: t("title"), description: t("description") };
 }
 
 export default async function UserBookingReviewPage({ params }: ReviewPageProps): Promise<ReactNode> {

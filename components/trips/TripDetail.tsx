@@ -15,15 +15,20 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; basePath?: string }): ReactNode {
   const t = useTranslations("trips");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const td = useTranslations("trips.detail");
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
@@ -38,7 +43,7 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
   const name = localizedName(trip.name, loc);
   const nextDeparture = trip.departures[0];
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${trip.coordinates.latitude},${trip.coordinates.longitude}`;
-  const bookingHref = `/bookings/new?type=trip&id=${trip.id}${nextDeparture ? `&date=${nextDeparture.date}` : ""}`;
+  const bookingHref = withBookingSearch(`${paths.checkout}?type=trip&id=${trip.id}`, bookingSearch, "trip");
 
   return (
     <>

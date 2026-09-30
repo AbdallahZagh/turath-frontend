@@ -2,6 +2,8 @@ export const USER_PATHS = {
   home: "/user",
   profile: "/user/profile",
   bookings: "/user/bookings",
+  newBooking: "/user/bookings/new",
+  booking: (bookingId: string): string => `/user/bookings/${bookingId}`,
   reliability: "/user/reliability",
   saved: "/user/saved",
   notifications: "/user/notifications",

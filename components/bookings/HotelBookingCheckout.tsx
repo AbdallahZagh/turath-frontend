@@ -10,6 +10,7 @@ import { Controller, useForm, useWatch, type FieldError } from "react-hook-form"
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -21,6 +22,7 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Textarea } from "@/components/ui/Textarea";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateHotelBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
@@ -63,6 +65,7 @@ export function HotelBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
   const createBooking = useCreateHotelBooking();
@@ -71,7 +74,7 @@ export function HotelBookingCheckout({
 
   const today = format(new Date(), "yyyy-MM-dd");
   const defaultCheckIn = initialCheckIn ?? format(addDays(new Date(), 1), "yyyy-MM-dd");
-  const defaultCheckOut = initialCheckOut ?? format(addDays(new Date(), 2), "yyyy-MM-dd");
+  const defaultCheckOut = initialCheckOut ?? format(addDays(parseISO(defaultCheckIn), 1), "yyyy-MM-dd");
   const form = useForm<HotelBookingValues>({
     resolver: zodResolver(hotelBookingSchema),
     defaultValues: {
@@ -107,7 +110,7 @@ export function HotelBookingCheckout({
     return <ErrorState title={t("states.loadErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void hotelQuery.refetch()} />;
   }
   if (!hotel) {
-    return <EmptyState icon={Hotel} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href="/hotels" variant="outline">{t("backToHotels")}</Button>} />;
+    return <EmptyState icon={Hotel} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href={paths.catalog("hotels")} variant="outline">{t("backToHotels")}</Button>} />;
   }
   const availableHotel = hotel;
 
@@ -129,7 +132,14 @@ export function HotelBookingCheckout({
 
   async function onSubmit(submitted: HotelBookingValues): Promise<void> {
     const room = availableHotel.rooms.find((item) => item.id === submitted.roomId);
-    if (!room || room.maxGuests < submitted.guests || nights < 1) return;
+    if (nights < 1) {
+      form.setError("checkOut", { message: "checkOutAfterCheckIn" });
+      return;
+    }
+    if (!room || room.maxGuests < submitted.guests) {
+      form.setError("roomId", { message: "roomRequired" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         hotelId: availableHotel.id,
@@ -144,7 +154,7 @@ export function HotelBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -153,13 +163,7 @@ export function HotelBookingCheckout({
   return (
     <div className="grid min-w-0 items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
       <GlassPanel className="order-2 p-6 sm:p-8 lg:order-1 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">{t("title")}</h1>
-          <p className="text-prose-muted mt-2">{localizedName(hotel.name, loc)}</p>
-        </div>
-
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
             <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
@@ -202,6 +206,8 @@ export function HotelBookingCheckout({
 
           <BookingReliabilityNotice />
 
+          <BookingPolicyNote />
+
           <div className="bg-glass-control flex gap-3 rounded-2xl p-4 text-sm">
             <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
             <div><p className="text-prose font-semibold">{t("holdTitle")}</p><p className="text-prose-muted mt-1 leading-relaxed">{t("holdBody")}</p></div>
@@ -224,7 +230,7 @@ export function HotelBookingCheckout({
         </dl>
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
         <Button type="submit" className="mt-6 hidden w-full lg:inline-flex" disabled={createBooking.isPending || !selectedRoom || nights < 1} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>
-        <Button href={`/hotels/${hotel.id}`} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
+        <Button href={paths.listing("hotels", hotel.id)} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
       </GlassPanel>
 
       <div className="border-border bg-surface/95 supports-[backdrop-filter]:bg-surface/80 fixed inset-x-0 bottom-0 z-40 border-t px-4 py-3 backdrop-blur-md lg:hidden">

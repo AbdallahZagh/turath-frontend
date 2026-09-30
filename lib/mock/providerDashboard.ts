@@ -1,6 +1,6 @@
 import type { LocalizedName } from "@/lib/i18n/localized";
 
-export type ProviderArrivalStatus = "CONFIRMED" | "NEEDS_ACCEPTANCE";
+export type ProviderArrivalStatus = "CONFIRMED" | "PENDING_CONFIRMATION";
 
 export type ProviderArrival = {
   id: string;
@@ -82,7 +82,7 @@ const PROVIDER_DASHBOARD: ProviderDashboardData = {
       startsAt: "2026-09-21T18:00:00+03:00",
       partySize: 3,
       cashDueSyp: 720_000,
-      status: "NEEDS_ACCEPTANCE",
+      status: "PENDING_CONFIRMATION",
     },
   ],
   recentCheckIns: [

@@ -41,7 +41,7 @@ function bookingDate(booking: TouristBooking): string {
 }
 
 function isUpcoming(booking: TouristBooking, today: string): boolean {
-  return (booking.status === "PENDING" || booking.status === "CONFIRMED") && bookingDate(booking) >= today;
+  return (booking.status === "PENDING_CONFIRMATION" || booking.status === "CONFIRMED") && bookingDate(booking) >= today;
 }
 
 function BookingTypeIcon({ type }: { type: TouristBooking["type"] | null }): ReactNode {
@@ -146,7 +146,7 @@ export function UserDashboard(): ReactNode {
                     <p className="text-prose-muted text-xs">{nextBooking.reference}</p>
                     <p className="text-prose mt-1 text-sm font-semibold">{formatMoney(nextBooking.cashDueSyp)}</p>
                   </div>
-                  <Button href={`/bookings/${nextBooking.id}`} size="sm" variant="outline">{t("next.open")}</Button>
+                  <Button href={USER_PATHS.booking(nextBooking.id)} size="sm" variant="outline">{t("next.open")}</Button>
                 </div>
               </>
             ) : (

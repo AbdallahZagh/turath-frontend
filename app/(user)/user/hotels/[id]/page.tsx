@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { HotelDetail } from "@/components/hotels/HotelDetail";
@@ -18,5 +19,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function UserHotelDetailPage({ params }: { params: Promise<{ id: string }> }): Promise<ReactNode> {
   const { id } = await params;
+  if (!(await getHotel(id))) notFound();
   return <HotelDetail hotelId={id} basePath="/user/hotels" />;
 }

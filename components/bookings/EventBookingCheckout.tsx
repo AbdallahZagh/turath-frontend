@@ -19,6 +19,7 @@ import { Controller, useForm, useWatch, type FieldError } from "react-hook-form"
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -28,6 +29,7 @@ import { Input } from "@/components/ui/Input";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateEventBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -66,6 +68,7 @@ export function EventBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const eventQuery = useEvent(eventId);
   const createBooking = useCreateEventBooking();
@@ -115,7 +118,7 @@ export function EventBookingCheckout({
         title={t("states.unavailableTitle")}
         description={t("states.unavailableBody")}
         action={
-          <Button href="/events" variant="outline">
+          <Button href={paths.catalog("events")} variant="outline">
             {t("backToEvents")}
           </Button>
         }
@@ -146,7 +149,18 @@ export function EventBookingCheckout({
   async function onSubmit(values: EventBookingValues): Promise<void> {
     const selectedSession = availableEvent.sessions.find((item) => item.id === values.sessionId);
     const selectedTier = selectedSession?.tiers.find((item) => item.id === values.ticketTier);
-    if (!selectedSession || !selectedTier || selectedTier.remaining < values.quantity) return;
+    if (!selectedSession) {
+      form.setError("sessionId", { message: "sessionRequired" });
+      return;
+    }
+    if (!selectedTier) {
+      form.setError("ticketTier", { message: "tierRequired" });
+      return;
+    }
+    if (selectedTier.remaining < values.quantity) {
+      form.setError("quantity", { message: "quantityMax" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         eventId: availableEvent.id,
@@ -160,7 +174,7 @@ export function EventBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -169,14 +183,7 @@ export function EventBookingCheckout({
   return (
     <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
-            {t("title")}
-          </h1>
-          <p className="text-prose-muted mt-2">{localizedName(event.name, loc)}</p>
-        </div>
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("ticketDetails")}</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -250,6 +257,8 @@ export function EventBookingCheckout({
             </div>
           </section>
           <BookingReliabilityNotice />
+
+          <BookingPolicyNote />
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -329,7 +338,7 @@ export function EventBookingCheckout({
         >
           {createBooking.isPending ? t("confirming") : t("confirm")}
         </Button>
-        <Button href={`/events/${event.id}`} variant="glass" className="mt-3 w-full">
+        <Button href={paths.listing("events", event.id)} variant="glass" className="mt-3 w-full">
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("backToEvent")}
         </Button>

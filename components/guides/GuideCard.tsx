@@ -10,21 +10,24 @@ import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TourGuide } from "@/lib/mock/guides";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function GuideCard({ guide, detailBasePath = "/guides" }: { guide: TourGuide; detailBasePath?: string }): ReactNode {
   const t = useTranslations("guides");
   const tGov = useTranslations("landing.governorates");
   const loc: Locale = useLocale() === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
+  const bookingSearch = useBookingSearch();
   const href = `${detailBasePath}/${guide.id}`;
 
   return (
     <article className="group relative h-full min-w-0 transition duration-300 hover:-translate-y-1">
-      <Link href={href} className="block h-full">
+      <Link href={withBookingSearch(href, bookingSearch, "guide")} className="block h-full">
         <GlassPanel frost={false} className="h-full transition group-hover:ring-1 group-hover:ring-primary/40">
           <div className="relative aspect-4/3 overflow-hidden rounded-t-[inherit]">
             <Image src={guide.imageSrc} alt={localizedName(guide.name, loc)} fill sizes="(min-width:1280px) 29vw, (min-width:768px) 45vw, 92vw" className="object-cover transition duration-500 group-hover:scale-105" />

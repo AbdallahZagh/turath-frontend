@@ -1,4 +1,4 @@
-import { BadgeCheck, LockKeyhole, ScrollText, type LucideIcon } from "lucide-react";
+import { BadgeCheck, CalendarCheck, LockKeyhole, ScrollText, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -28,6 +28,18 @@ const LEGAL_PAGES = {
       "pages.privacy.sections.choices",
     ],
   },
+  "booking-policy": {
+    pageKey: "bookingPolicy",
+    icon: CalendarCheck,
+    sections: [
+      "pages.bookingPolicy.sections.holds",
+      "pages.bookingPolicy.sections.cash",
+      "pages.bookingPolicy.sections.cancel",
+      "pages.bookingPolicy.sections.noShow",
+      "pages.bookingPolicy.sections.reliability",
+      "pages.bookingPolicy.sections.disputes",
+    ],
+  },
   "provider-licensing": {
     pageKey: "providerLicensing",
     icon: BadgeCheck,
@@ -39,7 +51,7 @@ const LEGAL_PAGES = {
     ],
   },
 } as const satisfies Record<string, {
-  pageKey: "terms" | "privacy" | "providerLicensing";
+  pageKey: "terms" | "privacy" | "bookingPolicy" | "providerLicensing";
   icon: LucideIcon;
   sections: readonly string[];
 }>;

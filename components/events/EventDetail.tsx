@@ -26,12 +26,15 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useEvent } from "@/hooks/useEvents";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function EventDetail({
   eventId,
@@ -41,6 +44,8 @@ export function EventDetail({
   basePath?: string;
 }): ReactNode {
   const t = useTranslations("events");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const td = useTranslations("events.detail");
   const tt = useTranslations("events.tiers");
   const tGov = useTranslations("landing.governorates");
@@ -86,7 +91,11 @@ export function EventDetail({
     ...event.sessions.flatMap((session) => session.tiers.map((tier) => tier.priceSyp)),
   );
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${event.coordinates.latitude},${event.coordinates.longitude}`;
-  const bookingHref = `/bookings/new?type=event&id=${event.id}${nextSession ? `&session=${nextSession.id}` : ""}`;
+  const bookingHref = withBookingSearch(
+    `${paths.checkout}?type=event&id=${event.id}`,
+    bookingSearch,
+    "event",
+  );
 
   return (
     <>

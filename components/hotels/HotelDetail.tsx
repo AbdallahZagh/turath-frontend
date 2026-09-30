@@ -26,11 +26,14 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 type HotelDetailProps = {
   hotelId: string;
@@ -51,6 +54,8 @@ function HotelDetailSkeleton(): ReactNode {
 
 export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps): ReactNode {
   const t = useTranslations("hotels");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const tDetail = useTranslations("hotels.detail");
   const tRooms = useTranslations("hotels.roomTypes");
   const tGov = useTranslations("landing.governorates");
@@ -217,7 +222,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
           <p className="text-prose-muted text-xs">{t("perNight")}</p>
           <div className="border-border my-5 border-t" />
           <p className="text-prose-muted text-sm leading-relaxed">{tDetail("cashOnArrival")}</p>
-          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} className="mt-5 w-full">
+          <Button href={withBookingSearch(`${paths.checkout}?type=hotel&id=${hotel.id}`, bookingSearch, "hotel")} className="mt-5 w-full">
             <CalendarCheck className="size-5" aria-hidden />
             {tDetail("book")}
           </Button>
@@ -233,7 +238,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
               <span className="text-prose-muted ms-1 font-normal">{t("perNight")}</span>
             </p>
           </div>
-          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} size="sm" className="shrink-0">
+          <Button href={withBookingSearch(`${paths.checkout}?type=hotel&id=${hotel.id}`, bookingSearch, "hotel")} size="sm" className="shrink-0">
             <CalendarCheck className="size-4" aria-hidden />
             {tDetail("book")}
           </Button>

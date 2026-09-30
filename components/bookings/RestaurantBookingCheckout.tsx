@@ -18,6 +18,7 @@ import { Controller, useForm, useWatch, type FieldError } from "react-hook-form"
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -29,6 +30,7 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Textarea } from "@/components/ui/Textarea";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateRestaurantBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useRestaurant } from "@/hooks/useRestaurants";
@@ -54,9 +56,13 @@ function message(
 
 export function RestaurantBookingCheckout({
   restaurantId,
+  initialDate,
+  initialTime,
   initialPartySize,
 }: {
   restaurantId: string;
+  initialDate?: string;
+  initialTime?: string;
   initialPartySize: number;
 }): ReactNode {
   const t = useTranslations("restaurantBooking");
@@ -65,6 +71,7 @@ export function RestaurantBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const restaurantQuery = useRestaurant(restaurantId);
   const createBooking = useCreateRestaurantBooking();
@@ -74,8 +81,8 @@ export function RestaurantBookingCheckout({
   const form = useForm<RestaurantBookingValues>({
     resolver: zodResolver(restaurantBookingSchema),
     defaultValues: {
-      date: today,
-      timeSlot: "",
+      date: initialDate ?? today,
+      timeSlot: initialTime ?? "",
       zoneId: undefined,
       partySize: initialPartySize,
       specialRequests: "",
@@ -117,7 +124,7 @@ export function RestaurantBookingCheckout({
         title={t("states.unavailableTitle")}
         description={t("states.unavailableBody")}
         action={
-          <Button href="/restaurants" variant="outline">
+          <Button href={paths.catalog("restaurants")} variant="outline">
             {t("backToRestaurants")}
           </Button>
         }
@@ -147,12 +154,14 @@ export function RestaurantBookingCheckout({
   }
   async function onSubmit(values: RestaurantBookingValues): Promise<void> {
     const zone = availableRestaurant.zones.find((item) => item.id === values.zoneId);
-    if (
-      !zone ||
-      zone.capacity < values.partySize ||
-      !availableRestaurant.timeSlots.includes(values.timeSlot)
-    )
+    if (!availableRestaurant.timeSlots.includes(values.timeSlot)) {
+      form.setError("timeSlot", { message: "timeRequired" });
       return;
+    }
+    if (!zone || zone.capacity < values.partySize) {
+      form.setError("zoneId", { message: "zoneRequired" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         restaurantId: availableRestaurant.id,
@@ -166,7 +175,7 @@ export function RestaurantBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -175,14 +184,7 @@ export function RestaurantBookingCheckout({
   return (
     <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
-            {t("title")}
-          </h1>
-          <p className="text-prose-muted mt-2">{localizedName(restaurant.name, loc)}</p>
-        </div>
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">
               {t("reservationDetails")}
@@ -305,6 +307,8 @@ export function RestaurantBookingCheckout({
             <BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} />
           </section>
           <BookingReliabilityNotice />
+
+          <BookingPolicyNote />
           <div className="bg-glass-control flex gap-3 rounded-2xl p-4 text-sm">
             <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
             <div>
@@ -383,7 +387,11 @@ export function RestaurantBookingCheckout({
         >
           {createBooking.isPending ? t("confirming") : t("confirm")}
         </Button>
-        <Button href={`/restaurants/${restaurant.id}`} variant="glass" className="mt-3 w-full">
+        <Button
+          href={paths.listing("restaurants", restaurant.id)}
+          variant="glass"
+          className="mt-3 w-full"
+        >
           {t("backToRestaurant")}
         </Button>
       </GlassPanel>

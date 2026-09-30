@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { USER_PATHS } from "@/config/userRoutes";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useTouristBooking } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -33,6 +35,7 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
+  const paths = useBookingPaths();
   const bookingQuery = useTouristBooking(bookingId);
   const booking = bookingQuery.data;
   const hotelQuery = useHotel(booking?.type === "hotel" ? booking.hotelId : "");
@@ -43,13 +46,10 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
 
   if (bookingQuery.isPending) return <Skeleton className="mx-auto h-[40rem] max-w-6xl" />;
   if (bookingQuery.isError) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void bookingQuery.refetch()} />;
-  if (!booking) return <EmptyState icon={BedDouble} title={t("states.voucherMissingTitle")} description={t("states.voucherMissingBody")} action={<Button href="/hotels" variant="outline">{t("backToHotels")}</Button>} />;
+  if (!booking) return <EmptyState icon={BedDouble} title={t("states.voucherMissingTitle")} description={t("states.voucherMissingBody")} action={<Button href={paths.catalog("hotels")} variant="outline">{t("backToHotels")}</Button>} />;
 
   const discountLabel = booking.couponCode ? `${t("discount")} (${booking.couponCode})` : t("discount");
   const shared = {
-    pageEyebrow: t("voucher.eyebrow"),
-    pageTitle: t("voucher.title"),
-    pageDescription: t("voucher.subtitle"),
     passLabel: t("voucher.passLabel"),
     downloadLabel: t("voucher.downloadQr"),
     printLabel: t("voucher.print"),
@@ -101,5 +101,5 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
     pass = <UniversalBookingPass {...shared} providerName={localizedName(guide.name, loc)} providerAddress={localizedName(guide.address, loc)} start={{ label: tg("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tg("voucher.duration"), value: tGuides(`durations.${booking.duration}`) }} routeLabel={tg("voucher.experience")} routeValue={tGuides(`specialties.${booking.focusArea}`)} facts={[{ icon: Languages, label: tg("language"), value: tGuides(`languages.${booking.language}`) }, { icon: Sparkles, label: tg("focusArea"), value: tGuides(`specialties.${booking.focusArea}`) }, { icon: Clock3, label: tg("hours"), value: tg("voucher.hours", { count: booking.hours }) }]} />;
   }
 
-  return <>{pass}{booking.status === "CHECKED_IN" ? <div className="mx-auto mt-6 flex max-w-6xl justify-center"><Button href={`/user/bookings/${booking.id}/review`}>{t("voucher.writeReview")}</Button></div> : null}</>;
+  return <>{pass}{booking.status === "CHECKED_IN" ? <div className="mx-auto mt-6 flex max-w-6xl justify-center"><Button href={USER_PATHS.review(booking.id)}>{t("voucher.writeReview")}</Button></div> : null}</>;
 }

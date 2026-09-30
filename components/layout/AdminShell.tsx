@@ -14,7 +14,9 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { getPageHeader } from "@/config/pageHeaders";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 import { useUiStore } from "@/store/uiStore";
 
@@ -25,6 +27,7 @@ type AdminShellProps = {
 export function AdminShell({ children }: AdminShellProps): ReactNode {
   const t = useTranslations("admin.shell");
   const pathname = usePathname();
+  const currentPath = useCurrentPath();
   const fillViewport = getPageHeader(pathname)?.fillViewport === true;
   const contentScrolls = useUiStore((state) => state.contentScrolls);
   const pinViewport = fillViewport && !contentScrolls;
@@ -56,7 +59,7 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
             {t("access.description")}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button href="/login">{t("access.signIn")}</Button>
+            <Button href={withReturnTo("/login", currentPath)}>{t("access.signIn")}</Button>
             {process.env.NODE_ENV === "development" ? (
               <Button variant="outline" onClick={() => completeSession("SUPER_ADMIN")}>
                 {t("access.preview")}

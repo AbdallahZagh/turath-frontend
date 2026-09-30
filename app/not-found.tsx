@@ -1,21 +1,20 @@
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { PublicShell } from "@/components/layout/PublicShell";
-import { NotFoundPanel } from "@/components/ui/NotFoundPanel";
+import { PublicNotFoundSection } from "@/components/ui/NotFoundPanel";
+import { notFoundMetadata } from "@/lib/i18n/notFoundMetadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("notFound");
-  return { title: t("title") };
-}
+export const generateMetadata = notFoundMetadata;
 
+/**
+ * URLs that match no route render outside every route-group layout, so this is the one
+ * place that adds the public shell. `notFound()` inside `(public)` uses
+ * `(public)/not-found.tsx`, where the group layout already provides the shell.
+ */
 export default function NotFound(): ReactNode {
   return (
     <PublicShell>
-      <div className="flex min-h-[70svh] items-center px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24">
-        <NotFoundPanel />
-      </div>
+      <PublicNotFoundSection />
     </PublicShell>
   );
 }

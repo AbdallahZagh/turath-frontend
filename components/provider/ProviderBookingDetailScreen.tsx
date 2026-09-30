@@ -52,7 +52,7 @@ function statusBadge(status: TouristBookingStatus): {
   className?: string;
 } {
   if (status === "CHECKED_IN") return { variant: "solid" };
-  if (status === "PENDING" || status === "CONFIRMED") {
+  if (status === "PENDING_CONFIRMATION" || status === "CONFIRMED") {
     return { variant: "glass", className: "text-accent" };
   }
   return { variant: "outline", className: "border-destructive text-destructive" };
@@ -104,7 +104,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
   const booking = query.data;
   const canChangeStatus =
     role === "PROVIDER_OWNER" &&
-    (booking.status === "PENDING" || booking.status === "CONFIRMED");
+    (booking.status === "PENDING_CONFIRMATION" || booking.status === "CONFIRMED");
 
   function copyBackupCode(): void {
     void navigator.clipboard.writeText(booking.backupCode);
@@ -255,7 +255,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
                 </button>
               </div>
             </div>
-            {(booking.status === "CONFIRMED" || booking.status === "PENDING") ? (
+            {(booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION") ? (
               <Button href={providerCheckInPath(booking.backupCode)} className="mt-5 w-full">
                 <ScanLine className="size-4" aria-hidden />
                 {t("detail.checkIn")}

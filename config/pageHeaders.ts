@@ -4,8 +4,10 @@
  */
 import { ADMIN_PATHS, isAdminDetailPath } from "@/config/adminRoutes";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { USER_PATHS } from "@/config/userRoutes";
+import type { BookingKind } from "@/lib/search/bookingSearch";
 
-export type PageHeaderNamespace = "admin.headers" | "provider.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "guides.headers" | "attractions.headers" | "discovery.headers" | "account.headers" | "legal.headers" | "contact.headers";
+export type PageHeaderNamespace = "admin.headers" | "provider.headers" | "hotels.headers" | "restaurants.headers" | "trips.headers" | "events.headers" | "guides.headers" | "attractions.headers" | "discovery.headers" | "account.headers" | "legal.headers" | "contact.headers" | "bookings.headers";
 
 export type AdminHeaderPage =
   | "overview"
@@ -47,7 +49,7 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "providerLicensing";
+  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "bookingPolicy" | "providerLicensing" | "hotel" | "restaurant" | "trip" | "event" | "guide" | "voucher" | "review";
   /** List page one level up; renders a breadcrumb (its title, then this page's). */
   parent?: string;
   /** Pin the header and let the page body fill leftover viewport height. */
@@ -82,6 +84,7 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   "/search": { namespace: "discovery.headers", page: "search" },
   "/legal/terms": { namespace: "legal.headers", page: "terms" },
   "/legal/privacy": { namespace: "legal.headers", page: "privacy" },
+  "/legal/booking-policy": { namespace: "legal.headers", page: "bookingPolicy" },
   "/legal/provider-licensing": { namespace: "legal.headers", page: "providerLicensing" },
   "/contact": { namespace: "contact.headers", page: "index" },
   "/user": { namespace: "account.headers", page: "dashboard" },
@@ -220,6 +223,42 @@ const PAGE_HEADERS: Record<string, PageHeaderSpec> = {
   },
 };
 
+/** Checkout titles per booking type; the checkout page passes one to `<PageHeader spec>`. */
+export const CHECKOUT_PAGE_HEADERS: Record<BookingKind, PageHeaderSpec> = {
+  hotel: { namespace: "bookings.headers", page: "hotel" },
+  restaurant: { namespace: "bookings.headers", page: "restaurant" },
+  trip: { namespace: "bookings.headers", page: "trip" },
+  event: { namespace: "bookings.headers", page: "event" },
+  guide: { namespace: "bookings.headers", page: "guide" },
+};
+
+const PUBLIC_VOUCHER_HEADER: PageHeaderSpec = { namespace: "bookings.headers", page: "voucher" };
+const USER_VOUCHER_HEADER: PageHeaderSpec = {
+  namespace: "bookings.headers",
+  page: "voucher",
+  parent: USER_PATHS.bookings,
+};
+const USER_REVIEW_HEADER: PageHeaderSpec = {
+  namespace: "bookings.headers",
+  page: "review",
+  parent: USER_PATHS.bookings,
+};
+
+/** `/bookings/<id>`, `/user/bookings/<id>` and `/user/bookings/<id>/review` (not `/new`). */
+function bookingHeader(pathname: string): PageHeaderSpec | undefined {
+  const segments = pathname.split("/").slice(1);
+  if (segments.length === 2 && segments[0] === "bookings" && segments[1] !== "new") {
+    return PUBLIC_VOUCHER_HEADER;
+  }
+  if (segments[0] !== "user" || segments[1] !== "bookings" || !segments[2] || segments[2] === "new") {
+    return undefined;
+  }
+  if (segments.length === 3) {
+    return USER_VOUCHER_HEADER;
+  }
+  return segments.length === 4 && segments[3] === "review" ? USER_REVIEW_HEADER : undefined;
+}
+
 export function getPageHeader(pathname: string): PageHeaderSpec | undefined {
   const exact = PAGE_HEADERS[pathname];
   if (exact) {
@@ -243,5 +282,5 @@ export function getPageHeader(pathname: string): PageHeaderSpec | undefined {
   if (pathname.startsWith(`${PROVIDER_PATHS.bookings}/`)) {
     return PAGE_HEADERS.providerBookingDetail;
   }
-  return undefined;
+  return bookingHeader(pathname);
 }

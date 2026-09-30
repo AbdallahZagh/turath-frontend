@@ -15,14 +15,19 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function RestaurantDetail({ restaurantId, basePath = "/restaurants" }: { restaurantId: string; basePath?: string }): ReactNode {
   const t = useTranslations("restaurants");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const td = useTranslations("restaurants.detail");
   const tz = useTranslations("restaurants.zones");
   const tGov = useTranslations("landing.governorates");
@@ -54,7 +59,7 @@ export function RestaurantDetail({ restaurantId, basePath = "/restaurants" }: { 
           <div className="grid gap-7 md:grid-cols-2"><GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("availableTimes")}</h2><div className="mt-4 flex flex-wrap gap-2">{restaurant.timeSlots.map((slot) => <Badge key={slot} icon={<Clock3 className="size-3.5" aria-hidden />}>{slot}</Badge>)}</div></GlassPanel><GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("location")}</h2><ListingLocationMap latitude={restaurant.coordinates.latitude} longitude={restaurant.coordinates.longitude} label={`${td("location")}: ${name}`} /><p className="text-prose-muted mt-3 text-sm">{localizedName(restaurant.address, loc)}</p><a href={mapHref} target="_blank" rel="noreferrer" className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"><Navigation className="size-4" aria-hidden />{td("navigate")}</a></GlassPanel></div>
           <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("reviews")}</h2>{restaurant.reviews.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2">{restaurant.reviews.map((review) => <article key={review.id} className="bg-glass-control rounded-2xl p-4"><div className="flex items-center justify-between gap-3"><p className="text-prose font-semibold">{review.guestName}</p><StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} /></div><p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p><time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{review.date}</time></article>)}</div> : <p className="text-prose-muted mt-3 text-sm">{td("noReviews")}</p>}</GlassPanel>
         </div>
-        <GlassPanel className="p-6 lg:sticky lg:top-28"><p className="text-prose-muted text-sm">{t("from")}</p><p className="text-prose mt-1 text-xl font-semibold">{formatSyp(lowestPrice, loc)}</p><p className="text-prose-muted text-xs">{t("perGuest")}</p><div className="border-border my-5 border-t" /><p className="text-prose-muted text-sm leading-relaxed">{td("cashOnArrival")}</p><Button href={`/bookings/new?type=restaurant&id=${restaurant.id}`} className="mt-5 w-full"><CalendarCheck className="size-5" aria-hidden />{td("book")}</Button></GlassPanel>
+        <GlassPanel className="p-6 lg:sticky lg:top-28"><p className="text-prose-muted text-sm">{t("from")}</p><p className="text-prose mt-1 text-xl font-semibold">{formatSyp(lowestPrice, loc)}</p><p className="text-prose-muted text-xs">{t("perGuest")}</p><div className="border-border my-5 border-t" /><p className="text-prose-muted text-sm leading-relaxed">{td("cashOnArrival")}</p><Button href={withBookingSearch(`${paths.checkout}?type=restaurant&id=${restaurant.id}`, bookingSearch, "restaurant")} className="mt-5 w-full"><CalendarCheck className="size-5" aria-hidden />{td("book")}</Button></GlassPanel>
       </div>
     </>
   );

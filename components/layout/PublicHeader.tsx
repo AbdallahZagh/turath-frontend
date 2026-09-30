@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Coins, Menu as MenuIcon, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   useEffect,
   useId,
@@ -26,6 +25,7 @@ import {
 import { controlStyle } from "@/components/ui/controlScale";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select, type SelectOption } from "@/components/ui/Select";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
@@ -111,6 +111,9 @@ type HeaderMobileNavProps = {
   onCurrencyChange: (value: string) => void;
 };
 
+/** placeAnchoredMenu opens the panel this far below the trigger. */
+const DRAWER_OFFSET_PX = 8;
+
 function HeaderMobileNav({
   items,
   showGuestAuth,
@@ -139,8 +142,10 @@ function HeaderMobileNav({
       }
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 12 + items.length * 40 + 160,
-          maxHeightCap: 420,
+          estimatedHeight: 12 + items.length * 44 + 200,
+          // Grow to the space under the header (less a 16px margin) so the language switch at the
+          // bottom is never cut off; taller lists scroll inside the panel.
+          maxHeightCap: window.innerHeight - trigger.getBoundingClientRect().bottom - DRAWER_OFFSET_PX - 16,
           width: "max-content",
           minWidth: Math.max(trigger.getBoundingClientRect().width, MOBILE_MENU_MIN_WIDTH_PX),
           // Open from trigger start so the panel stays on-screen on ~375.
@@ -205,7 +210,11 @@ function HeaderMobileNav({
             role="menu"
             aria-label={t("navLabel")}
             style={{ ...controlStyle({ size: "sm", defaultRadius: "0.5rem" }), ...box }}
-            className={cn(SELECT_MENU_BASE, SELECT_MENU_VARIANT.glass, "w-max max-w-[min(100vw-2rem,20rem)]")}
+            className={cn(
+              SELECT_MENU_BASE,
+              SELECT_MENU_VARIANT.glass,
+              "w-max max-w-[min(100vw-2rem,20rem)] max-h-none overscroll-contain",
+            )}
           >
             {items.map((item) => {
               const label = t(item.labelKey);
@@ -338,9 +347,9 @@ export function PublicHeader(): ReactNode {
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
   const touristSignedIn = mounted && isAuthenticated && user.role === "TOURIST";
-  const pathname = usePathname();
-  // Sign-in from any page but home brings the user back to it (see lib/auth/returnTo).
-  const returnTo = pathname === "/" ? undefined : pathname;
+  const currentPath = useCurrentPath();
+  // Sign-in from any page but home brings the user back to it, query included (lib/auth/returnTo).
+  const returnTo = currentPath === "/" ? undefined : currentPath;
   const authHrefs: AuthHrefs = {
     login: withReturnTo("/login", returnTo),
     register: withReturnTo("/register", returnTo),

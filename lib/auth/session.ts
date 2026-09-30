@@ -41,3 +41,22 @@ export const MOCK_USERS: Record<AppRole, MockUser> = {
 
 /** Signed-out placeholder. Never a privileged role; portals also check `isAuthenticated`. */
 export const DEFAULT_MOCK_USER: MockUser = MOCK_USERS.TOURIST;
+
+function phoneDigits(value: string): string {
+  // Compare the national number so "+963 955 367 890", "0955367890" and "955367890" all match.
+  return value.replace(/\D/g, "").slice(-9);
+}
+
+/**
+ * Mock sign-in: the demo account whose email or phone matches signs in with its own role
+ * (business owner, staff, admin). Any other destination signs in as a user.
+ */
+export function mockRoleForSignIn(channel: "phone" | "email", destination: string): AppRole {
+  const value = destination.trim();
+  const match = Object.values(MOCK_USERS).find((user) =>
+    channel === "email"
+      ? user.email.toLowerCase() === value.toLowerCase()
+      : value.length > 0 && phoneDigits(user.phone) === phoneDigits(value),
+  );
+  return match?.role ?? "TOURIST";
+}

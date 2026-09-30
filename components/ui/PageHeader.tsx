@@ -12,6 +12,7 @@ import {
   getPageHeader,
   type PageHeaderActionKind,
   type PageHeaderActionSpec,
+  type PageHeaderSpec,
 } from "@/config/pageHeaders";
 import { usePageHeaderStore } from "@/store/pageHeaderStore";
 
@@ -73,9 +74,13 @@ function PageHeaderBreadcrumb({
   );
 }
 
-export function PageHeader(): ReactNode {
+/**
+ * Title block from config/pageHeaders.ts. Looks the route up by pathname; pass `spec` when the
+ * title depends on more than the path (the checkout, whose type is in the query).
+ */
+export function PageHeader({ spec: givenSpec }: { spec?: PageHeaderSpec } = {}): ReactNode {
   const pathname = usePathname();
-  const spec = getPageHeader(pathname);
+  const spec = givenSpec ?? getPageHeader(pathname);
   const t = useTranslations(spec?.namespace ?? "admin.headers");
 
   if (!spec) {

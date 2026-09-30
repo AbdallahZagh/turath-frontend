@@ -1,3 +1,5 @@
+import { CREDIT_GRACE_RATIO, CREDIT_WATCH_RATIO } from "@/lib/mock/adminLedger";
+
 export type ProviderLedgerStanding = "healthy" | "warning" | "grace";
 export type ProviderSettlementCadence = "weekly" | "biweekly" | "monthly";
 export type ProviderStatementStatus = "paid" | "due" | "overdue";
@@ -27,20 +29,20 @@ export type ProviderLedgerData = {
   paidCommissionSyp: number;
   outstandingCommissionSyp: number;
   creditCeilingSyp: number;
+  /** Computed from outstanding commission vs the credit ceiling, never stored. */
   standing: ProviderLedgerStanding;
   nextStatementAt: string;
   statements: ProviderLedgerStatement[];
   entries: ProviderLedgerEntry[];
 };
 
-const PROVIDER_LEDGER: ProviderLedgerData = {
+const PROVIDER_LEDGER: Omit<ProviderLedgerData, "standing"> = {
   tier: "established",
   cadence: "biweekly",
   accruedCommissionSyp: 6_200_000,
   paidCommissionSyp: 2_100_000,
   outstandingCommissionSyp: 4_100_000,
   creditCeilingSyp: 5_000_000,
-  standing: "warning",
   nextStatementAt: "2026-09-28",
   statements: [
     {
@@ -108,9 +110,28 @@ const PROVIDER_LEDGER: ProviderLedgerData = {
   ],
 };
 
+/** PAGES.md credit rules: watch from 75% of the ceiling, 48h grace from 100%. */
+function ledgerStandingFor(
+  outstandingSyp: number,
+  creditCeilingSyp: number,
+): ProviderLedgerStanding {
+  const ratio = creditCeilingSyp > 0 ? outstandingSyp / creditCeilingSyp : 0;
+  if (ratio >= CREDIT_GRACE_RATIO) {
+    return "grace";
+  }
+  if (ratio >= CREDIT_WATCH_RATIO) {
+    return "warning";
+  }
+  return "healthy";
+}
+
 export function getProviderLedger(): ProviderLedgerData {
   return {
     ...PROVIDER_LEDGER,
+    standing: ledgerStandingFor(
+      PROVIDER_LEDGER.outstandingCommissionSyp,
+      PROVIDER_LEDGER.creditCeilingSyp,
+    ),
     statements: PROVIDER_LEDGER.statements.map((statement) => ({ ...statement })),
     entries: PROVIDER_LEDGER.entries.map((entry) => ({ ...entry })),
   };

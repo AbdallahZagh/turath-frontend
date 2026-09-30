@@ -23,11 +23,14 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useGuide } from "@/hooks/useGuides";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function GuideDetail({
   guideId,
@@ -37,6 +40,8 @@ export function GuideDetail({
   basePath?: string;
 }): ReactNode {
   const t = useTranslations("guides");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const td = useTranslations("guides.detail");
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
@@ -207,7 +212,14 @@ export function GuideDetail({
           <p className="text-prose-muted text-xs">{t("perHour")}</p>
           <div className="border-border my-5 border-t" />
           <p className="text-prose-muted text-sm leading-relaxed">{td("cashOnArrival")}</p>
-          <Button href={`/bookings/new?type=guide&id=${guide.id}`} className="mt-5 w-full">
+          <Button
+            href={withBookingSearch(
+              `${paths.checkout}?type=guide&id=${guide.id}`,
+              bookingSearch,
+              "guide",
+            )}
+            className="mt-5 w-full"
+          >
             <CalendarCheck className="size-5" aria-hidden />
             {td("book")}
           </Button>

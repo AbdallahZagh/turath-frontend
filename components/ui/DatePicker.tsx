@@ -62,6 +62,8 @@ type DatePickerProps = {
   centerOn?: string;
   /** `short` ("Oct 10, 2026" / "10 أكتوبر 2026") for narrow fields such as the checkout grid. */
   dateStyle?: "long" | "short";
+  /** When set, only these ISO dates can be picked; every other day is greyed out. */
+  availableDates?: readonly string[];
 };
 
 const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6] as const;
@@ -110,6 +112,7 @@ export function DatePicker({
   showToday = true,
   centerOn,
   dateStyle = "long",
+  availableDates,
 }: DatePickerProps): ReactNode {
   const t = useTranslations("picker");
   const rawLocale = useLocale();
@@ -268,7 +271,9 @@ export function DatePicker({
                   const outside = !isSameMonth(day, cursor);
                   const selected = selectedDate ? isSameDay(day, selectedDate) : false;
                   const isToday = isSameDay(day, today);
-                  const blocked = isDisabled(day, minDate, maxDate);
+                  const blocked =
+                    isDisabled(day, minDate, maxDate) ||
+                    (availableDates !== undefined && !availableDates.includes(iso));
 
                   return (
                     <button
@@ -281,7 +286,7 @@ export function DatePicker({
                         !outside && !selected && "text-prose hover:bg-option-hover",
                         isToday && !selected && "ring-ring ring-1",
                         selected && "bg-primary text-primary-foreground",
-                        blocked && "opacity-30",
+                        blocked && "cursor-not-allowed opacity-30",
                       )}
                       onClick={() => commit(day)}
                     >

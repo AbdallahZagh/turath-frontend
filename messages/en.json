@@ -1016,9 +1016,9 @@
       "empty": "No business accounts are on file yet.",
       "emptyFiltered": "No accounts match these filters.",
       "standing": {
-        "healthy": "Healthy",
-        "watch": "Watch 75%",
-        "grace": "Grace 100%",
+        "healthy": "Good standing",
+        "watch": "Warning 75%",
+        "grace": "48h settlement",
         "suspended": "Suspended"
       },
       "cadence": {
@@ -1970,6 +1970,7 @@
     "description": "Your reliability score is below 50, so the business will review this request before confirming it."
   },
   "guideBooking": {
+    "dateUnavailable": "That date isn't available. Pick another.",
     "details": "Experience details",
     "date": "Date", "datePlaceholder": "Choose an available date", "duration": "Duration", "hours": "Hours",
     "language": "Language", "languagePlaceholder": "Choose a language", "focusArea": "Focus area", "focusPlaceholder": "Choose your focus",
@@ -1985,13 +1986,23 @@
   "bookings": {
     "chooseRoomForPrice": "Choose a room to see the price",
     "headers": {
-      "hotel": { "title": "Complete your booking", "description": "Pick your dates and room. You pay in cash when you arrive." },
+      "hotel": { "title": "Book your stay", "description": "Pick your dates and room. You pay in cash when you arrive." },
       "restaurant": { "title": "Reserve your table", "description": "Choose a date, time, and seating area. You pay in cash at the restaurant." },
       "trip": { "title": "Reserve your journey", "description": "Choose a departure, seats, and pickup point. You pay in cash on the day." },
       "event": { "title": "Reserve your tickets", "description": "Choose a session, ticket type, and quantity. You pay in cash at the door." },
       "guide": { "title": "Book your guide", "description": "Choose a date, length, language, and focus. You pay your guide in cash." },
       "voucher": { "title": "Your booking voucher", "description": "Keep this page available and show the QR code or backup code when you arrive." },
-      "review": { "title": "Share your experience", "description": "Share a verified review after completing your Turath booking." }
+      "review": { "title": "Share your experience", "description": "Share a verified review after completing your Turath booking." },
+      "hotelVoucher": { "title": "Your stay voucher", "description": "Show the QR code or backup code when you check in at the hotel." },
+      "restaurantVoucher": { "title": "Your table voucher", "description": "Show the QR code or backup code when you arrive at the restaurant." },
+      "tripVoucher": { "title": "Your trip voucher", "description": "Show the QR code or backup code at the pickup point." },
+      "eventVoucher": { "title": "Your ticket voucher", "description": "Show the QR code or backup code at the door." },
+      "guideVoucher": { "title": "Your guide booking voucher", "description": "Show the QR code or backup code when you meet your guide." },
+      "hotelReview": { "title": "Review your stay", "description": "Share a verified review of the hotel after your stay." },
+      "restaurantReview": { "title": "Review your meal", "description": "Share a verified review of the restaurant after your visit." },
+      "tripReview": { "title": "Review your trip", "description": "Share a verified review of the trip after you travel." },
+      "eventReview": { "title": "Review the event", "description": "Share a verified review of the event after you attend." },
+      "guideReview": { "title": "Review your guide", "description": "Share a verified review of your guide after the tour." }
     },
     "policyNote": "Before you book, read the <policy>booking and no-show policy</policy>.",
     "stayDetails": "Stay details",

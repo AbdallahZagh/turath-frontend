@@ -49,7 +49,7 @@ export type PageHeaderActionSpec = {
 
 export type PageHeaderSpec = {
   namespace: PageHeaderNamespace;
-  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "bookingPolicy" | "providerLicensing" | "hotel" | "restaurant" | "trip" | "event" | "guide" | "voucher" | "review";
+  page: AdminHeaderPage | "index" | "dashboard" | "bookingDetail" | "profile" | "myProfile" | "inventory" | "checkIn" | "staff" | "reliability" | "saved" | "notifications" | "explore" | "search" | "terms" | "privacy" | "bookingPolicy" | "providerLicensing" | "hotel" | "restaurant" | "trip" | "event" | "guide" | "voucher" | "review" | `${BookingKind}Voucher` | `${BookingKind}Review`;
   /** List page one level up; renders a breadcrumb (its title, then this page's). */
   parent?: string;
   /** Pin the header and let the page body fill leftover viewport height. */
@@ -232,31 +232,21 @@ export const CHECKOUT_PAGE_HEADERS: Record<BookingKind, PageHeaderSpec> = {
   guide: { namespace: "bookings.headers", page: "guide" },
 };
 
-const PUBLIC_VOUCHER_HEADER: PageHeaderSpec = { namespace: "bookings.headers", page: "voucher" };
-const USER_VOUCHER_HEADER: PageHeaderSpec = {
-  namespace: "bookings.headers",
-  page: "voucher",
-  parent: USER_PATHS.bookings,
-};
-const USER_REVIEW_HEADER: PageHeaderSpec = {
-  namespace: "bookings.headers",
-  page: "review",
-  parent: USER_PATHS.bookings,
-};
-
-/** `/bookings/<id>`, `/user/bookings/<id>` and `/user/bookings/<id>/review` (not `/new`). */
-function bookingHeader(pathname: string): PageHeaderSpec | undefined {
-  const segments = pathname.split("/").slice(1);
-  if (segments.length === 2 && segments[0] === "bookings" && segments[1] !== "new") {
-    return PUBLIC_VOUCHER_HEADER;
-  }
-  if (segments[0] !== "user" || segments[1] !== "bookings" || !segments[2] || segments[2] === "new") {
-    return undefined;
-  }
-  if (segments.length === 3) {
-    return USER_VOUCHER_HEADER;
-  }
-  return segments.length === 4 && segments[3] === "review" ? USER_REVIEW_HEADER : undefined;
+/**
+ * Voucher and review titles per booking type. The booking type is only known once the booking
+ * loads, so these pages render `<BookingPageHeader>` instead of a path lookup; the generic
+ * title shows while it loads.
+ */
+export function bookingPageHeader(
+  screen: "voucher" | "review",
+  kind: BookingKind | undefined,
+  inAccount: boolean,
+): PageHeaderSpec {
+  return {
+    namespace: "bookings.headers",
+    page: kind ? `${kind}${screen === "voucher" ? "Voucher" : "Review"}` : screen,
+    parent: inAccount ? USER_PATHS.bookings : undefined,
+  };
 }
 
 export function getPageHeader(pathname: string): PageHeaderSpec | undefined {
@@ -282,5 +272,5 @@ export function getPageHeader(pathname: string): PageHeaderSpec | undefined {
   if (pathname.startsWith(`${PROVIDER_PATHS.bookings}/`)) {
     return PAGE_HEADERS.providerBookingDetail;
   }
-  return bookingHeader(pathname);
+  return undefined;
 }

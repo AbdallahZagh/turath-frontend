@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useProviderStay } from "@/hooks/useStayTranslations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 
@@ -27,6 +28,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
   const t = useTranslations("provider");
   const mounted = useIsClient();
   const currentPath = useCurrentPath();
+  const stay = useProviderStay();
   const [mobileOpen, setMobileOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -146,7 +148,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
 
         <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-0 lg:pe-8">
           <div className="mx-auto w-full max-w-[98rem]">
-            <PageHeader />
+            <PageHeader values={{ stay }} />
             {children}
           </div>
         </main>

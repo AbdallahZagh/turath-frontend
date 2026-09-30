@@ -20,6 +20,7 @@ import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 const ALL_STATUSES = "all";
 const STATUSES: TouristBookingStatus[] = [
@@ -42,7 +43,7 @@ function statusBadge(status: TouristBookingStatus): {
 }
 
 export function ProviderBookingsScreen(): ReactNode {
-  const t = useTranslations("provider.bookings");
+  const t = useStayTranslations("provider.bookings");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";

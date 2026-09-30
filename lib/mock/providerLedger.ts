@@ -1,4 +1,4 @@
-import { CREDIT_GRACE_RATIO, CREDIT_WATCH_RATIO } from "@/lib/mock/adminLedger";
+import { creditStandingFor, creditUsedRatio } from "@/lib/mock/adminLedger";
 
 export type ProviderLedgerStanding = "healthy" | "warning" | "grace";
 export type ProviderSettlementCadence = "weekly" | "biweekly" | "monthly";
@@ -110,19 +110,13 @@ const PROVIDER_LEDGER: Omit<ProviderLedgerData, "standing"> = {
   ],
 };
 
-/** PAGES.md credit rules: watch from 75% of the ceiling, 48h grace from 100%. */
+/** Same rule and helper as the admin ledger; the business side calls "watch" a warning. */
 function ledgerStandingFor(
   outstandingSyp: number,
   creditCeilingSyp: number,
 ): ProviderLedgerStanding {
-  const ratio = creditCeilingSyp > 0 ? outstandingSyp / creditCeilingSyp : 0;
-  if (ratio >= CREDIT_GRACE_RATIO) {
-    return "grace";
-  }
-  if (ratio >= CREDIT_WATCH_RATIO) {
-    return "warning";
-  }
-  return "healthy";
+  const standing = creditStandingFor(creditUsedRatio(outstandingSyp, creditCeilingSyp));
+  return standing === "watch" ? "warning" : standing;
 }
 
 export function getProviderLedger(): ProviderLedgerData {

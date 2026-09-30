@@ -370,7 +370,7 @@ export function AdminAttractionModal({
                 size="sm"
                 type="number"
                 min={0}
-                step={1000}
+                step={1}
                 required
                 value={entryFeeSyp}
                 onChange={(event) => setEntryFeeSyp(event.target.value)}

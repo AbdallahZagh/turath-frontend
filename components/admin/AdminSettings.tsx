@@ -177,20 +177,20 @@ export function AdminSettings(): ReactNode {
         const raw = draft?.ceilings[row.tier] ?? "";
         const amount = Number(raw);
         return (
-          <div className="ms-auto flex w-56 flex-col items-end gap-1">
+          <div className="ms-auto flex w-40 flex-col items-end gap-1 sm:w-56">
             <Input
               variant="glass"
               size="sm"
               type="number"
               min={1}
-              step={1000}
+              step={1}
               inputMode="numeric"
               value={raw}
               onChange={(event) => setCeiling(row.tier, event.target.value)}
               label={t("credit.columns.ceiling")}
             />
             {Number.isFinite(amount) && amount > 0 ? (
-              <span className="text-prose-muted text-xs">{formatSyp(amount, loc)}</span>
+              <span className="text-prose-muted text-end text-xs">{formatSyp(amount, loc)}</span>
             ) : null}
           </div>
         );
@@ -224,7 +224,7 @@ export function AdminSettings(): ReactNode {
   }
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+    <form className="flex flex-col gap-6" noValidate onSubmit={onSubmit}>
       <div className="flex shrink-0">
         <Button
           type="submit"

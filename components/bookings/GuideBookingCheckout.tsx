@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeft,
-  CalendarDays,
   Clock3,
   Languages,
   MapPin,
@@ -26,6 +25,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
+import { DatePicker } from "@/components/ui/DatePicker";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
@@ -83,13 +83,15 @@ export function GuideBookingCheckout({
       couponCode: "",
     },
   });
-  const date = useWatch({ control: form.control, name: "date" });
+  const pickedDate = useWatch({ control: form.control, name: "date" });
   const duration = useWatch({ control: form.control, name: "duration" });
   const hours = useWatch({ control: form.control, name: "hours" });
   const language = useWatch({ control: form.control, name: "language" });
   const focusArea = useWatch({ control: form.control, name: "focusArea" });
   const couponCode = useWatch({ control: form.control, name: "couponCode" });
   const guide = guideQuery.data;
+  // A carried or typed date the guide is not available on is dropped, never booked.
+  const date = guide?.availability.includes(pickedDate) ? pickedDate : "";
   const listPriceSyp = guide
     ? duration === "hourly"
       ? guide.rates.hourly * hours
@@ -128,10 +130,8 @@ export function GuideBookingCheckout({
       />
     );
   const availableGuide = guide;
-  const dates: SelectOption[] = guide.availability.map((value) => ({
-    value,
-    label: formatMediumDate(value, loc),
-  }));
+  const availableDates = [...guide.availability].sort();
+  const urlDateUnavailable = Boolean(initialDate) && pickedDate === initialDate && !date;
   const durations: SelectOption[] = (["hourly", "halfDay", "fullDay"] as const).map((value) => ({
     value,
     label: tg(`durations.${value}`),
@@ -155,6 +155,10 @@ export function GuideBookingCheckout({
     );
   }
   async function onSubmit(values: GuideBookingValues): Promise<void> {
+    if (!availableGuide.availability.includes(values.date)) {
+      form.setError("date", { message: "dateRequired" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         guideId: availableGuide.id,
@@ -185,18 +189,25 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="date"
                   render={({ field }) => (
-                    <Select
+                    <DatePicker
                       variant="main"
+                      dateStyle="short"
                       required
                       label={t("date")}
                       placeholder={t("datePlaceholder")}
-                      options={dates}
-                      value={field.value}
+                      min={availableDates[0]}
+                      max={availableDates.at(-1)}
+                      centerOn={availableDates[0]}
+                      availableDates={availableDates}
+                      showToday={false}
+                      value={date}
                       onChange={field.onChange}
-                      icon={<CalendarDays className="size-4" />}
                     />
                   )}
                 />
+                {urlDateUnavailable && !form.formState.errors.date ? (
+                  <p className="text-prose-muted text-xs">{t("dateUnavailable")}</p>
+                ) : null}
                 <AuthFieldError message={errorMessage(te, form.formState.errors.date)} />
               </div>
               <div className="space-y-1.5">

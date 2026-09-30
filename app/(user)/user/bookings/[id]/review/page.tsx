@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { BookingPageHeader } from "@/components/bookings/BookingPageHeader";
 import { BookingReviewForm } from "@/components/bookings/BookingReviewForm";
 
 type ReviewPageProps = { params: Promise<{ id: string }> };
@@ -13,5 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function UserBookingReviewPage({ params }: ReviewPageProps): Promise<ReactNode> {
   const { id } = await params;
-  return <BookingReviewForm bookingId={id} />;
+  return (
+    <>
+      <BookingPageHeader bookingId={id} screen="review" />
+      <BookingReviewForm bookingId={id} />
+    </>
+  );
 }

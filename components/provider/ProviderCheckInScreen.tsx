@@ -39,6 +39,7 @@ import {
   type ProviderCheckInValues,
 } from "@/lib/validation/providerCheckIn";
 import { useAuthStore } from "@/store/authStore";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 function ResultPanel({
   result,
@@ -47,7 +48,7 @@ function ResultPanel({
   result: ProviderCheckInResult;
   locale: Locale;
 }): ReactNode {
-  const t = useTranslations("provider.checkIn");
+  const t = useStayTranslations("provider.checkIn");
   const formatMoney = useFormatSyp();
 
   if (result.kind === "invalid") {
@@ -188,7 +189,7 @@ function Detail({
 }
 
 export function ProviderCheckInScreen({ initialCode = "" }: { initialCode?: string }): ReactNode {
-  const t = useTranslations("provider.checkIn");
+  const t = useStayTranslations("provider.checkIn");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
@@ -328,7 +329,7 @@ function ArrivalCard({
   pending: boolean;
   onVerify: () => void;
 }): ReactNode {
-  const t = useTranslations("provider.checkIn");
+  const t = useStayTranslations("provider.checkIn");
   const formatMoney = useFormatSyp();
   return (
     <GlassPanel className="p-5 sm:p-6">

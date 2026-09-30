@@ -55,6 +55,15 @@ test("sign-in lands users on the return page and portals inside their own area",
   assert.equal(postSignInPath("SUPER_ADMIN", "/provider"), "/admin");
 });
 
+test("a user asked to return to a business or admin page lands on home", () => {
+  assert.equal(postSignInPath("TOURIST", "/user/bookings"), "/user/bookings");
+  assert.equal(postSignInPath("TOURIST", "/admin/settings"), "/");
+  assert.equal(postSignInPath("TOURIST", "/admin"), "/");
+  assert.equal(postSignInPath("TOURIST", "/provider/bookings?status=CONFIRMED"), "/");
+  assert.equal(postSignInPath("TOURIST", "/providers-fake"), "/providers-fake");
+  assert.equal(postSignInPath("TOURIST", "/provider/register"), "/provider/register");
+});
+
 test("demo accounts sign in with their own role", () => {
   assert.equal(mockRoleForSignIn("email", "Lina.Nasser@turath.sy"), "SUPER_ADMIN");
   assert.equal(mockRoleForSignIn("email", "samer.qabbani@example.com"), "PROVIDER_OWNER");

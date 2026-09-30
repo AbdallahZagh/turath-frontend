@@ -117,7 +117,7 @@ export function AdminProviderFinance({
         <p className="text-prose-muted text-sm">
           {t("detail.tier")}: {tTiers(`tiers.${provider.tier}`)}
         </p>
-        <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+        <form className="flex flex-col gap-4" noValidate onSubmit={onSubmit}>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">{t("detail.commission")}</span>
             <div className="flex items-center gap-2">
@@ -151,7 +151,7 @@ export function AdminProviderFinance({
               size="sm"
               type="number"
               min={1}
-              step={1000}
+              step={1}
               inputMode="numeric"
               value={credit}
               onChange={(event) => setCredit(event.target.value)}

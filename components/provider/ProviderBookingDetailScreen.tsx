@@ -41,6 +41,7 @@ import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "@/store/toastStore";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 const BookingQr = dynamic(
   () => import("qrcode.react").then((module) => module.QRCodeSVG),
@@ -59,7 +60,7 @@ function statusBadge(status: TouristBookingStatus): {
 }
 
 export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
-  const t = useTranslations("provider.bookings");
+  const t = useStayTranslations("provider.bookings");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";

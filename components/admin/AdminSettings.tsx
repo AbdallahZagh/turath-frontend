@@ -15,6 +15,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminSettings, useSaveAdminSettings } from "@/hooks/useAdminSettings";
 import type { Locale } from "@/i18n/config";
 import { formatSyp } from "@/lib/format/money";
+import { formatCount, parseTypedDigits } from "@/lib/format/number";
 import {
   CREDIT_CEILING_TIERS,
   FEATURED_SLOT_IDS,
@@ -177,7 +178,7 @@ export function AdminSettings(): ReactNode {
         const raw = draft?.ceilings[row.tier] ?? "";
         const amount = Number(raw);
         return (
-          <div className="ms-auto flex w-40 flex-col items-end gap-1 sm:w-56">
+          <div className="ms-auto flex w-56 flex-col items-end gap-1">
             <Input
               variant="glass"
               size="sm"
@@ -241,13 +242,42 @@ export function AdminSettings(): ReactNode {
           <h2 className="text-prose text-lg font-semibold">{t("credit.title")}</h2>
           <p className="text-prose-muted text-sm leading-relaxed">{t("credit.description")}</p>
         </div>
-        <Table
-          columns={creditColumns}
-          rows={creditRows}
-          getRowId={(row) => row.tier}
-          caption={t("credit.title")}
-          isLoading={false}
-        />
+        {/* Phones: one block per tier, no table. From 640px the table below. */}
+        <div className="flex flex-col gap-3 sm:hidden">
+          {CREDIT_CEILING_TIERS.map((tier) => {
+            const raw = draft.ceilings[tier];
+            const amount = Number(raw);
+            return (
+              <GlassPanel key={tier} className="flex-none gap-2 p-4">
+                <span className="text-prose text-start font-medium">{t(`tiers.${tier}`)}</span>
+                <Input
+                  variant="glass"
+                  size="sm"
+                  type="text"
+                  inputMode="numeric"
+                  value={raw && Number.isFinite(amount) ? formatCount(amount, loc) : raw}
+                  onChange={(event) => setCeiling(tier, parseTypedDigits(event.target.value))}
+                  label={`${t(`tiers.${tier}`)} · ${t("credit.columns.ceiling")}`}
+                  className="w-full"
+                />
+                {Number.isFinite(amount) && amount > 0 ? (
+                  <span className="text-prose-muted text-xs whitespace-nowrap">
+                    {formatSyp(amount, loc)}
+                  </span>
+                ) : null}
+              </GlassPanel>
+            );
+          })}
+        </div>
+        <div className="hidden sm:block">
+          <Table
+            columns={creditColumns}
+            rows={creditRows}
+            getRowId={(row) => row.tier}
+            caption={t("credit.title")}
+            isLoading={false}
+          />
+        </div>
       </div>
 
       <GlassPanel className="flex-none gap-4 p-5">

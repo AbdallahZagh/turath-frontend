@@ -1,26 +1,28 @@
 "use client";
 
 import { CalendarCheck, CalendarDays, FilterX, Phone, StickyNote, UsersRound } from "lucide-react";
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { DatePicker } from "@/components/ui/DatePicker";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { providerBookingPath } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderBookings } from "@/hooks/useProviderBookings";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
-import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 const ALL_STATUSES = "all";
 const STATUSES: TouristBookingStatus[] = [
@@ -148,15 +150,12 @@ export function ProviderBookingsScreen(): ReactNode {
     <div className="flex min-h-0 flex-1 flex-col gap-4">
       <GlassPanel className="flex flex-col gap-3 p-4 lg:flex-row lg:items-end">
         <div className="min-w-0 flex-1">
-          <label className="text-prose-muted mb-1.5 block text-xs font-semibold" htmlFor="provider-booking-date">
-            {t("filters.date")}
-          </label>
-          <Input
-            id="provider-booking-date"
-            type="date"
+          <DatePicker
             variant="glass"
+            dateStyle="short"
+            label={t("filters.date")}
             value={date}
-            onChange={(event) => setDate(event.target.value)}
+            onChange={setDate}
           />
         </div>
         <div className="min-w-0 flex-1">
@@ -185,17 +184,64 @@ export function ProviderBookingsScreen(): ReactNode {
         </Button>
       </GlassPanel>
 
-      <Table
-        fill
-        columns={columns}
-        rows={filtered}
-        getRowId={(booking) => booking.id}
-        getRowHref={(booking) => providerBookingPath(booking.id)}
-        caption={t("caption")}
-        emptyMessage={t("empty.filtered")}
-        isLoading={query.isPending}
-        loadingRowCount={6}
-      />
+      {/* Phones: one card per booking instead of the wide table. */}
+      <ul className="flex flex-col gap-3 sm:hidden" aria-label={t("caption")}>
+        {query.isPending
+          ? Array.from({ length: 4 }, (_, index) => (
+              <li key={index}>
+                <Skeleton className="h-36" />
+              </li>
+            ))
+          : null}
+        {!query.isPending && filtered.length === 0 ? (
+          <li className="text-prose-muted py-6 text-center text-sm">{t("empty.filtered")}</li>
+        ) : null}
+        {filtered.map((booking) => (
+          <li key={booking.id}>
+            <Link
+              href={providerBookingPath(booking.id)}
+              className="focus-visible:outline-ring rounded-glass block focus-visible:outline-2"
+            >
+              <GlassPanel className="flex-none gap-2 p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-prose font-semibold">{localizedName(booking.guestName, locale)}</p>
+                  <Badge {...statusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+                </div>
+                <p className="text-prose-muted flex items-center gap-1.5 text-xs">
+                  <Phone className="size-3.5" aria-hidden />
+                  <span dir="ltr">{booking.phone}</span>
+                </p>
+                <p className="text-prose flex items-center gap-1.5 text-sm">
+                  <CalendarDays className="text-prose-muted size-4" aria-hidden />
+                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.roomName, locale)}
+                </p>
+                <div className="flex items-center justify-between gap-3 text-sm">
+                  <span className="text-prose-muted inline-flex items-center gap-1.5">
+                    <UsersRound className="size-4" aria-hidden />
+                    {t("party", { count: booking.partySize })}
+                  </span>
+                  <span className="text-prose font-semibold tabular-nums">
+                    {formatMoney(booking.cashDueSyp)}
+                  </span>
+                </div>
+              </GlassPanel>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="hidden min-h-0 flex-1 flex-col sm:flex">
+        <Table
+          fill
+          columns={columns}
+          rows={filtered}
+          getRowId={(booking) => booking.id}
+          getRowHref={(booking) => providerBookingPath(booking.id)}
+          caption={t("caption")}
+          emptyMessage={t("empty.filtered")}
+          isLoading={query.isPending}
+          loadingRowCount={6}
+        />
+      </div>
 
       {!query.isPending ? (
         <p className="text-prose-muted flex items-center gap-2 text-xs">

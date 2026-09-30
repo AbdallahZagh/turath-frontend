@@ -150,7 +150,9 @@ export function ProviderReviewsScreen(): ReactNode {
           <span className="bg-primary/12 text-primary grid size-12 place-items-center rounded-2xl">
             <Star className="size-6 fill-current" aria-hidden />
           </span>
-          <p className="font-heading text-prose mt-4 text-5xl font-semibold tabular-nums">
+          <h2 className="font-heading text-prose mt-4 text-xl font-semibold">{t("summary.title")}</h2>
+          <p className="text-prose-muted mt-1 text-sm">{t("summary.subline")}</p>
+          <p className="font-heading text-prose mt-3 text-5xl font-semibold tabular-nums">
             {formatRating(summary.average, locale)}
           </p>
           <StarRating

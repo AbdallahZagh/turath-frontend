@@ -287,6 +287,12 @@ export function DatePicker({
                         isToday && !selected && "ring-ring ring-1",
                         selected && "bg-primary text-primary-foreground",
                         blocked && "cursor-not-allowed opacity-30",
+                        // Days on an availability list get a light seafoam fill so they read as pickable.
+                        availableDates !== undefined &&
+                          !blocked &&
+                          !selected &&
+                          !outside &&
+                          "bg-accent/20",
                       )}
                       onClick={() => commit(day)}
                     >

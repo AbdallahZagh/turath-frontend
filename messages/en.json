@@ -2448,7 +2448,7 @@
     },
     "providerRating": {
       "title": "Your rating",
-      "description": "From guest reviews",
+      "description": "From businesses you've booked with",
       "count": "{count, plural, one {# business review} other {# business reviews}}",
       "ratingLabel": "Rated {rating} out of 5"
     },
@@ -2536,7 +2536,7 @@
     "rating": "Your rating",
     "star": "{count, plural, one {# star} other {# stars}}",
     "comment": "Your review",
-    "commentPlaceholder": "Tell other users what stood out about your experience",
+    "commentPlaceholder": "Tell other guests what stood out about your experience",
     "submit": "Submit review",
     "submitting": "Submitting…",
     "back": "Back to voucher",
@@ -2742,6 +2742,8 @@
     },
     "reviews": {
       "summary": {
+        "title": "Your rating",
+        "subline": "From guest reviews",
         "count": "Based on {count, plural, one {# verified guest review} other {# verified guest reviews}}",
         "verifiedOnly": "Verified arrivals only"
       },

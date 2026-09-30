@@ -2072,6 +2072,7 @@
     }
   },
   "restaurantBooking": {
+    "chooseZoneForPrice": "اختر منطقة الجلوس لعرض السعر",
     "reservationDetails": "تفاصيل الحجز",
     "date": "التاريخ",
     "time": "الوقت",
@@ -2126,6 +2127,7 @@
     }
   },
   "tripBooking": {
+    "chooseOptionForPrice": "اختر خياراً لعرض السعر",
     "tripDetails": "تفاصيل الرحلة",
     "date": "تاريخ الانطلاق",
     "datePlaceholder": "اختر موعد الانطلاق",
@@ -2178,6 +2180,7 @@
     }
   },
   "eventBooking": {
+    "chooseTierForPrice": "اختر نوع التذكرة لعرض السعر",
     "ticketDetails": "تفاصيل التذاكر",
     "session": "الموعد",
     "sessionPlaceholder": "اختر موعداً",

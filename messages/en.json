@@ -2072,6 +2072,7 @@
     }
   },
   "restaurantBooking": {
+    "chooseZoneForPrice": "Choose a seating area to see the price",
     "reservationDetails": "Reservation details",
     "date": "Date",
     "time": "Time",
@@ -2126,6 +2127,7 @@
     }
   },
   "tripBooking": {
+    "chooseOptionForPrice": "Choose an option to see the price",
     "tripDetails": "Trip details",
     "date": "Departure date",
     "datePlaceholder": "Choose a departure",
@@ -2178,6 +2180,7 @@
     }
   },
   "eventBooking": {
+    "chooseTierForPrice": "Choose a ticket type to see the price",
     "ticketDetails": "Ticket details",
     "session": "Session",
     "sessionPlaceholder": "Choose a session",

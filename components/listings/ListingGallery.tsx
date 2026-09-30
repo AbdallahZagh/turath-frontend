@@ -17,12 +17,12 @@ export function ListingGallery({ images, imageAlt, openImageLabel }: ListingGall
 
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_7rem]">
-      <div className="rounded-glass relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:h-[clamp(360px,calc(100svh-24rem),60vh)]">
+      <div className="rounded-glass relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:h-[clamp(360px,60vh,640px)]">
         <Image src={activeImage} alt={imageAlt} fill priority sizes="(min-width: 1024px) 62vw, 94vw" className="object-cover" />
         <div aria-hidden className="from-ink/30 absolute inset-0 bg-linear-to-t to-transparent" />
       </div>
       {/* Swipe row on phones (starts at the inline start, so from the right in Arabic); column beside the photo on desktop. */}
-      <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-1 lg:h-[clamp(360px,calc(100svh-24rem),60vh)] lg:snap-y lg:flex-col lg:overflow-x-visible lg:overflow-y-auto lg:pb-0">
+      <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-1 lg:h-[clamp(360px,60vh,640px)] lg:snap-y lg:flex-col lg:overflow-x-visible lg:overflow-y-auto lg:pb-0">
         {images.map((image, index) => (
           <button
             key={image}

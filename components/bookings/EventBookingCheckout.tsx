@@ -94,6 +94,8 @@ export function EventBookingCheckout({
   const activeCoupon = coupon?.valid ? coupon : null;
   const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = Math.max(0, listPriceSyp - discountSyp);
+  const priceReady = Boolean(session && tier);
+  const price = (amountSyp: number): string => (priceReady ? formatMoney(amountSyp) : "—");
 
   if (eventQuery.isPending)
     return (
@@ -313,7 +315,7 @@ export function EventBookingCheckout({
         <dl className="mt-5 space-y-3 text-sm">
           <div className="flex justify-between gap-3">
             <dt className="text-prose-muted">{t("listPrice")}</dt>
-            <dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd>
+            <dd className="text-prose font-medium">{price(listPriceSyp)}</dd>
           </div>
           {discountSyp > 0 ? (
             <div className="text-primary flex justify-between gap-3">
@@ -323,9 +325,12 @@ export function EventBookingCheckout({
           ) : null}
           <div className="border-border flex justify-between gap-3 border-t pt-4">
             <dt className="text-prose font-semibold">{t("cashDue")}</dt>
-            <dd className="text-prose text-end font-semibold">{formatMoney(cashDueSyp)}</dd>
+            <dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd>
           </div>
         </dl>
+        {priceReady ? null : (
+          <p className="text-prose-muted mt-3 text-xs">{t("chooseTierForPrice")}</p>
+        )}
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed">
           <ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />
           {t("cashDueHint")}

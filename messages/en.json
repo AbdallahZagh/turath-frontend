@@ -2436,8 +2436,8 @@
       "usd": "US dollar estimate (USD)"
     },
     "providerRating": {
-      "title": "Your reliability score",
-      "description": "Verified businesses rate you after each check-in. These ratings sit next to your show-up record.",
+      "title": "Your rating",
+      "description": "From guest reviews",
       "count": "{count, plural, one {# business review} other {# business reviews}}",
       "ratingLabel": "Rated {rating} out of 5"
     },

@@ -51,14 +51,14 @@ export function AdminDisputeCase({
             </Badge>
           </div>
           <p className="text-prose text-sm font-medium">
-            {localizedName(dispute.guest, loc)}
+            <bdi>{localizedName(dispute.guest, loc)}</bdi>
             <span className="text-prose-muted"> · </span>
-            {localizedName(dispute.provider, loc)}
+            <bdi>{localizedName(dispute.provider, loc)}</bdi>
           </p>
           <p className="text-prose-muted text-sm">
-            {localizedName(dispute.guest, other)}
+            <bdi>{localizedName(dispute.guest, other)}</bdi>
             <span> · </span>
-            {localizedName(dispute.provider, other)}
+            <bdi>{localizedName(dispute.provider, other)}</bdi>
           </p>
           <dl className="mt-1 grid gap-3 text-sm sm:grid-cols-2">
             <div className="flex min-w-0 flex-col gap-0.5">

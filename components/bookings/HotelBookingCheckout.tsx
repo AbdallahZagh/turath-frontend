@@ -220,7 +220,7 @@ export function HotelBookingCheckout({
       </GlassPanel>
 
       <GlassPanel className="p-6 lg:sticky lg:top-28">
-        <div className="flex items-center gap-3"><div className="bg-primary/12 text-primary grid size-11 place-items-center rounded-xl"><Hotel className="size-5" aria-hidden /></div><div><h2 className="text-prose font-semibold">{localizedName(hotel.name, loc)}</h2><p className="text-prose-muted text-xs">{localizedName(hotel.address, loc)}</p></div></div>
+        <div className="flex items-center gap-3"><div className="bg-primary/12 text-primary grid size-11 place-items-center rounded-xl"><Hotel className="size-5" aria-hidden /></div><div><h2 className="text-prose font-semibold"><bdi>{localizedName(hotel.name, loc)}</bdi></h2><p className="text-prose-muted text-xs">{localizedName(hotel.address, loc)}</p></div></div>
         <dl className="border-border mt-5 space-y-3 border-y py-5 text-sm">
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" />{t("dates")}</dt><dd className="text-prose text-end font-medium">{checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected")}</dd></div>
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><BedDouble className="size-4" />{t("room")}</dt><dd className="text-prose font-medium">{selectedRoom ? tRooms(selectedRoom.type) : t("notSelected")}</dd></div>

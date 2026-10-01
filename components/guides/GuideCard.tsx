@@ -39,7 +39,7 @@ export function GuideCard({ guide, detailBasePath = "/guides" }: { guide: TourGu
           </div>
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-start justify-between gap-4">
-              <div><h2 className="font-heading text-prose text-xl font-semibold">{localizedName(guide.name, loc)}</h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4" aria-hidden />{tGov(guide.governorate)}</p></div>
+              <div><h2 className="font-heading text-prose text-xl font-semibold"><bdi>{localizedName(guide.name, loc)}</bdi></h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4" aria-hidden />{tGov(guide.governorate)}</p></div>
               <ArrowUpRight className="text-primary size-5 shrink-0" aria-hidden />
             </div>
             <div className="mt-3 flex items-center gap-2 text-sm"><StarRating value={guide.rating} label={t("ratingLabel", { rating: guide.rating })} /><span className="text-prose font-semibold">{formatRating(guide.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: guide.reviewCount })}</span></div>

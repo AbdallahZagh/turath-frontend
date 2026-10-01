@@ -301,7 +301,7 @@ export function AdminSidebar({ sticky = false }: AdminSidebarProps): ReactNode {
               {initialsFromName(user.name)}
             </span>
             <span className={cn("flex min-w-0 flex-col leading-tight", collapsed && "lg:hidden")}>
-              <span className="text-prose truncate text-sm font-medium">{user.name}</span>
+              <span className="text-prose truncate text-sm font-medium"><bdi>{user.name}</bdi></span>
               <span className="text-prose-muted truncate text-xs">{tChrome("adminBadge")}</span>
             </span>
           </div>

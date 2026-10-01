@@ -205,7 +205,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
                 {hotel.reviews.map((review) => (
                   <article key={review.id} className="bg-glass-control rounded-2xl p-4">
                     <div className="flex items-center justify-between gap-3">
-                      <p className="text-prose font-semibold">{review.guestName}</p>
+                      <p className="text-prose font-semibold"><bdi>{review.guestName}</bdi></p>
                       <StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} />
                     </div>
                     <p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p>

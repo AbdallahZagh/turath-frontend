@@ -123,7 +123,7 @@ export function AdminReviewsPage(): ReactNode {
       header: t("columns.author"),
       cell: (r) => (
         <div className="flex flex-col gap-0.5 min-w-0">
-          <span className="truncate font-medium">{localizedName(r.author, loc)}</span>
+          <span className="truncate font-medium"><bdi>{localizedName(r.author, loc)}</bdi></span>
           <span className="text-prose-muted text-xs truncate">
             {r.about === "guest" ? t("aboutGuest") : t("aboutProvider")}
           </span>

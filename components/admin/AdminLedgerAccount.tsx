@@ -56,11 +56,11 @@ export function AdminLedgerAccount({
           <div className="flex min-w-0 flex-col gap-2">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="font-heading text-prose text-2xl font-semibold tracking-tight">
-                {displayName}
+                <bdi>{displayName}</bdi>
               </h2>
               <LedgerStandingBadge standing={ledger.standing} />
             </div>
-            <p className="text-prose-muted text-sm">{localizedName(ledger.provider, other)}</p>
+            <p className="text-prose-muted text-sm"><bdi>{localizedName(ledger.provider, other)}</bdi></p>
             <AdminNamedRating
               about="provider"
               nameEn={ledger.provider.en}

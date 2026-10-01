@@ -250,7 +250,7 @@ export function AdminHeritageSitesMap({
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4 className="text-prose text-sm font-semibold truncate">
-                      {localizedName(selectedSite.name, loc)}
+                      <bdi>{localizedName(selectedSite.name, loc)}</bdi>
                     </h4>
                     <p className="text-prose-muted text-xs line-clamp-2 mt-0.5 leading-relaxed">
                       {localizedName(selectedSite.narrative, loc)}

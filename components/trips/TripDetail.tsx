@@ -55,8 +55,8 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
         <div className="space-y-7">
           <section>
             <div className="flex flex-wrap items-center gap-2">{trip.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(trip.governorate)}</Badge><Badge icon={<Clock3 className="size-3.5" aria-hidden />}>{t(`durations.${trip.duration}`)} · {localizedName(trip.durationDetail, loc)}</Badge></div>
-            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
-            <p className="text-primary mt-2 text-sm font-semibold">{localizedName(trip.providerName, loc)}</p>
+            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}><bdi>{name}</bdi></h1>
+            <p className="text-primary mt-2 text-sm font-semibold"><bdi>{localizedName(trip.providerName, loc)}</bdi></p>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} size="md" label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span><span className="text-prose-muted" aria-hidden>·</span><span className="text-prose-muted">{localizedName(trip.address, loc)}</span></div>
           </section>
 
@@ -69,7 +69,7 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
 
           <div className="grid gap-7 md:grid-cols-2">
             <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("departures")}</h2><div className="mt-4 space-y-3">{trip.departures.map((departure) => <div key={departure.date} className="bg-glass-control flex items-center justify-between gap-3 rounded-2xl p-4"><p className="text-prose flex items-center gap-2 text-sm font-semibold"><CalendarDays className="text-accent size-4" aria-hidden />{formatMediumDate(departure.date, loc)}</p><Badge>{t("seatsLeft", { count: departure.seatsLeft })}</Badge></div>)}</div></GlassPanel>
-            <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("pickupPoints")}</h2><div className="mt-4 space-y-3">{trip.pickupPoints.map((point) => <div key={point.id} className="bg-glass-control rounded-2xl p-4"><p className="text-prose font-semibold">{localizedName(point.name, loc)}</p><p className="text-prose-muted mt-1 flex items-center gap-2 text-sm"><Clock3 className="size-4" aria-hidden />{formatPickerTime(point.time, loc, "24")}</p></div>)}</div></GlassPanel>
+            <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("pickupPoints")}</h2><div className="mt-4 space-y-3">{trip.pickupPoints.map((point) => <div key={point.id} className="bg-glass-control rounded-2xl p-4"><p className="text-prose font-semibold"><bdi>{localizedName(point.name, loc)}</bdi></p><p className="text-prose-muted mt-1 flex items-center gap-2 text-sm"><Clock3 className="size-4" aria-hidden />{formatPickerTime(point.time, loc, "24")}</p></div>)}</div></GlassPanel>
           </div>
 
           <div className="grid gap-7 md:grid-cols-2">
@@ -77,7 +77,7 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
             <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("meetingPoint")}</h2><ListingLocationMap latitude={trip.coordinates.latitude} longitude={trip.coordinates.longitude} label={`${td("meetingPoint")}: ${name}`} /><p className="text-prose-muted mt-3 text-sm">{localizedName(trip.address, loc)}</p><a href={mapHref} target="_blank" rel="noreferrer" className="text-primary mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"><Navigation className="size-4" aria-hidden />{td("navigate")}</a></GlassPanel>
           </div>
 
-          <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("reviews")}</h2>{trip.reviews.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2">{trip.reviews.map((review) => <article key={review.id} className="bg-glass-control rounded-2xl p-4"><div className="flex items-center justify-between gap-3"><p className="text-prose font-semibold">{review.guestName}</p><StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} /></div><p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p><time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{formatShortDate(review.date, loc)}</time></article>)}</div> : <p className="text-prose-muted mt-3 text-sm">{td("noReviews")}</p>}</GlassPanel>
+          <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("reviews")}</h2>{trip.reviews.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2">{trip.reviews.map((review) => <article key={review.id} className="bg-glass-control rounded-2xl p-4"><div className="flex items-center justify-between gap-3"><p className="text-prose font-semibold"><bdi>{review.guestName}</bdi></p><StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} /></div><p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p><time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{formatShortDate(review.date, loc)}</time></article>)}</div> : <p className="text-prose-muted mt-3 text-sm">{td("noReviews")}</p>}</GlassPanel>
         </div>
 
         <GlassPanel className="p-6 lg:sticky lg:top-28">

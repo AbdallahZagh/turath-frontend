@@ -52,13 +52,13 @@ export function AdminProviderProfile({
           <div className="flex min-w-0 flex-col gap-2">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="font-heading text-prose text-2xl font-semibold tracking-tight">
-                {displayName}
+                <bdi>{displayName}</bdi>
               </h2>
               <Badge {...providerStatusBadgeProps(provider.status)}>
                 {t(`status.${provider.status}`)}
               </Badge>
             </div>
-            <p className="text-prose-muted text-sm">{localizedName(provider.name, other)}</p>
+            <p className="text-prose-muted text-sm"><bdi>{localizedName(provider.name, other)}</bdi></p>
             <AdminStarRating average={ratingAverage} count={ratingCount} size="md" />
             <p className="text-prose-muted text-sm leading-relaxed">
               {localizedName(provider.description, loc)}
@@ -66,7 +66,7 @@ export function AdminProviderProfile({
             <dl className="mt-1 grid gap-3 text-sm sm:grid-cols-2">
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.owner")}</dt>
-                <dd>{localizedName(provider.owner, loc)}</dd>
+                <dd><bdi>{localizedName(provider.owner, loc)}</bdi></dd>
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("columns.category")}</dt>

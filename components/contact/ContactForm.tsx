@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { CheckCircle2, Mail, Send, UserRound } from "lucide-react";
+import { CheckCircle2, Mail, MessageSquareText, Send, Tag, UserRound } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { FieldError } from "react-hook-form";
@@ -194,6 +194,7 @@ export function ContactForm(): ReactNode {
                     required
                     label={tForm("topic")}
                     placeholder={tForm("topicPlaceholder")}
+                    icon={<Tag className="size-4" />}
                     options={topicOptions}
                     value={field.value ?? "general"}
                     onChange={(value) => {
@@ -216,6 +217,7 @@ export function ContactForm(): ReactNode {
                 required
                 label={tForm("message")}
                 placeholder={tForm("messagePlaceholder")}
+                icon={<MessageSquareText className="size-4" />}
                 rows={5}
                 {...form.register("message")}
               />

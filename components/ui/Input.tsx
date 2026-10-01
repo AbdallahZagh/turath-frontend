@@ -18,6 +18,8 @@ import { formatCount } from "@/lib/format/number";
 import {
   FIELD_BASE,
   FIELD_GROUP_MAIN,
+  FIELD_ICON_PADDING,
+  FIELD_ICON_SLOT,
   FIELD_STACK_LABEL,
   FIELD_VARIANT,
 } from "./controlClasses";
@@ -51,9 +53,6 @@ type InputProps = Omit<
   /** Field error shown under the input; sets aria-invalid and aria-describedby. */
   error?: string;
 };
-
-/** Room for a 1rem icon plus the control gap, same as the Select trigger. */
-const FIELD_ICON_PADDING = "ps-[calc(var(--control-px)+1rem+var(--control-gap))]";
 
 const VARIANT_RADIUS: Record<InputVariant, string> = {
   main: "0.625rem",
@@ -126,10 +125,7 @@ export function Input({
             aria-label={label}
           />
           {icon ? (
-            <span
-              aria-hidden
-              className="text-prose-muted pointer-events-none absolute inset-y-0 start-(--control-px) z-[6] inline-flex items-center"
-            >
+            <span aria-hidden className={cn(FIELD_ICON_SLOT, "inset-y-0")}>
               {icon}
             </span>
           ) : null}

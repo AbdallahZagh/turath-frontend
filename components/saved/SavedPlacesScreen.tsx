@@ -56,7 +56,7 @@ export function SavedPlacesScreen(): ReactNode {
                 </div>
                 <div className="p-5">
                   <Badge>{t(`categories.${item.category}`)}</Badge>
-                  <h2 className="font-heading text-prose mt-3 text-xl font-semibold">{localizedName(item.name, locale)}</h2>
+                  <h2 className="font-heading text-prose mt-3 text-xl font-semibold"><bdi>{localizedName(item.name, locale)}</bdi></h2>
                   <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4" aria-hidden />{tGov(item.governorate)}</p>
                 </div>
               </Link>

@@ -68,7 +68,9 @@ export function AdminUserBookings({ bookings }: AdminUserBookingsProps): ReactNo
       header: tBookings("columns.provider"),
       cell: (booking) => (
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium">{localizedName(booking.provider, loc)}</span>
+          <span className="truncate font-medium">
+            <bdi>{localizedName(booking.provider, loc)}</bdi>
+          </span>
           <AdminNamedRating about="provider" nameEn={booking.provider.en} />
           <span className="text-prose-muted truncate text-xs">{tPillars(booking.category)}</span>
         </div>

@@ -66,7 +66,7 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <h2 className="font-heading text-prose text-xl font-semibold tracking-tight">
-                  {localizedName(hotel.name, loc)}
+                  <bdi>{localizedName(hotel.name, loc)}</bdi>
                 </h2>
                 <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm">
                   <MapPin className="size-4 shrink-0" aria-hidden />

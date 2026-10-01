@@ -105,7 +105,7 @@ export function AdminLedger(): ReactNode {
       header: t("columns.provider"),
       cell: (row) => (
         <div className="flex max-w-36 min-w-0 flex-col gap-1">
-          <span className="font-medium break-words">{localizedName(row.provider, loc)}</span>
+          <span className="font-medium break-words"><bdi>{localizedName(row.provider, loc)}</bdi></span>
           <span className="text-prose-muted text-xs">{tPillars(row.category)}</span>
         </div>
       ),

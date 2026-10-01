@@ -143,7 +143,7 @@ export function AdminAttractions(): ReactNode {
             />
           </div>
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="truncate font-medium">{localizedName(attraction.name, loc)}</span>
+            <span className="truncate font-medium"><bdi>{localizedName(attraction.name, loc)}</bdi></span>
             <span className="text-prose-muted truncate text-xs">{attraction.slug}</span>
           </div>
         </div>

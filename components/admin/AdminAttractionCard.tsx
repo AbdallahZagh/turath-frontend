@@ -59,7 +59,7 @@ export function AdminAttractionCard({
           </div>
           <div className="flex flex-1 flex-col gap-2 p-4">
             <h2 className="font-heading text-prose text-lg font-semibold tracking-tight">
-              {localizedName(attraction.name, loc)}
+              <bdi>{localizedName(attraction.name, loc)}</bdi>
             </h2>
             <p className="text-prose-muted text-xs font-medium tracking-wide uppercase">
               {tGov(attraction.governorate)}

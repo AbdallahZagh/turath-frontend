@@ -102,7 +102,7 @@ export function AdminTaxonomy(): ReactNode {
       id: "name",
       header: t("columns.name"),
       cell: (term) => (
-        <span className="truncate font-medium">{localizedName(term.name, loc)}</span>
+        <span className="truncate font-medium"><bdi>{localizedName(term.name, loc)}</bdi></span>
       ),
     },
     {

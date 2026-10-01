@@ -99,9 +99,9 @@ export function AdminDisputes(): ReactNode {
       header: t("columns.parties"),
       cell: (dispute) => (
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium">{localizedName(dispute.guest, loc)}</span>
+          <span className="truncate font-medium"><bdi>{localizedName(dispute.guest, loc)}</bdi></span>
           <span className="text-prose-muted truncate text-xs">
-            {localizedName(dispute.provider, loc)} · {tPillars(dispute.category)}
+            <bdi>{localizedName(dispute.provider, loc)}</bdi> · {tPillars(dispute.category)}
           </span>
         </div>
       ),

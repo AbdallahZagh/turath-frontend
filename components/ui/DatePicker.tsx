@@ -63,7 +63,7 @@ type DatePickerProps = {
   max?: string;
   showToday?: boolean;
   centerOn?: string;
-  /** `short` ("Oct 10, 2026" / "10 أكتوبر 2026") for narrow fields such as the checkout grid. */
+  /** `short` ("Oct 10, 2026" / "١٠ تشرين الأول ٢٠٢٦") for narrow fields such as the checkout grid. */
   dateStyle?: "long" | "short";
   /** When set, only these ISO dates can be picked; every other day is greyed out. */
   availableDates?: readonly string[];

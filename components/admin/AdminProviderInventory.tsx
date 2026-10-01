@@ -66,7 +66,7 @@ function HotelRooms({ rooms }: { rooms: HotelRoomType[] }): ReactNode {
       id: "name",
       header: t("detail.rooms.name"),
       cell: (room) => (
-        <span className="font-medium">{localizedName(room.name, loc)}</span>
+        <span className="font-medium"><bdi>{localizedName(room.name, loc)}</bdi></span>
       ),
     },
     {

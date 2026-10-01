@@ -14,8 +14,38 @@ export type HourCycle = "12" | "24";
 
 const ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 
+/**
+ * Levantine (Syrian) month names, January first. date-fns `ar` uses Egyptian/Gulf names
+ * (يناير، أغسطس …); Turath shows these instead in every Arabic date (docs/PAGES.md §0).
+ */
+export const LEVANTINE_MONTHS = [
+  "كانون الثاني",
+  "شباط",
+  "آذار",
+  "نيسان",
+  "أيار",
+  "حزيران",
+  "تموز",
+  "آب",
+  "أيلول",
+  "تشرين الأول",
+  "تشرين الثاني",
+  "كانون الأول",
+] as const;
+
+const arLevant: DateFnsLocale = {
+  ...ar,
+  localize: {
+    ...ar.localize,
+    // Every width (MMM, MMMM, LLL, LLLL) uses the full name, as date-fns `ar` already does;
+    // the narrow single letter (MMMMM) is left to date-fns.
+    month: (month, options) =>
+      options?.width === "narrow" ? ar.localize.month(month, options) : LEVANTINE_MONTHS[month],
+  },
+};
+
 export function dateFnsLocale(locale: Locale): DateFnsLocale {
-  return locale === "ar" ? ar : enUS;
+  return locale === "ar" ? arLevant : enUS;
 }
 
 /** Parses `yyyy-MM-dd` as local midnight, or a full ISO datetime via `parseISO`. */
@@ -56,13 +86,22 @@ export function formatMediumDate(iso: string, locale: Locale): string {
   return formatDisplayDate(date, "PP", locale);
 }
 
-/** Compact day, month and year for lists such as review dates: "18 Aug 2026" / "١٨ أغسطس ٢٠٢٦". */
+/** Compact day, month and year for lists such as review dates: "18 Aug 2026" / "١٨ آب ٢٠٢٦". */
 export function formatShortDate(iso: string, locale: Locale): string {
   const date = parseIsoDate(iso);
   if (!date) {
     return "";
   }
   return formatDisplayDate(date, "d MMM yyyy", locale);
+}
+
+/** Full month name, for page dates such as "Last updated": "September 20, 2026" / "٢٠ أيلول ٢٠٢٦". */
+export function formatLongDate(iso: string, locale: Locale): string {
+  const date = parseIsoDate(iso);
+  if (!date) {
+    return "";
+  }
+  return formatDisplayDate(date, locale === "ar" ? "d MMMM yyyy" : "MMMM d, yyyy", locale);
 }
 
 export function parseHHmm(value: string): { hours: number; minutes: number } | undefined {

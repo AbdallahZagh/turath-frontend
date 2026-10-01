@@ -56,11 +56,13 @@ export function formatUsdLabel(
 }
 
 /**
- * Unicode first-strong isolate (the text equivalent of `<bdi>`). Keeps "~US$ 16.80" in one
- * piece inside Arabic text, and works in option hints and aria labels where JSX cannot go.
+ * Unicode first-strong isolate (the text equivalent of `<bdi>`) whose spaces do not break: the
+ * string form of `<bdi className="whitespace-nowrap">`. Keeps "~US$ 16.80" or "1,500,000 SYP" in
+ * one piece on one line inside Arabic text, and works in option hints and aria labels where JSX
+ * cannot go. A price can only wrap between its two halves.
  */
 function isolate(text: string): string {
-  return `\u2068${text}\u2069`;
+  return `\u2068${text.replaceAll(" ", "\u00a0")}\u2069`;
 }
 
 /**

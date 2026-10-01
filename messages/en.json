@@ -2255,7 +2255,6 @@
     "contactNotice": "Questions about these pages can be sent through the Turath contact page. Final policies may be updated before the live service launches.",
     "pages": {
       "terms": {
-        "updated": "September 20, 2026",
         "introduction": "These terms describe the frontend MVP experience. Completing a reservation means you agree to provide accurate details, respect the business's published rules, and pay the displayed amount in cash on arrival.",
         "sections": {
           "agreement": { "title": "Using Turath", "body": "You may browse public listings without an account. An account is required to keep bookings, vouchers, preferences, and reliability history together. Account details must be accurate and must not be used to impersonate another person." },
@@ -2265,7 +2264,6 @@
         }
       },
       "privacy": {
-        "updated": "September 20, 2026",
         "introduction": "Turath collects only the information needed to provide accounts, reservations, arrival verification, support, and platform safety. This frontend currently uses mock data and does not send booking details to a production backend.",
         "sections": {
           "collection": { "title": "Information we use", "body": "Account information may include your name, phone number, email, nationality, date of birth, language, and currency preference. A booking may also include dates, party size, pickup choice, accessibility requests, special notes, or an emergency contact when the experience requires it." },
@@ -2275,7 +2273,6 @@
         }
       },
       "providerLicensing": {
-        "updated": "September 20, 2026",
         "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a guest's own travel judgment.",
         "sections": {
           "verification": { "title": "Who is reviewed", "body": "Hotels, restaurants, trip agencies, event managers, and independent tour guides submit an owner account and bilingual business information. Tour guides also provide their professional license number." },
@@ -2285,7 +2282,6 @@
         }
       },
       "bookingPolicy": {
-        "updated": "September 26, 2026",
         "introduction": "This policy explains what happens between booking and arrival. It applies to hotels, restaurants, trips, events, and guides booked through Turath.",
         "sections": {
           "holds": {

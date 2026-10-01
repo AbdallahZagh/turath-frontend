@@ -329,7 +329,9 @@ export function RestaurantBookingCheckout({
             <UtensilsCrossed className="size-5" aria-hidden />
           </span>
           <div>
-            <h2 className="text-prose font-semibold">{localizedName(restaurant.name, loc)}</h2>
+            <h2 className="text-prose font-semibold">
+              <bdi>{localizedName(restaurant.name, loc)}</bdi>
+            </h2>
             <p className="text-prose-muted text-xs">{localizedName(restaurant.address, loc)}</p>
           </div>
         </div>

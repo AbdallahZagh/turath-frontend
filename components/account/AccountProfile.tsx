@@ -52,7 +52,7 @@ export function AccountProfile(): ReactNode {
             </span>
             <div className="min-w-0">
               <p className="text-primary text-xs font-bold uppercase tracking-[0.15em]">{t("profile.guest")}</p>
-              <h2 className="font-heading text-prose mt-1 text-3xl font-semibold">{profile.name}</h2>
+              <h2 className="font-heading text-prose mt-1 text-3xl font-semibold"><bdi>{profile.name}</bdi></h2>
               <div className="text-prose-muted mt-3 flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5">
                 <span className="inline-flex items-center gap-2"><Mail className="size-4" aria-hidden />{profile.email}</span>
                 <span className="inline-flex items-center gap-2" dir="ltr"><Phone className="size-4" aria-hidden />{profile.phone}</span>
@@ -124,7 +124,7 @@ export function AccountProfile(): ReactNode {
               <article key={review.id}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-prose text-sm font-semibold">{localizedName(review.providerName, loc)}</p>
+                    <p className="text-prose text-sm font-semibold"><bdi>{localizedName(review.providerName, loc)}</bdi></p>
                     <time className="text-prose-muted text-xs" dateTime={review.date}>{formatMediumDate(review.date, loc)}</time>
                   </div>
                   <StarRating value={review.rating} label={t("providerRating.ratingLabel", { rating: review.rating })} />

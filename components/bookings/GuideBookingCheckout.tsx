@@ -329,7 +329,7 @@ export function GuideBookingCheckout({
       <GlassPanel className="p-6 lg:sticky lg:top-28">
         <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p>
         <h2 className="font-heading text-prose mt-2 text-2xl font-semibold">
-          {localizedName(guide.name, loc)}
+          <bdi>{localizedName(guide.name, loc)}</bdi>
         </h2>
         <p className="text-prose-muted mt-1 flex items-center gap-2 text-sm">
           <MapPin className="size-4" aria-hidden />

@@ -49,7 +49,7 @@ export function AdminReviews({
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="text-prose text-sm font-medium">
-                      {localizedName(review.author, loc)}
+                      <bdi>{localizedName(review.author, loc)}</bdi>
                     </p>
                     <p className="text-prose-muted text-xs">
                       {formatMediumDate(review.at, loc)}

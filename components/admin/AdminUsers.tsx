@@ -114,7 +114,7 @@ export function AdminUsers(): ReactNode {
       cell: (user) => (
         <div className="flex min-w-0 flex-col gap-1">
           <span className="flex items-center gap-2 font-medium">
-            <span className="truncate">{localizedName(user.name, loc)}</span>
+            <span className="truncate"><bdi>{localizedName(user.name, loc)}</bdi></span>
             {user.locked ? (
               <Badge variant="outline" className="text-destructive border-destructive">
                 {t("locked")}

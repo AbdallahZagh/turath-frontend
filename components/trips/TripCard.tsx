@@ -43,7 +43,7 @@ export function TripCard({ trip, detailBasePath = "/trips" }: { trip: Trip; deta
           </div>
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0"><h2 className="font-heading text-prose text-xl font-semibold">{localizedName(trip.name, loc)}</h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4 shrink-0" aria-hidden />{tGov(trip.governorate)}</p></div>
+              <div className="min-w-0"><h2 className="font-heading text-prose text-xl font-semibold"><bdi>{localizedName(trip.name, loc)}</bdi></h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4 shrink-0" aria-hidden />{tGov(trip.governorate)}</p></div>
               <ArrowUpRight className="text-primary size-5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5" aria-hidden />
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span></div>

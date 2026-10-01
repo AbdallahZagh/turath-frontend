@@ -153,7 +153,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
                 <div>
                   <p className="text-prose-muted text-xs font-semibold uppercase tracking-wide">{t("detail.guest")}</p>
                   <h2 className="font-heading text-prose mt-1 text-2xl font-semibold">
-                    {localizedName(booking.guestName, locale)}
+                    <bdi>{localizedName(booking.guestName, locale)}</bdi>
                   </h2>
                 </div>
               </div>

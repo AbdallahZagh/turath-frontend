@@ -105,7 +105,9 @@ export function GuideDetail({
               </Badge>
               <Badge>{td("license", { number: guide.licenseNumber })}</Badge>
             </div>
-            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
+            <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>
+              <bdi>{name}</bdi>
+            </h1>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
               <StarRating
                 value={guide.rating}
@@ -191,7 +193,9 @@ export function GuideDetail({
                 {guide.reviews.map((review) => (
                   <article key={review.id} className="bg-glass-control rounded-2xl p-4">
                     <div className="flex justify-between gap-3">
-                      <p className="text-prose font-semibold">{review.guestName}</p>
+                      <p className="text-prose font-semibold">
+                        <bdi>{review.guestName}</bdi>
+                      </p>
                       <StarRating
                         value={review.rating}
                         label={t("ratingLabel", { rating: review.rating })}

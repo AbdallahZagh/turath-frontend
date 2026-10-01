@@ -57,7 +57,7 @@ export function DiscoveryCard({
                 <h2
                   className={`font-heading text-prose mt-2 truncate font-semibold ${compact ? "text-lg" : "text-xl"}`}
                 >
-                  {localizedName(result.name, loc)}
+                  <bdi>{localizedName(result.name, loc)}</bdi>
                 </h2>
                 <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-xs">
                   <MapPin className="size-3.5" aria-hidden />

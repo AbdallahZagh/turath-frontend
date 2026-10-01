@@ -32,7 +32,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatDisplayDate } from "@/lib/format/datetime";
-import { localizedName } from "@/lib/i18n/localized";
+import { isolateName, localizedName } from "@/lib/i18n/localized";
 import type { ProviderCheckInResult, ProviderDeskBooking } from "@/lib/mock/providerCheckIn";
 import {
   providerCheckInSchema,
@@ -153,7 +153,11 @@ function ResultPanel({
                 : "—"}
             </p>
             <p className="text-prose-muted mt-1 text-xs">
-              {t("result.byStaff", { staff: booking.checkedInBy ?? t("result.unknownStaff") })}
+              {t("result.byStaff", {
+                staff: booking.checkedInBy
+                  ? isolateName(booking.checkedInBy)
+                  : t("result.unknownStaff"),
+              })}
             </p>
           </div>
         </div>
@@ -336,7 +340,7 @@ function ArrivalCard({
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-prose truncate font-semibold">
-            {localizedName(booking.guestName, locale)}
+            <bdi>{localizedName(booking.guestName, locale)}</bdi>
           </p>
           <p className="text-prose-muted mt-1 text-xs">
             {booking.reference} · {t(`categories.${booking.category}`)}

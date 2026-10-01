@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
@@ -56,13 +56,22 @@ function ErrorText({ show }: { show: boolean }): ReactNode {
   return show ? <p className="text-destructive text-xs">{t("invalid")}</p> : null;
 }
 
-/** Visible label above a field, as in Admin Settings. */
-function FieldLabel({ label, children }: { label: string; children: ReactNode }): ReactNode {
+/** Visible label above a field, as in Admin Settings, tied to the control by `htmlFor`. */
+function FieldLabel({
+  label,
+  children,
+}: {
+  label: string;
+  children: (id: string) => ReactNode;
+}): ReactNode {
+  const id = useId();
   return (
-    <label className="flex flex-col gap-1.5">
-      <span className="text-prose-muted text-xs font-medium">{label}</span>
-      {children}
-    </label>
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-prose-muted text-xs font-medium">
+        {label}
+      </label>
+      {children(id)}
+    </div>
   );
 }
 
@@ -161,13 +170,23 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <FieldLabel label={t("nameEn")}>
-            <Input variant="glass" label={t("nameEn")} {...form.register("nameEn")} />
+            {(id) => (
+              <Input id={id} variant="glass" label={t("nameEn")} {...form.register("nameEn")} />
+            )}
           </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.nameEn)} />
         </div>
         <div>
           <FieldLabel label={t("nameAr")}>
-            <Input variant="glass" dir="rtl" label={t("nameAr")} {...form.register("nameAr")} />
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                dir="rtl"
+                label={t("nameAr")}
+                {...form.register("nameAr")}
+              />
+            )}
           </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.nameAr)} />
         </div>
@@ -175,36 +194,45 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
       <div className="grid gap-3 sm:grid-cols-3">
         <div>
           <FieldLabel label={t("occupancy")}>
-            <Input
-              variant="glass"
-              type="number"
-              min={1}
-              label={t("occupancy")}
-              {...form.register("occupancy", { setValueAs: numberFieldValue })}
-            />
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                type="number"
+                min={1}
+                label={t("occupancy")}
+                {...form.register("occupancy", { setValueAs: numberFieldValue })}
+              />
+            )}
           </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.occupancy)} />
         </div>
         <div>
           <FieldLabel label={t("quantity")}>
-            <Input
-              variant="glass"
-              type="number"
-              min={1}
-              label={t("quantity")}
-              {...form.register("quantity", { setValueAs: numberFieldValue })}
-            />
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                type="number"
+                min={1}
+                label={t("quantity")}
+                {...form.register("quantity", { setValueAs: numberFieldValue })}
+              />
+            )}
           </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.quantity)} />
         </div>
         <div>
           <FieldLabel label={t("pricePerNight")}>
-            <Input
-              variant="glass"
-              amount
-              label={t("pricePerNight")}
-              {...form.register("priceSyp", { setValueAs: numberFieldValue })}
-            />
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                amount
+                label={t("pricePerNight")}
+                {...form.register("priceSyp", { setValueAs: numberFieldValue })}
+              />
+            )}
           </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.priceSyp)} />
         </div>
@@ -266,40 +294,48 @@ function RestaurantTableForm({
       )}
     >
       <div>
-        <Input
-          variant="glass"
-          label={t("tableLabel")}
-          placeholder={t("tableLabel")}
-          {...form.register("label")}
-        />
+        <FieldLabel label={t("tableLabel")}>
+          {(id) => (
+            <Input id={id} variant="glass" label={t("tableLabel")} {...form.register("label")} />
+          )}
+        </FieldLabel>
         <ErrorText show={Boolean(form.formState.errors.label)} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <Input
-            variant="glass"
-            type="number"
-            min={1}
-            label={t("capacity")}
-            placeholder={t("capacity")}
-            {...form.register("capacity", { setValueAs: numberFieldValue })}
-          />
+          <FieldLabel label={t("capacity")}>
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                type="number"
+                min={1}
+                label={t("capacity")}
+                {...form.register("capacity", { setValueAs: numberFieldValue })}
+              />
+            )}
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.capacity)} />
         </div>
         <Controller
           control={form.control}
           name="zone"
           render={({ field }) => (
-            <Select
-              variant="glass"
-              label={t("zone")}
-              options={(["indoor", "terrace", "vip", "smoking"] as const).map((value) => ({
-                value,
-                label: t(`zoneOptions.${value}`),
-              }))}
-              value={field.value}
-              onChange={field.onChange}
-            />
+            <FieldLabel label={t("zone")}>
+              {(id) => (
+                <Select
+                  id={id}
+                  variant="glass"
+                  label={t("zone")}
+                  options={(["indoor", "terrace", "vip", "smoking"] as const).map((value) => ({
+                    value,
+                    label: t(`zoneOptions.${value}`),
+                  }))}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            </FieldLabel>
           )}
         />
       </div>
@@ -333,13 +369,18 @@ function RestaurantScheduleForm({
       )}
     >
       <div>
-        <Input
-          variant="glass"
-          dir="ltr"
-          label={t("slots")}
-          placeholder="13:00, 18:00, 20:30"
-          {...form.register("slots")}
-        />
+        <FieldLabel label={t("slots")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              dir="ltr"
+              label={t("slots")}
+              placeholder="13:00, 18:00, 20:30"
+              {...form.register("slots")}
+            />
+          )}
+        </FieldLabel>
         <p className="text-prose-muted mt-1 text-xs">{t("slotsHint")}</p>
         <ErrorText show={Boolean(form.formState.errors.slots)} />
       </div>
@@ -385,22 +426,25 @@ function TripForm({
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <Input
-            variant="glass"
-            label={t("titleEn")}
-            placeholder={t("titleEn")}
-            {...form.register("titleEn")}
-          />
+          <FieldLabel label={t("titleEn")}>
+            {(id) => (
+              <Input id={id} variant="glass" label={t("titleEn")} {...form.register("titleEn")} />
+            )}
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.titleEn)} />
         </div>
         <div>
-          <Input
-            variant="glass"
-            dir="rtl"
-            label={t("titleAr")}
-            placeholder={t("titleAr")}
-            {...form.register("titleAr")}
-          />
+          <FieldLabel label={t("titleAr")}>
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                dir="rtl"
+                label={t("titleAr")}
+                {...form.register("titleAr")}
+              />
+            )}
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.titleAr)} />
         </div>
       </div>
@@ -408,74 +452,102 @@ function TripForm({
         control={form.control}
         name="date"
         render={({ field }) => (
-          <DatePicker
-            variant="glass"
-            label={t("date")}
-            value={field.value}
-            onChange={field.onChange}
-            required
-          />
+          <FieldLabel label={t("date")}>
+            {(id) => (
+              <DatePicker
+                id={id}
+                variant="glass"
+                label={t("date")}
+                value={field.value}
+                onChange={field.onChange}
+                required
+              />
+            )}
+          </FieldLabel>
         )}
       />
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <Input
-            variant="glass"
-            label={t("pickupEn")}
-            placeholder={t("pickupEn")}
-            {...form.register("pickupEn")}
-          />
+          <FieldLabel label={t("pickupEn")}>
+            {(id) => (
+              <Input id={id} variant="glass" label={t("pickupEn")} {...form.register("pickupEn")} />
+            )}
+          </FieldLabel>
         </div>
         <div>
-          <Input
-            variant="glass"
-            dir="rtl"
-            label={t("pickupAr")}
-            placeholder={t("pickupAr")}
-            {...form.register("pickupAr")}
-          />
+          <FieldLabel label={t("pickupAr")}>
+            {(id) => (
+              <Input
+                id={id}
+                variant="glass"
+                dir="rtl"
+                label={t("pickupAr")}
+                {...form.register("pickupAr")}
+              />
+            )}
+          </FieldLabel>
         </div>
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("capacity")}
-          placeholder={t("capacity")}
-          {...form.register("capacity", { setValueAs: numberFieldValue })}
-        />
-        <Input
-          variant="glass"
-          type="number"
-          min={0}
-          label={t("seatsLeft")}
-          placeholder={t("seatsLeft")}
-          {...form.register("seatsLeft", { setValueAs: numberFieldValue })}
-        />
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("priceSyp")}
-          placeholder={t("priceSyp")}
-          {...form.register("priceSyp", { setValueAs: numberFieldValue })}
-        />
+        <FieldLabel label={t("capacity")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("capacity")}
+              {...form.register("capacity", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("seatsLeft")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={0}
+              label={t("seatsLeft")}
+              {...form.register("seatsLeft", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("priceSyp")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("priceSyp")}
+              {...form.register("priceSyp", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Textarea
-          variant="glass"
-          label={t("itineraryEn")}
-          placeholder={t("itineraryEn")}
-          {...form.register("itineraryEn")}
-        />
-        <Textarea
-          variant="glass"
-          dir="rtl"
-          label={t("itineraryAr")}
-          placeholder={t("itineraryAr")}
-          {...form.register("itineraryAr")}
-        />
+        <FieldLabel label={t("itineraryEn")}>
+          {(id) => (
+            <Textarea
+              id={id}
+              variant="glass"
+              label={t("itineraryEn")}
+              {...form.register("itineraryEn")}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("itineraryAr")}>
+          {(id) => (
+            <Textarea
+              id={id}
+              variant="glass"
+              dir="rtl"
+              label={t("itineraryAr")}
+              {...form.register("itineraryAr")}
+            />
+          )}
+        </FieldLabel>
       </div>
       <ErrorText show={Object.keys(form.formState.errors).length > 0} />
       <Actions pending={save.isPending} onClose={onClose} />
@@ -518,46 +590,59 @@ function EventForm({
       )}
     >
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
-          variant="glass"
-          label={t("titleEn")}
-          placeholder={t("titleEn")}
-          {...form.register("titleEn")}
-        />
-        <Input
-          variant="glass"
-          dir="rtl"
-          label={t("titleAr")}
-          placeholder={t("titleAr")}
-          {...form.register("titleAr")}
-        />
+        <FieldLabel label={t("titleEn")}>
+          {(id) => (
+            <Input id={id} variant="glass" label={t("titleEn")} {...form.register("titleEn")} />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("titleAr")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              dir="rtl"
+              label={t("titleAr")}
+              {...form.register("titleAr")}
+            />
+          )}
+        </FieldLabel>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Controller
           control={form.control}
           name="date"
           render={({ field }) => (
-            <DatePicker
-              variant="glass"
-              label={t("date")}
-              value={field.value}
-              onChange={field.onChange}
-              required
-            />
+            <FieldLabel label={t("date")}>
+              {(id) => (
+                <DatePicker
+                  id={id}
+                  variant="glass"
+                  label={t("date")}
+                  value={field.value}
+                  onChange={field.onChange}
+                  required
+                />
+              )}
+            </FieldLabel>
           )}
         />
         <Controller
           control={form.control}
           name="time"
           render={({ field }) => (
-            <TimePicker
-              variant="glass"
-              label={t("time")}
-              value={field.value}
-              onChange={field.onChange}
-              minuteStep={15}
-              required
-            />
+            <FieldLabel label={t("time")}>
+              {(id) => (
+                <TimePicker
+                  id={id}
+                  variant="glass"
+                  label={t("time")}
+                  value={field.value}
+                  onChange={field.onChange}
+                  minuteStep={15}
+                  required
+                />
+              )}
+            </FieldLabel>
           )}
         />
       </div>
@@ -566,53 +651,74 @@ function EventForm({
           control={form.control}
           name="tier"
           render={({ field }) => (
-            <Select
-              variant="glass"
-              label={t("tier")}
-              options={[
-                { value: "standard", label: t("standard") },
-                { value: "vip", label: t("vip") },
-              ]}
-              value={field.value}
-              onChange={field.onChange}
-            />
+            <FieldLabel label={t("tier")}>
+              {(id) => (
+                <Select
+                  id={id}
+                  variant="glass"
+                  label={t("tier")}
+                  options={[
+                    { value: "standard", label: t("standard") },
+                    { value: "vip", label: t("vip") },
+                  ]}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            </FieldLabel>
           )}
         />
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("priceSyp")}
-          placeholder={t("priceSyp")}
-          {...form.register("priceSyp", { setValueAs: numberFieldValue })}
-        />
+        <FieldLabel label={t("priceSyp")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("priceSyp")}
+              {...form.register("priceSyp", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("capacity")}
-          placeholder={t("capacity")}
-          {...form.register("capacity", { setValueAs: numberFieldValue })}
-        />
-        <Input
-          variant="glass"
-          type="number"
-          min={0}
-          label={t("available")}
-          placeholder={t("available")}
-          {...form.register("available", { setValueAs: numberFieldValue })}
-        />
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          max={6}
-          label={t("maxPerUser")}
-          placeholder={t("maxPerUser")}
-          {...form.register("maxPerUser", { setValueAs: numberFieldValue })}
-        />
+        <FieldLabel label={t("capacity")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("capacity")}
+              {...form.register("capacity", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("available")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={0}
+              label={t("available")}
+              {...form.register("available", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("maxPerUser")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              max={6}
+              label={t("maxPerUser")}
+              {...form.register("maxPerUser", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
       </div>
       <ErrorText show={Object.keys(form.formState.errors).length > 0} />
       <Actions pending={save.isPending} onClose={onClose} />
@@ -638,12 +744,16 @@ function GuideForm({ item, onClose }: { item: GuideOffering; onClose: () => void
         ),
       )}
     >
-      <Input
-        variant="glass"
-        label={t("licenseNumber")}
-        placeholder={t("licenseNumber")}
-        {...form.register("licenseNumber")}
-      />
+      <FieldLabel label={t("licenseNumber")}>
+        {(id) => (
+          <Input
+            id={id}
+            variant="glass"
+            label={t("licenseNumber")}
+            {...form.register("licenseNumber")}
+          />
+        )}
+      </FieldLabel>
       <Controller
         control={form.control}
         name="languages"
@@ -671,45 +781,66 @@ function GuideForm({ item, onClose }: { item: GuideOffering; onClose: () => void
         )}
       />
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("hourlySyp")}
-          placeholder={t("hourlySyp")}
-          {...form.register("hourlySyp", { setValueAs: numberFieldValue })}
-        />
-        <Input
-          variant="glass"
-          type="number"
-          min={1}
-          label={t("fullDaySyp")}
-          placeholder={t("fullDaySyp")}
-          {...form.register("fullDaySyp", { setValueAs: numberFieldValue })}
-        />
+        <FieldLabel label={t("hourlySyp")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("hourlySyp")}
+              {...form.register("hourlySyp", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("fullDaySyp")}>
+          {(id) => (
+            <Input
+              id={id}
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("fullDaySyp")}
+              {...form.register("fullDaySyp", { setValueAs: numberFieldValue })}
+            />
+          )}
+        </FieldLabel>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Textarea
-          variant="glass"
-          label={t("specialtiesEn")}
-          placeholder={t("specialtiesEn")}
-          {...form.register("specialtiesEn")}
-        />
-        <Textarea
-          variant="glass"
-          dir="rtl"
-          label={t("specialtiesAr")}
-          placeholder={t("specialtiesAr")}
-          {...form.register("specialtiesAr")}
-        />
+        <FieldLabel label={t("specialtiesEn")}>
+          {(id) => (
+            <Textarea
+              id={id}
+              variant="glass"
+              label={t("specialtiesEn")}
+              {...form.register("specialtiesEn")}
+            />
+          )}
+        </FieldLabel>
+        <FieldLabel label={t("specialtiesAr")}>
+          {(id) => (
+            <Textarea
+              id={id}
+              variant="glass"
+              dir="rtl"
+              label={t("specialtiesAr")}
+              {...form.register("specialtiesAr")}
+            />
+          )}
+        </FieldLabel>
       </div>
-      <Textarea
-        variant="glass"
-        dir="ltr"
-        label={t("blockedDates")}
-        placeholder="2026-10-04, 2026-10-11"
-        {...form.register("blockedDates")}
-      />
+      <FieldLabel label={t("blockedDates")}>
+        {(id) => (
+          <Textarea
+            id={id}
+            variant="glass"
+            dir="ltr"
+            label={t("blockedDates")}
+            placeholder="2026-10-04, 2026-10-11"
+            {...form.register("blockedDates")}
+          />
+        )}
+      </FieldLabel>
       <p className="text-prose-muted text-xs">{t("blockedDatesHint")}</p>
       <ErrorText show={Object.keys(form.formState.errors).length > 0} />
       <Actions pending={save.isPending} onClose={onClose} />

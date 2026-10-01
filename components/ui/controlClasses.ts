@@ -51,6 +51,19 @@ export const FIELD_VARIANT: Record<FieldVariant, string> = {
   ].join(" "),
 };
 
+/** Text start after a leading 1rem icon: the control padding, the icon, then the control gap. */
+export const FIELD_ICON_PADDING = "ps-[calc(var(--control-px)+1rem+var(--control-gap))]";
+
+/**
+ * Leading icon slot of a main field: inside the 2px border at the control padding (the same spot
+ * as the Select icon), in the muted icon colour. It uses the control font size because the
+ * control padding is in `em`.
+ */
+export const FIELD_ICON_SLOT = [
+  "text-prose-muted pointer-events-none absolute z-[6] inline-flex items-center",
+  "start-[calc(var(--control-px)+2px)] text-[length:var(--control-font-size)]",
+].join(" ");
+
 export const FIELD_GROUP_MAIN = [
   "flex w-full min-w-0 flex-col-reverse items-stretch gap-(--control-gap)",
   "has-[:focus]:[&_label]:text-prose",

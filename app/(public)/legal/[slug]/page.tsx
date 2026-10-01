@@ -1,15 +1,19 @@
 import { BadgeCheck, CalendarCheck, LockKeyhole, ScrollText, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PageHeader } from "@/components/ui/PageHeader";
+import type { Locale } from "@/i18n/config";
 import { getTranslations } from "@/i18n/serverTranslations";
+import { formatLongDate } from "@/lib/format/datetime";
 
 const LEGAL_PAGES = {
   terms: {
     pageKey: "terms",
+    updated: "2026-09-20",
     icon: ScrollText,
     sections: [
       "pages.terms.sections.agreement",
@@ -20,6 +24,7 @@ const LEGAL_PAGES = {
   },
   privacy: {
     pageKey: "privacy",
+    updated: "2026-09-20",
     icon: LockKeyhole,
     sections: [
       "pages.privacy.sections.collection",
@@ -30,6 +35,7 @@ const LEGAL_PAGES = {
   },
   "booking-policy": {
     pageKey: "bookingPolicy",
+    updated: "2026-09-26",
     icon: CalendarCheck,
     sections: [
       "pages.bookingPolicy.sections.holds",
@@ -42,6 +48,7 @@ const LEGAL_PAGES = {
   },
   "provider-licensing": {
     pageKey: "providerLicensing",
+    updated: "2026-09-20",
     icon: BadgeCheck,
     sections: [
       "pages.providerLicensing.sections.verification",
@@ -52,6 +59,8 @@ const LEGAL_PAGES = {
   },
 } as const satisfies Record<string, {
   pageKey: "terms" | "privacy" | "bookingPolicy" | "providerLicensing";
+  /** Last updated, ISO `yyyy-MM-dd`; shown with the locale's month names. */
+  updated: string;
   icon: LucideIcon;
   sections: readonly string[];
 }>;
@@ -89,7 +98,8 @@ export default async function LegalPage({
   const { slug } = await params;
   if (!isLegalSlug(slug)) notFound();
 
-  const t = await getTranslations("legal");
+  const [t, locale] = await Promise.all([getTranslations("legal"), getLocale()]);
+  const loc: Locale = locale === "ar" ? "ar" : "en";
   const page = LEGAL_PAGES[slug];
   const Icon = page.icon;
 
@@ -103,7 +113,7 @@ export default async function LegalPage({
         </span>
         <div>
           <p className="text-prose font-semibold">{t("updatedLabel")}</p>
-          <p className="text-prose-muted mt-1 text-sm">{t(`pages.${page.pageKey}.updated`)}</p>
+          <p className="text-prose-muted mt-1 text-sm"><time dateTime={page.updated}>{formatLongDate(page.updated, loc)}</time></p>
           <p className="text-prose-muted mt-3 text-sm leading-relaxed">{t(`pages.${page.pageKey}.introduction`)}</p>
         </div>
       </GlassPanel>

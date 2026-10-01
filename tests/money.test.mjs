@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { formatSyp, formatUsdLabel, sypToUsdCents } from "../lib/format/money.ts";
+import { formatSyp, formatSypParts, formatUsdLabel, sypToUsdCents } from "../lib/format/money.ts";
 
 const LRI = "\u2066";
 const PDI = "\u2069";
+const NBSP = "\u00a0";
 
 test("USD is rounded to the nearest cent, not truncated", () => {
   assert.equal(sypToUsdCents(5_000_000, 14_285.71), 35_000);
@@ -27,7 +28,18 @@ test("Arabic USD part keeps the tilde at its start inside one LTR isolate", () =
 
 test("formatSyp puts SYP first and the approximate USD part in parentheses", () => {
   const ar = formatSyp(240_000, "ar");
-  assert.ok(ar.includes(`(\u2068${LRI}~US$ ١٦٫٨٠${PDI}\u2069)`), ar);
-  assert.ok(ar.startsWith("\u2068٢٤٠٬٠٠٠ ل.س\u2069"), ar);
-  assert.equal(formatSyp(240_000, "en"), "\u2068240,000 SYP\u2069 (\u2068~$16.80\u2069)");
+  assert.ok(ar.includes(`(\u2068${LRI}~US$${NBSP}١٦٫٨٠${PDI}\u2069)`), ar);
+  assert.ok(ar.startsWith(`\u2068٢٤٠٬٠٠٠${NBSP}ل.س\u2069`), ar);
+  assert.equal(formatSyp(240_000, "en"), `\u2068240,000${NBSP}SYP\u2069 (\u2068~$16.80\u2069)`);
+});
+
+test("each half of a price stays on one line; it can only wrap between SYP and USD", () => {
+  for (const locale of ["ar", "en"]) {
+    for (const currency of ["SYP", "USD"]) {
+      const { primary, secondary } = formatSypParts(4_100_000, locale, currency);
+      assert.ok(!/ /.test(primary), primary);
+      assert.ok(!/ /.test(secondary), secondary);
+      assert.equal(formatSyp(4_100_000, locale, currency), `${primary} ${secondary}`);
+    }
+  }
 });

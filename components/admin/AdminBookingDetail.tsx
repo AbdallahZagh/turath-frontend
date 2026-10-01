@@ -217,11 +217,11 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-2">
-              <p className="text-prose text-sm font-semibold">{guestName}</p>
+              <p className="text-prose text-sm font-semibold"><bdi>{guestName}</bdi></p>
               <span className="text-prose-muted text-xs">{t("detail.guest")}</span>
             </div>
             {guestOtherName !== guestName ? (
-              <p className="text-prose-muted mt-0.5 text-xs">{guestOtherName}</p>
+              <p className="text-prose-muted mt-0.5 text-xs"><bdi>{guestOtherName}</bdi></p>
             ) : null}
             <div className="mt-1.5">
               <AdminNamedRating about="guest" nameEn={booking.guest.en} />
@@ -257,11 +257,11 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-2">
-              <p className="text-prose text-sm font-semibold">{providerName}</p>
+              <p className="text-prose text-sm font-semibold"><bdi>{providerName}</bdi></p>
               <span className="text-prose-muted text-xs">{t("detail.provider")}</span>
             </div>
             {providerOtherName !== providerName ? (
-              <p className="text-prose-muted mt-0.5 text-xs">{providerOtherName}</p>
+              <p className="text-prose-muted mt-0.5 text-xs"><bdi>{providerOtherName}</bdi></p>
             ) : null}
             <div className="mt-1.5">
               <AdminNamedRating about="provider" nameEn={booking.provider.en} />

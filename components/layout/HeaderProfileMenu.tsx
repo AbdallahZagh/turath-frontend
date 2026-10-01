@@ -128,7 +128,7 @@ export function HeaderProfileMenu({
               {initialsFromName(name)}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">{name}</p>
+              <p className="truncate text-sm font-semibold"><bdi>{name}</bdi></p>
               <p className="text-prose-muted mt-0.5 truncate text-xs" dir="ltr">{email}</p>
             </div>
           </div>

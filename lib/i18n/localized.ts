@@ -8,3 +8,12 @@ export type LocalizedName = {
 export function localizedName(name: LocalizedName, locale: Locale): string {
   return name[locale];
 }
+
+/**
+ * A person or business name placed inside translated text (message arguments, aria labels):
+ * U+2068 FIRST-STRONG ISOLATE … U+2069, the string form of `<bdi>`. Keeps "Lina M." whole, with
+ * its full stop on the right side, inside an Arabic sentence. In JSX, wrap names in `<bdi>`.
+ */
+export function isolateName(name: string): string {
+  return `\u2068${name}\u2069`;
+}

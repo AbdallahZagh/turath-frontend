@@ -106,7 +106,7 @@ export function ProviderStaffScreen(): ReactNode {
             {initialsFromName(member.name)}
           </span>
           <div className="min-w-0">
-            <p className="truncate font-semibold">{member.name}</p>
+            <p className="truncate font-semibold"><bdi>{member.name}</bdi></p>
             <p className="text-prose-muted mt-0.5 text-xs" dir="ltr">{member.phone}</p>
           </div>
         </div>

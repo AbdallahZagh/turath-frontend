@@ -165,7 +165,7 @@ export function UniversalBookingPass({
               </div>
 
               <div className="sm:text-center">
-                <p className="font-heading text-prose text-xl font-semibold">{providerName}</p>
+                <p className="font-heading text-prose text-xl font-semibold"><bdi>{providerName}</bdi></p>
                 <p className="text-prose-muted mt-0.5 text-xs">{providerAddress}</p>
               </div>
 

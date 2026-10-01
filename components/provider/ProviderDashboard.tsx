@@ -28,7 +28,7 @@ import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatDisplayDate } from "@/lib/format/datetime";
 import { formatCount, formatPercent } from "@/lib/format/number";
-import { localizedName } from "@/lib/i18n/localized";
+import { isolateName, localizedName } from "@/lib/i18n/localized";
 import { useAuthStore } from "@/store/authStore";
 
 type MetricCardProps = {
@@ -300,7 +300,7 @@ export function ProviderDashboard(): ReactNode {
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-prose truncate text-sm font-semibold">
-                      {localizedName(arrival.guestName, locale)}
+                      <bdi>{localizedName(arrival.guestName, locale)}</bdi>
                     </p>
                     <Badge
                       variant={
@@ -347,11 +347,11 @@ export function ProviderDashboard(): ReactNode {
               >
                 <div className="min-w-0">
                   <p className="text-prose truncate text-sm font-semibold">
-                    {localizedName(checkIn.guestName, locale)}
+                    <bdi>{localizedName(checkIn.guestName, locale)}</bdi>
                   </p>
                   <p className="text-prose-muted mt-1 text-xs">
                     {t("recent.checkedInBy", {
-                      staff: localizedName(checkIn.staffName, locale),
+                      staff: isolateName(localizedName(checkIn.staffName, locale)),
                     })}
                   </p>
                 </div>

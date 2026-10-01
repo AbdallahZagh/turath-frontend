@@ -69,7 +69,7 @@ export function ProviderBookingsScreen(): ReactNode {
       header: t("columns.guest"),
       cell: (booking) => (
         <div className="min-w-52">
-          <p className="font-semibold">{localizedName(booking.guestName, locale)}</p>
+          <p className="font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
           <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-xs" dir="ltr">
             <Phone className="size-3.5" aria-hidden />
             {booking.phone}
@@ -83,7 +83,7 @@ export function ProviderBookingsScreen(): ReactNode {
       cell: (booking) => (
         <div className="whitespace-nowrap">
           <p className="font-medium">{formatMediumDate(booking.scheduledAt, locale)}</p>
-          <p className="text-prose-muted mt-1 text-xs">{localizedName(booking.roomName, locale)}</p>
+          <p className="text-prose-muted mt-1 text-xs"><bdi>{localizedName(booking.roomName, locale)}</bdi></p>
         </div>
       ),
     },
@@ -205,7 +205,7 @@ export function ProviderBookingsScreen(): ReactNode {
             >
               <GlassPanel className="flex-none gap-2 p-4">
                 <div className="flex items-start justify-between gap-3">
-                  <p className="text-prose font-semibold">{localizedName(booking.guestName, locale)}</p>
+                  <p className="text-prose font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
                   <Badge {...statusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
                 </div>
                 <p className="text-prose-muted flex items-center gap-1.5 text-xs">

@@ -110,9 +110,9 @@ export function AdminProviders(): ReactNode {
       header: t("columns.business"),
       cell: (provider) => (
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium">{localizedName(provider.name, loc)}</span>
+          <span className="truncate font-medium"><bdi>{localizedName(provider.name, loc)}</bdi></span>
           <span className="text-prose-muted truncate text-xs">
-            {localizedName(provider.owner, loc)}
+            <bdi>{localizedName(provider.owner, loc)}</bdi>
           </span>
         </div>
       ),

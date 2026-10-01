@@ -110,7 +110,9 @@ export function AttractionDetail({
               {tGov(attraction.governorate)}
             </Badge>
           </div>
-          <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1>
+          <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>
+            <bdi>{name}</bdi>
+          </h1>
           {otherName !== name ? <p className="text-prose-muted mt-2 text-lg">{otherName}</p> : null}
         </section>
         <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">

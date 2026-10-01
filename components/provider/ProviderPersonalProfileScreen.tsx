@@ -82,7 +82,7 @@ function ProfileSummary({ profile }: { profile: ProviderPersonalProfile }): Reac
         <span className="bg-primary text-primary-foreground grid size-20 place-items-center rounded-3xl text-2xl font-bold">
           {initialsFromName(profile.name)}
         </span>
-        <h2 className="font-heading text-prose mt-4 text-2xl font-semibold">{profile.name}</h2>
+        <h2 className="font-heading text-prose mt-4 text-2xl font-semibold"><bdi>{profile.name}</bdi></h2>
         <Badge
           variant="glass"
           className="text-primary mt-3"

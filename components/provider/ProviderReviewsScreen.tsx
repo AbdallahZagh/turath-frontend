@@ -53,9 +53,9 @@ function ReviewCard({ review, locale }: { review: ProviderReview; locale: Locale
             {initialsFromName(guestName)}
           </span>
           <div className="min-w-0">
-            <p className="text-prose truncate font-semibold">{guestName}</p>
+            <p className="text-prose truncate font-semibold"><bdi>{guestName}</bdi></p>
             <p className="text-prose-muted mt-0.5 text-xs">
-              {localizedName(review.roomName, locale)}
+              <bdi>{localizedName(review.roomName, locale)}</bdi>
             </p>
           </div>
         </div>

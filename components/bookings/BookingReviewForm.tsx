@@ -24,6 +24,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
+import { VISITED_BOOKING_STATUS } from "@/lib/mock/bookings";
 import {
   bookingReviewSchema,
   isBookingReviewErrorKey,
@@ -64,7 +65,7 @@ export function BookingReviewForm({ bookingId }: BookingReviewFormProps): ReactN
   if (providerQuery.isPending) return <Skeleton className="mx-auto h-[30rem] max-w-2xl" />;
   if (providerQuery.isError) return <ErrorState title={t("errorTitle")} description={t("errorBody")} retryLabel={t("retry")} onRetry={() => void providerQuery.refetch()} />;
   const provider = providerQuery.data;
-  if (!provider || booking.status !== "CHECKED_IN") {
+  if (!provider || !VISITED_BOOKING_STATUS[booking.status]) {
     return <EmptyState icon={MessageSquareQuote} title={t("unavailableTitle")} description={t("unavailableBody")} action={<Button href={USER_PATHS.booking(booking.id)} variant="outline">{t("back")}</Button>} />;
   }
 

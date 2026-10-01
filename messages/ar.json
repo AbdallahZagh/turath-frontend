@@ -2082,8 +2082,10 @@
         "PENDING_CONFIRMATION": "بانتظار التأكيد",
         "CONFIRMED": "مؤكد",
         "CHECKED_IN": "تم تسجيل الوصول",
+        "COMPLETED": "مكتمل",
         "CANCELLED": "ملغى",
-        "NO_SHOW": "عدم حضور"
+        "NO_SHOW": "عدم حضور",
+        "DISPUTED": "متنازع عليه"
       }
     }
   },
@@ -2427,6 +2429,8 @@
     "bookingsCard": { "title": "رحلاتك في مكان واحد", "description": "احتفظ بكل قسيمة ورمز وصول جاهزاً قبل السفر.", "open": "فتح حجوزاتي" },
     "bookings": {
       "tabsLabel": "سجل الحجوزات",
+      "filters": { "status": "حالة الحجز", "allStatuses": "كل الحالات" },
+      "emptyFiltered": { "title": "لا توجد حجوزات بهذه الحالة", "description": "اختر حالة أو تبويباً آخر لعرض حجوزات أخرى." },
       "tabs": { "upcoming": "القادمة", "past": "السابقة", "cancelled": "الملغاة" },
       "voucher": "فتح القسيمة", "review": "كتابة مراجعة", "browse": "تصفح الفنادق",
       "travelers": "{count, plural, one {مسافر واحد} two {مسافران} few {# مسافرين} many {# مسافراً} other {# مسافر}}",
@@ -2718,8 +2722,8 @@
         "pinTitle": "دبوس الخريطة العام"
       },
       "amenities": {
-        "title": "مرافق الضيوف",
-        "description": "حدد المرافق التي يمكن للضيوف توقع توفرها لدى هذه المنشأة.",
+        "title": "{stay, select, hotel {مرافق النزلاء} other {مرافق الضيوف}}",
+        "description": "{stay, select, hotel {حدد المرافق التي يمكن للنزلاء توقع توفرها لدى هذه المنشأة.} other {حدد المرافق التي يمكن للضيوف توقع توفرها لدى هذه المنشأة.}}",
         "options": {
           "generator": "كهرباء المولدة",
           "wifi": "واي فاي",
@@ -3051,7 +3055,7 @@
     "bookings": {
       "filters": { "date": "{stay, select, hotel {تاريخ الوصول} other {تاريخ الحجز}}", "status": "حالة الحجز", "allStatuses": "كل الحالات", "clear": "مسح عوامل التصفية" },
       "columns": { "guest": "{stay, select, hotel {النزيل} other {الضيف}}", "arrival": "{stay, select, hotel {الوصول} other {الموعد}}", "party": "{stay, select, hotel {عدد النزلاء} other {عدد الضيوف}}", "notes": "الملاحظات", "amount": "النقد المستحق", "status": "الحالة" },
-      "status": { "PENDING_CONFIRMATION": "بانتظار التأكيد", "CONFIRMED": "مؤكد", "CHECKED_IN": "تم تسجيل الوصول", "CANCELLED": "ملغى", "NO_SHOW": "عدم حضور" },
+      "status": { "PENDING_CONFIRMATION": "بانتظار التأكيد", "CONFIRMED": "مؤكد", "CHECKED_IN": "تم تسجيل الوصول", "COMPLETED": "مكتمل", "CANCELLED": "ملغى", "NO_SHOW": "عدم حضور", "DISPUTED": "متنازع عليه" },
       "party": "{stay, select, hotel {{count, plural, one {نزيل واحد} two {نزيلان} few {# نزلاء} many {# نزيلاً} other {# نزيل}}} other {{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}}}",
       "caption": "حجوزات المنشأة",
       "results": "{count, plural, one {حجز واحد ظاهر} two {حجزان ظاهران} few {# حجوزات ظاهرة} many {# حجزاً ظاهراً} other {# حجز ظاهر}}",

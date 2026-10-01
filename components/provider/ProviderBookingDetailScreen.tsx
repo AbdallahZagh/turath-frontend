@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
+import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -38,7 +39,6 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatDisplayDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
-import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import { useAuthStore } from "@/store/authStore";
 import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
@@ -48,17 +48,6 @@ const BookingQr = dynamic(
   () => import("qrcode.react").then((module) => module.QRCodeSVG),
   { ssr: false, loading: () => <Skeleton className="size-40 rounded-xl" /> },
 );
-
-function statusBadge(status: TouristBookingStatus): {
-  variant: "solid" | "glass" | "outline";
-  className?: string;
-} {
-  if (status === "CHECKED_IN") return { variant: "solid" };
-  if (status === "PENDING_CONFIRMATION" || status === "CONFIRMED") {
-    return { variant: "glass", className: "text-accent" };
-  }
-  return { variant: "outline", className: "border-destructive text-destructive" };
-}
 
 export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
   const t = useStayTranslations("provider.bookings");
@@ -139,7 +128,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
           {t("detail.back")}
         </Button>
         <div className="flex items-center gap-2">
-          <Badge {...statusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+          <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
           <Badge variant="outline">{booking.reference}</Badge>
         </div>
       </div>

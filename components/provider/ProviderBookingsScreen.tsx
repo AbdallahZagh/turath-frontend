@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
+import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -22,30 +23,11 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
-import type { TouristBookingStatus } from "@/lib/mock/bookings";
+import { TOURIST_BOOKING_STATUSES } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
 import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const ALL_STATUSES = "all";
-const STATUSES: TouristBookingStatus[] = [
-  "PENDING_CONFIRMATION",
-  "CONFIRMED",
-  "CHECKED_IN",
-  "CANCELLED",
-  "NO_SHOW",
-];
-
-function statusBadge(status: TouristBookingStatus): {
-  variant: "solid" | "glass" | "outline";
-  className?: string;
-} {
-  if (status === "CHECKED_IN") return { variant: "solid" };
-  if (status === "PENDING_CONFIRMATION" || status === "CONFIRMED") {
-    return { variant: "glass", className: "text-accent" };
-  }
-  return { variant: "outline", className: "border-destructive text-destructive" };
-}
-
 export function ProviderBookingsScreen(): ReactNode {
   const t = useStayTranslations("provider.bookings");
   const tUi = useTranslations("ui");
@@ -123,7 +105,7 @@ export function ProviderBookingsScreen(): ReactNode {
       id: "status",
       header: t("columns.status"),
       cell: (booking) => (
-        <Badge {...statusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+        <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
       ),
     },
   ];
@@ -169,7 +151,7 @@ export function ProviderBookingsScreen(): ReactNode {
             onChange={setStatus}
             options={[
               { value: ALL_STATUSES, label: t("filters.allStatuses") },
-              ...STATUSES.map((value) => ({ value, label: t(`status.${value}`) })),
+              ...TOURIST_BOOKING_STATUSES.map((value) => ({ value, label: t(`status.${value}`) })),
             ]}
           />
         </div>
@@ -208,15 +190,16 @@ export function ProviderBookingsScreen(): ReactNode {
               <GlassPanel className="flex-none gap-2 p-4">
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-prose font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
-                  <Badge {...statusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+                  <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
                 </div>
                 <p className="text-prose-muted flex items-center gap-1.5 text-xs">
                   <Phone className="size-3.5" aria-hidden />
                   <span dir="ltr">{booking.phone}</span>
                 </p>
-                <p className="text-prose flex items-center gap-1.5 text-sm">
+                <p className="text-prose flex flex-wrap items-center gap-x-1.5 text-sm">
                   <CalendarDays className="text-prose-muted size-4" aria-hidden />
-                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.offeringName, locale)}
+                  <span className="text-prose-muted">{t("columns.arrival")}</span>
+                  {formatMediumDate(booking.scheduledAt, locale)} · <bdi>{localizedName(booking.offeringName, locale)}</bdi>
                 </p>
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <span className="text-prose-muted inline-flex items-center gap-1.5">

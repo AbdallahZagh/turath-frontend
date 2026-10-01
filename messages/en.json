@@ -2082,8 +2082,10 @@
         "PENDING_CONFIRMATION": "Pending confirmation",
         "CONFIRMED": "Confirmed",
         "CHECKED_IN": "Checked in",
+        "COMPLETED": "Completed",
         "CANCELLED": "Cancelled",
-        "NO_SHOW": "No-show"
+        "NO_SHOW": "No-show",
+        "DISPUTED": "Disputed"
       }
     }
   },
@@ -2465,6 +2467,8 @@
     },
     "bookings": {
       "tabsLabel": "Booking history",
+      "filters": { "status": "Booking status", "allStatuses": "All statuses" },
+      "emptyFiltered": { "title": "No bookings with this status", "description": "Choose another status or tab to see more bookings." },
       "tabs": {
         "upcoming": "Upcoming",
         "past": "Past",
@@ -3125,7 +3129,7 @@
         "description": "Check every character on the guest's pass. Cancelled, expired, or unrelated booking codes cannot be checked in here."
       },
       "result": {
-        "guest": "Guest", "phone": "Verified phone", "party": "Party size", "schedule": "Scheduled arrival",
+        "guest": "Guest", "phone": "Verified phone", "party": "Party size", "schedule": "{stay, select, hotel {Scheduled check-in} other {Scheduled arrival}}",
         "collectCash": "Cash due on arrival", "listPrice": "List price", "discount": "Discount ({code})",
         "checkedNow": "Checked in now", "checkedAt": "Original check-in", "byStaff": "Handled by {staff}", "unknownStaff": "Previous staff member"
       },
@@ -3140,9 +3144,9 @@
       }
     },
     "bookings": {
-      "filters": { "date": "Booking date", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
-      "columns": { "guest": "Guest", "arrival": "Schedule", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
-      "status": { "PENDING_CONFIRMATION": "Pending confirmation", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "CANCELLED": "Cancelled", "NO_SHOW": "No-show" },
+      "filters": { "date": "{stay, select, hotel {Check-in date} other {Booking date}}", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
+      "columns": { "guest": "Guest", "arrival": "{stay, select, hotel {Check-in} other {Schedule}}", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
+      "status": { "PENDING_CONFIRMATION": "Pending confirmation", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "COMPLETED": "Completed", "CANCELLED": "Cancelled", "NO_SHOW": "No-show", "DISPUTED": "Disputed" },
       "party": "{count, plural, one {# guest} other {# guests}}",
       "caption": "Business bookings",
       "results": "{count, plural, one {# booking shown} other {# bookings shown}}",
@@ -3156,8 +3160,8 @@
         "notFoundTitle": "Booking not found",
         "notFoundDescription": "This booking may have been removed or the link may be incorrect.",
         "guest": "Guest",
-        "arrival": "Starts",
-        "departure": "Ends",
+        "arrival": "{stay, select, hotel {Check-in} other {Starts}}",
+        "departure": "{stay, select, hotel {Check-out} other {Ends}}",
         "offeringLabels": {
           "hotels": "Room",
           "dining": "Table and service",

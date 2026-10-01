@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
@@ -131,7 +132,7 @@ function ProfilePreview({ values, locale }: { values: ProviderProfileValues; loc
 }
 
 export function ProviderProfileEditor({ profile }: { profile: ProviderProfile }): ReactNode {
-  const t = useTranslations("provider.profile");
+  const t = useStayTranslations("provider.profile");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const update = useUpdateProviderProfile(profile.category);

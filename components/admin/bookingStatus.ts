@@ -1,15 +1,21 @@
-import type { BadgeVariant } from "@/components/ui/Badge";
+import {
+  bookingStatusBadge,
+  type BookingStatusBadgeProps,
+} from "@/components/bookings/bookingStatusBadge";
 import type { BookingStatus } from "@/lib/mock/adminBookings";
+import type { TouristBookingStatus } from "@/lib/mock/bookings";
 
-export function bookingStatusBadgeProps(status: BookingStatus): {
-  variant: BadgeVariant;
-  className?: string;
-} {
-  if (status === "checkedIn" || status === "completed") {
-    return { variant: "solid" };
-  }
-  if (status === "confirmed" || status === "pending") {
-    return { variant: "glass", className: "text-accent" };
-  }
-  return { variant: "outline", className: "text-destructive border-destructive" };
+/** Admin rows use lower-case status ids; each maps to the one shared booking status. */
+const ADMIN_TO_BOOKING_STATUS: Record<BookingStatus, TouristBookingStatus> = {
+  pending: "PENDING_CONFIRMATION",
+  confirmed: "CONFIRMED",
+  checkedIn: "CHECKED_IN",
+  completed: "COMPLETED",
+  cancelled: "CANCELLED",
+  noShow: "NO_SHOW",
+  disputed: "DISPUTED",
+};
+
+export function bookingStatusBadgeProps(status: BookingStatus): BookingStatusBadgeProps {
+  return bookingStatusBadge(ADMIN_TO_BOOKING_STATUS[status]);
 }

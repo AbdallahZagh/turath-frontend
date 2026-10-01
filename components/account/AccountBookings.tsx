@@ -4,12 +4,14 @@ import { Bus, CalendarDays, CalendarHeart, MessageSquareQuote, TicketCheck, User
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
+import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
+import { Select } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useTouristBookings } from "@/hooks/useBookings";
 import { useEvents } from "@/hooks/useEvents";
@@ -23,9 +25,11 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, formatPickerTime, toIsoDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
-import type { TouristBooking } from "@/lib/mock/bookings";
+import { VISITED_BOOKING_STATUS, TOURIST_BOOKING_STATUSES, type TouristBooking } from "@/lib/mock/bookings";
 
 type BookingTab = "upcoming" | "past" | "cancelled";
+
+const ALL_STATUSES = "all";
 
 function bookingDate(booking: TouristBooking): string {
   return booking.type === "hotel" ? booking.checkIn : booking.date;
@@ -47,6 +51,7 @@ export function AccountBookings(): ReactNode {
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const [tab, setTab] = useState<BookingTab>("upcoming");
+  const [status, setStatus] = useState(ALL_STATUSES);
   const bookingsQuery = useTouristBookings();
   const hotelsQuery = useHotels({});
   const restaurantsQuery = useRestaurants({});
@@ -60,20 +65,36 @@ export function AccountBookings(): ReactNode {
   }
 
   const today = toIsoDate(new Date());
-  const bookings = bookingsQuery.data.filter((booking) => tabForBooking(booking, today) === tab);
+  const tabBookings = bookingsQuery.data.filter((booking) => tabForBooking(booking, today) === tab);
+  const bookings = tabBookings.filter((booking) => status === ALL_STATUSES || booking.status === status);
 
   return (
     <div>
-      <SegmentSwitch
-        variant="glass"
-        className="w-full sm:w-fit"
-        aria-label={t("tabsLabel")}
-        value={tab}
-        options={(["upcoming", "past", "cancelled"] as const).map((value) => ({ value, label: t(`tabs.${value}`) }))}
-        onChange={(value) => { if (value === "upcoming" || value === "past" || value === "cancelled") setTab(value); }}
-      />
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <SegmentSwitch
+          variant="glass"
+          className="w-full sm:w-fit"
+          aria-label={t("tabsLabel")}
+          value={tab}
+          options={(["upcoming", "past", "cancelled"] as const).map((value) => ({ value, label: t(`tabs.${value}`) }))}
+          onChange={(value) => { if (value === "upcoming" || value === "past" || value === "cancelled") setTab(value); }}
+        />
+        <Select
+          variant="glass"
+          className="w-full sm:w-64"
+          label={t("filters.status")}
+          value={status}
+          onChange={setStatus}
+          options={[
+            { value: ALL_STATUSES, label: t("filters.allStatuses") },
+            ...TOURIST_BOOKING_STATUSES.map((value) => ({ value, label: tStatus(value) })),
+          ]}
+        />
+      </div>
 
-      {bookings.length === 0 ? (
+      {tabBookings.length > 0 && bookings.length === 0 ? (
+        <EmptyState className="mt-5" icon={CalendarDays} title={t("emptyFiltered.title")} description={t("emptyFiltered.description")} />
+      ) : bookings.length === 0 ? (
         <EmptyState className="mt-5" icon={CalendarDays} title={t(`empty.${tab}.title`)} description={t(`empty.${tab}.description`)} action={tab === "upcoming" ? <Button href={USER_PATHS.hotels} variant="outline">{t("browse")}</Button> : undefined} />
       ) : (
         <div className="mt-5 space-y-4">
@@ -93,12 +114,12 @@ export function AccountBookings(): ReactNode {
                 <div className="flex flex-col gap-5 md:flex-row md:items-center">
                   <span className="bg-primary/12 text-primary grid size-12 shrink-0 place-items-center rounded-2xl"><ProviderIcon className="size-5" aria-hidden /></span>
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2"><h2 className="font-heading text-prose text-xl font-semibold">{provider ? <bdi>{localizedName(provider.name, loc)}</bdi> : booking.reference}</h2><Badge variant="outline">{tStatus(booking.status)}</Badge></div>
+                    <div className="flex flex-wrap items-center gap-2"><h2 className="font-heading text-prose text-xl font-semibold">{provider ? <bdi>{localizedName(provider.name, loc)}</bdi> : booking.reference}</h2><Badge {...bookingStatusBadge(booking.status)}>{tStatus(booking.status)}</Badge></div>
                     <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${formatPickerTime(booking.timeSlot, loc, "24")}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : booking.type === "event" ? ` · ${t("tickets", { count: booking.quantity })}` : ` · ${t("guideHours", { count: booking.hours })}`}</p>
                     <p className="text-prose mt-2 text-sm font-semibold">{formatMoney(booking.cashDueSyp)}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {booking.status === "CHECKED_IN" ? <Button href={`/user/bookings/${booking.id}/review`} variant="glass" size="sm"><MessageSquareQuote className="size-4" aria-hidden />{t("review")}</Button> : null}
+                    {VISITED_BOOKING_STATUS[booking.status] ? <Button href={`/user/bookings/${booking.id}/review`} variant="glass" size="sm"><MessageSquareQuote className="size-4" aria-hidden />{t("review")}</Button> : null}
                     <Button href={USER_PATHS.booking(booking.id)} variant="outline" size="sm">{t("voucher")}</Button>
                   </div>
                 </div>

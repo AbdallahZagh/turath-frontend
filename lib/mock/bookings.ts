@@ -3,12 +3,32 @@ import { addDays, subDays } from "date-fns";
 import { toIsoDate } from "@/lib/format/datetime";
 import type { CouponBookingType } from "@/lib/mock/couponTargets";
 
-export type TouristBookingStatus =
-  | "PENDING_CONFIRMATION"
-  | "CONFIRMED"
-  | "CHECKED_IN"
-  | "CANCELLED"
-  | "NO_SHOW";
+/**
+ * Every booking status, in display order (docs/PAGES.md §0, "Booking status names"). `COMPLETED`
+ * and `DISPUTED` are product additions to the SRS; nothing in the frontend moves a booking into them.
+ */
+export const TOURIST_BOOKING_STATUSES = [
+  "PENDING_CONFIRMATION",
+  "CONFIRMED",
+  "CHECKED_IN",
+  "COMPLETED",
+  "CANCELLED",
+  "NO_SHOW",
+  "DISPUTED",
+] as const;
+
+export type TouristBookingStatus = (typeof TOURIST_BOOKING_STATUSES)[number];
+
+/** The guest arrived (checked in, or completed afterwards): the booking counts as a visit and can be reviewed. */
+export const VISITED_BOOKING_STATUS: Record<TouristBookingStatus, boolean> = {
+  PENDING_CONFIRMATION: false,
+  CONFIRMED: false,
+  CHECKED_IN: true,
+  COMPLETED: true,
+  CANCELLED: false,
+  NO_SHOW: false,
+  DISPUTED: false,
+};
 
 type BookingReceipt = {
   id: string;
@@ -278,5 +298,7 @@ export function listMockTouristBookings(): TouristBooking[] {
     demoBooking("demo-upcoming", "dar-al-yasmin", "yasmin-double", 12, 2, "CONFIRMED", 480000),
     demoBooking("demo-checked", "citadel-stone-house", "citadel-double", -18, 2, "CHECKED_IN", 420000),
     demoBooking("demo-cancel", "blue-coast-terrace", "coast-double", -42, 1, "CANCELLED", 195000),
+    demoBooking("demo-completed", "dar-al-yasmin", "yasmin-double", -30, 2, "COMPLETED", 480000),
+    demoBooking("demo-disputed", "citadel-stone-house", "citadel-double", -9, 1, "DISPUTED", 210000),
   ];
 }

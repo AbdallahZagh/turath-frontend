@@ -30,7 +30,7 @@ import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
 import { toDisplayDigits } from "@/lib/format/digits";
 import { formatReliabilityScore } from "@/lib/format/number";
-import type { TouristBooking } from "@/lib/mock/bookings";
+import { VISITED_BOOKING_STATUS, type TouristBooking } from "@/lib/mock/bookings";
 
 type DashboardStat = {
   key: string;
@@ -98,7 +98,7 @@ export function UserDashboard(): ReactNode {
     .filter((booking) => isUpcoming(booking, today))
     .sort((first, second) => bookingDate(first).localeCompare(bookingDate(second)));
   const nextBooking = upcoming[0];
-  const completed = bookingsQuery.data.filter((booking) => booking.status === "CHECKED_IN").length;
+  const completed = bookingsQuery.data.filter((booking) => VISITED_BOOKING_STATUS[booking.status]).length;
   const availableSlots = Math.max(accountQuery.data.concurrentBookingCap - upcoming.length, 0);
   const stats: DashboardStat[] = [
     { key: "upcoming", value: upcoming.length, label: t("stats.upcoming"), icon: CalendarDays },

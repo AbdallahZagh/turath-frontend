@@ -22,6 +22,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
+import { VISITED_BOOKING_STATUS } from "@/lib/mock/bookings";
 
 export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode {
   const t = useTranslations("bookings");
@@ -102,5 +103,5 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
     pass = <UniversalBookingPass {...shared} providerName={localizedName(guide.name, loc)} providerAddress={localizedName(guide.address, loc)} start={{ label: tg("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tg("voucher.duration"), value: tGuides(`durations.${booking.duration}`) }} routeLabel={tg("voucher.experience")} routeValue={tGuides(`specialties.${booking.focusArea}`)} facts={[{ icon: Languages, label: tg("language"), value: tGuides(`languages.${booking.language}`) }, { icon: Sparkles, label: tg("focusArea"), value: tGuides(`specialties.${booking.focusArea}`) }, { icon: Clock3, label: tg("hours"), value: tg("voucher.hours", { count: booking.hours }) }]} />;
   }
 
-  return <>{pass}{booking.status === "CHECKED_IN" ? <div className="mx-auto mt-6 flex max-w-6xl justify-center"><Button href={USER_PATHS.review(booking.id)}>{t("voucher.writeReview")}</Button></div> : null}</>;
+  return <>{pass}{VISITED_BOOKING_STATUS[booking.status] ? <div className="mx-auto mt-6 flex max-w-6xl justify-center"><Button href={USER_PATHS.review(booking.id)}>{t("voucher.writeReview")}</Button></div> : null}</>;
 }

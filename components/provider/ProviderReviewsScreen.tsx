@@ -19,6 +19,7 @@ import { formatCount, formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import type { ReviewStars } from "@/lib/mock/adminReviews";
 import type { ProviderReview } from "@/lib/mock/providerReviews";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const ALL_RATINGS = "all";
 const RATINGS: ReviewStars[] = [5, 4, 3, 2, 1];
@@ -54,7 +55,7 @@ function ReviewCard({ review, locale }: { review: ProviderReview; locale: Locale
           <div className="min-w-0">
             <p className="text-prose truncate font-semibold">{guestName}</p>
             <p className="text-prose-muted mt-0.5 text-xs">
-              {localizedName(review.roomName, locale)}
+              {localizedName(review.offeringName, locale)}
             </p>
           </div>
         </div>
@@ -99,7 +100,8 @@ export function ProviderReviewsScreen(): ReactNode {
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
-  const query = useProviderReviews();
+  const category = useProviderPreviewStore((state) => state.category);
+  const query = useProviderReviews(category);
   const [rating, setRating] = useState(ALL_RATINGS);
 
   const summary = useMemo(() => {

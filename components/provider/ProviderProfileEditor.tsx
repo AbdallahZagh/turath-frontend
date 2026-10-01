@@ -131,7 +131,7 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
   const t = useTranslations("provider.profile");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
-  const update = useUpdateProviderProfile();
+  const update = useUpdateProviderProfile(profile.category);
   const logoInput = useRef<HTMLInputElement>(null);
   const galleryInput = useRef<HTMLInputElement>(null);
   const form = useForm<ProviderProfileValues>({

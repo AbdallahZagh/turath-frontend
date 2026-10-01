@@ -7,32 +7,33 @@ import {
 } from "@tanstack/react-query";
 
 import type { ProviderProfile } from "@/lib/mock/providerProfile";
+import type { ProviderCategory } from "@/lib/validation/auth";
 import type { ProviderProfileValues } from "@/lib/validation/providerProfile";
 import {
   getProviderProfile,
   updateProviderProfile,
 } from "@/services/providerProfile";
 
-const providerProfileKey = ["provider", "profile"] as const;
+const providerProfileKey = (category: ProviderCategory) => ["provider", "profile", category] as const;
 
-export function useProviderProfile(): UseQueryResult<ProviderProfile> {
+export function useProviderProfile(category: ProviderCategory): UseQueryResult<ProviderProfile> {
   return useQuery({
-    queryKey: providerProfileKey,
-    queryFn: getProviderProfile,
+    queryKey: providerProfileKey(category),
+    queryFn: () => getProviderProfile(category),
     staleTime: 60_000,
   });
 }
 
-export function useUpdateProviderProfile(): UseMutationResult<
+export function useUpdateProviderProfile(category: ProviderCategory): UseMutationResult<
   ProviderProfile,
   Error,
   ProviderProfileValues
 > {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: updateProviderProfile,
+    mutationFn: (values) => updateProviderProfile(category, values),
     onSuccess: (profile) => {
-      client.setQueryData(providerProfileKey, profile);
+      client.setQueryData(providerProfileKey(category), profile);
     },
   });
 }

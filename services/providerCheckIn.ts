@@ -5,7 +5,11 @@ import {
   type ProviderCheckInResult,
   type ProviderDeskBooking,
 } from "@/lib/mock/providerCheckIn";
-import { checkInTouristBookingByBackupCode } from "@/services/bookings";
+import {
+  checkInTouristBookingByBackupCode,
+  listTouristBookings,
+} from "@/services/bookings";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
 function partySize(booking: TouristBooking): number {
   if (booking.type === "hotel") return booking.guests;
@@ -42,16 +46,32 @@ function toDeskBooking(booking: TouristBooking): ProviderDeskBooking {
   };
 }
 
-export async function listProviderArrivals(): Promise<ProviderDeskBooking[]> {
-  return listProviderDeskArrivals();
+function providerCategory(booking: TouristBooking): ProviderCategory {
+  if (booking.type === "hotel") return "hotels";
+  if (booking.type === "restaurant") return "dining";
+  if (booking.type === "trip") return "trips";
+  if (booking.type === "event") return "events";
+  return "guides";
+}
+
+export async function listProviderArrivals(category: ProviderCategory): Promise<ProviderDeskBooking[]> {
+  return listProviderDeskArrivals(category);
 }
 
 export async function verifyProviderCheckInCode(input: {
   code: string;
   staffName: string;
+  category: ProviderCategory;
 }): Promise<ProviderCheckInResult> {
-  const local = verifyProviderDeskCode(input.code, input.staffName);
+  const local = verifyProviderDeskCode(input.code, input.staffName, input.category);
   if (local.kind !== "invalid") return local;
+
+  const touristBooking = (await listTouristBookings()).find(
+    (booking) => booking.backupCode.toUpperCase() === input.code.trim().toUpperCase(),
+  );
+  if (!touristBooking || providerCategory(touristBooking) !== input.category) {
+    return { kind: "invalid" };
+  }
 
   const tourist = await checkInTouristBookingByBackupCode(
     input.code,

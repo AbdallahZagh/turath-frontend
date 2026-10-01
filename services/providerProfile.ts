@@ -4,13 +4,15 @@ import {
   type ProviderProfile,
 } from "@/lib/mock/providerProfile";
 import type { ProviderProfileValues } from "@/lib/validation/providerProfile";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
-export async function getProviderProfile(): Promise<ProviderProfile> {
-  return getProviderProfileMock();
+export async function getProviderProfile(category: ProviderCategory): Promise<ProviderProfile> {
+  return getProviderProfileMock(category);
 }
 
 export async function updateProviderProfile(
+  category: ProviderCategory,
   values: ProviderProfileValues,
 ): Promise<ProviderProfile> {
-  return updateProviderProfileMock(values);
+  return updateProviderProfileMock(category, values);
 }

@@ -11,6 +11,14 @@ import {
   toggleMockSavedPlace,
 } from "../lib/mock/savedPlaces.ts";
 import { providerOnboardingSchema } from "../lib/validation/auth.ts";
+import {
+  PROVIDER_BUSINESSES,
+  PROVIDER_CATEGORY_TO_INVENTORY,
+} from "../lib/mock/providerBusinesses.ts";
+import { listProviderBookings } from "../lib/mock/providerBookings.ts";
+import { getProviderInventory } from "../lib/mock/providerInventory.ts";
+import { getProviderProfile } from "../lib/mock/providerProfile.ts";
+import { listProviderReviews } from "../lib/mock/providerReviews.ts";
 
 test("notification actions update only the selected portal inbox", () => {
   const providerBefore = getMockNotifications("provider");
@@ -61,4 +69,26 @@ test("provider onboarding requires valid address, hours, documents, and photos",
 
   assert.equal(result.success, true);
   assert.equal(providerOnboardingSchema.safeParse({}).success, false);
+});
+
+test("every provider type has a complete frontend workspace preview", () => {
+  assert.deepEqual(
+    PROVIDER_BUSINESSES.map((business) => business.category),
+    ["hotels", "dining", "trips", "events", "guides"],
+  );
+
+  for (const business of PROVIDER_BUSINESSES) {
+    const category = business.category;
+    const profile = getProviderProfile(category);
+    const inventory = getProviderInventory(PROVIDER_CATEGORY_TO_INVENTORY[category]);
+    const bookings = listProviderBookings(category);
+    const reviews = listProviderReviews(category);
+
+    assert.equal(profile.category, category);
+    assert.equal(inventory.category, PROVIDER_CATEGORY_TO_INVENTORY[category]);
+    assert.ok(bookings.length > 0, `${category} should have a booking preview`);
+    assert.ok(bookings.every((booking) => booking.category === category));
+    assert.ok(reviews.length > 0, `${category} should have a review preview`);
+    assert.ok(reviews.every((review) => review.category === category));
+  }
 });

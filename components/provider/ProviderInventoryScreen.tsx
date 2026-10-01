@@ -14,7 +14,6 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { Select } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -25,7 +24,6 @@ import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import {
   inventoryItemName,
-  PROVIDER_INVENTORY_CATEGORIES,
   type DeleteProviderInventoryInput,
   type EventSession,
   type HotelRoom,
@@ -35,6 +33,8 @@ import {
   type TripOffering,
 } from "@/lib/mock/providerInventory";
 import { useAuthStore } from "@/store/authStore";
+import { PROVIDER_CATEGORY_TO_INVENTORY, getProviderBusiness } from "@/lib/mock/providerBusinesses";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
 
 type DeleteTarget = DeleteProviderInventoryInput & { name: string };
@@ -75,16 +75,15 @@ export function ProviderInventoryScreen(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const canEdit = useAuthStore((state) => state.user.role === "PROVIDER_OWNER");
-  const [category, setCategory] = useState<ProviderInventoryCategory>("hotels");
+  const providerCategory = useProviderPreviewStore((state) => state.category);
+  const category: ProviderInventoryCategory = PROVIDER_CATEGORY_TO_INVENTORY[providerCategory];
+  const business = getProviderBusiness(providerCategory);
+  const BusinessIcon = business.icon;
   const [editor, setEditor] = useState<ProviderInventoryEditor | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const query = useProviderInventory(category);
   const remove = useDeleteProviderInventory();
 
-  const categoryOptions = PROVIDER_INVENTORY_CATEGORIES.map((value) => ({
-    value,
-    label: t(`categories.${value}`),
-  }));
   const actions: InventoryActions | undefined = canEdit
     ? { onEdit: setEditor, onDelete: setDeleteTarget }
     : undefined;
@@ -101,17 +100,15 @@ export function ProviderInventoryScreen(): ReactNode {
           </h2>
           <p className="text-prose-muted mt-1 text-sm">{t("previewDescription")}</p>
         </div>
-        <Select
-          className="w-full sm:w-64"
-          variant="glass"
-          label={t("categoryLabel")}
-          options={categoryOptions}
-          value={category}
-          onChange={(value) => {
-            if (PROVIDER_INVENTORY_CATEGORIES.includes(value as ProviderInventoryCategory))
-              setCategory(value as ProviderInventoryCategory);
-          }}
-        />
+        <div className="bg-option-hover text-primary flex items-center gap-3 rounded-2xl px-4 py-3">
+          <BusinessIcon className="size-5" aria-hidden />
+          <div>
+            <p className="text-prose text-sm font-semibold">
+              {locale === "ar" ? business.name.ar : business.name.en}
+            </p>
+            <p className="text-prose-muted text-xs">{t(`categories.${category}`)}</p>
+          </div>
+        </div>
       </GlassPanel>
       {canEdit ? null : (
         <GlassPanel className="flex items-start gap-3 p-5">

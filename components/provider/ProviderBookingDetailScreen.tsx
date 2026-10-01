@@ -7,7 +7,7 @@ import {
   CalendarClock,
   Check,
   Copy,
-  DoorOpen,
+  PackageOpen,
   Inbox,
   KeyRound,
   Phone,
@@ -40,6 +40,7 @@ import { dateFnsLocale } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
 
 const BookingQr = dynamic(
@@ -65,7 +66,8 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const role = useAuthStore((state) => state.user.role);
-  const query = useProviderBooking(id);
+  const category = useProviderPreviewStore((state) => state.category);
+  const query = useProviderBooking(id, category);
   const updateStatus = useUpdateProviderBookingStatus();
   const [copied, setCopied] = useState(false);
   const [pendingStatus, setPendingStatus] = useState<"NO_SHOW" | "CANCELLED" | null>(null);
@@ -178,9 +180,9 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
                 value={format(new Date(booking.endsAt), "PPp", { locale: dateFnsLocale(locale) })}
               />
               <Detail
-                icon={DoorOpen}
-                label={t("detail.room")}
-                value={localizedName(booking.roomName, locale)}
+                icon={PackageOpen}
+                label={t(`detail.offeringLabels.${booking.category}`)}
+                value={localizedName(booking.offeringName, locale)}
               />
               <Detail
                 icon={UsersRound}

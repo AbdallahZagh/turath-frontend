@@ -411,7 +411,7 @@ Category-specific form on a glass sheet:
 
 ## 6. Provider pages — `app/(provider)`
 
-**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, role-aware `/provider/my-profile`, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, owner-only `/provider/staff` access management, and owner-only `/provider/settings` preferences are implemented with owner/staff mock previews. The planned provider frontend pages below are complete.
+**Frontend status:** registration, pending approval, the approved-provider shell, `/provider` dashboard, role-aware `/provider/my-profile`, editable owner-only `/provider/profile`, category-specific `/provider/inventory` management, `/provider/bookings` with its detail route, backup-code `/provider/check-in`, the owner-only `/provider/ledger`, verified `/provider/reviews`, owner-only `/provider/staff` access management, and owner-only `/provider/settings` preferences are implemented with owner/staff mock previews. The planned provider frontend pages below are complete. Until authentication is connected to the API, the business card in the provider sidebar includes a frontend preview selector for Hotel, Restaurant, Trip agency, Event manager, and Tour guide; dashboard, business profile, inventory, bookings, check-in, and reviews follow the selected business.
 
 ### `/provider/register`
 

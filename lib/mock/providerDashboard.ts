@@ -129,14 +129,14 @@ export function getProviderDashboardByDays(
   const categoryData = CATEGORY_DASHBOARD[category];
   const bookings = listProviderBookings(category);
   const arrivals: ProviderArrival[] = bookings
-    .filter((booking) => booking.status === "CONFIRMED" || booking.status === "PENDING")
+    .filter((booking) => booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION")
     .map((booking) => ({
       id: booking.reference,
       guestName: { ...booking.guestName },
       startsAt: booking.scheduledAt,
       partySize: booking.partySize,
       cashDueSyp: booking.cashDueSyp,
-      status: booking.status === "PENDING" ? "NEEDS_ACCEPTANCE" : "CONFIRMED",
+      status: booking.status === "PENDING_CONFIRMATION" ? "PENDING_CONFIRMATION" : "CONFIRMED",
     }));
   const recentCheckIns: ProviderRecentCheckIn[] = bookings
     .filter((booking) => booking.status === "CHECKED_IN" && booking.checkedInAt)

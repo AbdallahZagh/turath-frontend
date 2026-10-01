@@ -216,7 +216,7 @@ export function ProviderBookingsScreen(): ReactNode {
                 </p>
                 <p className="text-prose flex items-center gap-1.5 text-sm">
                   <CalendarDays className="text-prose-muted size-4" aria-hidden />
-                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.roomName, locale)}
+                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.offeringName, locale)}
                 </p>
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <span className="text-prose-muted inline-flex items-center gap-1.5">

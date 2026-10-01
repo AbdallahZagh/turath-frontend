@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { DiscoveryFiltersPanel } from "@/components/discovery/DiscoveryFiltersPanel";
@@ -9,6 +8,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useDiscovery } from "@/hooks/useDiscovery";
 import { useDiscoveryFilters } from "@/hooks/useDiscoveryFilters";
+import { useTranslations } from "@/i18n/translations";
 
 const ExploreMap = dynamic(() => import("@/components/discovery/ExploreMap").then((module) => module.ExploreMap), { ssr: false, loading: () => <Skeleton className="h-full min-h-[36rem]" /> });
 

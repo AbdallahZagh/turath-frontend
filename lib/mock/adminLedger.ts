@@ -191,6 +191,17 @@ const LEDGER_SEED: StoredLedger[] = [
     cadence: "biweekly",
     lastSettledAt: "2026-08-29",
   },
+  {
+    // 2,250,000 of 2,800,000 used (80%): the Warning (watch) standing.
+    id: "ldg_13",
+    provider: { en: "Hama Waterwheel Guesthouse", ar: "دار نواعير حماة" },
+    category: "hotels",
+    accruedSyp: 2_950_000,
+    paidSyp: 700_000,
+    creditCeilingSyp: 2_800_000,
+    cadence: "weekly",
+    lastSettledAt: "2026-08-24",
+  },
 ];
 
 function toRow({ suspended, ...stored }: StoredLedger): AdminLedgerRow {

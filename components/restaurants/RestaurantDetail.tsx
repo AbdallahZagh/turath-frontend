@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, CalendarCheck, Clock3, MapPin, Navigation, ShieldCheck, UtensilsCrossed, UsersRound } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ListingGallery } from "@/components/listings/ListingGallery";
@@ -19,8 +19,10 @@ import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatSyp } from "@/lib/format/money";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -49,7 +51,7 @@ export function RestaurantDetail({ restaurantId, basePath = "/restaurants" }: { 
       <ListingGallery images={restaurant.gallery} imageAlt={td("galleryImage", { restaurant: name })} openImageLabel={(number) => td("openImage", { number })} />
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="space-y-7">
-          <section><div className="flex flex-wrap items-center gap-2">{restaurant.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(restaurant.governorate)}</Badge><Badge>{localizedName(restaurant.cuisine, loc)}</Badge></div><h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1><div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={restaurant.rating} size="md" label={t("ratingLabel", { rating: restaurant.rating })} /><span className="text-prose font-semibold">{restaurant.rating.toFixed(1)}</span><span className="text-prose-muted">{t("reviewsCount", { count: restaurant.reviewCount })}</span><span className="text-prose-muted" aria-hidden>·</span><span className="text-prose-muted">{localizedName(restaurant.address, loc)}</span></div></section>
+          <section><div className="flex flex-wrap items-center gap-2">{restaurant.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(restaurant.governorate)}</Badge><Badge>{localizedName(restaurant.cuisine, loc)}</Badge></div><h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}>{name}</h1><div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={restaurant.rating} size="md" label={t("ratingLabel", { rating: restaurant.rating })} /><span className="text-prose font-semibold">{formatRating(restaurant.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: restaurant.reviewCount })}</span><span className="text-prose-muted" aria-hidden>·</span><span className="text-prose-muted">{localizedName(restaurant.address, loc)}</span></div></section>
           <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("about")}</h2><p className="text-prose-muted mt-3 leading-7">{localizedName(restaurant.description, loc)}</p></GlassPanel>
           <div className="grid gap-7 md:grid-cols-2">
             <GlassPanel className="p-6"><h2 className="font-heading text-prose text-xl font-semibold">{td("amenities")}</h2><div className="mt-4"><RestaurantAmenityList amenities={restaurant.amenities} /></div></GlassPanel>

@@ -2,7 +2,6 @@
 
 import { ChevronDown, LogOut, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import {
   useEffect,
   useId,
@@ -16,6 +15,7 @@ import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { initialsFromName } from "@/lib/format/initials";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { BadgeCheck, Building2, X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_NAV } from "@/config/nav";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useProviderProfile } from "@/hooks/useProviderProfile";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { useAuthStore } from "@/store/authStore";
 

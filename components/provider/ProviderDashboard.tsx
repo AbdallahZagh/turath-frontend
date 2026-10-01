@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import {
   BedDouble,
   CalendarClock,
@@ -13,7 +12,7 @@ import {
   XCircle,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -25,8 +24,9 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderDashboard } from "@/hooks/useProviderDashboard";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { dateFnsLocale } from "@/lib/format/datetime";
+import { formatDisplayDate } from "@/lib/format/datetime";
 import { formatCount, formatPercent } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { useAuthStore } from "@/store/authStore";
@@ -199,9 +199,7 @@ export function ProviderDashboard(): ReactNode {
                     />
                   </div>
                   <span className="text-prose-muted text-xs font-medium">
-                    {format(new Date(`${item.date}T12:00:00`), "EEE", {
-                      locale: dateFnsLocale(locale),
-                    })}
+                    {formatDisplayDate(new Date(`${item.date}T12:00:00`), "EEE", locale)}
                   </span>
                 </div>
               );
@@ -318,9 +316,7 @@ export function ProviderDashboard(): ReactNode {
                 </div>
                 <div className="shrink-0 sm:text-end">
                   <p className="text-prose text-sm font-semibold">
-                    {format(new Date(arrival.startsAt), "p", {
-                      locale: dateFnsLocale(locale),
-                    })}
+                    {formatDisplayDate(new Date(arrival.startsAt), "p", locale)}
                   </p>
                   <p className="text-prose-muted mt-1 text-xs">
                     {formatMoney(arrival.cashDueSyp)}
@@ -364,9 +360,7 @@ export function ProviderDashboard(): ReactNode {
                     {formatMoney(checkIn.cashCollectedSyp)}
                   </p>
                   <p className="text-prose-muted mt-1 text-xs">
-                    {format(new Date(checkIn.checkedInAt), "p", {
-                      locale: dateFnsLocale(locale),
-                    })}
+                    {formatDisplayDate(new Date(checkIn.checkedInAt), "p", locale)}
                   </p>
                 </div>
               </li>

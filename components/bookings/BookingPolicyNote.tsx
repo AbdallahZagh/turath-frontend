@@ -1,8 +1,8 @@
 import { ScrollText } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { BOOKING_POLICY_LINK_TAGS } from "@/components/auth/termsLinkTags";
+import { useTranslations } from "@/i18n/translations";
 
 /** Checkout link to /legal/booking-policy (docs/PAGES.md §3). */
 export function BookingPolicyNote(): ReactNode {

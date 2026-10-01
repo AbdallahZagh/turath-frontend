@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion/variants";
 import { TRUST_BAR_ITEMS, type TrustBarItemId } from "@/lib/mock/landing";
 

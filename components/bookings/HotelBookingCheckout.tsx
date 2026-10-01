@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, format, parseISO } from "date-fns";
 import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
@@ -27,7 +27,9 @@ import { useCreateHotelBooking, useValidateBookingCoupon } from "@/hooks/useBook
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import {
@@ -222,8 +224,8 @@ export function HotelBookingCheckout({
         <dl className="border-border mt-5 space-y-3 border-y py-5 text-sm">
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" />{t("dates")}</dt><dd className="text-prose text-end font-medium">{checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected")}</dd></div>
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><BedDouble className="size-4" />{t("room")}</dt><dd className="text-prose font-medium">{selectedRoom ? tRooms(selectedRoom.type) : t("notSelected")}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" />{t("guests")}</dt><dd className="text-prose font-medium">{guests}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{nights}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" />{t("guests")}</dt><dd className="text-prose font-medium">{formatCount(guests, loc)}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{formatCount(nights, loc)}</dd></div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">
           <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>

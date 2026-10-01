@@ -1,9 +1,9 @@
 "use client";
 
 import { FileUp, X } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useId, useRef, type ChangeEvent, type ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 type FileFieldProps = {

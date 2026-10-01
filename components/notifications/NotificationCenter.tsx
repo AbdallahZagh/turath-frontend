@@ -2,7 +2,6 @@
 
 import { Bell, CheckCheck } from "lucide-react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { NOTIFICATION_ICONS } from "@/components/notifications/NotificationIcon";
@@ -12,6 +11,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications } from "@/hooks/useNotifications";
+import { useTranslations } from "@/i18n/translations";
 import type { NotificationAudience } from "@/lib/mock/notifications";
 import { cn } from "@/lib/cn";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { useSaveAdminTaxonomyTerm } from "@/hooks/useAdminTaxonomy";
+import { useTranslations } from "@/i18n/translations";
 import {
   DuplicateTaxonomySlugError,
   type AdminTaxonomyTerm,

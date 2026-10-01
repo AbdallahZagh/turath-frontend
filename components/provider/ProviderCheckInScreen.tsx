@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import {
   BadgeCheck,
   CalendarClock,
@@ -16,7 +15,7 @@ import {
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,8 +29,9 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderArrivals, useVerifyProviderCheckIn } from "@/hooks/useProviderCheckIn";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { dateFnsLocale } from "@/lib/format/datetime";
+import { formatDisplayDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { ProviderCheckInResult, ProviderDeskBooking } from "@/lib/mock/providerCheckIn";
 import {
@@ -118,7 +118,7 @@ function ResultPanel({
           <Detail
             icon={CalendarClock}
             label={t("result.schedule")}
-            value={format(new Date(booking.schedule), "PPp", { locale: dateFnsLocale(locale) })}
+            value={formatDisplayDate(new Date(booking.schedule), "PPp", locale)}
           />
         </div>
         <div className="bg-glass-control rounded-2xl p-5">
@@ -149,7 +149,7 @@ function ResultPanel({
             </p>
             <p className="text-prose mt-1 text-sm font-semibold">
               {booking.checkedInAt
-                ? format(new Date(booking.checkedInAt), "PPp", { locale: dateFnsLocale(locale) })
+                ? formatDisplayDate(new Date(booking.checkedInAt), "PPp", locale)
                 : "—"}
             </p>
             <p className="text-prose-muted mt-1 text-xs">
@@ -342,7 +342,7 @@ function ArrivalCard({
             {booking.reference} · {t(`categories.${booking.category}`)}
           </p>
         </div>
-        <Badge>{format(new Date(booking.schedule), "p", { locale: dateFnsLocale(locale) })}</Badge>
+        <Badge>{formatDisplayDate(new Date(booking.schedule), "p", locale)}</Badge>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-4 border-y border-border py-4">
         <div>

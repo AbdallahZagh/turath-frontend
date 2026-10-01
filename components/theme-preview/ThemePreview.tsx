@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
@@ -18,6 +18,7 @@ import { Switch } from "@/components/ui/Switch";
 import { Stepper } from "@/components/ui/Stepper";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { Tooltip } from "@/components/ui/Tooltip";
+import { getTranslations } from "@/i18n/serverTranslations";
 import { formatSyp } from "@/lib/format/money";
 
 const SAMPLE_AMOUNT_SYP = 150_000;

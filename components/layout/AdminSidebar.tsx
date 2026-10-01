@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -17,6 +16,7 @@ import {
   type NavGroupKey,
   type NavItem,
 } from "@/config/nav";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import type { AppRole } from "@/lib/auth/roles";
 import { initialsFromName } from "@/lib/format/initials";

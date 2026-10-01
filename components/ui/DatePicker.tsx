@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
   addMonths,
@@ -18,15 +18,18 @@ import {
   startOfWeek,
 } from "date-fns";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import {
   dateFnsLocale,
+  formatDisplayDate,
   formatMediumDate,
   formatPickerDate,
   parseIsoDate,
   toIsoDate,
 } from "@/lib/format/datetime";
 import { isLocale } from "@/i18n/config";
+import { toDisplayDigits } from "@/lib/format/digits";
 
 import type { ControlSize } from "./controlScale";
 import type { FieldVariant } from "./field.types";
@@ -177,10 +180,10 @@ export function DatePicker({
 
   const headerLabel =
     view === "days"
-      ? format(cursor, "LLLL yyyy", { locale: dfsLocale })
+      ? formatDisplayDate(cursor, "LLLL yyyy", locale)
       : view === "months"
-        ? format(cursor, "yyyy", { locale: dfsLocale })
-        : `${yearStart} – ${yearStart + 11}`;
+        ? formatDisplayDate(cursor, "yyyy", locale)
+        : toDisplayDigits(`${yearStart} – ${yearStart + 11}`, locale);
 
   const display = !selectedIso
     ? ""
@@ -296,7 +299,7 @@ export function DatePicker({
                       )}
                       onClick={() => commit(day)}
                     >
-                      {format(day, "d")}
+                      {formatDisplayDate(day, "d", locale)}
                     </button>
                   );
                 })}
@@ -326,7 +329,7 @@ export function DatePicker({
                       setView("days");
                     }}
                   >
-                    {format(date, "LLL", { locale: dfsLocale })}
+                    {formatDisplayDate(date, "LLL", locale)}
                   </button>
                 );
               })}
@@ -352,7 +355,7 @@ export function DatePicker({
                       setView("months");
                     }}
                   >
-                    {year}
+                    {toDisplayDigits(String(year), locale)}
                   </button>
                 );
               })}

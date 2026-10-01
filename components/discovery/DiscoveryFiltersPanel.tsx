@@ -1,7 +1,7 @@
 "use client";
 
 import { List, Map, RotateCcw, SlidersHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -11,6 +11,8 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import type { UseDiscoveryFiltersResult } from "@/hooks/useDiscoveryFilters";
+import { useTranslations } from "@/i18n/translations";
+import { formatCount } from "@/lib/format/number";
 import { GOVERNORATES } from "@/lib/mock/landing";
 import {
   DISCOVERY_AMENITIES,
@@ -30,6 +32,7 @@ export function DiscoveryFiltersPanel({
   const t = useTranslations("discovery");
   const tf = useTranslations("discovery.filters");
   const tGov = useTranslations("landing.governorates");
+  const locale = useLocale();
   const { state, update, reset, queryString } = discovery;
   const categories: SelectOption[] = [
     { value: "all", label: tf("allCategories") },
@@ -53,7 +56,7 @@ export function DiscoveryFiltersPanel({
     { value: "all", label: tf("anyPrice") },
     ...[100000, 250000, 500000].map((value) => ({
       value: String(value),
-      label: tf("priceUpTo", { value: new Intl.NumberFormat().format(value) }),
+      label: tf("priceUpTo", { value: formatCount(value, locale) }),
     })),
   ];
   const target = mode === "map" ? "/search" : "/explore";

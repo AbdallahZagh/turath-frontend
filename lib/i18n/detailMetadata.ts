@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 
 import { defaultLocale, isLocale } from "@/i18n/config";
+import { getTranslations } from "@/i18n/serverTranslations";
 import type { LocalizedName } from "@/lib/i18n/localized";
 
 type DetailMetadataSource = {

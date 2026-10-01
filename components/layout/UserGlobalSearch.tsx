@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   Utensils,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useMemo, type ReactNode } from "react";
 
 import {
@@ -20,6 +19,7 @@ import {
   type GlobalSearchItem,
 } from "@/components/layout/GlobalSearchPalette";
 import { USER_PATHS } from "@/config/userRoutes";
+import { useTranslations } from "@/i18n/translations";
 
 export function UserGlobalSearch(): ReactNode {
   const t = useTranslations("account");

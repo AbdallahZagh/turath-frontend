@@ -1,12 +1,13 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { TABLE_PAGE_SIZES } from "@/hooks/usePagination";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatCount } from "@/lib/format/number";
 

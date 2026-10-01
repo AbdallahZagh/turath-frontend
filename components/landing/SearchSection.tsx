@@ -1,5 +1,6 @@
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
+
+import { getTranslations } from "@/i18n/serverTranslations";
 
 import { OmniSearchWidget } from "./OmniSearchWidget";
 import { SectionHeading } from "./SectionHeading";

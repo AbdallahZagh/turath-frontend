@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, MapPin, ShieldCheck, UsersRound } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -14,6 +14,8 @@ import { StarRating } from "@/components/ui/StarRating";
 import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import type { Hotel } from "@/lib/mock/hotels";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
@@ -76,7 +78,7 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
 
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
               <StarRating value={hotel.rating} label={t("ratingLabel", { rating: hotel.rating })} />
-              <span className="text-prose font-semibold">{hotel.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(hotel.rating, loc)}</span>
               <span className="text-prose-muted">{t("reviewsCount", { count: hotel.reviewCount })}</span>
             </div>
 

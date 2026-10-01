@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Save, Send, UserPlus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, type ReactNode } from "react";
 import { Controller, useForm, type FieldError } from "react-hook-form";
 
@@ -11,6 +10,8 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
 import { useInviteProviderStaff, useUpdateProviderStaff } from "@/hooks/useProviderStaff";
+import { useTranslations } from "@/i18n/translations";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import type { ProviderStaffMember } from "@/lib/mock/providerStaff";
 import {
   providerStaffInviteSchema,
@@ -117,7 +118,7 @@ export function ProviderStaffModal({
           <Input variant="glass" autoComplete="name" {...form.register("name")} />
         </Field>
         <Field label={t("invite.fields.phone")} error={form.formState.errors.phone}>
-          <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" {...form.register("phone")} />
+          <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
         </Field>
         <Controller
           control={form.control}

@@ -1,10 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { StarRating } from "@/components/ui/StarRating";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatRating } from "@/lib/format/number";
 
 type AdminStarRatingProps = {

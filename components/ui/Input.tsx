@@ -1,6 +1,18 @@
-import { useId, type InputHTMLAttributes, type ReactNode } from "react";
+"use client";
+
+import { useLocale } from "next-intl";
+import {
+  useId,
+  useState,
+  type ChangeEvent,
+  type FocusEvent,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from "react";
 
 import { cn } from "@/lib/cn";
+import { normalizeNumberInput, parseNumberInput, toDisplayDigits } from "@/lib/format/digits";
+import { formatCount } from "@/lib/format/number";
 
 import {
   FIELD_BASE,
@@ -29,6 +41,11 @@ type InputProps = Omit<
   /** Leading icon (main variant). The text starts after it, lined up with Select and DatePicker. */
   icon?: ReactNode;
   className?: string;
+  /**
+   * Money amount (controlled `value`): shows grouped display digits (1,500,000 / ١٬٥٠٠٬٠٠٠)
+   * when blurred and plain digits while focused. The field width never changes.
+   */
+  amount?: boolean;
 };
 
 /** Room for a 1rem icon plus the control gap, same as the Select trigger. */
@@ -54,10 +71,14 @@ export function Input({
   id,
   placeholder,
   disabled,
-  ...rest
+  amount = false,
+  ...fieldProps
 }: InputProps): ReactNode {
   const generatedId = useId();
   const inputId = id ?? generatedId;
+  const locale = useLocale();
+  const [focusedText, setFocusedText] = useState<string | null>(null);
+  const rest = numberFieldProps(fieldProps, amount, locale, focusedText, setFocusedText);
   const style = controlStyle({
     size,
     paddingX,
@@ -109,4 +130,61 @@ export function Input({
       className={cn(FIELD_BASE, FIELD_VARIANT[variant], className)}
     />
   );
+}
+
+type FieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "size">;
+
+/**
+ * Number fields are text fields: browsers reject Arabic or Persian digits in `type="number"`.
+ * Controlled number fields show display digits when not focused (docs/PAGES.md §0, "Digits").
+ * What the person types is never rewritten while they type; forms read it with
+ * `parseNumberInput` (lib/format/digits.ts) before validating or saving.
+ */
+function numberFieldProps(
+  props: FieldProps,
+  amount: boolean,
+  locale: string,
+  focusedText: string | null,
+  setFocusedText: (text: string | null) => void,
+): FieldProps {
+  if (props.type !== "number" && !amount) {
+    return props;
+  }
+  const { step, inputMode, ...rest } = props;
+  // Browser number limits do not apply to a text field; forms validate the parsed value instead.
+  delete rest.type;
+  delete rest.min;
+  delete rest.max;
+  const decimal = step === "any" || (step !== undefined && !Number.isInteger(Number(step)));
+  const field: FieldProps = {
+    ...rest,
+    type: "text",
+    inputMode: inputMode ?? (decimal ? "decimal" : "numeric"),
+    autoComplete: rest.autoComplete ?? "off",
+  };
+  // Uncontrolled fields (React Hook Form `register`) show exactly what the browser holds.
+  if (rest.value === undefined) {
+    return field;
+  }
+  // Controlled fields show display digits (Arabic-Indic in Arabic) when not being edited.
+  const raw = String(rest.value);
+  const parsed = parseNumberInput(raw, { decimal, negative: true });
+  const plain = parsed === undefined ? raw : toDisplayDigits(normalizeNumberInput(raw), locale);
+  const blurred = parsed !== undefined && amount ? formatCount(parsed, locale) : plain;
+  return {
+    ...field,
+    value: focusedText ?? blurred,
+    onFocus: (event: FocusEvent<HTMLInputElement>) => {
+      setFocusedText(plain);
+      rest.onFocus?.(event);
+    },
+    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+      setFocusedText(event.target.value);
+      rest.onChange?.(event);
+    },
+    onBlur: (event: FocusEvent<HTMLInputElement>) => {
+      setFocusedText(null);
+      rest.onBlur?.(event);
+    },
+  };
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { Landmark, RotateCcw, SlidersHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { AttractionCard } from "@/components/attractions/AttractionCard";
@@ -13,6 +12,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAttractions } from "@/hooks/useAttractions";
+import { useTranslations } from "@/i18n/translations";
 import { GOVERNORATES } from "@/lib/mock/landing";
 import type { AttractionFilters } from "@/services/attractions";
 

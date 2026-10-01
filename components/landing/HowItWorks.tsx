@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { useRef, type ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { HOW_IT_WORKS_STEPS, type HowItWorksStepId } from "@/lib/mock/landing";
 
 import { SectionHeading } from "./SectionHeading";

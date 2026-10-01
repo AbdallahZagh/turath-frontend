@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ListingGallery } from "@/components/listings/ListingGallery";
@@ -28,7 +28,9 @@ import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useGuide } from "@/hooks/useGuides";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -110,7 +112,7 @@ export function GuideDetail({
                 size="md"
                 label={t("ratingLabel", { rating: guide.rating })}
               />
-              <span className="text-prose font-semibold">{guide.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(guide.rating, loc)}</span>
               <span className="text-prose-muted">
                 {t("reviewsCount", { count: guide.reviewCount })}
               </span>

@@ -1,9 +1,9 @@
 "use client";
 
 import { Accessibility, Baby, Building2, Trees, type LucideIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import type { EventFeatureId } from "@/lib/mock/events";
 
 const FEATURE_ICONS: Record<EventFeatureId, LucideIcon> = { indoor: Building2, outdoor: Trees, accessible: Accessibility, familyFriendly: Baby };

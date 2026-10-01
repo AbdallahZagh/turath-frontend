@@ -1,7 +1,7 @@
 "use client";
 
 import { Landmark, LayoutGrid, Map, Table2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
@@ -24,6 +24,7 @@ import { useInfiniteReveal } from "@/hooks/useInfiniteReveal";
 import { usePageHeaderAction } from "@/hooks/usePageHeaderAction";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";

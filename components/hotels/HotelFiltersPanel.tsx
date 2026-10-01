@@ -1,13 +1,13 @@
 "use client";
 
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { GOVERNORATES } from "@/lib/mock/landing";
 import type {

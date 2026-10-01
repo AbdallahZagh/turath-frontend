@@ -1,12 +1,14 @@
 "use client";
 
 import { Check, Compass, Copy, ExternalLink, MapPin } from "lucide-react";
+import { useLocale } from "next-intl";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useTranslations } from "@/i18n/translations";
+import { toDisplayDigits } from "@/lib/format/digits";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 import { toast } from "@/store/toastStore";
 
@@ -18,6 +20,7 @@ export function AdminAttractionLocationView({
   attraction,
 }: AdminAttractionLocationViewProps): ReactNode {
   const t = useTranslations("admin.attractions");
+  const locale = useLocale();
   const [copied, setCopied] = useState(false);
 
   const coordsString = `${attraction.latitude}, ${attraction.longitude}`;
@@ -53,7 +56,7 @@ export function AdminAttractionLocationView({
               {t("form.latitude")}
             </span>
             <span className="text-prose font-mono font-semibold tabular-nums">
-              {attraction.latitude.toFixed(6)}°
+              {toDisplayDigits(attraction.latitude.toFixed(6), locale)}°
             </span>
           </div>
 
@@ -62,7 +65,7 @@ export function AdminAttractionLocationView({
               {t("form.longitude")}
             </span>
             <span className="text-prose font-mono font-semibold tabular-nums">
-              {attraction.longitude.toFixed(6)}°
+              {toDisplayDigits(attraction.longitude.toFixed(6), locale)}°
             </span>
           </div>
 

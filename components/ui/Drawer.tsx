@@ -4,11 +4,12 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { useIsClient } from "@/hooks/useIsClient";
 import { useOverlay } from "@/hooks/useOverlay";
 import { dirForLocale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 export type DrawerSide = "start" | "end";

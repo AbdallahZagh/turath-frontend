@@ -1,12 +1,14 @@
 "use client";
 
 import { Bell, CheckCheck } from "lucide-react";
+import { useLocale } from "next-intl";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { NOTIFICATION_ICONS } from "@/components/notifications/NotificationIcon";
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications } from "@/hooks/useNotifications";
+import { useTranslations } from "@/i18n/translations";
+import { formatCount } from "@/lib/format/number";
 import type { NotificationAudience } from "@/lib/mock/notifications";
 
 type NotificationBellProps = {
@@ -16,6 +18,7 @@ type NotificationBellProps = {
 
 export function NotificationBell({ audience, href }: NotificationBellProps): ReactNode {
   const t = useTranslations("notifications");
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const query = useNotifications(audience);
@@ -53,7 +56,7 @@ export function NotificationBell({ audience, href }: NotificationBellProps): Rea
         <Bell className="size-4" aria-hidden />
         {unread > 0 ? (
           <span className="bg-accent text-ink absolute -end-0.5 -top-0.5 grid min-w-4 place-items-center rounded-full px-1 text-[0.6rem] font-bold leading-4">
-            {unread}
+            {formatCount(unread, locale)}
           </span>
         ) : null}
       </button>

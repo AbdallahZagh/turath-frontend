@@ -3,7 +3,7 @@
 import { ArrowLeft, ArrowRight, Landmark, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { AdminAttractionDeleteDialog } from "@/components/admin/AdminAttractionDeleteDialog";
@@ -19,6 +19,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminAttraction } from "@/hooks/useAdminAttractions";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
+import { useTranslations } from "@/i18n/translations";
 
 type AdminAttractionDetailProps = {
   attractionId: string;

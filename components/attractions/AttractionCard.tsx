@@ -3,13 +3,14 @@
 import { ArrowUpRight, Clock3, MapPin, Ticket } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristAttraction } from "@/services/attractions";

@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -14,6 +13,8 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { useSaveProviderInventory } from "@/hooks/useProviderInventory";
+import { useTranslations } from "@/i18n/translations";
+import { numberFieldValue } from "@/lib/format/digits";
 import type {
   EventSession,
   GuideOffering,
@@ -176,7 +177,7 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
             min={1}
             label={t("occupancy")}
             placeholder={t("occupancy")}
-            {...form.register("occupancy", { valueAsNumber: true })}
+            {...form.register("occupancy", { setValueAs: numberFieldValue })}
           />
           <ErrorText show={Boolean(form.formState.errors.occupancy)} />
         </div>
@@ -187,7 +188,7 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
             min={1}
             label={t("quantity")}
             placeholder={t("quantity")}
-            {...form.register("quantity", { valueAsNumber: true })}
+            {...form.register("quantity", { setValueAs: numberFieldValue })}
           />
           <ErrorText show={Boolean(form.formState.errors.quantity)} />
         </div>
@@ -198,7 +199,7 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
             min={1}
             label={t("priceSyp")}
             placeholder={t("priceSyp")}
-            {...form.register("priceSyp", { valueAsNumber: true })}
+            {...form.register("priceSyp", { setValueAs: numberFieldValue })}
           />
           <ErrorText show={Boolean(form.formState.errors.priceSyp)} />
         </div>
@@ -276,7 +277,7 @@ function RestaurantTableForm({
             min={1}
             label={t("capacity")}
             placeholder={t("capacity")}
-            {...form.register("capacity", { valueAsNumber: true })}
+            {...form.register("capacity", { setValueAs: numberFieldValue })}
           />
           <ErrorText show={Boolean(form.formState.errors.capacity)} />
         </div>
@@ -437,7 +438,7 @@ function TripForm({
           min={1}
           label={t("capacity")}
           placeholder={t("capacity")}
-          {...form.register("capacity", { valueAsNumber: true })}
+          {...form.register("capacity", { setValueAs: numberFieldValue })}
         />
         <Input
           variant="glass"
@@ -445,7 +446,7 @@ function TripForm({
           min={0}
           label={t("seatsLeft")}
           placeholder={t("seatsLeft")}
-          {...form.register("seatsLeft", { valueAsNumber: true })}
+          {...form.register("seatsLeft", { setValueAs: numberFieldValue })}
         />
         <Input
           variant="glass"
@@ -453,7 +454,7 @@ function TripForm({
           min={1}
           label={t("priceSyp")}
           placeholder={t("priceSyp")}
-          {...form.register("priceSyp", { valueAsNumber: true })}
+          {...form.register("priceSyp", { setValueAs: numberFieldValue })}
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -578,7 +579,7 @@ function EventForm({
           min={1}
           label={t("priceSyp")}
           placeholder={t("priceSyp")}
-          {...form.register("priceSyp", { valueAsNumber: true })}
+          {...form.register("priceSyp", { setValueAs: numberFieldValue })}
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
@@ -588,7 +589,7 @@ function EventForm({
           min={1}
           label={t("capacity")}
           placeholder={t("capacity")}
-          {...form.register("capacity", { valueAsNumber: true })}
+          {...form.register("capacity", { setValueAs: numberFieldValue })}
         />
         <Input
           variant="glass"
@@ -596,7 +597,7 @@ function EventForm({
           min={0}
           label={t("available")}
           placeholder={t("available")}
-          {...form.register("available", { valueAsNumber: true })}
+          {...form.register("available", { setValueAs: numberFieldValue })}
         />
         <Input
           variant="glass"
@@ -605,7 +606,7 @@ function EventForm({
           max={6}
           label={t("maxPerUser")}
           placeholder={t("maxPerUser")}
-          {...form.register("maxPerUser", { valueAsNumber: true })}
+          {...form.register("maxPerUser", { setValueAs: numberFieldValue })}
         />
       </div>
       <ErrorText show={Object.keys(form.formState.errors).length > 0} />
@@ -671,7 +672,7 @@ function GuideForm({ item, onClose }: { item: GuideOffering; onClose: () => void
           min={1}
           label={t("hourlySyp")}
           placeholder={t("hourlySyp")}
-          {...form.register("hourlySyp", { valueAsNumber: true })}
+          {...form.register("hourlySyp", { setValueAs: numberFieldValue })}
         />
         <Input
           variant="glass"
@@ -679,7 +680,7 @@ function GuideForm({ item, onClose }: { item: GuideOffering; onClose: () => void
           min={1}
           label={t("fullDaySyp")}
           placeholder={t("fullDaySyp")}
-          {...form.register("fullDaySyp", { valueAsNumber: true })}
+          {...form.register("fullDaySyp", { setValueAs: numberFieldValue })}
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">

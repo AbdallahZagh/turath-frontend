@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, CalendarDays, Clock3, MapPin, ShieldCheck, UsersRound } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -13,8 +13,10 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { StarRating } from "@/components/ui/StarRating";
 import type { Locale } from "@/i18n/config";
 import { useBookingSearch } from "@/hooks/useBookingSearch";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import type { Trip } from "@/lib/mock/trips";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
@@ -44,7 +46,7 @@ export function TripCard({ trip, detailBasePath = "/trips" }: { trip: Trip; deta
               <div className="min-w-0"><h2 className="font-heading text-prose text-xl font-semibold">{localizedName(trip.name, loc)}</h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4 shrink-0" aria-hidden />{tGov(trip.governorate)}</p></div>
               <ArrowUpRight className="text-primary size-5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5" aria-hidden />
             </div>
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{trip.rating.toFixed(1)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span></div>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span></div>
             <p className="text-prose-muted mt-3 line-clamp-2 text-sm leading-relaxed">{localizedName(trip.shortDescription, loc)}</p>
             <div className="mt-4"><TripGearList gear={trip.gear} compact /></div>
             <div className="border-border mt-auto grid grid-cols-2 gap-3 border-t pt-4 text-sm">

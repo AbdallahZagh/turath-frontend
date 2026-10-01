@@ -2,7 +2,7 @@
 
 import { CalendarCheck, CalendarDays, FilterX, Phone, StickyNote, UsersRound } from "lucide-react";
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -19,6 +19,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderBookings } from "@/hooks/useProviderBookings";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";

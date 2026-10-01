@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { CheckCircle2, Mail, Send, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { FieldError } from "react-hook-form";
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { PhoneField } from "@/components/ui/PhoneField";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 import {
   CONTACT_TOPICS,

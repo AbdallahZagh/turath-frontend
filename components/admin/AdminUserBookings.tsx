@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { AdminBookingDetail } from "@/components/admin/AdminBookingDetail";
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
@@ -12,6 +12,7 @@ import { Drawer } from "@/components/ui/Drawer";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";

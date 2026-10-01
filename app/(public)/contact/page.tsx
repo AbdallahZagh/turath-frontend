@@ -1,10 +1,10 @@
-import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactInfo } from "@/components/contact/ContactInfo";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getTranslations } from "@/i18n/serverTranslations";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("contact.headers.index");

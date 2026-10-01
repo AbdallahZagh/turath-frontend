@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, CalendarDays, Clock3, Compass, MapPin, ShieldCheck, Tag, Users } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
@@ -24,7 +24,9 @@ import { useCreateTripBooking, useValidateBookingCoupon } from "@/hooks/useBooki
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import { isTripBookingErrorKey, tripBookingSchema, type TripBookingErrorKey, type TripBookingValues } from "@/lib/validation/booking";
@@ -111,7 +113,7 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
 
       <GlassPanel className="p-6 lg:sticky lg:top-28">
         <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p><h2 className="font-heading text-prose mt-2 text-2xl font-semibold">{localizedName(trip.name, loc)}</h2>
-        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" aria-hidden />{t("date")}</dt><dd className="text-prose text-end font-medium">{date ? formatMediumDate(date, loc) : t("notSelected")}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" aria-hidden />{t("seats")}</dt><dd className="text-prose font-medium">{seats}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><MapPin className="size-4" aria-hidden />{t("pickup")}</dt><dd className="text-prose max-w-44 text-end font-medium">{pickup ? localizedName(pickup.name, loc) : t("notSelected")}</dd></div></dl>
+        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" aria-hidden />{t("date")}</dt><dd className="text-prose text-end font-medium">{date ? formatMediumDate(date, loc) : t("notSelected")}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" aria-hidden />{t("seats")}</dt><dd className="text-prose font-medium">{formatCount(seats, loc)}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><MapPin className="size-4" aria-hidden />{t("pickup")}</dt><dd className="text-prose max-w-44 text-end font-medium">{pickup ? localizedName(pickup.name, loc) : t("notSelected")}</dd></div></dl>
         <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>{discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}<div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd></div></dl>
         {priceReady ? null : <p className="text-prose-muted mt-3 text-xs">{t("chooseOptionForPrice")}</p>}
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>

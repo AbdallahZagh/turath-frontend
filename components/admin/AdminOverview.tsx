@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { format } from "date-fns";
 import {
   Building2,
   CircleCheck,
@@ -11,7 +10,7 @@ import {
   UserX,
   Wallet,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { BarList, ChartCard, KpiCard } from "@/components/admin/OverviewPrimitives";
@@ -20,7 +19,8 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminOverview } from "@/hooks/useAdminOverview";
-import { dateFnsLocale } from "@/lib/format/datetime";
+import { useTranslations } from "@/i18n/translations";
+import { formatDisplayDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatCount, formatPercent } from "@/lib/format/number";
 import type { Locale } from "@/i18n/config";
@@ -193,9 +193,7 @@ export function AdminOverview(): ReactNode {
           <div className="flex h-52 items-end gap-2 sm:gap-3">
             {data.volume.map((day) => {
               const height = (day.count / maxVolume) * 100;
-              const label = format(new Date(`${day.date}T12:00:00`), "EEE", {
-                locale: dateFnsLocale(loc),
-              });
+              const label = formatDisplayDate(new Date(`${day.date}T12:00:00`), "EEE", loc);
               return (
                 <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
                   <span className="text-prose-muted text-xs tabular-nums">

@@ -11,7 +11,7 @@ import {
   Tag,
   UserRoundSearch,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
@@ -34,6 +34,7 @@ import { useCreateGuideBooking, useValidateBookingCoupon } from "@/hooks/useBook
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useGuide } from "@/hooks/useGuides";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";

@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { useTranslations } from "@/i18n/translations";
 import { toast } from "@/store/toastStore";
 
 export function ToastLab(): ReactNode {

@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import { QrCode, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 
 export type AuthMode =

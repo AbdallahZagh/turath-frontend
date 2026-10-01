@@ -1,12 +1,12 @@
 "use client";
 
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import type { ComponentType, ReactNode } from "react";
 
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 const THEMES = ["light", "dark", "system"] as const;

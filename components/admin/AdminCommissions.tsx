@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
 import { Badge } from "@/components/ui/Badge";
@@ -14,6 +14,8 @@ import {
   useSaveAdminCommissions,
 } from "@/hooks/useAdminCommissions";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { parseNumberInput } from "@/lib/format/digits";
 import { formatPercent } from "@/lib/format/number";
 import {
   COMMISSION_PILLARS,
@@ -32,8 +34,8 @@ function rateToInput(rate: number): string {
 }
 
 function parsePercent(value: string): number | undefined {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
+  const parsed = parseNumberInput(value, { decimal: true });
+  if (parsed === undefined || parsed > 100) {
     return undefined;
   }
   return parsed / 100;
@@ -121,7 +123,7 @@ export function AdminCommissions(): ReactNode {
       return;
     }
 
-    const exchange = Number(sypPerUsd);
+    const exchange = parseNumberInput(sypPerUsd) ?? Number.NaN;
     const parsedRates = {} as Record<LandingPillarId, number>;
     for (const pillar of COMMISSION_PILLARS) {
       const rate = parsePercent(rates[pillar] ?? "");

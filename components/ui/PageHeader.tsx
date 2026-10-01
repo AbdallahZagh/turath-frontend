@@ -3,7 +3,6 @@
 import { ChevronRight, Plus, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -14,6 +13,7 @@ import {
   type PageHeaderActionSpec,
   type PageHeaderSpec,
 } from "@/config/pageHeaders";
+import { useTranslations } from "@/i18n/translations";
 import { usePageHeaderStore } from "@/store/pageHeaderStore";
 
 const ACTION_ICON: Record<PageHeaderActionKind, LucideIcon> = {

@@ -10,7 +10,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -22,6 +22,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderLedger } from "@/hooks/useProviderLedger";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatPercent } from "@/lib/format/number";

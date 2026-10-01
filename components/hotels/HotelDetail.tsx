@@ -12,7 +12,7 @@ import {
   UsersRound,
   Zap,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
@@ -31,7 +31,9 @@ import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -122,7 +124,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
             </h1>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
               <StarRating value={hotel.rating} size="md" label={t("ratingLabel", { rating: hotel.rating })} />
-              <span className="text-prose font-semibold">{hotel.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(hotel.rating, loc)}</span>
               <span className="text-prose-muted">{t("reviewsCount", { count: hotel.reviewCount })}</span>
               <span aria-hidden className="text-prose-muted">·</span>
               <span className="text-prose-muted">{localizedName(hotel.address, loc)}</span>

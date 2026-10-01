@@ -1,7 +1,7 @@
 "use client";
 
 import { BedDouble, Bus, CalendarDays, Clock3, Languages, MapPin, Moon, Sparkles, Ticket, Users } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { UniversalBookingPass } from "@/components/bookings/UniversalBookingPass";
@@ -19,6 +19,7 @@ import { useHotel } from "@/hooks/useHotels";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 

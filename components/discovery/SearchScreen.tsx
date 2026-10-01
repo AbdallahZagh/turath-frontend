@@ -1,7 +1,6 @@
 "use client";
 
 import { SearchX } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { DiscoveryCard } from "@/components/discovery/DiscoveryCard";
@@ -11,6 +10,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useDiscovery } from "@/hooks/useDiscovery";
 import { useDiscoveryFilters } from "@/hooks/useDiscoveryFilters";
+import { useTranslations } from "@/i18n/translations";
 
 export function SearchScreen(): ReactNode {
   const t = useTranslations("discovery");

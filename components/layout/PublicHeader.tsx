@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Coins, Menu as MenuIcon, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import {
   useEffect,
@@ -27,6 +26,7 @@ import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";

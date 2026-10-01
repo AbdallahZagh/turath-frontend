@@ -9,9 +9,9 @@ import {
   Wifi,
   type LucideIcon,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import type { HotelAmenityId } from "@/lib/mock/hotels";
 
 const AMENITY_ICON: Record<HotelAmenityId, LucideIcon> = {

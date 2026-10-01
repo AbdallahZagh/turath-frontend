@@ -1,13 +1,14 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { CircleCheck, Scale, Wallet } from "lucide-react";
 
 import { KpiCard } from "@/components/admin/OverviewPrimitives";
 import { creditBarClass, creditUsedClass } from "@/components/admin/ledgerStanding";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatSyp } from "@/lib/format/money";
 import { formatPercent } from "@/lib/format/number";

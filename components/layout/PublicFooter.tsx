@@ -1,9 +1,9 @@
 import { Flame, Phone, ShieldAlert, Siren, type LucideIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
+import { getTranslations } from "@/i18n/serverTranslations";
 import { EMERGENCY_HOTLINES, type EmergencyHotlineId } from "@/lib/mock/landing";
 
 const HOTLINE_ICONS: Record<EmergencyHotlineId, LucideIcon> = {

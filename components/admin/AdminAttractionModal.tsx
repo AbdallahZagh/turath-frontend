@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Plus, X } from "lucide-react";
 import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 
@@ -14,7 +14,9 @@ import { Select } from "@/components/ui/Select";
 import { Switch } from "@/components/ui/Switch";
 import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { parseNumberInput } from "@/lib/format/digits";
 import { formatSyp } from "@/lib/format/money";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 import { GOVERNORATES, type GovernorateSlug } from "@/lib/mock/landing";
@@ -38,6 +40,7 @@ export function AdminAttractionModal({
 }: AdminAttractionModalProps): ReactNode {
   const t = useTranslations("admin.attractions");
   const tGov = useTranslations("landing.governorates");
+  const tUi = useTranslations("ui");
   const locale = useLocale();
 
   const isEditing = Boolean(attraction);
@@ -57,6 +60,8 @@ export function AdminAttractionModal({
   const [latitude, setLatitude] = useState(() => String(attraction?.latitude ?? 33.5138));
   const [longitude, setLongitude] = useState(() => String(attraction?.longitude ?? 36.2765));
   const [published, setPublished] = useState(attraction?.published ?? true);
+  /** Entry fee that is blank or not a clean amount (0 means free): a field error, never a silent 0. */
+  const [feeInvalid, setFeeInvalid] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   const galleryInputRef = useRef<HTMLInputElement>(null);
@@ -103,22 +108,23 @@ export function AdminAttractionModal({
     setGallery((prev) => prev.filter((_, i) => i !== index));
   }
 
-  const numericFee = Number(entryFeeSyp);
+  const numericFee = parseNumberInput(entryFeeSyp);
   const formattedFeePreview =
-    Number.isFinite(numericFee) && numericFee > 0 ? formatSyp(numericFee, locale) : t("free");
+    numericFee !== undefined && numericFee > 0 ? formatSyp(numericFee, locale) : t("free");
 
   function onSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    const fee = parseNumberInput(entryFeeSyp);
+    setFeeInvalid(fee === undefined);
     if (!imageSrc) {
       setImageError(true);
       return;
     }
 
-    const fee = Number(entryFeeSyp);
-    const lat = Number(latitude);
-    const lng = Number(longitude);
+    const lat = parseNumberInput(latitude, { decimal: true, negative: true });
+    const lng = parseNumberInput(longitude, { decimal: true, negative: true });
 
-    if (!Number.isFinite(fee) || fee < 0 || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+    if (fee === undefined || lat === undefined || lng === undefined) {
       toast.error(t("detail.invalid"), t("detail.saveFailedBody"));
       return;
     }
@@ -368,14 +374,16 @@ export function AdminAttractionModal({
               <Input
                 variant="glass"
                 size="sm"
-                type="number"
-                min={0}
-                step={1}
+                amount
                 required
                 value={entryFeeSyp}
                 onChange={(event) => setEntryFeeSyp(event.target.value)}
                 label={t("form.fee")}
+                aria-invalid={feeInvalid || undefined}
               />
+              {feeInvalid ? (
+                <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
+              ) : null}
             </label>
           </div>
 

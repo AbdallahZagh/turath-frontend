@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, MessageSquareQuote, Star } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, type FieldError } from "react-hook-form";
 
@@ -21,6 +21,7 @@ import { useGuide } from "@/hooks/useGuides";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
 import {

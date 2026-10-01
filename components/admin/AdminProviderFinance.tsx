@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
@@ -11,8 +11,10 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { useSaveAdminProviderFinance } from "@/hooks/useAdminProviders";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { parseNumberInput } from "@/lib/format/digits";
 import { formatSyp } from "@/lib/format/money";
 import { formatPercent } from "@/lib/format/number";
 import type { AdminLedgerRow } from "@/lib/mock/adminLedger";
@@ -35,8 +37,8 @@ function rateToInput(rate: number | null): string {
 }
 
 function parsePercent(value: string): number | undefined {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
+  const parsed = parseNumberInput(value, { decimal: true });
+  if (parsed === undefined || parsed > 100) {
     return undefined;
   }
   return parsed / 100;
@@ -62,8 +64,12 @@ export function AdminProviderFinance({
     provider.creditOverrideSyp === null ? "" : String(provider.creditOverrideSyp),
   );
 
+  /** A typed credit limit that is not a clean amount: shown under the field, never saved as 0. */
+  const [creditInvalid, setCreditInvalid] = useState(false);
+
   if (provider !== source) {
     setSource(provider);
+    setCreditInvalid(false);
     setCommission(rateToInput(provider.commissionOverride));
     setCredit(provider.creditOverrideSyp === null ? "" : String(provider.creditOverrideSyp));
   }
@@ -88,14 +94,17 @@ export function AdminProviderFinance({
       commissionOverride = parsed;
     }
 
+    // Blank keeps the tier default (see creditHint); anything typed must be a clean amount.
     if (trimmedCredit !== "") {
-      const amount = Number(trimmedCredit);
-      if (!Number.isFinite(amount) || amount <= 0) {
+      const amount = parseNumberInput(trimmedCredit);
+      if (amount === undefined || amount <= 0) {
+        setCreditInvalid(true);
         toast.error(t("detail.financeInvalid"));
         return;
       }
-      creditOverrideSyp = Math.round(amount);
+      creditOverrideSyp = amount;
     }
+    setCreditInvalid(false);
 
     saveFinance.mutate(
       { id: provider.id, finance: { commissionOverride, creditOverrideSyp } },
@@ -125,10 +134,7 @@ export function AdminProviderFinance({
                 variant="glass"
                 size="sm"
                 type="number"
-                min={0}
-                max={100}
-                step={0.1}
-                inputMode="decimal"
+                step="any"
                 value={commission}
                 onChange={(event) => setCommission(event.target.value)}
                 label={t("detail.commission")}
@@ -149,14 +155,15 @@ export function AdminProviderFinance({
             <Input
               variant="glass"
               size="sm"
-              type="number"
-              min={1}
-              step={1}
-              inputMode="numeric"
+              amount
               value={credit}
               onChange={(event) => setCredit(event.target.value)}
               label={t("detail.creditCeiling")}
+              aria-invalid={creditInvalid || undefined}
             />
+            {creditInvalid ? (
+              <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
+            ) : null}
             <span className="text-prose-muted text-xs">
               {t("detail.creditHint")}{" "}
               {t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}

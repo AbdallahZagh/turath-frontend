@@ -1,7 +1,11 @@
+import { toLatinDigits } from "@/lib/format/digits";
+
 /**
  * Dates and party size carried from Home, /search and the catalogs to a detail page and its
  * checkout (docs/PAGES.md §0). Hand-typed values are cleaned here: anything malformed, in the
  * past, or out of range is dropped so the checkout falls back to its normal defaults.
+ * Arabic-Indic or Persian digits typed into the URL are read as Latin; the address bar is
+ * rewritten to Latin by components/layout/LatinUrlDigits.tsx.
  */
 export type BookingKind = "hotel" | "restaurant" | "trip" | "event" | "guide";
 
@@ -70,7 +74,12 @@ function slug(value: string | null | undefined): string | undefined {
 }
 
 /** `today` is the viewer's local date as yyyy-mm-dd. */
-export function sanitizeBookingSearch(input: BookingSearchInput, today: string): BookingSearch {
+export function sanitizeBookingSearch(raw: BookingSearchInput, today: string): BookingSearch {
+  const input: BookingSearchInput = {};
+  for (const key of BOOKING_SEARCH_KEYS) {
+    const value = raw[key];
+    input[key] = value ? toLatinDigits(value) : value;
+  }
   const checkIn = isoDate(input.checkIn, today);
   const checkOut = isoDate(input.checkOut, today);
   return {

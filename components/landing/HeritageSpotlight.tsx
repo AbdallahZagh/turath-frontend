@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MoveHorizontal } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useRef, type ReactNode } from "react";
@@ -10,6 +10,7 @@ import { useMemo, useRef, type ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { useLiveFeaturedSlot } from "@/hooks/useHomeFeatured";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { localizedName } from "@/lib/i18n/localized";
 import { HERITAGE_SITES } from "@/lib/mock/landing";
 import { fadeUp, viewportOnce } from "@/lib/motion/variants";

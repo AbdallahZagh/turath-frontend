@@ -12,7 +12,7 @@ import {
   Ticket,
   Users,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
@@ -34,7 +34,9 @@ import { useCreateEventBooking, useValidateBookingCoupon } from "@/hooks/useBook
 import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import {
@@ -309,7 +311,7 @@ export function EventBookingCheckout({
           </div>
           <div className="flex justify-between gap-3">
             <dt className="text-prose-muted">{t("quantity")}</dt>
-            <dd className="text-prose font-medium">{quantity}</dd>
+            <dd className="text-prose font-medium">{formatCount(quantity, loc)}</dd>
           </div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">

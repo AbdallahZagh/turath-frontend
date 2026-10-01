@@ -12,7 +12,7 @@ import {
   Sparkles,
   Ticket,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { EventFeatureList } from "@/components/events/EventFeatureList";
@@ -30,9 +30,11 @@ import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useEvent } from "@/hooks/useEvents";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -132,7 +134,7 @@ export function EventDetail({
                 size="md"
                 label={t("ratingLabel", { rating: event.rating })}
               />
-              <span className="text-prose font-semibold">{event.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(event.rating, loc)}</span>
               <span className="text-prose-muted">
                 {t("reviewsCount", { count: event.reviewCount })}
               </span>

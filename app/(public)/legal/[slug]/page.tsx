@@ -1,11 +1,11 @@
 import { BadgeCheck, CalendarCheck, LockKeyhole, ScrollText, type LucideIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getTranslations } from "@/i18n/serverTranslations";
 
 const LEGAL_PAGES = {
   terms: {

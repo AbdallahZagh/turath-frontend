@@ -1,7 +1,6 @@
 "use client";
 
 import { CalendarDays, Hotel as HotelIcon, SlidersHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { HotelCard } from "@/components/hotels/HotelCard";
@@ -13,6 +12,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useHotels } from "@/hooks/useHotels";
+import { useTranslations } from "@/i18n/translations";
 import type { HotelFilters } from "@/lib/mock/hotels";
 
 type HotelCatalogProps = {

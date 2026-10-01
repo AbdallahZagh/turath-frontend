@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { CalendarCheck, Download } from "lucide-react";
 
 import { AdminBookingDetail } from "@/components/admin/AdminBookingDetail";
@@ -17,6 +17,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminBookings } from "@/hooks/useAdminBookings";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { formatSyp } from "@/lib/format/money";

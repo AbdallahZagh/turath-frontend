@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { EventCatalogScreen } from "@/components/events/EventCatalogScreen";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getTranslations } from "@/i18n/serverTranslations";
 import type { ListingSearchParams } from "@/lib/search/listingParams";
 
 export async function generateMetadata(): Promise<Metadata> { const t = await getTranslations("events.headers.index"); return { title: t("title"), description: t("description") }; }

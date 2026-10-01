@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
 import { Button } from "@/components/ui/Button";
@@ -14,8 +14,9 @@ import { Switch } from "@/components/ui/Switch";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminSettings, useSaveAdminSettings } from "@/hooks/useAdminSettings";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatSyp } from "@/lib/format/money";
-import { formatCount, parseTypedDigits } from "@/lib/format/number";
+import { parseNumberInput } from "@/lib/format/digits";
 import {
   CREDIT_CEILING_TIERS,
   FEATURED_SLOT_IDS,
@@ -41,12 +42,17 @@ type SettingsDraft = {
 };
 
 function parseScoreCutoff(value: string): number | undefined {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
-    return undefined;
-  }
-  return Math.round(parsed);
+  const parsed = parseNumberInput(value);
+  return parsed !== undefined && parsed <= 100 ? parsed : undefined;
 }
+
+function parseCeiling(value: string): number | undefined {
+  const parsed = parseNumberInput(value);
+  return parsed !== undefined && parsed > 0 ? parsed : undefined;
+}
+
+type CutoffField = "vipAtOrAbove" | "standardAtOrAbove" | "restrictedAtOrAbove";
+const CUTOFF_FIELDS: CutoffField[] = ["vipAtOrAbove", "standardAtOrAbove", "restrictedAtOrAbove"];
 
 function draftFromSettings(data: AdminSettings): SettingsDraft {
   return {
@@ -79,6 +85,8 @@ export function AdminSettings(): ReactNode {
   const saveSettings = useSaveAdminSettings();
 
   const [source, setSource] = useState(data);
+  /** Fields that failed the last save: shown as field errors, never saved as 0. */
+  const [invalid, setInvalid] = useState<ReadonlySet<string>>(new Set());
   const [draft, setDraft] = useState<SettingsDraft | null>(() =>
     data ? draftFromSettings(data) : null,
   );
@@ -114,13 +122,19 @@ export function AdminSettings(): ReactNode {
     }
 
     const creditCeilingsSyp = {} as Record<CreditCeilingTierId, number>;
+    const failed = new Set<string>();
     for (const tier of CREDIT_CEILING_TIERS) {
-      const amount = Number(draft.ceilings[tier]);
-      if (!Number.isFinite(amount) || amount <= 0) {
-        toast.error(t("saveFailed"), t("invalidCredit"));
-        return;
-      }
-      creditCeilingsSyp[tier] = Math.round(amount);
+      const amount = parseCeiling(draft.ceilings[tier]);
+      if (amount === undefined) failed.add(tier);
+      else creditCeilingsSyp[tier] = amount;
+    }
+    for (const field of CUTOFF_FIELDS) {
+      if (parseScoreCutoff(draft[field]) === undefined) failed.add(field);
+    }
+    setInvalid(failed);
+    if (failed.size > 0) {
+      toast.error(t("saveFailed"), t("invalidFields"));
+      return;
     }
 
     const vipAtOrAbove = parseScoreCutoff(draft.vipAtOrAbove);
@@ -176,21 +190,22 @@ export function AdminSettings(): ReactNode {
       align: "end",
       cell: (row) => {
         const raw = draft?.ceilings[row.tier] ?? "";
-        const amount = Number(raw);
+        const amount = parseCeiling(raw);
         return (
           <div className="ms-auto flex w-56 flex-col items-end gap-1">
             <Input
               variant="glass"
               size="sm"
-              type="number"
-              min={1}
-              step={1}
-              inputMode="numeric"
+              amount
               value={raw}
               onChange={(event) => setCeiling(row.tier, event.target.value)}
               label={t("credit.columns.ceiling")}
+              aria-invalid={invalid.has(row.tier) || undefined}
+              className="w-full"
             />
-            {Number.isFinite(amount) && amount > 0 ? (
+            {invalid.has(row.tier) ? (
+              <span className="text-destructive text-end text-xs">{tUi("invalidAmount")}</span>
+            ) : amount !== undefined ? (
               <span className="text-prose-muted text-end text-xs">{formatSyp(amount, loc)}</span>
             ) : null}
           </div>
@@ -246,21 +261,23 @@ export function AdminSettings(): ReactNode {
         <div className="flex flex-col gap-3 sm:hidden">
           {CREDIT_CEILING_TIERS.map((tier) => {
             const raw = draft.ceilings[tier];
-            const amount = Number(raw);
+            const amount = parseCeiling(raw);
             return (
               <GlassPanel key={tier} className="flex-none gap-2 p-4">
                 <span className="text-prose text-start font-medium">{t(`tiers.${tier}`)}</span>
                 <Input
                   variant="glass"
                   size="sm"
-                  type="text"
-                  inputMode="numeric"
-                  value={raw && Number.isFinite(amount) ? formatCount(amount, loc) : raw}
-                  onChange={(event) => setCeiling(tier, parseTypedDigits(event.target.value))}
+                  amount
+                  value={raw}
+                  onChange={(event) => setCeiling(tier, event.target.value)}
                   label={`${t(`tiers.${tier}`)} · ${t("credit.columns.ceiling")}`}
+                  aria-invalid={invalid.has(tier) || undefined}
                   className="w-full"
                 />
-                {Number.isFinite(amount) && amount > 0 ? (
+                {invalid.has(tier) ? (
+                  <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
+                ) : amount !== undefined ? (
                   <span className="text-prose-muted text-xs whitespace-nowrap">
                     {formatSyp(amount, loc)}
                   </span>
@@ -296,10 +313,6 @@ export function AdminSettings(): ReactNode {
               variant="glass"
               size="sm"
               type="number"
-              min={0}
-              max={100}
-              step={1}
-              inputMode="numeric"
               value={draft.vipAtOrAbove}
               onChange={(event) =>
                 setDraft((current) =>
@@ -307,8 +320,12 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.vipAtOrAbove")}
+              aria-invalid={invalid.has("vipAtOrAbove") || undefined}
               className="w-28"
             />
+            {invalid.has("vipAtOrAbove") ? (
+              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
+            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
@@ -318,10 +335,6 @@ export function AdminSettings(): ReactNode {
               variant="glass"
               size="sm"
               type="number"
-              min={0}
-              max={100}
-              step={1}
-              inputMode="numeric"
               value={draft.standardAtOrAbove}
               onChange={(event) =>
                 setDraft((current) =>
@@ -331,8 +344,12 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.standardAtOrAbove")}
+              aria-invalid={invalid.has("standardAtOrAbove") || undefined}
               className="w-28"
             />
+            {invalid.has("standardAtOrAbove") ? (
+              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
+            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
@@ -342,10 +359,6 @@ export function AdminSettings(): ReactNode {
               variant="glass"
               size="sm"
               type="number"
-              min={0}
-              max={100}
-              step={1}
-              inputMode="numeric"
               value={draft.restrictedAtOrAbove}
               onChange={(event) =>
                 setDraft((current) =>
@@ -355,8 +368,12 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.restrictedAtOrAbove")}
+              aria-invalid={invalid.has("restrictedAtOrAbove") || undefined}
               className="w-28"
             />
+            {invalid.has("restrictedAtOrAbove") ? (
+              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
+            ) : null}
           </label>
         </div>
         <p className="text-prose-muted text-xs">{t("reliability.tierHint")}</p>

@@ -15,7 +15,7 @@ import {
   Upload,
 } from "lucide-react";
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRef, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
@@ -28,6 +28,8 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import type { ProviderProfile } from "@/lib/mock/providerProfile";
 import {
   PROVIDER_PROFILE_AMENITIES,
@@ -310,7 +312,7 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               )}
             />
             <FormField label={t("fields.phone")} error={form.formState.errors.phone}>
-              <Input variant="glass" dir="ltr" {...form.register("phone")} />
+              <Input variant="glass" dir="ltr" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
             </FormField>
             <FormField label={t("fields.addressEn")} error={form.formState.errors.addressEn}>
               <Input variant="glass" dir="ltr" {...form.register("addressEn")} />

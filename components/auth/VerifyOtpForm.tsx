@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -13,6 +12,7 @@ import { OtpInput } from "@/components/auth/OtpInput";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { useSendLoginCode, useVerifyOtp } from "@/hooks/useAuth";
+import { useTranslations } from "@/i18n/translations";
 import { postSignInPath } from "@/lib/auth/home";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { mockRoleForSignIn } from "@/lib/auth/session";
@@ -80,6 +80,8 @@ export function VerifyOtpForm(): ReactNode {
           ? "TOURIST"
           : mockRoleForSignIn(pending.channel, pending.destination);
       completeSession(role);
+      // The "Code sent" toast has done its job once the code is accepted.
+      toast.dismissAll();
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
       router.replace(postSignInPath(role, pending.returnTo));
     } catch {

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { subYears } from "date-fns";
 import { motion } from "framer-motion";
 import { Info } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
@@ -27,6 +27,7 @@ import {
   useSendLoginCode,
 } from "@/hooks/useAuth";
 import { isLocale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
 import { toIsoDate } from "@/lib/format/datetime";

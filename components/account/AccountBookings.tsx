@@ -1,7 +1,7 @@
 "use client";
 
 import { Bus, CalendarDays, CalendarHeart, MessageSquareQuote, TicketCheck, UserRoundSearch, UtensilsCrossed } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -20,6 +20,7 @@ import { useRestaurants } from "@/hooks/useRestaurants";
 import { useTrips } from "@/hooks/useTrips";
 import { USER_PATHS } from "@/config/userRoutes";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBooking } from "@/lib/mock/bookings";

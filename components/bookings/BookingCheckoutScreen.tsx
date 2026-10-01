@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { EventBookingCheckout } from "@/components/bookings/EventBookingCheckout";
@@ -10,6 +9,7 @@ import { RestaurantBookingCheckout } from "@/components/bookings/RestaurantBooki
 import { TripBookingCheckout } from "@/components/bookings/TripBookingCheckout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CHECKOUT_PAGE_HEADERS } from "@/config/pageHeaders";
+import { getTranslations } from "@/i18n/serverTranslations";
 import {
   BOOKING_SEARCH_KEYS,
   sanitizeBookingSearch,

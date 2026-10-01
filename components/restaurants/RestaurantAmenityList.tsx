@@ -1,9 +1,9 @@
 "use client";
 
 import { Accessibility, Snowflake, Wifi, Zap, type LucideIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import type { RestaurantAmenityId } from "@/lib/mock/restaurants";
 
 const AMENITY_ICONS: Record<RestaurantAmenityId, LucideIcon> = { generator: Zap, wifi: Wifi, ac: Snowflake, accessible: Accessibility };

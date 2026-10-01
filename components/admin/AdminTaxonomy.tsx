@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { ChevronDown, ChevronUp, Pencil, Tags, Trash2 } from "lucide-react";
 
 import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
@@ -20,6 +20,7 @@ import {
 import { usePageHeaderAction } from "@/hooks/usePageHeaderAction";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { localizedName } from "@/lib/i18n/localized";
 import {
   TAXONOMY_KINDS,

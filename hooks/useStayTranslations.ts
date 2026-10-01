@@ -1,6 +1,5 @@
-import { useTranslations } from "next-intl";
-
 import { useProviderProfile } from "@/hooks/useProviderProfile";
+import { useTranslations } from "@/i18n/translations";
 
 /** Hotel businesses say نزيل in Arabic; every other business says ضيف (docs/PAGES.md, people words). */
 export type ProviderStay = "hotel" | "other";

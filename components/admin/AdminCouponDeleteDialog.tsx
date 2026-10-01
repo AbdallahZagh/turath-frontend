@@ -1,12 +1,13 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useDeleteAdminCoupon } from "@/hooks/useAdminCoupons";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminCoupon } from "@/lib/mock/adminCoupons";
 import { toast } from "@/store/toastStore";

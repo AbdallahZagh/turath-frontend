@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { useTranslations } from "next-intl";
 import { Scale } from "lucide-react";
 
 import { AdminBookingDetail } from "@/components/admin/AdminBookingDetail";
@@ -13,6 +12,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminDispute, useResolveAdminDispute } from "@/hooks/useAdminDisputes";
+import { useTranslations } from "@/i18n/translations";
 import type { DisputeResolution } from "@/lib/mock/adminDisputes";
 import { toast } from "@/store/toastStore";
 

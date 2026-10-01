@@ -1,7 +1,6 @@
 "use client";
 
 import { RotateCcw, SlidersHorizontal, UserRoundSearch } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { GuideCard } from "@/components/guides/GuideCard";
@@ -12,6 +11,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useGuides } from "@/hooks/useGuides";
+import { useTranslations } from "@/i18n/translations";
 import type {
   GuideDurationId,
   GuideFilters,

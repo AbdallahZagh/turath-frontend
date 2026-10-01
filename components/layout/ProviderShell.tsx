@@ -1,7 +1,6 @@
 "use client";
 
 import { Building2, Menu, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
@@ -17,6 +16,7 @@ import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
 import { useProviderStay } from "@/hooks/useStayTranslations";
+import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 

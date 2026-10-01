@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Download, MessageSquareQuote } from "lucide-react";
 
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
@@ -19,6 +19,7 @@ import {
 } from "@/hooks/useAdminReviews";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";

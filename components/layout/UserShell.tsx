@@ -1,7 +1,6 @@
 "use client";
 
 import { Coins, Menu, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
@@ -16,6 +15,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { USER_PATHS } from "@/config/userRoutes";
 import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";

@@ -1,11 +1,11 @@
 import { House, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useTranslations } from "@/i18n/translations";
 
 type NotFoundPanelProps = {
   /** Where "Back to home" goes: the public home, or the portal home inside a portal shell. */

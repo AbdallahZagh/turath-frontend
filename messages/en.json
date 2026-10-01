@@ -540,7 +540,8 @@
     "ratingLabel": "{value} out of 5 from {count, plural, one {# review} other {# reviews}}",
     "ratingCount": "{count, plural, one {# review} other {# reviews}}",
     "ratingOutOf": "{value} out of 5",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "invalidAmount": "Enter a valid amount"
   },
   "admin": {
     "shell": {
@@ -1468,7 +1469,8 @@
       "savedBody": "Credit limits, reliability cutoffs, and switches are updated for this session.",
       "saveFailed": "Could not save settings",
       "saveFailedBody": "Check the numbers and try again.",
-      "invalidCredit": "Enter a positive credit ceiling for every tier.",
+      "invalidCutoff": "Enter a whole number from 0 to 100",
+      "invalidFields": "Fix the highlighted fields and save again.",
       "invalidReliability": "Restricted must be below Standard, Standard below VIP, and all between 0 and 100.",
       "credit": {
         "title": "Credit limits",

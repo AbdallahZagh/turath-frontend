@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Clock3 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 
 export function ProviderPendingView(): ReactNode {

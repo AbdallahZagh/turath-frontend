@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Quote, ShieldCheck, Star } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 import type { Testimonial } from "@/lib/mock/landing";
 

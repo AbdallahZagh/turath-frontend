@@ -14,13 +14,13 @@ import {
   X,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { USER_PATHS } from "@/config/userRoutes";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 type UserSidebarProps = {

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { RestaurantCatalogScreen } from "@/components/restaurants/RestaurantCatalogScreen";
+import { getTranslations } from "@/i18n/serverTranslations";
 import type { ListingSearchParams } from "@/lib/search/listingParams";
 
 export async function generateMetadata(): Promise<Metadata> {

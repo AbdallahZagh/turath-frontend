@@ -1,7 +1,7 @@
 "use client";
 
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import {
@@ -20,6 +20,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useDeleteProviderInventory, useProviderInventory } from "@/hooks/useProviderInventory";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";

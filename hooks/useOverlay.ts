@@ -23,6 +23,13 @@ export function useOverlay({
   onPanelKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void;
 } {
   const triggerRef = useRef<HTMLElement | null>(null);
+  // Latest onClose without re-running the open effect: callers often pass a new function on
+  // every render, and re-running would move focus back to the first control on each keystroke.
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) {
@@ -40,7 +47,7 @@ export function useOverlay({
 
     function onKeyDown(event: KeyboardEvent): void {
       if (event.key === "Escape") {
-        onClose();
+        onCloseRef.current();
       }
     }
 
@@ -51,7 +58,7 @@ export function useOverlay({
       document.removeEventListener("keydown", onKeyDown);
       triggerRef.current?.focus();
     };
-  }, [open, onClose, panelRef]);
+  }, [open, panelRef]);
 
   function onPanelKeyDown(event: ReactKeyboardEvent<HTMLElement>): void {
     if (event.key !== "Tab" || !panelRef.current) {

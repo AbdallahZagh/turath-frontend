@@ -30,12 +30,3 @@ export function formatReliabilityScore(score: number, locale: string): string {
     maximumFractionDigits: 0,
   }).format(clamped);
 }
-
-
-/** Digits only from a typed amount; Arabic-Indic digits count, separators and spaces are dropped. */
-export function parseTypedDigits(value: string): string {
-  return value
-    .replace(/[\u0660-\u0669]/g, (digit) => String(digit.charCodeAt(0) - 0x0660))
-    .replace(/[\u06F0-\u06F9]/g, (digit) => String(digit.charCodeAt(0) - 0x06f0))
-    .replace(/\D/g, "");
-}

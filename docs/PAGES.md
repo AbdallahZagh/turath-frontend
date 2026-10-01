@@ -27,6 +27,12 @@ These are settled. Code, copy, and later phases follow them.
 - **Booking status names:** one set everywhere, matching the SRS: `PENDING_CONFIRMATION`, `CONFIRMED`, `CHECKED_IN`, `CANCELLED`, `NO_SHOW` (labels “Pending confirmation / Confirmed / Checked in / Cancelled / No-show”). **Additions to the SRS** (kept by product decision, Julie, Oct 2026): `COMPLETED` (“Completed”) — the booking happened and the guest checked in, which makes a review possible; `DISPUTED` (“Disputed”) — the guest challenged a no-show or a charge; only an admin can resolve it. Admin rows use both (`completed`, `disputed` in the mock data).
 - **Derived, not stored:** the user reliability tier comes from the score and the admin cutoffs in Settings; the business ledger warning and the admin `/admin/accounts` credit used % and standing come from outstanding commission vs the credit ceiling through one helper (`creditUsedRatio` / `creditStandingFor` in `lib/mock/adminLedger.ts`: warning from 75%, 48h settlement from 100%); only a manual suspension is stored. Admin standing badges use the business wording and colours.
 - **Unknown URLs:** `app/not-found.tsx` shows the branded `NotFoundPanel` (logo, title, one sentence, Back to home, Search) inside the public header and footer; `app/(public)/not-found.tsx` renders the same panel inside the public group layout so a route renders exactly one shell. Every 404 tab reads “Page not found | Turath”. `/user/…`, `/provider/…`, and `/admin/…` have a catch-all `[...missing]` page plus a segment `not-found.tsx`, so the same panel renders inside that portal shell and Back to home goes to the portal home. No `error.tsx` or `loading.tsx` yet.
+- **Digits (one rule, `lib/format/digits.ts`):**
+  - **Display:** Arabic shows Arabic-Indic digits everywhere people read a number (prices, dates, times, ratings, counts, percentages, admin tables, breadcrumbs, badges, table cells, date picker days, months and years), with ٬ for grouping and ٫ for decimals; English shows Latin digits. Translated copy goes through the app's `useTranslations` / `getTranslations` (`i18n/translations.ts`, `i18n/serverTranslations.ts`), which convert digits in Arabic output; numbers and dates rendered outside copy use `formatCount` / `formatRating` / `formatPercent` / `formatSyp` (`lib/format/number.ts`, `lib/format/money.ts`) and `formatDisplayDate` / `formatMediumDate` / `formatPickerDate` (`lib/format/datetime.ts`). The USD part next to SYP stays in its own isolate (`<bdi>` equivalent), so its order never flips when the line wraps.
+  - **Input:** every numeric field accepts Arabic ٠–٩, Persian ۰–۹ and Latin 0–9 and reads them with the one normalizer (`parseNumberInput`): grouping (٬ , ، spaces) is dropped, ٫ and . are the decimal point, and decimals are accepted only where the field allows them. Blank or junk (e.g. `١٢abc`) is a field error (“Enter a valid amount” / «أدخل مبلغاً صحيحاً»), never a silent 0. What the person types is not rewritten while they type. Amount fields (credit limits, entry fee) show grouped digits when blurred and plain digits when focused, at the same width.
+  - **OTP:** always Latin, `dir="ltr"`, cursor at the left, ungrouped, `inputmode="numeric"`; typed or pasted Arabic/Persian digits (e.g. ١٢٣٤٥٦) are normalized to Latin and sign in.
+  - **Phone:** always Latin, `dir="ltr"`, cursor at the left, ungrouped, `inputmode="tel"` (so + is on the keypad for +963). Every keystroke runs through the normalizer (`normalizePhoneInput`): digits become Latin, spaces are removed, and a leading + is kept.
+  - **Stored, API and links:** saved values, mock/API payloads and URL params are always Latin. Arabic or Persian digits typed into the address (dates, people) are read as Latin, applied, and the address bar is rewritten to Latin (`lib/search/bookingSearch.ts`, `components/layout/LatinUrlDigits.tsx`).
 
 ---
 
@@ -755,3 +761,58 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 7. Admin license review → heritage catalog → finance (including `/admin/discount-codes`)  
 
 Wire real APIs and middleware only after the backend exists. Keep this file updated if a route is added or dropped.
+
+---
+
+## Loading, error and empty states (spec only, build with the backend)
+
+### General rules
+- States render inside the page layout. The header, breadcrumbs and PageHeader stay visible, and only the content area changes.
+- Every state panel uses the existing glass panel, with the same radius, blur and border as the 404.
+- Never lose what the user typed. On any error, the form keeps its values.
+- Never show error codes, stack traces or raw API messages.
+- Announce changes with `aria-live="polite"`. After a failed submit, move focus to the first field with an error.
+- EN and AR copy must match in meaning. Arabic uses the digit rule in §0.
+
+### Loading
+- **When:** a data request takes longer than 300ms. Show nothing before that, to avoid a flash.
+- **Page or section:** skeletons shaped like the real content (cards, table rows, gallery), with a soft seafoam shimmer. With `prefers-reduced-motion`, show static blocks with no shimmer.
+- **Buttons:** a small spinner goes inside the button, and the button is disabled with its label unchanged. No full-page spinners.
+- **Screen reader text:** "Loading…" / «جارٍ التحميل…»
+
+### Empty
+- **Layout:** a centered glass panel with an icon, a title, one sentence and one primary action.
+- **Copy:**
+  - Search, no results:
+    - EN: "No results". "Try changing the dates or clearing some filters." Action: "Clear filters".
+    - AR: «لا توجد نتائج». «جرّب تغيير التواريخ أو إزالة بعض الفلاتر.» Action: «مسح الفلاتر».
+  - User bookings, none yet:
+    - EN: "No bookings yet". "Explore hotels, heritage sites and trips." Action: "Explore".
+    - AR: «لا توجد حجوزات بعد». «استكشف الفنادق والمواقع التراثية والرحلات.» Action: «استكشف».
+  - Business bookings, none in the chosen range:
+    - EN: "No bookings in this period". "Try a different date range."
+    - AR: «لا توجد حجوزات في هذه الفترة». «جرّب نطاق تاريخ مختلفاً.»
+  - Reviews, none yet:
+    - EN: "No reviews yet".
+    - AR: «لا توجد تقييمات بعد».
+  - Admin table, no rows matching the filters:
+    - EN: "No matching records".
+    - AR: «لا توجد سجلات مطابقة».
+
+### Error
+- **Field:** the message goes under the field, with an icon and the error colour token, linked with `aria-describedby`. Examples: "Enter a valid amount" / «أدخل مبلغاً صحيحاً», "Enter the 6-digit code" / «أدخل الرمز المكوّن من ٦ أرقام».
+- **Section failed to load:** the glass panel replaces that section only.
+  - EN: "Couldn't load this". "Check your connection and try again." Action: "Try again".
+  - AR: «تعذّر تحميل البيانات». «تحقّق من اتصالك وحاول مرة أخرى.» Action: «إعادة المحاولة».
+- **Save or action failed:** show a toast and keep the form open with its values.
+  - EN: "Couldn't save. Try again."
+  - AR: «تعذّر الحفظ. حاول مرة أخرى.»
+- **Booking slot gone** (the date, room or ticket was taken during checkout): show an inline banner at the top of checkout, and return focus to the picker.
+  - EN: "This is no longer available. Please choose another option."
+  - AR: «لم يعد هذا الخيار متاحاً. يُرجى اختيار خيار آخر.»
+- **Offline:** show a slim banner under the header that hides itself once the connection is back.
+  - EN: "You're offline"
+  - AR: «أنت غير متصل بالإنترنت»
+- **Whole page failed:** use the 404 layout with its logo, title, one sentence and two buttons.
+  - EN: "Something went wrong". "We're on it. Please try again shortly." Buttons: "Try again" and "Back to home".
+  - AR: «حدث خطأ غير متوقع». «نعمل على إصلاحه. حاول مرة أخرى بعد قليل.» Buttons: «إعادة المحاولة» and «العودة للرئيسية».

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { parseNumberInput } from "@/lib/format/digits";
 import type { LandingPillarId } from "@/lib/mock/landing";
 
 const emailSchema = z
@@ -148,8 +149,8 @@ function coordinateSchema(requiredKey: string, invalidKey: string, min: number, 
     .trim()
     .min(1, requiredKey)
     .refine((value) => {
-      const parsed = Number(value);
-      return Number.isFinite(parsed) && parsed >= min && parsed <= max;
+      const parsed = parseNumberInput(value, { decimal: true, negative: true });
+      return parsed !== undefined && parsed >= min && parsed <= max;
     }, invalidKey);
 }
 

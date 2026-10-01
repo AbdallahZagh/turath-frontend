@@ -8,6 +8,7 @@ import {
 } from "date-fns";
 
 import type { Locale } from "@/i18n/config";
+import { toDisplayDigits } from "@/lib/format/digits";
 
 export type HourCycle = "12" | "24";
 
@@ -31,12 +32,20 @@ export function toIsoDate(date: Date): string {
   return format(date, "yyyy-MM-dd");
 }
 
+/**
+ * Any date shown to people: date-fns pattern in the locale, with Arabic-Indic digits in Arabic
+ * (date-fns `ar` prints Latin digits). Stored and URL dates use `toIsoDate` instead.
+ */
+export function formatDisplayDate(date: Date, pattern: string, locale: Locale): string {
+  return toDisplayDigits(format(date, pattern, { locale: dateFnsLocale(locale) }), locale);
+}
+
 export function formatPickerDate(iso: string, locale: Locale): string {
   const date = parseIsoDate(iso);
   if (!date) {
     return "";
   }
-  return format(date, "PPP", { locale: dateFnsLocale(locale) });
+  return formatDisplayDate(date, "PPP", locale);
 }
 
 export function formatMediumDate(iso: string, locale: Locale): string {
@@ -44,7 +53,7 @@ export function formatMediumDate(iso: string, locale: Locale): string {
   if (!date) {
     return "";
   }
-  return format(date, "PP", { locale: dateFnsLocale(locale) });
+  return formatDisplayDate(date, "PP", locale);
 }
 
 export function parseHHmm(value: string): { hours: number; minutes: number } | undefined {
@@ -70,5 +79,5 @@ export function formatPickerTime(
   }
   const date = new Date(2000, 0, 1, parsed.hours, parsed.minutes);
   const pattern = hourCycle === "12" ? "h:mm a" : "HH:mm";
-  return format(date, pattern, { locale: dateFnsLocale(locale) });
+  return formatDisplayDate(date, pattern, locale);
 }

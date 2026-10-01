@@ -21,7 +21,7 @@ import { useTrips } from "@/hooks/useTrips";
 import { USER_PATHS } from "@/config/userRoutes";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime, toIsoDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBooking } from "@/lib/mock/bookings";
 
@@ -94,7 +94,7 @@ export function AccountBookings(): ReactNode {
                   <span className="bg-primary/12 text-primary grid size-12 shrink-0 place-items-center rounded-2xl"><ProviderIcon className="size-5" aria-hidden /></span>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2"><h2 className="font-heading text-prose text-xl font-semibold">{provider ? localizedName(provider.name, loc) : booking.reference}</h2><Badge variant="outline">{tStatus(booking.status)}</Badge></div>
-                    <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${booking.timeSlot}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : booking.type === "event" ? ` · ${t("tickets", { count: booking.quantity })}` : ` · ${t("guideHours", { count: booking.hours })}`}</p>
+                    <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(booking), loc)}{booking.type === "hotel" ? ` – ${formatMediumDate(booking.checkOut, loc)}` : booking.type === "restaurant" ? ` · ${formatPickerTime(booking.timeSlot, loc, "24")}` : booking.type === "trip" ? ` · ${t("travelers", { count: booking.seats })}` : booking.type === "event" ? ` · ${t("tickets", { count: booking.quantity })}` : ` · ${t("guideHours", { count: booking.hours })}`}</p>
                     <p className="text-prose mt-2 text-sm font-semibold">{formatMoney(booking.cashDueSyp)}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">

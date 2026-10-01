@@ -29,6 +29,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
+import { formatPickerTime } from "@/lib/format/datetime";
 import { normalizePhoneInput } from "@/lib/format/digits";
 import type { ProviderProfile } from "@/lib/mock/providerProfile";
 import {
@@ -121,7 +122,7 @@ function ProfilePreview({ values, locale }: { values: ProviderProfileValues; loc
           </div>
           <div className="flex items-center gap-2">
             <Clock3 className="text-primary size-4 shrink-0" aria-hidden />
-            <span className="text-prose">{values.opensAt} – {values.closesAt}</span>
+            <span className="text-prose">{formatPickerTime(values.opensAt, locale, "24")} – {formatPickerTime(values.closesAt, locale, "24")}</span>
           </div>
         </dl>
       </div>

@@ -248,6 +248,7 @@
       "navHowItWorks": "How it works",
       "navLabel": "Explore Turath",
       "openMenu": "Open menu",
+      "closeMenu": "Close menu",
       "languageMenu": "Language",
       "appearanceMenu": "Appearance",
       "currencyLabel": "Currency",
@@ -890,6 +891,7 @@
         "creditCeiling": "Credit ceiling",
         "creditHint": "Leave empty to use the Settings default for this tier.",
         "creditDefault": "Tier default {amount}",
+        "creditUsingDefault": "Using the tier default ({amount})",
         "tier": "Tier",
         "saveFinance": "Save",
         "financeSaved": "Finance saved",
@@ -1011,6 +1013,7 @@
     "ledger": {
       "caption": "Accounts",
       "searchPlaceholder": "Search businesses",
+      "watchTooltip": "Over 75% of credit used",
       "allStandings": "All standings",
       "allCategories": "All categories",
       "categoryLabel": "Category",
@@ -1018,7 +1021,7 @@
       "emptyFiltered": "No accounts match these filters.",
       "standing": {
         "healthy": "Good standing",
-        "watch": "Warning 75%",
+        "watch": "Warning",
         "grace": "48h settlement",
         "suspended": "Suspended"
       },
@@ -3084,7 +3087,7 @@
       "form": {
         "addTitle": "Add inventory", "editTitle": "Edit inventory", "save": "Save changes", "saving": "Saving…", "cancel": "Cancel", "invalid": "Review the required information.",
         "nameEn": "English name", "nameAr": "Arabic name", "titleEn": "English title", "titleAr": "Arabic title",
-        "occupancy": "Maximum guests", "quantity": "Available quantity", "priceSyp": "Price in SYP", "amenities": "Amenities",
+        "occupancy": "Maximum guests", "quantity": "Available quantity", "priceSyp": "Price in SYP", "pricePerNight": "Price per night (SYP)", "amenities": "Amenities",
         "amenity": { "generator": "Generator", "wifi": "Wi-Fi", "ac": "Air conditioning" },
         "tableLabel": "Table label", "capacity": "Capacity", "zone": "Seating zone",
         "zoneOptions": { "indoor": "Indoor", "terrace": "Terrace", "vip": "VIP", "smoking": "Smoking" },
@@ -3201,6 +3204,8 @@
       },
       "credit": {
         "eyebrow": "Account standing",
+        "warningBadge": "Warning",
+        "warningTooltip": "Over 75% of credit used",
         "of": "of a {amount} credit ceiling",
         "tier": "Account tier",
         "cadence": "Statement schedule",

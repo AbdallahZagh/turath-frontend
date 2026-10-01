@@ -6,8 +6,7 @@ import { Banknote, Building2, RotateCcw, ShieldOff } from "lucide-react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
-import { Badge } from "@/components/ui/Badge";
+import { LedgerStandingBadge } from "@/components/admin/LedgerStandingBadge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
@@ -59,9 +58,7 @@ export function AdminLedgerAccount({
               <h2 className="font-heading text-prose text-2xl font-semibold tracking-tight">
                 {displayName}
               </h2>
-              <Badge {...ledgerStandingBadgeProps(ledger.standing)}>
-                {t(`standing.${ledger.standing}`)}
-              </Badge>
+              <LedgerStandingBadge standing={ledger.standing} />
             </div>
             <p className="text-prose-muted text-sm">{localizedName(ledger.provider, other)}</p>
             <AdminNamedRating

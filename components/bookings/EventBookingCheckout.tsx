@@ -35,7 +35,7 @@ import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -132,7 +132,7 @@ export function EventBookingCheckout({
   const sessions: SelectOption[] = availableEvent.sessions.map((item) => ({
     value: item.id,
     label: formatMediumDate(item.date, loc),
-    hint: `${item.startsAt}–${item.endsAt}`,
+    hint: `${formatPickerTime(item.startsAt, loc, "24")}–${formatPickerTime(item.endsAt, loc, "24")}`,
   }));
   const tiers: SelectOption[] = (session?.tiers ?? []).map((item) => ({
     value: item.id,
@@ -301,7 +301,7 @@ export function EventBookingCheckout({
             <dt className="text-prose-muted">{t("session")}</dt>
             <dd className="text-prose text-end font-medium">
               {session
-                ? `${formatMediumDate(session.date, loc)} · ${session.startsAt}`
+                ? `${formatMediumDate(session.date, loc)} · ${formatPickerTime(session.startsAt, loc, "24")}`
                 : t("notSelected")}
             </dd>
           </div>

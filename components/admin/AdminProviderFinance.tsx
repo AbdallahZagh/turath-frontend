@@ -4,8 +4,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { useLocale } from "next-intl";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
-import { ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
-import { Badge } from "@/components/ui/Badge";
+import { LedgerStandingBadge } from "@/components/admin/LedgerStandingBadge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
@@ -15,10 +14,11 @@ import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { parseNumberInput } from "@/lib/format/digits";
-import { formatSyp } from "@/lib/format/money";
-import { formatPercent } from "@/lib/format/number";
+import { formatSyp, formatSypLabel } from "@/lib/format/money";
+import { formatCount, formatPercent } from "@/lib/format/number";
 import type { AdminLedgerRow } from "@/lib/mock/adminLedger";
 import type { AdminProvider } from "@/lib/mock/adminProviders";
+import { parseCreditCeilingInput } from "@/lib/validation/creditCeiling";
 import { toast } from "@/store/toastStore";
 
 type AdminProviderFinanceProps = {
@@ -81,9 +81,7 @@ export function AdminProviderFinance({
   function onSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const trimmedRate = commission.trim();
-    const trimmedCredit = credit.trim();
     let commissionOverride: number | null = null;
-    let creditOverrideSyp: number | null = null;
 
     if (trimmedRate !== "") {
       const parsed = parsePercent(trimmedRate);
@@ -94,16 +92,14 @@ export function AdminProviderFinance({
       commissionOverride = parsed;
     }
 
-    // Blank keeps the tier default (see creditHint); anything typed must be a clean amount.
-    if (trimmedCredit !== "") {
-      const amount = parseNumberInput(trimmedCredit);
-      if (amount === undefined || amount <= 0) {
-        setCreditInvalid(true);
-        toast.error(t("detail.financeInvalid"));
-        return;
-      }
-      creditOverrideSyp = amount;
+    // Blank removes the override, so the business uses its tier default.
+    const ceiling = parseCreditCeilingInput(credit);
+    if (ceiling.kind === "invalid") {
+      setCreditInvalid(true);
+      toast.error(t("detail.financeInvalid"));
+      return;
     }
+    const creditOverrideSyp = ceiling.kind === "amount" ? ceiling.amountSyp : null;
     setCreditInvalid(false);
 
     saveFinance.mutate(
@@ -159,11 +155,13 @@ export function AdminProviderFinance({
               value={credit}
               onChange={(event) => setCredit(event.target.value)}
               label={t("detail.creditCeiling")}
+              placeholder={formatCount(tierCeilingSyp, loc)}
               error={creditInvalid ? tUi("invalidAmount") : undefined}
             />
             <span className="text-prose-muted text-xs">
-              {t("detail.creditHint")}{" "}
-              {t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}
+              {credit.trim() === ""
+                ? t("detail.creditUsingDefault", { amount: formatSypLabel(tierCeilingSyp, loc) })
+                : `${t("detail.creditHint")} ${t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}`}
             </span>
             <span className="text-prose text-xs tabular-nums">{formatSyp(effectiveCeiling, loc)}</span>
           </label>
@@ -189,9 +187,7 @@ export function AdminProviderFinance({
             <div className="flex items-center justify-between gap-3">
               <dt className="text-prose-muted">{tLedger("columns.standing")}</dt>
               <dd>
-                <Badge {...ledgerStandingBadgeProps(ledger.standing)}>
-                  {tLedger(`standing.${ledger.standing}`)}
-                </Badge>
+                <LedgerStandingBadge standing={ledger.standing} />
               </dd>
             </div>
             <div className="flex items-center justify-between gap-3">

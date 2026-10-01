@@ -56,6 +56,15 @@ export function formatMediumDate(iso: string, locale: Locale): string {
   return formatDisplayDate(date, "PP", locale);
 }
 
+/** Compact day, month and year for lists such as review dates: "18 Aug 2026" / "١٨ أغسطس ٢٠٢٦". */
+export function formatShortDate(iso: string, locale: Locale): string {
+  const date = parseIsoDate(iso);
+  if (!date) {
+    return "";
+  }
+  return formatDisplayDate(date, "d MMM yyyy", locale);
+}
+
 export function parseHHmm(value: string): { hours: number; minutes: number } | undefined {
   const match = /^([01]?\d|2[0-3]):([0-5]\d)$/.exec(value);
   if (!match) {

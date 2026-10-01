@@ -25,7 +25,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -69,7 +69,7 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
   if (!trip) return <EmptyState icon={Compass} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href={paths.catalog("trips")} variant="outline">{t("backToTrips")}</Button>} />;
   const availableTrip = trip;
   const departures: SelectOption[] = availableTrip.departures.map((item) => ({ value: item.date, label: formatMediumDate(item.date, loc), hint: t("seatsAvailable", { count: item.seatsLeft }), disabled: item.seatsLeft < seats }));
-  const pickups: SelectOption[] = availableTrip.pickupPoints.map((item) => ({ value: item.id, label: localizedName(item.name, loc), hint: item.time }));
+  const pickups: SelectOption[] = availableTrip.pickupPoints.map((item) => ({ value: item.id, label: localizedName(item.name, loc), hint: formatPickerTime(item.time, loc, "24") }));
 
   async function applyCoupon(): Promise<void> {
     setCoupon(await couponMutation.mutateAsync({

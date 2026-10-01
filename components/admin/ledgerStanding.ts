@@ -1,22 +1,4 @@
-import type { BadgeVariant } from "@/components/ui/Badge";
-import {
-  CREDIT_GRACE_RATIO,
-  CREDIT_WATCH_RATIO,
-  type LedgerStanding,
-} from "@/lib/mock/adminLedger";
-
-export function ledgerStandingBadgeProps(standing: LedgerStanding): {
-  variant: BadgeVariant;
-  className?: string;
-} {
-  if (standing === "healthy") {
-    return { variant: "solid" };
-  }
-  if (standing === "watch") {
-    return { variant: "glass", className: "text-accent" };
-  }
-  return { variant: "outline", className: "text-destructive border-destructive" };
-}
+import { CREDIT_GRACE_RATIO, CREDIT_WATCH_RATIO } from "@/lib/mock/adminLedger";
 
 export function creditUsedClass(ratio: number): string {
   if (ratio >= CREDIT_GRACE_RATIO) {

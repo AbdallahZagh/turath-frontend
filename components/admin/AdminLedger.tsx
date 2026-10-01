@@ -7,8 +7,8 @@ import { BookOpen, Download } from "lucide-react";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { creditUsedClass, ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
-import { Badge } from "@/components/ui/Badge";
+import { LedgerStandingBadge } from "@/components/admin/LedgerStandingBadge";
+import { creditUsedClass } from "@/components/admin/ledgerStanding";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -156,7 +156,7 @@ export function AdminLedger(): ReactNode {
       id: "standing",
       header: t("columns.standing"),
       cell: (row) => (
-        <Badge {...ledgerStandingBadgeProps(row.standing)}>{t(`standing.${row.standing}`)}</Badge>
+        <LedgerStandingBadge standing={row.standing} />
       ),
     },
   ];

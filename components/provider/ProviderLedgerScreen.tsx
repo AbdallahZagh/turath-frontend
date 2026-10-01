@@ -276,9 +276,16 @@ export function ProviderLedgerScreen(): ReactNode {
               <AlertTriangle className={cn("size-5", standing.icon)} aria-hidden />
             </span>
             <div>
-              <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">
-                {t("credit.eyebrow")}
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">
+                  {t("credit.eyebrow")}
+                </p>
+                {ledger.standing === "warning" ? (
+                  <Badge variant="warning" tooltip={t("credit.warningTooltip")}>
+                    {t("credit.warningBadge")}
+                  </Badge>
+                ) : null}
+              </div>
               <h2 className="font-heading text-prose mt-1 text-xl font-semibold">
                 {t(`credit.state.${ledger.standing}.title`)}
               </h2>

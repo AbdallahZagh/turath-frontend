@@ -248,6 +248,7 @@
       "navHowItWorks": "كيف يعمل",
       "navLabel": "استكشف تراث",
       "openMenu": "فتح القائمة",
+      "closeMenu": "إغلاق القائمة",
       "languageMenu": "اللغة",
       "appearanceMenu": "المظهر",
       "currencyLabel": "العملة",
@@ -890,6 +891,7 @@
         "creditCeiling": "سقف الائتمان",
         "creditHint": "اترك الحقل فارغاً لاستخدام افتراضي الإعدادات لهذه الشريحة.",
         "creditDefault": "افتراضي الشريحة {amount}",
+        "creditUsingDefault": "يُستخدم حد الفئة الافتراضي ({amount})",
         "tier": "الشريحة",
         "saveFinance": "حفظ",
         "financeSaved": "حُفظت المالية",
@@ -1011,6 +1013,7 @@
     "ledger": {
       "caption": "المستحقات",
       "searchPlaceholder": "ابحث عن المنشآت",
+      "watchTooltip": "تجاوز ٧٥٪ من حد الائتمان",
       "allStandings": "كل الأوضاع",
       "allCategories": "كل الفئات",
       "categoryLabel": "الفئة",
@@ -1018,7 +1021,7 @@
       "emptyFiltered": "لا توجد حسابات مطابقة لعوامل التصفية هذه.",
       "standing": {
         "healthy": "وضع جيد",
-        "watch": "تنبيه 75٪",
+        "watch": "تنبيه",
         "grace": "مهلة تسوية 48 ساعة",
         "suspended": "موقّف"
       },
@@ -2993,7 +2996,7 @@
       "form": {
         "addTitle": "إضافة مخزون", "editTitle": "تعديل المخزون", "save": "حفظ التغييرات", "saving": "جارٍ الحفظ…", "cancel": "إلغاء", "invalid": "راجع المعلومات المطلوبة.",
         "nameEn": "الاسم بالإنجليزية", "nameAr": "الاسم بالعربية", "titleEn": "العنوان بالإنجليزية", "titleAr": "العنوان بالعربية",
-        "occupancy": "الحد الأقصى للنزلاء", "quantity": "الكمية المتاحة", "priceSyp": "السعر بالليرة السورية", "amenities": "المرافق",
+        "occupancy": "الحد الأقصى للنزلاء", "quantity": "الكمية المتاحة", "priceSyp": "السعر بالليرة السورية", "pricePerNight": "السعر لليلة (ل.س)", "amenities": "المرافق",
         "amenity": { "generator": "مولدة", "wifi": "واي فاي", "ac": "تكييف" },
         "tableLabel": "رمز الطاولة", "capacity": "السعة", "zone": "منطقة الجلوس",
         "zoneOptions": { "indoor": "داخلي", "terrace": "تراس", "vip": "VIP", "smoking": "تدخين" },
@@ -3110,6 +3113,8 @@
       },
       "credit": {
         "eyebrow": "وضع الحساب",
+        "warningBadge": "تنبيه",
+        "warningTooltip": "تجاوز ٧٥٪ من حد الائتمان",
         "of": "من حد ائتمان قدره {amount}",
         "tier": "فئة الحساب",
         "cadence": "جدول الكشوف",

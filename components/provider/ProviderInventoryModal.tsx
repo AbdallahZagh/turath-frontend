@@ -56,6 +56,16 @@ function ErrorText({ show }: { show: boolean }): ReactNode {
   return show ? <p className="text-destructive text-xs">{t("invalid")}</p> : null;
 }
 
+/** Visible label above a field, as in Admin Settings. */
+function FieldLabel({ label, children }: { label: string; children: ReactNode }): ReactNode {
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="text-prose-muted text-xs font-medium">{label}</span>
+      {children}
+    </label>
+  );
+}
+
 function Actions({ pending, onClose }: { pending: boolean; onClose: () => void }): ReactNode {
   const t = useTranslations("provider.inventory.form");
   return (
@@ -150,57 +160,52 @@ function HotelForm({ item, onClose }: { item: HotelRoom | null; onClose: () => v
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
-          <Input
-            variant="glass"
-            label={t("nameEn")}
-            placeholder={t("nameEn")}
-            {...form.register("nameEn")}
-          />
+          <FieldLabel label={t("nameEn")}>
+            <Input variant="glass" label={t("nameEn")} {...form.register("nameEn")} />
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.nameEn)} />
         </div>
         <div>
-          <Input
-            variant="glass"
-            dir="rtl"
-            label={t("nameAr")}
-            placeholder={t("nameAr")}
-            {...form.register("nameAr")}
-          />
+          <FieldLabel label={t("nameAr")}>
+            <Input variant="glass" dir="rtl" label={t("nameAr")} {...form.register("nameAr")} />
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.nameAr)} />
         </div>
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
         <div>
-          <Input
-            variant="glass"
-            type="number"
-            min={1}
-            label={t("occupancy")}
-            placeholder={t("occupancy")}
-            {...form.register("occupancy", { setValueAs: numberFieldValue })}
-          />
+          <FieldLabel label={t("occupancy")}>
+            <Input
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("occupancy")}
+              {...form.register("occupancy", { setValueAs: numberFieldValue })}
+            />
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.occupancy)} />
         </div>
         <div>
-          <Input
-            variant="glass"
-            type="number"
-            min={1}
-            label={t("quantity")}
-            placeholder={t("quantity")}
-            {...form.register("quantity", { setValueAs: numberFieldValue })}
-          />
+          <FieldLabel label={t("quantity")}>
+            <Input
+              variant="glass"
+              type="number"
+              min={1}
+              label={t("quantity")}
+              {...form.register("quantity", { setValueAs: numberFieldValue })}
+            />
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.quantity)} />
         </div>
         <div>
-          <Input
-            variant="glass"
-            type="number"
-            min={1}
-            label={t("priceSyp")}
-            placeholder={t("priceSyp")}
-            {...form.register("priceSyp", { setValueAs: numberFieldValue })}
-          />
+          <FieldLabel label={t("pricePerNight")}>
+            <Input
+              variant="glass"
+              amount
+              label={t("pricePerNight")}
+              {...form.register("priceSyp", { setValueAs: numberFieldValue })}
+            />
+          </FieldLabel>
           <ErrorText show={Boolean(form.formState.errors.priceSyp)} />
         </div>
       </div>

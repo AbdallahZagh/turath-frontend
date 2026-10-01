@@ -43,8 +43,9 @@ type InputProps = Omit<
   icon?: ReactNode;
   className?: string;
   /**
-   * Money amount (controlled `value`): shows grouped display digits (1,500,000 / ١٬٥٠٠٬٠٠٠)
-   * when blurred and plain digits while focused. The field width never changes.
+   * Money amount (controlled `value` or React Hook Form `register`): shows grouped display digits
+   * (1,500,000 / ١٬٥٠٠٬٠٠٠) when blurred and plain digits while focused. The field width never
+   * changes.
    */
   amount?: boolean;
   /** Field error shown under the input; sets aria-invalid and aria-describedby. */
@@ -97,6 +98,7 @@ export function Input({
     (fieldProps.type === "number" || amount) && fieldProps.value === undefined,
     locale,
     isDecimalStep(fieldProps.step),
+    amount,
   );
   const style = controlStyle({
     size,
@@ -166,36 +168,46 @@ function isDecimalStep(step: FieldProps["step"]): boolean {
 
 /**
  * Uncontrolled number fields (React Hook Form `register`) get their value from the form, in
- * Latin. Outside of editing, show it in display digits (Arabic-Indic in Arabic). The form's own
- * values are untouched: no input event fires, and typed text is read with `numberFieldValue`.
+ * Latin. Outside of editing, show it in display digits (Arabic-Indic in Arabic), grouped for an
+ * amount; while focused, an amount shows plain digits. The form's own values are untouched: no
+ * input event fires, and typed text is read with `numberFieldValue`.
  */
 function useUncontrolledDisplayDigits(
   inputId: string,
   enabled: boolean,
   locale: string,
   decimal: boolean,
+  amount: boolean,
 ): void {
   useLayoutEffect(() => {
     const node = enabled ? document.getElementById(inputId) : null;
     if (!(node instanceof HTMLInputElement)) {
       return;
     }
-    const show = (): void => {
-      if (node === document.activeElement) {
+    const render = (focused: boolean): void => {
+      const parsed = parseNumberInput(node.value, { decimal, negative: true });
+      if (parsed === undefined) {
         return;
       }
-      const parsed = parseNumberInput(node.value, { decimal, negative: true });
       const shown =
-        parsed === undefined
-          ? node.value
+        amount && !focused
+          ? formatCount(parsed, locale)
           : toDisplayDigits(normalizeNumberInput(node.value), locale);
       if (shown !== node.value) {
         node.value = shown;
       }
     };
-    show();
-    node.addEventListener("blur", show);
-    return () => node.removeEventListener("blur", show);
+    const showBlurred = (): void => render(false);
+    const showFocused = (): void => render(true);
+    if (node !== document.activeElement) {
+      showBlurred();
+    }
+    node.addEventListener("blur", showBlurred);
+    node.addEventListener("focus", showFocused);
+    return () => {
+      node.removeEventListener("blur", showBlurred);
+      node.removeEventListener("focus", showFocused);
+    };
   });
 }
 

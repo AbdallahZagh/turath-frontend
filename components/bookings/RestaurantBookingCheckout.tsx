@@ -36,7 +36,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -144,7 +144,7 @@ export function RestaurantBookingCheckout({
   }));
   const slots: SelectOption[] = availableRestaurant.timeSlots.map((slot) => ({
     value: slot,
-    label: slot,
+    label: formatPickerTime(slot, loc, "24"),
   }));
 
   async function applyCoupon(): Promise<void> {
@@ -348,7 +348,9 @@ export function RestaurantBookingCheckout({
               <Clock3 className="size-4" />
               {t("time")}
             </dt>
-            <dd className="text-prose font-medium">{timeSlot || t("notSelected")}</dd>
+            <dd className="text-prose font-medium">
+              {timeSlot ? formatPickerTime(timeSlot, loc, "24") : t("notSelected")}
+            </dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt className="text-prose-muted flex items-center gap-2">

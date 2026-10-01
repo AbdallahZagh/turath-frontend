@@ -3,13 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, format, parseISO } from "date-fns";
 import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -21,11 +22,14 @@ import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Textarea } from "@/components/ui/Textarea";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateHotelBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import {
@@ -63,6 +67,7 @@ export function HotelBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const hotelQuery = useHotel(hotelId);
   const createBooking = useCreateHotelBooking();
@@ -71,7 +76,7 @@ export function HotelBookingCheckout({
 
   const today = format(new Date(), "yyyy-MM-dd");
   const defaultCheckIn = initialCheckIn ?? format(addDays(new Date(), 1), "yyyy-MM-dd");
-  const defaultCheckOut = initialCheckOut ?? format(addDays(new Date(), 2), "yyyy-MM-dd");
+  const defaultCheckOut = initialCheckOut ?? format(addDays(parseISO(defaultCheckIn), 1), "yyyy-MM-dd");
   const form = useForm<HotelBookingValues>({
     resolver: zodResolver(hotelBookingSchema),
     defaultValues: {
@@ -99,6 +104,8 @@ export function HotelBookingCheckout({
   const activeCoupon = coupon?.valid ? coupon : null;
   const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = Math.max(0, listPriceSyp - discountSyp);
+  /** No price until a room is picked (a 0 SYP total reads as free). */
+  const price = (amountSyp: number): string => (selectedRoom ? formatMoney(amountSyp) : "—");
 
   if (hotelQuery.isPending) {
     return <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]"><Skeleton className="h-[42rem]" /><Skeleton className="h-96" /></div>;
@@ -107,7 +114,7 @@ export function HotelBookingCheckout({
     return <ErrorState title={t("states.loadErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void hotelQuery.refetch()} />;
   }
   if (!hotel) {
-    return <EmptyState icon={Hotel} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href="/hotels" variant="outline">{t("backToHotels")}</Button>} />;
+    return <EmptyState icon={Hotel} title={t("states.unavailableTitle")} description={t("states.unavailableBody")} action={<Button href={paths.catalog("hotels")} variant="outline">{t("backToHotels")}</Button>} />;
   }
   const availableHotel = hotel;
 
@@ -129,7 +136,14 @@ export function HotelBookingCheckout({
 
   async function onSubmit(submitted: HotelBookingValues): Promise<void> {
     const room = availableHotel.rooms.find((item) => item.id === submitted.roomId);
-    if (!room || room.maxGuests < submitted.guests || nights < 1) return;
+    if (nights < 1) {
+      form.setError("checkOut", { message: "checkOutAfterCheckIn" });
+      return;
+    }
+    if (!room || room.maxGuests < submitted.guests) {
+      form.setError("roomId", { message: "roomRequired" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         hotelId: availableHotel.id,
@@ -144,7 +158,7 @@ export function HotelBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -152,23 +166,17 @@ export function HotelBookingCheckout({
 
   return (
     <div className="grid min-w-0 items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
-      <GlassPanel className="order-2 p-6 sm:p-8 lg:order-1 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">{t("title")}</h1>
-          <p className="text-prose-muted mt-2">{localizedName(hotel.name, loc)}</p>
-        </div>
-
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+      <GlassPanel className="p-6 sm:p-8 lg:p-9">
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
             <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkIn)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkOut)} />
               </div>
               <div className="min-w-0 space-y-1.5">
@@ -202,6 +210,8 @@ export function HotelBookingCheckout({
 
           <BookingReliabilityNotice />
 
+          <BookingPolicyNote />
+
           <div className="bg-glass-control flex gap-3 rounded-2xl p-4 text-sm">
             <Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden />
             <div><p className="text-prose font-semibold">{t("holdTitle")}</p><p className="text-prose-muted mt-1 leading-relaxed">{t("holdBody")}</p></div>
@@ -209,29 +219,31 @@ export function HotelBookingCheckout({
         </form>
       </GlassPanel>
 
-      <GlassPanel className="order-1 p-6 lg:sticky lg:top-28 lg:order-2">
+      <GlassPanel className="p-6 lg:sticky lg:top-28">
         <div className="flex items-center gap-3"><div className="bg-primary/12 text-primary grid size-11 place-items-center rounded-xl"><Hotel className="size-5" aria-hidden /></div><div><h2 className="text-prose font-semibold">{localizedName(hotel.name, loc)}</h2><p className="text-prose-muted text-xs">{localizedName(hotel.address, loc)}</p></div></div>
         <dl className="border-border mt-5 space-y-3 border-y py-5 text-sm">
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" />{t("dates")}</dt><dd className="text-prose text-end font-medium">{checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected")}</dd></div>
           <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><BedDouble className="size-4" />{t("room")}</dt><dd className="text-prose font-medium">{selectedRoom ? tRooms(selectedRoom.type) : t("notSelected")}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" />{t("guests")}</dt><dd className="text-prose font-medium">{guests}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{nights}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" />{t("guests")}</dt><dd className="text-prose font-medium">{formatCount(guests, loc)}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{formatCount(nights, loc)}</dd></div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd></div>
+          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>
           {discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}
-          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{formatMoney(cashDueSyp)}</dd></div>
+          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd></div>
         </dl>
+        {selectedRoom ? null : <p className="text-prose-muted mt-3 text-xs">{t("chooseRoomForPrice")}</p>}
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
         <Button type="submit" className="mt-6 hidden w-full lg:inline-flex" disabled={createBooking.isPending || !selectedRoom || nights < 1} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>
-        <Button href={`/hotels/${hotel.id}`} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
+        <Button href={paths.listing("hotels", hotel.id)} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
       </GlassPanel>
 
       <div className="border-border bg-surface/95 supports-[backdrop-filter]:bg-surface/80 fixed inset-x-0 bottom-0 z-40 border-t px-4 py-3 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-[98rem] items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="text-prose-muted text-xs">{t("cashDue")}</p>
-            <p className="text-prose text-sm leading-tight font-semibold">{formatMoney(cashDueSyp)}</p>
+            <p className="text-prose text-sm leading-tight font-semibold">{price(cashDueSyp)}</p>
+            {selectedRoom ? null : <p className="text-prose-muted text-xs">{t("chooseRoomForPrice")}</p>}
           </div>
           <Button
             type="submit"

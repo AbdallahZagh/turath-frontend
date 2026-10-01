@@ -1,9 +1,11 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
+import { formatCount } from "@/lib/format/number";
 
 export type ProviderRegisterProgressStep = {
   id: string;
@@ -23,6 +25,7 @@ export function ProviderRegisterProgress({
   label,
   onSelect,
 }: ProviderRegisterProgressProps): ReactNode {
+  const locale = useLocale();
   return (
     <nav aria-label={label} className="mt-5">
       <ol className="grid grid-cols-4 gap-2">
@@ -49,7 +52,11 @@ export function ProviderRegisterProgress({
                       : "bg-app-muted text-prose-muted",
                   )}
                 >
-                  {done ? <Check className="size-3.5" aria-hidden /> : index + 1}
+                  {done ? (
+                    <Check className="size-3.5" aria-hidden />
+                  ) : (
+                    formatCount(index + 1, locale)
+                  )}
                 </span>
                 <span
                   className={cn(

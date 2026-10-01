@@ -1,7 +1,7 @@
 "use client";
 
 import { ListFilter, X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import {
   useCallback,
   useEffect,
@@ -23,7 +23,9 @@ import { Input } from "@/components/ui/Input";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select } from "@/components/ui/Select";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { formatCount } from "@/lib/format/number";
 
 export type AdminFilterField = {
   id: string;
@@ -61,6 +63,7 @@ export function AdminFilterBar({
   trailing,
 }: AdminFilterBarProps): ReactNode {
   const t = useTranslations("ui.filter");
+  const locale = useLocale();
   const mounted = useIsClient();
   const labelId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -211,7 +214,7 @@ export function AdminFilterBar({
           {t("title")}
           {activeCount > 0 ? (
             <span className="bg-primary text-primary-foreground ms-0.5 inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-[0.7rem] font-semibold tabular-nums">
-              {activeCount}
+              {formatCount(activeCount, locale)}
             </span>
           ) : null}
         </Button>

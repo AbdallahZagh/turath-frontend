@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { parseNumberInput } from "@/lib/format/digits";
+
 export const PROVIDER_PROFILE_AMENITIES = [
   "generator",
   "wifi",
@@ -17,8 +19,8 @@ const coordinate = (minimum: number, maximum: number) =>
     .trim()
     .min(1, "required")
     .refine((value) => {
-      const parsed = Number(value);
-      return Number.isFinite(parsed) && parsed >= minimum && parsed <= maximum;
+      const parsed = parseNumberInput(value, { decimal: true, negative: true });
+      return parsed !== undefined && parsed >= minimum && parsed <= maximum;
     }, "coordinate");
 
 export const providerProfileSchema = z.object({

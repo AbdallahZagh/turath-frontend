@@ -2,11 +2,11 @@
 
 import { motion, type Variants } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { useTranslations } from "@/i18n/translations";
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 

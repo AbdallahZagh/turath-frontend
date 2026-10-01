@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
   addMonths,
@@ -18,14 +18,18 @@ import {
   startOfWeek,
 } from "date-fns";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import {
   dateFnsLocale,
+  formatDisplayDate,
+  formatMediumDate,
   formatPickerDate,
   parseIsoDate,
   toIsoDate,
 } from "@/lib/format/datetime";
 import { isLocale } from "@/i18n/config";
+import { toDisplayDigits } from "@/lib/format/digits";
 
 import type { ControlSize } from "./controlScale";
 import type { FieldVariant } from "./field.types";
@@ -59,6 +63,10 @@ type DatePickerProps = {
   max?: string;
   showToday?: boolean;
   centerOn?: string;
+  /** `short` ("Oct 10, 2026" / "10 أكتوبر 2026") for narrow fields such as the checkout grid. */
+  dateStyle?: "long" | "short";
+  /** When set, only these ISO dates can be picked; every other day is greyed out. */
+  availableDates?: readonly string[];
 };
 
 const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6] as const;
@@ -106,6 +114,8 @@ export function DatePicker({
   max,
   showToday = true,
   centerOn,
+  dateStyle = "long",
+  availableDates,
 }: DatePickerProps): ReactNode {
   const t = useTranslations("picker");
   const rawLocale = useLocale();
@@ -170,12 +180,16 @@ export function DatePicker({
 
   const headerLabel =
     view === "days"
-      ? format(cursor, "LLLL yyyy", { locale: dfsLocale })
+      ? formatDisplayDate(cursor, "LLLL yyyy", locale)
       : view === "months"
-        ? format(cursor, "yyyy", { locale: dfsLocale })
-        : `${yearStart} – ${yearStart + 11}`;
+        ? formatDisplayDate(cursor, "yyyy", locale)
+        : toDisplayDigits(`${yearStart} – ${yearStart + 11}`, locale);
 
-  const display = selectedIso ? formatPickerDate(selectedIso, locale) : "";
+  const display = !selectedIso
+    ? ""
+    : dateStyle === "short"
+      ? formatMediumDate(selectedIso, locale)
+      : formatPickerDate(selectedIso, locale);
 
   return (
     <PickerField
@@ -260,7 +274,9 @@ export function DatePicker({
                   const outside = !isSameMonth(day, cursor);
                   const selected = selectedDate ? isSameDay(day, selectedDate) : false;
                   const isToday = isSameDay(day, today);
-                  const blocked = isDisabled(day, minDate, maxDate);
+                  const blocked =
+                    isDisabled(day, minDate, maxDate) ||
+                    (availableDates !== undefined && !availableDates.includes(iso));
 
                   return (
                     <button
@@ -273,11 +289,17 @@ export function DatePicker({
                         !outside && !selected && "text-prose hover:bg-option-hover",
                         isToday && !selected && "ring-ring ring-1",
                         selected && "bg-primary text-primary-foreground",
-                        blocked && "opacity-30",
+                        blocked && "cursor-not-allowed opacity-30",
+                        // Days on an availability list get a light seafoam fill so they read as pickable.
+                        availableDates !== undefined &&
+                          !blocked &&
+                          !selected &&
+                          !outside &&
+                          "bg-accent/20",
                       )}
                       onClick={() => commit(day)}
                     >
-                      {format(day, "d")}
+                      {formatDisplayDate(day, "d", locale)}
                     </button>
                   );
                 })}
@@ -307,7 +329,7 @@ export function DatePicker({
                       setView("days");
                     }}
                   >
-                    {format(date, "LLL", { locale: dfsLocale })}
+                    {formatDisplayDate(date, "LLL", locale)}
                   </button>
                 );
               })}
@@ -333,7 +355,7 @@ export function DatePicker({
                       setView("months");
                     }}
                   >
-                    {year}
+                    {toDisplayDigits(String(year), locale)}
                   </button>
                 );
               })}

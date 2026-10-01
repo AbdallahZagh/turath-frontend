@@ -1,7 +1,6 @@
 "use client";
 
 import { Building2, Menu, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
@@ -14,7 +13,11 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useProviderStay } from "@/hooks/useStayTranslations";
+import { useTranslations } from "@/i18n/translations";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 
 type ProviderShellProps = {
@@ -24,6 +27,8 @@ type ProviderShellProps = {
 export function ProviderShell({ children }: ProviderShellProps): ReactNode {
   const t = useTranslations("provider");
   const mounted = useIsClient();
+  const currentPath = useCurrentPath();
+  const stay = useProviderStay();
   const [mobileOpen, setMobileOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -56,7 +61,7 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
             {t("access.description")}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button href="/login">{t("access.signIn")}</Button>
+            <Button href={withReturnTo("/login", currentPath)}>{t("access.signIn")}</Button>
             {process.env.NODE_ENV === "development" ? (
               <>
                 <Button
@@ -141,9 +146,9 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
           </div>
         </header>
 
-        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-0 lg:pe-8">
+        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-8 lg:pe-8">
           <div className="mx-auto w-full max-w-[98rem]">
-            <PageHeader />
+            <PageHeader values={{ stay }} />
             {children}
           </div>
         </main>

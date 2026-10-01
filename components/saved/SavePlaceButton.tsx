@@ -1,10 +1,10 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { MouseEvent, ReactNode } from "react";
 
 import { useSavedPlaces, useToggleSavedPlace } from "@/hooks/useSavedPlaces";
+import { useTranslations } from "@/i18n/translations";
 import type { SavedPlace } from "@/lib/mock/savedPlaces";
 import { cn } from "@/lib/cn";
 

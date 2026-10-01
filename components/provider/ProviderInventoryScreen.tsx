@@ -1,7 +1,7 @@
 "use client";
 
 import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import {
@@ -19,6 +19,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useDeleteProviderInventory, useProviderInventory } from "@/hooks/useProviderInventory";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
@@ -282,7 +283,9 @@ function HotelInventory({
     <section className="space-y-4">
       <SectionHeader
         title={t("sections.hotels.title")}
-        description={t("sections.hotels.description")}
+        description={t(
+          actions ? "sections.hotels.description" : "sections.hotels.descriptionReadOnly",
+        )}
         action={
           actions ? (
             <Button size="sm" onClick={() => actions.onEdit({ kind: "hotels", item: null })}>
@@ -348,7 +351,9 @@ function RestaurantInventory({
     <section className="space-y-4">
       <SectionHeader
         title={t("sections.restaurants.title")}
-        description={t("sections.restaurants.description")}
+        description={t(
+          actions ? "sections.restaurants.description" : "sections.restaurants.descriptionReadOnly",
+        )}
         action={
           actions ? (
             <Button size="sm" onClick={() => actions.onEdit({ kind: "restaurants", item: null })}>
@@ -441,7 +446,9 @@ function TripInventory({
     <section className="space-y-4">
       <SectionHeader
         title={t("sections.trips.title")}
-        description={t("sections.trips.description")}
+        description={t(
+          actions ? "sections.trips.description" : "sections.trips.descriptionReadOnly",
+        )}
         action={
           actions ? (
             <Button size="sm" onClick={() => actions.onEdit({ kind: "trips", item: null })}>
@@ -519,7 +526,9 @@ function EventInventory({
     <section className="space-y-4">
       <SectionHeader
         title={t("sections.events.title")}
-        description={t("sections.events.description")}
+        description={t(
+          actions ? "sections.events.description" : "sections.events.descriptionReadOnly",
+        )}
         action={
           actions ? (
             <Button size="sm" onClick={() => actions.onEdit({ kind: "events", item: null })}>
@@ -560,7 +569,9 @@ function GuideInventory({
     <section className="space-y-4">
       <SectionHeader
         title={t("sections.guides.title")}
-        description={t("sections.guides.description")}
+        description={t(
+          actions ? "sections.guides.description" : "sections.guides.descriptionReadOnly",
+        )}
         action={
           actions ? (
             <Button size="sm" onClick={() => actions.onEdit({ kind: "guides", item: guide })}>

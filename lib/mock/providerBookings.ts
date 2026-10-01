@@ -107,7 +107,7 @@ const SEED: ProviderBookingSeed[] = [
     discountSyp: 150_000,
     cashDueSyp: 900_000,
     couponCode: "DAMASCUS150",
-    status: "PENDING",
+    status: "PENDING_CONFIRMATION",
     checkedInAt: null,
     checkedInBy: null,
     createdAt: "2026-09-20T18:05:00+03:00",

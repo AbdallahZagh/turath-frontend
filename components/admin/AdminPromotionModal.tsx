@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, type FieldError } from "react-hook-form";
 
@@ -17,6 +17,7 @@ import {
   useSaveAdminPromotion,
 } from "@/hooks/useAdminPromotions";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import {
   CUSTOM_PROMOTION_TARGET_ID,
   FEATURED_SLOT_IDS,

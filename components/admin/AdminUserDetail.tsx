@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
 import { UserRound } from "lucide-react";
 
 import { AdminReviews } from "@/components/admin/AdminReviews";
@@ -14,6 +13,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
 import { useAdminUser, useSetAdminUserLocked } from "@/hooks/useAdminUsers";
+import { useTranslations } from "@/i18n/translations";
 import { reviewSummary } from "@/lib/mock/adminReviews";
 import { DEFAULT_RELIABILITY_CUTOFFS } from "@/lib/mock/adminUsers";
 import { toast } from "@/store/toastStore";

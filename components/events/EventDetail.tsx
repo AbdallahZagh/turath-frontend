@@ -12,7 +12,7 @@ import {
   Sparkles,
   Ticket,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { EventFeatureList } from "@/components/events/EventFeatureList";
@@ -26,12 +26,17 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useEvent } from "@/hooks/useEvents";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime, formatShortDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 export function EventDetail({
   eventId,
@@ -41,6 +46,8 @@ export function EventDetail({
   basePath?: string;
 }): ReactNode {
   const t = useTranslations("events");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const td = useTranslations("events.detail");
   const tt = useTranslations("events.tiers");
   const tGov = useTranslations("landing.governorates");
@@ -86,7 +93,11 @@ export function EventDetail({
     ...event.sessions.flatMap((session) => session.tiers.map((tier) => tier.priceSyp)),
   );
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${event.coordinates.latitude},${event.coordinates.longitude}`;
-  const bookingHref = `/bookings/new?type=event&id=${event.id}${nextSession ? `&session=${nextSession.id}` : ""}`;
+  const bookingHref = withBookingSearch(
+    `${paths.checkout}?type=event&id=${event.id}`,
+    bookingSearch,
+    "event",
+  );
 
   return (
     <>
@@ -123,7 +134,7 @@ export function EventDetail({
                 size="md"
                 label={t("ratingLabel", { rating: event.rating })}
               />
-              <span className="text-prose font-semibold">{event.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(event.rating, loc)}</span>
               <span className="text-prose-muted">
                 {t("reviewsCount", { count: event.reviewCount })}
               </span>
@@ -164,7 +175,8 @@ export function EventDetail({
                       </p>
                       <p className="text-prose-muted mt-1 flex items-center gap-2 text-sm">
                         <Clock3 className="size-4" aria-hidden />
-                        {session.startsAt}–{session.endsAt}
+                        {formatPickerTime(session.startsAt, loc, "24")}–
+                        {formatPickerTime(session.endsAt, loc, "24")}
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -259,7 +271,7 @@ export function EventDetail({
                       {localizedName(review.comment, loc)}
                     </p>
                     <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">
-                      {review.date}
+                      {formatShortDate(review.date, loc)}
                     </time>
                   </article>
                 ))}
@@ -284,7 +296,9 @@ export function EventDetail({
               </div>
               <div className="flex justify-between gap-3">
                 <dt className="text-prose-muted">{td("time")}</dt>
-                <dd className="text-prose font-semibold">{nextSession.startsAt}</dd>
+                <dd className="text-prose font-semibold">
+                  {formatPickerTime(nextSession.startsAt, loc, "24")}
+                </dd>
               </div>
             </dl>
           ) : null}

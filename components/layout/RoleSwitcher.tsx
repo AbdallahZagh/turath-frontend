@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Select, type SelectOption } from "@/components/ui/Select";
+import { useTranslations } from "@/i18n/translations";
 import { APP_ROLES, isAppRole, type AppRole } from "@/lib/auth/roles";
 import { useAuthStore } from "@/store/authStore";
 

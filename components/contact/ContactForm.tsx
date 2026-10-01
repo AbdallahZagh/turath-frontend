@@ -2,8 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { CheckCircle2, Send } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { CheckCircle2, Mail, Send, UserRound } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { FieldError } from "react-hook-form";
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { PhoneField } from "@/components/ui/PhoneField";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 import {
   CONTACT_TOPICS,
@@ -130,6 +130,7 @@ export function ContactForm(): ReactNode {
                 variant="main"
                 label={tForm("name")}
                 placeholder={tForm("namePlaceholder")}
+                icon={<UserRound className="size-4" />}
                 autoComplete="name"
                 required
                 {...form.register("name")}
@@ -148,6 +149,7 @@ export function ContactForm(): ReactNode {
                     type="email"
                     label={tForm("email")}
                     placeholder={tForm("emailPlaceholder")}
+                    icon={<Mail className="size-4" />}
                     autoComplete="email"
                     {...form.register("email")}
                   />
@@ -228,7 +230,7 @@ export function ContactForm(): ReactNode {
                 type="submit"
                 variant="solid"
                 disabled={busy}
-                className="w-full justify-center sm:w-auto"
+                className="w-full justify-center whitespace-nowrap sm:w-auto"
               >
                 {busy ? tForm("submitting") : tForm("submit")}
                 <Send className="size-4 rtl:rotate-180" aria-hidden />

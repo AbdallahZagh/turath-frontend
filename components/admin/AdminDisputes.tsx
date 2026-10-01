@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Scale } from "lucide-react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
@@ -14,6 +14,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminDisputes } from "@/hooks/useAdminDisputes";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";

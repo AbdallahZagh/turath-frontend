@@ -1,7 +1,6 @@
 "use client";
 
 import { Inbox, ShieldLock } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ProviderProfileEditor } from "@/components/provider/ProviderProfileEditor";
@@ -9,6 +8,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useProviderProfile } from "@/hooks/useProviderProfile";
+import { useTranslations } from "@/i18n/translations";
 import { useAuthStore } from "@/store/authStore";
 import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 

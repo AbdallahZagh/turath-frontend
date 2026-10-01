@@ -49,16 +49,13 @@ export function outstandingSyp(row: AdminLedgerRow): number {
   return Math.max(row.accruedSyp - row.paidSyp, 0);
 }
 
-function creditUsedRatio(row: AdminLedgerRow): number {
-  if (row.creditCeilingSyp <= 0) {
-    return 0;
-  }
-  return outstandingSyp(row) / row.creditCeilingSyp;
+/** Share of the credit ceiling used by unpaid commission; the admin and business ledgers both use it. */
+export function creditUsedRatio(outstanding: number, creditCeilingSyp: number): number {
+  return creditCeilingSyp > 0 ? outstanding / creditCeilingSyp : 0;
 }
 
-function standingFromCreditUsed(
-  ratio: number,
-): Exclude<LedgerStanding, "suspended"> {
+/** PAGES.md credit rules: watch from 75% of the ceiling, 48h grace from 100%. */
+export function creditStandingFor(ratio: number): Exclude<LedgerStanding, "suspended"> {
   if (ratio >= CREDIT_GRACE_RATIO) {
     return "grace";
   }
@@ -68,7 +65,10 @@ function standingFromCreditUsed(
   return "healthy";
 }
 
-const LEDGER_SEED: AdminLedgerRow[] = [
+/** Stored ledger: amounts and a manual suspension only; credit used and standing are derived. */
+type StoredLedger = Omit<AdminLedgerRow, "creditUsed" | "standing"> & { suspended?: boolean };
+
+const LEDGER_SEED: StoredLedger[] = [
   {
     id: "ldg_01",
     provider: { en: "Beit Al-Wali", ar: "بيت الوالي" },
@@ -76,10 +76,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 4_820_000,
     paidSyp: 3_100_000,
     creditCeilingSyp: 15_000_000,
-    creditUsed: 0.42,
     cadence: "weekly",
     lastSettledAt: "2026-08-25",
-    standing: "healthy",
   },
   {
     id: "ldg_02",
@@ -88,10 +86,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 1_940_000,
     paidSyp: 1_200_000,
     creditCeilingSyp: 5_000_000,
-    creditUsed: 0.58,
     cadence: "biweekly",
     lastSettledAt: "2026-08-18",
-    standing: "healthy",
   },
   {
     id: "ldg_03",
@@ -100,10 +96,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 890_000,
     paidSyp: 210_000,
     creditCeilingSyp: 1_500_000,
-    creditUsed: 0.78,
     cadence: "monthly",
     lastSettledAt: "2026-08-01",
-    standing: "watch",
   },
   {
     id: "ldg_04",
@@ -112,10 +106,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 1_120_000,
     paidSyp: 900_000,
     creditCeilingSyp: 2_500_000,
-    creditUsed: 0.31,
     cadence: "biweekly",
     lastSettledAt: "2026-08-22",
-    standing: "healthy",
   },
   {
     id: "ldg_05",
@@ -124,10 +116,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 760_000,
     paidSyp: 760_000,
     creditCeilingSyp: 1_500_000,
-    creditUsed: 0.12,
     cadence: "monthly",
     lastSettledAt: "2026-08-28",
-    standing: "healthy",
   },
   {
     id: "ldg_06",
@@ -136,10 +126,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 2_640_000,
     paidSyp: 400_000,
     creditCeilingSyp: 2_200_000,
-    creditUsed: 1.05,
     cadence: "weekly",
     lastSettledAt: "2026-08-04",
-    standing: "grace",
   },
   {
     id: "ldg_07",
@@ -148,10 +136,9 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 1_480_000,
     paidSyp: 200_000,
     creditCeilingSyp: 1_000_000,
-    creditUsed: 1.18,
     cadence: "monthly",
     lastSettledAt: "2026-07-15",
-    standing: "suspended",
+    suspended: true,
   },
   {
     id: "ldg_08",
@@ -160,10 +147,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 3_210_000,
     paidSyp: 1_800_000,
     creditCeilingSyp: 5_000_000,
-    creditUsed: 0.67,
     cadence: "weekly",
     lastSettledAt: "2026-08-20",
-    standing: "healthy",
   },
   {
     id: "ldg_09",
@@ -172,10 +157,9 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 5_100_000,
     paidSyp: 800_000,
     creditCeilingSyp: 4_000_000,
-    creditUsed: 1.22,
     cadence: "weekly",
     lastSettledAt: "2026-07-28",
-    standing: "suspended",
+    suspended: true,
   },
   {
     id: "ldg_10",
@@ -184,10 +168,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 1_730_000,
     paidSyp: 1_100_000,
     creditCeilingSyp: 1_800_000,
-    creditUsed: 0.81,
     cadence: "biweekly",
     lastSettledAt: "2026-08-11",
-    standing: "watch",
   },
   {
     id: "ldg_11",
@@ -196,10 +178,8 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 540_000,
     paidSyp: 120_000,
     creditCeilingSyp: 900_000,
-    creditUsed: 0.74,
     cadence: "monthly",
     lastSettledAt: "2026-08-02",
-    standing: "watch",
   },
   {
     id: "ldg_12",
@@ -208,39 +188,51 @@ const LEDGER_SEED: AdminLedgerRow[] = [
     accruedSyp: 680_000,
     paidSyp: 680_000,
     creditCeilingSyp: 2_000_000,
-    creditUsed: 0.08,
     cadence: "biweekly",
     lastSettledAt: "2026-08-29",
-    standing: "healthy",
+  },
+  {
+    // 2,250,000 of 2,800,000 used (80%): the Warning (watch) standing.
+    id: "ldg_13",
+    provider: { en: "Hama Waterwheel Guesthouse", ar: "دار نواعير حماة" },
+    category: "hotels",
+    accruedSyp: 2_950_000,
+    paidSyp: 700_000,
+    creditCeilingSyp: 2_800_000,
+    cadence: "weekly",
+    lastSettledAt: "2026-08-24",
   },
 ];
 
-function cloneRow(row: AdminLedgerRow): AdminLedgerRow {
+function toRow({ suspended, ...stored }: StoredLedger): AdminLedgerRow {
+  const creditUsed = creditUsedRatio(Math.max(stored.accruedSyp - stored.paidSyp, 0), stored.creditCeilingSyp);
   return {
-    ...row,
-    provider: { ...row.provider },
+    ...stored,
+    provider: { ...stored.provider },
+    creditUsed,
+    standing: suspended ? "suspended" : creditStandingFor(creditUsed),
   };
 }
 
-const ledgers: AdminLedgerRow[] = LEDGER_SEED.map(cloneRow);
+const ledgers: StoredLedger[] = LEDGER_SEED.map((row) => ({ ...row, provider: { ...row.provider } }));
 
 export function listAdminLedger(): AdminLedgerRow[] {
-  return ledgers.map(cloneRow);
+  return ledgers.map(toRow);
 }
 
 export function getAdminLedger(id: string): AdminLedgerRow | undefined {
   const found = ledgers.find((row) => row.id === id);
-  return found ? cloneRow(found) : undefined;
+  return found ? toRow(found) : undefined;
 }
 
 export function getAdminLedgerByProviderName(en: string): AdminLedgerRow | undefined {
   const found = ledgers.find((row) => row.provider.en === en);
-  return found ? cloneRow(found) : undefined;
+  return found ? toRow(found) : undefined;
 }
 
-function writeLedger(index: number, next: AdminLedgerRow): AdminLedgerRow {
+function writeLedger(index: number, next: StoredLedger): AdminLedgerRow {
   ledgers[index] = next;
-  return cloneRow(next);
+  return toRow(next);
 }
 
 function findIndex(id: string): number {
@@ -261,14 +253,7 @@ export function setAdminLedgerStanding(
     throw new Error(`Unknown admin ledger: ${id}`);
   }
 
-  const next = cloneRow(current);
-  if (standing === "suspended") {
-    next.standing = "suspended";
-  } else if (current.standing === "suspended") {
-    next.standing = standingFromCreditUsed(creditUsedRatio(next));
-  }
-
-  return writeLedger(index, next);
+  return writeLedger(index, { ...current, suspended: standing === "suspended" });
 }
 
 export function recordAdminLedgerSettlement(id: string, at: string): AdminLedgerRow {
@@ -278,15 +263,7 @@ export function recordAdminLedgerSettlement(id: string, at: string): AdminLedger
     throw new Error(`Unknown admin ledger: ${id}`);
   }
 
-  const next = cloneRow(current);
-  next.paidSyp = next.accruedSyp;
-  next.creditUsed = 0;
-  next.lastSettledAt = at;
-  if (next.standing !== "suspended") {
-    next.standing = "healthy";
-  }
-
-  return writeLedger(index, next);
+  return writeLedger(index, { ...current, paidSyp: current.accruedSyp, lastSettledAt: at });
 }
 
 function shiftIso(iso: string, days: number): string {

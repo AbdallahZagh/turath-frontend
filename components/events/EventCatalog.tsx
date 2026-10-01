@@ -1,7 +1,6 @@
 "use client";
 
 import { CalendarHeart } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { EventCard } from "@/components/events/EventCard";
@@ -11,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useEvents } from "@/hooks/useEvents";
+import { useTranslations } from "@/i18n/translations";
 import type { EventFilters } from "@/lib/mock/events";
 
 const DEFAULT_FILTERS: EventFilters = { minTickets: 1 };

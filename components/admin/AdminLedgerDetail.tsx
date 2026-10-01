@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
 import { BookOpen } from "lucide-react";
 
 import { AdminLedgerAccount } from "@/components/admin/AdminLedgerAccount";
@@ -15,6 +14,7 @@ import {
   useRecordAdminLedgerSettlement,
   useSetAdminLedgerStanding,
 } from "@/hooks/useAdminLedger";
+import { useTranslations } from "@/i18n/translations";
 import { toast } from "@/store/toastStore";
 
 type AdminLedgerDetailProps = {

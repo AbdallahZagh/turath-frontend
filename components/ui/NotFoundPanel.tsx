@@ -1,11 +1,11 @@
 import { House, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useTranslations } from "@/i18n/translations";
 
 type NotFoundPanelProps = {
   /** Where "Back to home" goes: the public home, or the portal home inside a portal shell. */
@@ -34,5 +34,14 @@ export function NotFoundPanel({ homeHref = "/" }: NotFoundPanelProps): ReactNode
         </Button>
       </div>
     </GlassPanel>
+  );
+}
+
+/** The panel placed under the fixed public header. */
+export function PublicNotFoundSection(): ReactNode {
+  return (
+    <div className="flex min-h-[70svh] items-center px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24">
+      <NotFoundPanel />
+    </div>
   );
 }

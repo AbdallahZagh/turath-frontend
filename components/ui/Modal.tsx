@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { useTranslations } from "next-intl";
 
 import { useIsClient } from "@/hooks/useIsClient";
 import { useOverlay } from "@/hooks/useOverlay";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 type ModalProps = {

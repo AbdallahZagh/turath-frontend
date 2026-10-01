@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { fadeUp, viewportOnce } from "@/lib/motion/variants";
 import { GOVERNORATES, HERITAGE_SITES, type GovernorateSlug } from "@/lib/mock/landing";

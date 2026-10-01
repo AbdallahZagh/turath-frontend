@@ -1,7 +1,6 @@
 "use client";
 
 import { Settings2, ShieldLock } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { ProviderSettingsForm } from "@/components/provider/ProviderSettingsForm";
@@ -9,6 +8,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useProviderSettings } from "@/hooks/useProviderSettings";
+import { useTranslations } from "@/i18n/translations";
 import { useAuthStore } from "@/store/authStore";
 
 export function ProviderSettingsScreen(): ReactNode {

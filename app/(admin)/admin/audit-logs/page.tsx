@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { AdminAuditLogsPage } from "@/components/admin/AdminAuditLogsPage";
+import { getTranslations } from "@/i18n/serverTranslations";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("admin.headers.auditLogs");

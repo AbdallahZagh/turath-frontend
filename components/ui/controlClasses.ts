@@ -11,6 +11,8 @@ export const FIELD_BASE = [
   "box-border block w-full caret-primary min-h-(--control-min-height)",
   "disabled:pointer-events-none disabled:opacity-40",
   "placeholder:text-prose-muted",
+  // A field with an error (aria-invalid) keeps the error border, focused or not.
+  "aria-invalid:border-destructive! aria-invalid:shadow-none",
 ].join(" ");
 
 export const FIELD_VARIANT: Record<FieldVariant, string> = {

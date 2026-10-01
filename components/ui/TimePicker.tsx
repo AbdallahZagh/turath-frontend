@@ -1,9 +1,10 @@
 "use client";
 
 import { Clock } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import {
   formatPickerTime,
   parseHHmm,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { Button } from "@/components/ui/Button";
 import { FIELD_BASE, FIELD_VARIANT, SELECT_TRIGGER } from "@/components/ui/controlClasses";
@@ -11,9 +11,11 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
 import { Switch } from "@/components/ui/Switch";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { useSaveAdminCoupon } from "@/hooks/useAdminCoupons";
 import type { Locale } from "@/i18n/config";
+import { parseNumberInput } from "@/lib/format/digits";
 import { localizedName } from "@/lib/i18n/localized";
 import { COMMISSION_PILLARS } from "@/lib/mock/adminCommissions";
 import {
@@ -44,8 +46,8 @@ function parseOptionalCount(value: string): number | null | "invalid" {
   if (!trimmed) {
     return null;
   }
-  const parsed = Number(trimmed);
-  if (!Number.isInteger(parsed) || parsed < 1) {
+  const parsed = parseNumberInput(trimmed);
+  if (parsed === undefined || parsed < 1) {
     return "invalid";
   }
   return parsed;
@@ -124,7 +126,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
       return;
     }
 
-    const amount = Number(discountValue);
+    const amount = parseNumberInput(discountValue) ?? Number.NaN;
     if (!Number.isFinite(amount) || amount <= 0) {
       toast.error(t("saveFailed"), t("invalidDiscount"));
       return;

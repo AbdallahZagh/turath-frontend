@@ -30,4 +30,3 @@ export function formatReliabilityScore(score: number, locale: string): string {
     maximumFractionDigits: 0,
   }).format(clamped);
 }
-

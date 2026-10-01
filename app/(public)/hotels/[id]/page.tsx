@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { HotelDetail } from "@/components/hotels/HotelDetail";
@@ -26,6 +27,7 @@ export default async function HotelDetailPage({
   params: Promise<{ id: string }>;
 }): Promise<ReactNode> {
   const { id } = await params;
+  if (!(await getHotel(id))) notFound();
 
   return (
     <div className="mx-auto max-w-[98rem] px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24 lg:px-8">

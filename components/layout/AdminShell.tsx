@@ -2,7 +2,6 @@
 
 import { Menu, ShieldCheck } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { AdminSidebar } from "@/components/layout/AdminSidebar";
@@ -14,7 +13,10 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { getPageHeader } from "@/config/pageHeaders";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
+import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
 import { useUiStore } from "@/store/uiStore";
 
@@ -25,6 +27,7 @@ type AdminShellProps = {
 export function AdminShell({ children }: AdminShellProps): ReactNode {
   const t = useTranslations("admin.shell");
   const pathname = usePathname();
+  const currentPath = useCurrentPath();
   const fillViewport = getPageHeader(pathname)?.fillViewport === true;
   const contentScrolls = useUiStore((state) => state.contentScrolls);
   const pinViewport = fillViewport && !contentScrolls;
@@ -56,7 +59,7 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
             {t("access.description")}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button href="/login">{t("access.signIn")}</Button>
+            <Button href={withReturnTo("/login", currentPath)}>{t("access.signIn")}</Button>
             {process.env.NODE_ENV === "development" ? (
               <Button variant="outline" onClick={() => completeSession("SUPER_ADMIN")}>
                 {t("access.preview")}
@@ -84,18 +87,25 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
             : "relative flex min-w-0 flex-1 flex-col"
         }
       >
-        <button
-          type="button"
-          className="glass-surface backdrop-blur-sm text-prose hover:text-prose absolute inset-s-4 top-4 z-30 flex size-10 items-center justify-center rounded-full lg:hidden"
-          aria-label={t("openNav")}
-          onClick={() => setMobileNavOpen(true)}
-        >
-          <Menu className="size-5" aria-hidden />
-        </button>
-        <div className="absolute inset-e-6 top-5 z-30 hidden w-[min(32rem,calc(100%-6rem))] items-center gap-2 sm:flex">
-          <div className="min-w-0 flex-1"><AdminCommandPalette /></div>
-          <NotificationBell audience="admin" href={ADMIN_PATHS.notifications} />
-        </div>
+        {/* Same glass top bar as the user and business portals; it stays put while tables scroll under it. */}
+        <header className="glass-surface sticky top-2 z-30 mx-2 mt-2 flex items-center justify-between gap-3 rounded-xl px-3 py-2 backdrop-blur-sm sm:top-3 sm:mx-4 sm:mt-3 sm:px-4 lg:ms-0">
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <button
+              type="button"
+              className="text-prose-muted hover:bg-option-hover grid size-10 place-items-center rounded-full lg:hidden"
+              aria-label={t("openNav")}
+              onClick={() => setMobileNavOpen(true)}
+            >
+              <Menu className="size-5" aria-hidden />
+            </button>
+            <div className="hidden w-[min(32rem,100%)] min-w-0 sm:block">
+              <AdminCommandPalette />
+            </div>
+          </div>
+          <div className="flex min-w-0 items-center gap-2">
+            <NotificationBell audience="admin" href={ADMIN_PATHS.notifications} />
+          </div>
+        </header>
         <main
           className={
             pinViewport
@@ -106,8 +116,8 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
           <div
             className={
               pinViewport
-                ? "mx-auto flex h-full min-h-0 w-full flex-col gap-6 max-lg:pt-10"
-                : "mx-auto flex w-full flex-col gap-6 max-lg:pt-10"
+                ? "mx-auto flex h-full min-h-0 w-full flex-col gap-6"
+                : "mx-auto flex w-full flex-col gap-6"
             }
           >
             <PageHeader />

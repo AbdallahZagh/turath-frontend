@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useMemo, type ReactNode } from "react";
 
 import {
@@ -8,6 +7,7 @@ import {
   type GlobalSearchItem,
 } from "@/components/layout/GlobalSearchPalette";
 import { flattenAdminNav } from "@/config/nav";
+import { useTranslations } from "@/i18n/translations";
 
 const COMMAND_ITEMS = flattenAdminNav();
 

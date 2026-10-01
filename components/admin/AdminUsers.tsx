@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Download, Users } from "lucide-react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
@@ -16,6 +16,7 @@ import { useAdminSettings } from "@/hooks/useAdminSettings";
 import { useAdminUsers } from "@/hooks/useAdminUsers";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatMediumDate } from "@/lib/format/datetime";

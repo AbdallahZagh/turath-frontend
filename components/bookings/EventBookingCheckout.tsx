@@ -12,13 +12,14 @@ import {
   Ticket,
   Users,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -28,11 +29,14 @@ import { Input } from "@/components/ui/Input";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateEventBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useEvent } from "@/hooks/useEvents";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { useTranslations } from "@/i18n/translations";
+import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
+import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
 import {
@@ -66,6 +70,7 @@ export function EventBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const eventQuery = useEvent(eventId);
   const createBooking = useCreateEventBooking();
@@ -91,6 +96,8 @@ export function EventBookingCheckout({
   const activeCoupon = coupon?.valid ? coupon : null;
   const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = Math.max(0, listPriceSyp - discountSyp);
+  const priceReady = Boolean(session && tier);
+  const price = (amountSyp: number): string => (priceReady ? formatMoney(amountSyp) : "—");
 
   if (eventQuery.isPending)
     return (
@@ -115,7 +122,7 @@ export function EventBookingCheckout({
         title={t("states.unavailableTitle")}
         description={t("states.unavailableBody")}
         action={
-          <Button href="/events" variant="outline">
+          <Button href={paths.catalog("events")} variant="outline">
             {t("backToEvents")}
           </Button>
         }
@@ -125,7 +132,7 @@ export function EventBookingCheckout({
   const sessions: SelectOption[] = availableEvent.sessions.map((item) => ({
     value: item.id,
     label: formatMediumDate(item.date, loc),
-    hint: `${item.startsAt}–${item.endsAt}`,
+    hint: `${formatPickerTime(item.startsAt, loc, "24")}–${formatPickerTime(item.endsAt, loc, "24")}`,
   }));
   const tiers: SelectOption[] = (session?.tiers ?? []).map((item) => ({
     value: item.id,
@@ -146,7 +153,18 @@ export function EventBookingCheckout({
   async function onSubmit(values: EventBookingValues): Promise<void> {
     const selectedSession = availableEvent.sessions.find((item) => item.id === values.sessionId);
     const selectedTier = selectedSession?.tiers.find((item) => item.id === values.ticketTier);
-    if (!selectedSession || !selectedTier || selectedTier.remaining < values.quantity) return;
+    if (!selectedSession) {
+      form.setError("sessionId", { message: "sessionRequired" });
+      return;
+    }
+    if (!selectedTier) {
+      form.setError("ticketTier", { message: "tierRequired" });
+      return;
+    }
+    if (selectedTier.remaining < values.quantity) {
+      form.setError("quantity", { message: "quantityMax" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         eventId: availableEvent.id,
@@ -160,7 +178,7 @@ export function EventBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -169,14 +187,7 @@ export function EventBookingCheckout({
   return (
     <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
-            {t("title")}
-          </h1>
-          <p className="text-prose-muted mt-2">{localizedName(event.name, loc)}</p>
-        </div>
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("ticketDetails")}</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -250,6 +261,8 @@ export function EventBookingCheckout({
             </div>
           </section>
           <BookingReliabilityNotice />
+
+          <BookingPolicyNote />
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -288,7 +301,7 @@ export function EventBookingCheckout({
             <dt className="text-prose-muted">{t("session")}</dt>
             <dd className="text-prose text-end font-medium">
               {session
-                ? `${formatMediumDate(session.date, loc)} · ${session.startsAt}`
+                ? `${formatMediumDate(session.date, loc)} · ${formatPickerTime(session.startsAt, loc, "24")}`
                 : t("notSelected")}
             </dd>
           </div>
@@ -298,13 +311,13 @@ export function EventBookingCheckout({
           </div>
           <div className="flex justify-between gap-3">
             <dt className="text-prose-muted">{t("quantity")}</dt>
-            <dd className="text-prose font-medium">{quantity}</dd>
+            <dd className="text-prose font-medium">{formatCount(quantity, loc)}</dd>
           </div>
         </dl>
         <dl className="mt-5 space-y-3 text-sm">
           <div className="flex justify-between gap-3">
             <dt className="text-prose-muted">{t("listPrice")}</dt>
-            <dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd>
+            <dd className="text-prose font-medium">{price(listPriceSyp)}</dd>
           </div>
           {discountSyp > 0 ? (
             <div className="text-primary flex justify-between gap-3">
@@ -314,9 +327,12 @@ export function EventBookingCheckout({
           ) : null}
           <div className="border-border flex justify-between gap-3 border-t pt-4">
             <dt className="text-prose font-semibold">{t("cashDue")}</dt>
-            <dd className="text-prose text-end font-semibold">{formatMoney(cashDueSyp)}</dd>
+            <dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd>
           </div>
         </dl>
+        {priceReady ? null : (
+          <p className="text-prose-muted mt-3 text-xs">{t("chooseTierForPrice")}</p>
+        )}
         <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed">
           <ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />
           {t("cashDueHint")}
@@ -329,7 +345,7 @@ export function EventBookingCheckout({
         >
           {createBooking.isPending ? t("confirming") : t("confirm")}
         </Button>
-        <Button href={`/events/${event.id}`} variant="glass" className="mt-3 w-full">
+        <Button href={paths.listing("events", event.id)} variant="glass" className="mt-3 w-full">
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("backToEvent")}
         </Button>

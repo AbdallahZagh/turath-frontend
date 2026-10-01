@@ -9,9 +9,9 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useRef, type FocusEvent, type ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import {
   TOAST_DURATION_MS,

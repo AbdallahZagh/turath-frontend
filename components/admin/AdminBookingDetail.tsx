@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import {
   AlertTriangle,
   ArrowUpRight,
@@ -33,6 +33,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { useUpdateAdminBookingStatus } from "@/hooks/useAdminBookings";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { initialsFromName } from "@/lib/format/initials";
 import { formatSyp } from "@/lib/format/money";

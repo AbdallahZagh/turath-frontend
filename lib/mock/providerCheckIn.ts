@@ -67,7 +67,7 @@ export function verifyProviderDeskCode(
   if (booking.status === "CHECKED_IN") {
     return { kind: "alreadyUsed", booking: toDeskBooking(booking) };
   }
-  if (booking.status !== "CONFIRMED" && booking.status !== "PENDING") {
+  if (booking.status !== "CONFIRMED" && booking.status !== "PENDING_CONFIRMATION") {
     return { kind: "invalid" };
   }
 

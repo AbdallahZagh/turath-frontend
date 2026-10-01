@@ -2,12 +2,13 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import type { MouseEvent, ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/i18n/config";
 import { localizedName } from "@/lib/i18n/localized";

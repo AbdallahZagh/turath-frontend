@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Building2, CheckCircle2, FileCheck2, ImagePlus, MapPin, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { useRef, useState, type ChangeEvent, type ReactNode } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 
@@ -16,6 +15,7 @@ import { ImageField } from "@/components/ui/ImageField";
 import { Input } from "@/components/ui/Input";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
+import { useTranslations } from "@/i18n/translations";
 import { providerOnboardingSchema, type ProviderOnboardingValues } from "@/lib/validation/auth";
 import { fieldMessage, fieldMessageFromUnknown } from "@/lib/validation/fieldMessage";
 import { toast } from "@/store/toastStore";

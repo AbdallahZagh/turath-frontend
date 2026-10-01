@@ -1,10 +1,10 @@
 "use client";
 
 import { BookOpen } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useTranslations } from "@/i18n/translations";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 
 type AdminAttractionNarrativeViewProps = {

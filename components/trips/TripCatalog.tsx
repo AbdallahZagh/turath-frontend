@@ -1,7 +1,6 @@
 "use client";
 
 import { Compass } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { TripCard } from "@/components/trips/TripCard";
@@ -11,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useTrips } from "@/hooks/useTrips";
+import { useTranslations } from "@/i18n/translations";
 import type { TripFilters } from "@/lib/mock/trips";
 
 const DEFAULT_FILTERS: TripFilters = { minSeats: 1 };

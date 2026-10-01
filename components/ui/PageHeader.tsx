@@ -3,7 +3,6 @@
 import { ChevronRight, Plus, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -12,7 +11,9 @@ import {
   getPageHeader,
   type PageHeaderActionKind,
   type PageHeaderActionSpec,
+  type PageHeaderSpec,
 } from "@/config/pageHeaders";
+import { useTranslations } from "@/i18n/translations";
 import { usePageHeaderStore } from "@/store/pageHeaderStore";
 
 const ACTION_ICON: Record<PageHeaderActionKind, LucideIcon> = {
@@ -73,9 +74,20 @@ function PageHeaderBreadcrumb({
   );
 }
 
-export function PageHeader(): ReactNode {
+/**
+ * Title block from config/pageHeaders.ts. Looks the route up by pathname; pass `spec` when the
+ * title depends on more than the path (the checkout, whose type is in the query).
+ */
+export function PageHeader({
+  spec: givenSpec,
+  values,
+}: {
+  spec?: PageHeaderSpec;
+  /** ICU values for the title and description (the business portal passes `stay`). */
+  values?: Record<string, string>;
+} = {}): ReactNode {
   const pathname = usePathname();
-  const spec = getPageHeader(pathname);
+  const spec = givenSpec ?? getPageHeader(pathname);
   const t = useTranslations(spec?.namespace ?? "admin.headers");
 
   if (!spec) {
@@ -94,11 +106,14 @@ export function PageHeader(): ReactNode {
     >
       <div className="flex flex-col gap-2">
         {spec.parent ? (
-          <PageHeaderBreadcrumb parentPath={spec.parent} currentTitle={t(`${spec.page}.title`)} />
+          <PageHeaderBreadcrumb
+            parentPath={spec.parent}
+            currentTitle={t(`${spec.page}.title`, values)}
+          />
         ) : null}
-        <h1 className={PAGE_TITLE_CLASS}>{t(`${spec.page}.title`)}</h1>
+        <h1 className={PAGE_TITLE_CLASS}>{t(`${spec.page}.title`, values)}</h1>
         <p className="text-prose-muted max-w-2xl text-sm leading-relaxed sm:text-base">
-          {t(`${spec.page}.description`)}
+          {t(`${spec.page}.description`, values)}
         </p>
       </div>
       {actions.length > 0 ? (

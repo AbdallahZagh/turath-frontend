@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
 import {
   ArrowLeft,
   Banknote,
@@ -19,7 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -36,12 +35,14 @@ import {
   useUpdateProviderBookingStatus,
 } from "@/hooks/useProviderBookings";
 import type { Locale } from "@/i18n/config";
-import { dateFnsLocale } from "@/lib/format/datetime";
+import { useTranslations } from "@/i18n/translations";
+import { formatDisplayDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import { useAuthStore } from "@/store/authStore";
 import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 const BookingQr = dynamic(
   () => import("qrcode.react").then((module) => module.QRCodeSVG),
@@ -53,14 +54,14 @@ function statusBadge(status: TouristBookingStatus): {
   className?: string;
 } {
   if (status === "CHECKED_IN") return { variant: "solid" };
-  if (status === "PENDING" || status === "CONFIRMED") {
+  if (status === "PENDING_CONFIRMATION" || status === "CONFIRMED") {
     return { variant: "glass", className: "text-accent" };
   }
   return { variant: "outline", className: "border-destructive text-destructive" };
 }
 
 export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
-  const t = useTranslations("provider.bookings");
+  const t = useStayTranslations("provider.bookings");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
@@ -106,7 +107,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
   const booking = query.data;
   const canChangeStatus =
     role === "PROVIDER_OWNER" &&
-    (booking.status === "PENDING" || booking.status === "CONFIRMED");
+    (booking.status === "PENDING_CONFIRMATION" || booking.status === "CONFIRMED");
 
   function copyBackupCode(): void {
     void navigator.clipboard.writeText(booking.backupCode);
@@ -172,12 +173,12 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
               <Detail
                 icon={CalendarClock}
                 label={t("detail.arrival")}
-                value={format(new Date(booking.scheduledAt), "PPp", { locale: dateFnsLocale(locale) })}
+                value={formatDisplayDate(new Date(booking.scheduledAt), "PPp", locale)}
               />
               <Detail
                 icon={CalendarClock}
                 label={t("detail.departure")}
-                value={format(new Date(booking.endsAt), "PPp", { locale: dateFnsLocale(locale) })}
+                value={formatDisplayDate(new Date(booking.endsAt), "PPp", locale)}
               />
               <Detail
                 icon={PackageOpen}
@@ -257,7 +258,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
                 </button>
               </div>
             </div>
-            {(booking.status === "CONFIRMED" || booking.status === "PENDING") ? (
+            {(booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION") ? (
               <Button href={providerCheckInPath(booking.backupCode)} className="mt-5 w-full">
                 <ScanLine className="size-4" aria-hidden />
                 {t("detail.checkIn")}

@@ -33,7 +33,7 @@
     "dateOfBirth": "Date of birth",
     "nationality": "Nationality",
     "nationalityPlaceholder": "Select a country",
-    "termsLabel": "I agree to Turath's <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
+    "termsLabel": "I agree to Turath's <terms>Terms of use</terms> and <privacy>Privacy policy</privacy>.",
     "forgotPassword": "Forgot password?",
     "sendCode": "Send code",
     "submitLogin": "Continue",
@@ -248,6 +248,7 @@
       "navHowItWorks": "How it works",
       "navLabel": "Explore Turath",
       "openMenu": "Open menu",
+      "closeMenu": "Close menu",
       "languageMenu": "Language",
       "appearanceMenu": "Appearance",
       "currencyLabel": "Currency",
@@ -318,7 +319,7 @@
         "familyStays": "Family-friendly Stays",
         "familyDayTrips": "Group Day Trips",
         "familyFestivals": "Cultural Festivals",
-        "familySupport": "24/7 User Support",
+        "familySupport": "24/7 Guest Support",
         "providerListBusiness": "List Your Hotel or Venue",
         "providerScannerApp": "Offline QR Scanner App",
         "providerLedger": "Clear Payout Records",
@@ -442,7 +443,7 @@
     "testimonials": {
       "eyebrow": "Only after they arrived",
       "title": "What travelers are saying.",
-      "subtitle": "A user can review only after check-in. These notes are from people who showed up.",
+      "subtitle": "A guest can review only after check-in. These notes are from people who showed up.",
       "verifiedBadge": "Checked in",
       "ratingLabel": "{count} out of 5 stars",
       "items": {
@@ -490,9 +491,10 @@
       "companyPartner": "Partner with Us",
       "companyContact": "Contact",
       "legalHeading": "Legal & Licensing",
-      "legalTerms": "Terms of Service",
-      "legalPrivacy": "Privacy Policy",
+      "legalTerms": "Terms of use",
+      "legalPrivacy": "Privacy policy",
       "legalLicensing": "Business Licensing",
+      "legalBookingPolicy": "Booking and no-show policy",
       "hotlinesHeading": "Emergency Hotlines",
       "hotlines": {
         "police": "Police",
@@ -539,7 +541,8 @@
     "ratingLabel": "{value} out of 5 from {count, plural, one {# review} other {# reviews}}",
     "ratingCount": "{count, plural, one {# review} other {# reviews}}",
     "ratingOutOf": "{value} out of 5",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "invalidAmount": "Enter a valid amount"
   },
   "admin": {
     "shell": {
@@ -888,6 +891,7 @@
         "creditCeiling": "Credit ceiling",
         "creditHint": "Leave empty to use the Settings default for this tier.",
         "creditDefault": "Tier default {amount}",
+        "creditUsingDefault": "Using the tier default ({amount})",
         "tier": "Tier",
         "saveFinance": "Save",
         "financeSaved": "Finance saved",
@@ -910,7 +914,7 @@
       "empty": "No bookings are on the platform yet.",
       "emptyFiltered": "No bookings match these filters.",
       "status": {
-        "pending": "Pending",
+        "pending": "Pending confirmation",
         "confirmed": "Confirmed",
         "checkedIn": "Checked in",
         "completed": "Completed",
@@ -1009,15 +1013,16 @@
     "ledger": {
       "caption": "Accounts",
       "searchPlaceholder": "Search businesses",
+      "watchTooltip": "Over 75% of credit used",
       "allStandings": "All standings",
       "allCategories": "All categories",
       "categoryLabel": "Category",
       "empty": "No business accounts are on file yet.",
       "emptyFiltered": "No accounts match these filters.",
       "standing": {
-        "healthy": "Healthy",
-        "watch": "Watch 75%",
-        "grace": "Grace 100%",
+        "healthy": "Good standing",
+        "watch": "Warning",
+        "grace": "48h settlement",
         "suspended": "Suspended"
       },
       "cadence": {
@@ -1467,7 +1472,8 @@
       "savedBody": "Credit limits, reliability cutoffs, and switches are updated for this session.",
       "saveFailed": "Could not save settings",
       "saveFailedBody": "Check the numbers and try again.",
-      "invalidCredit": "Enter a positive credit ceiling for every tier.",
+      "invalidCutoff": "Enter a whole number from 0 to 100",
+      "invalidFields": "Fix the highlighted fields and save again.",
       "invalidReliability": "Restricted must be below Standard, Standard below VIP, and all between 0 and 100.",
       "credit": {
         "title": "Credit limits",
@@ -1639,7 +1645,7 @@
       "generatorHours": "Generator hours",
       "location": "Location",
       "navigate": "Open directions",
-      "reviews": "Verified user reviews",
+      "reviews": "Verified guest reviews",
       "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve now and pay the final amount in cash when you arrive.",
       "book": "Book this hotel"
@@ -1713,7 +1719,7 @@
       "availableTimes": "Available reservation times",
       "location": "Location",
       "navigate": "Open directions",
-      "reviews": "Verified user reviews",
+      "reviews": "Verified guest reviews",
       "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve your table now and pay the final amount directly at the restaurant.",
       "book": "Reserve a table"
@@ -1868,7 +1874,7 @@
       "experience": "What to expect",
       "venue": "Venue and directions",
       "navigate": "Open directions",
-      "reviews": "Verified user reviews",
+      "reviews": "Verified guest reviews",
       "noReviews": "No verified reviews yet.",
       "nextDate": "Next date",
       "time": "Starts at",
@@ -1945,7 +1951,7 @@
     "detail": {
       "back": "Back to guides", "galleryImage": "Experience with {guide}", "openImage": "Open photo {number}", "license": "License {number}",
       "about": "About this guide", "languages": "Languages", "specialties": "Specialties", "rates": "Private guide rates", "meetingArea": "Meeting area and directions",
-      "navigate": "Open directions", "reviews": "Verified user reviews", "noReviews": "No verified reviews yet.",
+      "navigate": "Open directions", "reviews": "Verified guest reviews", "noReviews": "No verified reviews yet.",
       "cashOnArrival": "Reserve now and pay the final amount directly to your guide when the experience begins.", "book": "Book this guide"
     }
   },
@@ -1969,7 +1975,8 @@
     "description": "Your reliability score is below 50, so the business will review this request before confirming it."
   },
   "guideBooking": {
-    "eyebrow": "Private guided experience", "title": "Book your guide", "details": "Experience details",
+    "dateUnavailable": "That date isn't available. Pick another.",
+    "details": "Experience details",
     "date": "Date", "datePlaceholder": "Choose an available date", "duration": "Duration", "hours": "Hours",
     "language": "Language", "languagePlaceholder": "Choose a language", "focusArea": "Focus area", "focusPlaceholder": "Choose your focus",
     "holdTitle": "Your selection is held for 10 minutes", "holdBody": "Complete confirmation within this window. Live guide availability will be connected when the booking API is ready.",
@@ -1982,9 +1989,27 @@
     "states": { "loadErrorTitle": "We couldn't prepare this booking", "loadErrorBody": "Please check your connection and try again.", "retry": "Try again", "unavailableTitle": "Guide unavailable", "unavailableBody": "The booking link may be incomplete, or this guide may no longer be listed." }
   },
   "bookings": {
-    "metaDescription": "Review your details and confirm your Turath reservation.",
-    "eyebrow": "Secure reservation",
-    "title": "Complete your booking",
+    "chooseRoomForPrice": "Choose a room to see the price",
+    "headers": {
+      "hotel": { "title": "Book your stay", "description": "Pick your dates and room. You pay in cash when you arrive." },
+      "restaurant": { "title": "Reserve your table", "description": "Choose a date, time, and seating area. You pay in cash at the restaurant." },
+      "trip": { "title": "Reserve your journey", "description": "Choose a departure, seats, and pickup point. You pay in cash on the day." },
+      "event": { "title": "Reserve your tickets", "description": "Choose a session, ticket type, and quantity. You pay in cash at the door." },
+      "guide": { "title": "Book your guide", "description": "Choose a date, length, language, and focus. You pay your guide in cash." },
+      "voucher": { "title": "Your booking voucher", "description": "Keep this page available and show the QR code or backup code when you arrive." },
+      "review": { "title": "Share your experience", "description": "Share a verified review after completing your Turath booking." },
+      "hotelVoucher": { "title": "Your stay voucher", "description": "Show the QR code or backup code when you check in at the hotel." },
+      "restaurantVoucher": { "title": "Your table voucher", "description": "Show the QR code or backup code when you arrive at the restaurant." },
+      "tripVoucher": { "title": "Your trip voucher", "description": "Show the QR code or backup code at the pickup point." },
+      "eventVoucher": { "title": "Your ticket voucher", "description": "Show the QR code or backup code at the door." },
+      "guideVoucher": { "title": "Your guide booking voucher", "description": "Show the QR code or backup code when you meet your guide." },
+      "hotelReview": { "title": "Review your stay", "description": "Share a verified review of the hotel after your stay." },
+      "restaurantReview": { "title": "Review your meal", "description": "Share a verified review of the restaurant after your visit." },
+      "tripReview": { "title": "Review your trip", "description": "Share a verified review of the trip after you travel." },
+      "eventReview": { "title": "Review the event", "description": "Share a verified review of the event after you attend." },
+      "guideReview": { "title": "Review your guide", "description": "Share a verified review of your guide after the tour." }
+    },
+    "policyNote": "Before you book, read the <policy>booking and no-show policy</policy>.",
     "stayDetails": "Stay details",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
@@ -2036,9 +2061,6 @@
       "voucherMissingBody": "This demo voucher is saved in the current browser session. It may have expired or the link may be incorrect."
     },
     "voucher": {
-      "eyebrow": "Booking confirmed",
-      "title": "Your booking voucher",
-      "subtitle": "Keep this page available and show the QR code or backup code when you arrive.",
       "passLabel": "Turath booking pass",
       "downloadQr": "Download QR",
       "print": "Print voucher",
@@ -2057,7 +2079,7 @@
       "exploreMore": "Explore more stays",
       "writeReview": "Write a verified review",
       "status": {
-        "PENDING": "Pending",
+        "PENDING_CONFIRMATION": "Pending confirmation",
         "CONFIRMED": "Confirmed",
         "CHECKED_IN": "Checked in",
         "CANCELLED": "Cancelled",
@@ -2066,8 +2088,7 @@
     }
   },
   "restaurantBooking": {
-    "eyebrow": "Table reservation",
-    "title": "Reserve your table",
+    "chooseZoneForPrice": "Choose a seating area to see the price",
     "reservationDetails": "Reservation details",
     "date": "Date",
     "time": "Time",
@@ -2122,8 +2143,7 @@
     }
   },
   "tripBooking": {
-    "eyebrow": "Trip reservation",
-    "title": "Reserve your journey",
+    "chooseOptionForPrice": "Choose an option to see the price",
     "tripDetails": "Trip details",
     "date": "Departure date",
     "datePlaceholder": "Choose a departure",
@@ -2176,8 +2196,7 @@
     }
   },
   "eventBooking": {
-    "eyebrow": "Event reservation",
-    "title": "Reserve your tickets",
+    "chooseTierForPrice": "Choose a ticket type to see the price",
     "ticketDetails": "Ticket details",
     "session": "Session",
     "sessionPlaceholder": "Choose a session",
@@ -2228,8 +2247,9 @@
   "legal": {
     "headers": {
       "terms": { "title": "Terms of use", "description": "The basic rules for using Turath, reserving experiences, and presenting your booking pass." },
-      "privacy": { "title": "Privacy", "description": "How Turath handles the information needed for accounts, bookings, safety, and support." },
-      "providerLicensing": { "title": "Business verification", "description": "How hotels, restaurants, trip organizers, event managers, and guides are reviewed before appearing on Turath." }
+      "privacy": { "title": "Privacy policy", "description": "How Turath handles the information needed for accounts, bookings, safety, and support." },
+      "providerLicensing": { "title": "Business verification", "description": "How hotels, restaurants, trip organizers, event managers, and guides are reviewed before appearing on Turath." },
+      "bookingPolicy": { "title": "Booking and no-show policy", "description": "How holds, cash on arrival, cancellations, and missed arrivals work on Turath." }
     },
     "updatedLabel": "Latest update",
     "contactNotice": "Questions about these pages can be sent through the Turath contact page. Final policies may be updated before the live service launches.",
@@ -2240,8 +2260,8 @@
         "sections": {
           "agreement": { "title": "Using Turath", "body": "You may browse public listings without an account. An account is required to keep bookings, vouchers, preferences, and reliability history together. Account details must be accurate and must not be used to impersonate another person." },
           "bookings": { "title": "Bookings and cash on arrival", "body": "Turath shows the list price, any valid discount, and the final cash amount due on arrival. A booking pass contains a QR code and backup code. Availability is held briefly during checkout and is confirmed only when the reservation succeeds." },
-          "responsibilities": { "title": "Cancellations and user conduct", "body": "Cancel as early as possible when plans change. Missing a confirmed arrival without cancelling may reduce your reliability score and booking access. Users must follow reasonable safety, venue, capacity, and cultural-site rules." },
-          "changes": { "title": "Service changes", "body": "Listing details, opening hours, schedules, prices, and local entry requirements may change. Turath and verified businesses should keep information current, but users should confirm time-sensitive details before a long journey." }
+          "responsibilities": { "title": "Cancellations and guest conduct", "body": "Cancel as early as possible when plans change. Missing a confirmed arrival without cancelling may reduce your reliability score and booking access. Guests must follow reasonable safety, venue, capacity, and cultural-site rules." },
+          "changes": { "title": "Service changes", "body": "Listing details, opening hours, schedules, prices, and local entry requirements may change. Turath and verified businesses should keep information current, but guests should confirm time-sensitive details before a long journey." }
         }
       },
       "privacy": {
@@ -2250,18 +2270,48 @@
         "sections": {
           "collection": { "title": "Information we use", "body": "Account information may include your name, phone number, email, nationality, date of birth, language, and currency preference. A booking may also include dates, party size, pickup choice, accessibility requests, special notes, or an emergency contact when the experience requires it." },
           "use": { "title": "Why the information is needed", "body": "Information is used to create and manage reservations, prepare booking passes, confirm arrival, calculate reliability, unlock verified reviews, prevent misuse, and help Turath or the business respond to support requests." },
-          "sharing": { "title": "What businesses can see", "body": "The booked business receives only the details needed to serve the reservation, such as your name, verified phone number, party size, schedule, relevant notes, discount code, and cash due. Businesses should not receive unrelated identity or account information." },
+          "sharing": { "title": "What businesses can see", "body": "The booked business receives only the details needed to serve the reservation, such as guest name, verified phone number, party size, schedule, relevant notes, discount code, and cash due. Businesses should not receive unrelated identity or account information." },
           "choices": { "title": "Your choices", "body": "You can change language and currency display preferences from your account. When the production service launches, account access, correction, deletion, and retention requests will be handled through verified support procedures." }
         }
       },
       "providerLicensing": {
         "updated": "September 20, 2026",
-        "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a user's own travel judgment.",
+        "introduction": "Turath reviews businesses before publishing them. Verification is designed to make discovery safer, but it does not replace government licenses, local regulations, or a guest's own travel judgment.",
         "sections": {
           "verification": { "title": "Who is reviewed", "body": "Hotels, restaurants, trip agencies, event managers, and independent tour guides submit an owner account and bilingual business information. Tour guides also provide their professional license number." },
           "documents": { "title": "Documents and listing evidence", "body": "Applicants provide commercial registration, ministry or professional licensing, owner identification, operating details, location, contact information, a logo, and listing photographs. Documents are reviewed privately and are not displayed as public downloads." },
           "standards": { "title": "Publishing standards", "body": "A published business must present accurate prices, capacity, schedules, amenities, location details, and booking policies. Verified status may be withheld when information is incomplete or cannot be confirmed." },
           "status": { "title": "Suspension and re-verification", "body": "Turath may suspend or remove a listing when licensing expires, information becomes misleading, serious safety concerns arise, or platform obligations remain unresolved. Reinstatement requires a new review by the Turath team." }
+        }
+      },
+      "bookingPolicy": {
+        "updated": "September 26, 2026",
+        "introduction": "This policy explains what happens between booking and arrival. It applies to hotels, restaurants, trips, events, and guides booked through Turath.",
+        "sections": {
+          "holds": {
+            "title": "Holds and confirmation",
+            "body": "While you check out, Turath holds the room, table, seats, or tickets for a short time. The booking is confirmed only when the reservation succeeds. Some bookings wait for the business to accept them first; they show as Pending confirmation until then."
+          },
+          "cash": {
+            "title": "Cash on arrival",
+            "body": "You pay nothing online. The booking pass shows the final cash amount, including any valid discount code, and you pay that amount to the business when you arrive. Show the QR code or the six-character backup code at the desk."
+          },
+          "cancel": {
+            "title": "Cancelling",
+            "body": "Plans change. Cancel from your bookings as early as you can so the business can offer the place to someone else. A booking you cancel does not count as a no-show."
+          },
+          "noShow": {
+            "title": "No-shows",
+            "body": "If you miss a confirmed arrival without cancelling, the business can mark the booking as a no-show. Turath then asks you to confirm what happened before the case is closed, and an unexcused no-show lowers your reliability score by 30 points."
+          },
+          "reliability": {
+            "title": "Reliability score",
+            "body": "Every account starts at 100. Your score decides your booking access: higher scores book instantly with more bookings at the same time, and lower scores may need the business to approve each request. Below the lowest level, new bookings pause until the account is reviewed. Turath sets the score levels."
+          },
+          "disputes": {
+            "title": "If you disagree",
+            "body": "If a no-show was marked by mistake, reply to Turath's message or contact support. The Turath team reviews the case with the business and can restore your score."
+          }
         }
       }
     }
@@ -2402,8 +2452,8 @@
       "usd": "US dollar estimate (USD)"
     },
     "providerRating": {
-      "title": "Your rating as a user",
-      "description": "Verified businesses can rate you after check-in. This is separate from your reliability score.",
+      "title": "Your rating",
+      "description": "From businesses you've booked with",
       "count": "{count, plural, one {# business review} other {# business reviews}}",
       "ratingLabel": "Rated {rating} out of 5"
     },
@@ -2487,14 +2537,11 @@
     }
   },
   "bookingReview": {
-    "metaDescription": "Share a verified review after completing your Turath booking.",
-    "eyebrow": "Verified stay",
-    "title": "Share your experience",
     "description": "How was your experience with {provider}?",
     "rating": "Your rating",
     "star": "{count, plural, one {# star} other {# stars}}",
     "comment": "Your review",
-    "commentPlaceholder": "Tell other users what stood out about your experience",
+    "commentPlaceholder": "Tell other guests what stood out about your experience",
     "submit": "Submit review",
     "submitting": "Submitting…",
     "back": "Back to voucher",
@@ -2561,7 +2608,7 @@
     "galleryHint": "At least one, up to {max}",
     "addPhoto": "Add photo",
     "removeFile": "Remove",
-    "termsLabel": "I agree to Turath’s <terms>terms of service</terms> and <privacy>privacy policy</privacy>.",
+    "termsLabel": "I agree to Turath’s <terms>Terms of use</terms> and <privacy>Privacy policy</privacy>.",
     "back": "Back",
     "next": "Continue",
     "submit": "Submit for review",
@@ -2701,6 +2748,8 @@
     },
     "reviews": {
       "summary": {
+        "title": "Your rating",
+        "subline": "From guest reviews",
         "count": "Based on {count, plural, one {# verified guest review} other {# verified guest reviews}}",
         "verifiedOnly": "Verified arrivals only"
       },
@@ -3021,11 +3070,11 @@
       "readOnlyTitle": "View only",
       "readOnlyDescription": "You can see rooms, tables, sessions, and availability. Ask the business owner to change prices, capacity, or availability.",
       "sections": {
-        "hotels": { "title": "Room types", "description": "Set nightly prices, occupancy, quantity, and included amenities." },
-        "restaurants": { "title": "Tables and reservation times", "description": "Keep table capacity, seating zones, and bookable times current." },
-        "trips": { "title": "Published trips", "description": "Manage departure dates, pickup points, itinerary, seats, and price." },
-        "events": { "title": "Event sessions", "description": "Manage sessions, ticket tiers, capacity, availability, and guest limits." },
-        "guides": { "title": "Guide availability and rates", "description": "Keep license details, languages, specialties, rates, and blocked dates current." }
+        "hotels": { "title": "Room types", "description": "Set nightly prices, occupancy, quantity, and included amenities.", "descriptionReadOnly": "Room types with their nightly prices, occupancy, quantity, and included amenities." },
+        "restaurants": { "title": "Tables and reservation times", "description": "Keep table capacity, seating zones, and bookable times current.", "descriptionReadOnly": "Tables with their capacity, seating zones, and bookable times." },
+        "trips": { "title": "Published trips", "description": "Manage departure dates, pickup points, itinerary, seats, and price.", "descriptionReadOnly": "Departure dates, pickup points, itinerary, seats, and price for each trip." },
+        "events": { "title": "Event sessions", "description": "Manage sessions, ticket tiers, capacity, availability, and guest limits.", "descriptionReadOnly": "Sessions with their ticket tiers, capacity, availability, and guest limits." },
+        "guides": { "title": "Guide availability and rates", "description": "Keep license details, languages, specialties, rates, and blocked dates current.", "descriptionReadOnly": "License details, languages, specialties, rates, and blocked dates." }
       },
       "columns": { "room": "Room type", "occupancy": "Guests", "quantity": "Rooms", "price": "Price", "amenities": "Amenities", "table": "Table", "capacity": "Capacity", "zone": "Zone", "trip": "Trip", "event": "Event", "date": "When", "seats": "Seats", "available": "Available", "actions": "Actions" },
       "addRoom": "Add room type", "addTable": "Add table", "addTrip": "Add trip", "addSession": "Add session", "editGuide": "Edit guide offering",
@@ -3039,7 +3088,7 @@
       "form": {
         "addTitle": "Add inventory", "editTitle": "Edit inventory", "save": "Save changes", "saving": "Saving…", "cancel": "Cancel", "invalid": "Review the required information.",
         "nameEn": "English name", "nameAr": "Arabic name", "titleEn": "English title", "titleAr": "Arabic title",
-        "occupancy": "Maximum guests", "quantity": "Available quantity", "priceSyp": "Price in SYP", "amenities": "Amenities",
+        "occupancy": "Maximum guests", "quantity": "Available quantity", "priceSyp": "Price in SYP", "pricePerNight": "Price per night (SYP)", "amenities": "Amenities",
         "amenity": { "generator": "Generator", "wifi": "Wi-Fi", "ac": "Air conditioning" },
         "tableLabel": "Table label", "capacity": "Capacity", "zone": "Seating zone",
         "zoneOptions": { "indoor": "Indoor", "terrace": "Terrace", "vip": "VIP", "smoking": "Smoking" },
@@ -3097,7 +3146,7 @@
     "bookings": {
       "filters": { "date": "Booking date", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
       "columns": { "guest": "Guest", "arrival": "Schedule", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
-      "status": { "PENDING": "Needs acceptance", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "CANCELLED": "Cancelled", "NO_SHOW": "No-show" },
+      "status": { "PENDING_CONFIRMATION": "Pending confirmation", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "CANCELLED": "Cancelled", "NO_SHOW": "No-show" },
       "party": "{count, plural, one {# guest} other {# guests}}",
       "caption": "Business bookings",
       "results": "{count, plural, one {# booking shown} other {# bookings shown}}",
@@ -3162,6 +3211,8 @@
       },
       "credit": {
         "eyebrow": "Account standing",
+        "warningBadge": "Warning",
+        "warningTooltip": "Over 75% of credit used",
         "of": "of a {amount} credit ceiling",
         "tier": "Account tier",
         "cadence": "Statement schedule",
@@ -3250,7 +3301,7 @@
         "party": "{count, plural, one {# guest} other {# guests}}",
         "status": {
           "CONFIRMED": "Confirmed",
-          "NEEDS_ACCEPTANCE": "Needs acceptance"
+          "PENDING_CONFIRMATION": "Pending confirmation"
         }
       },
       "recent": {
@@ -3345,7 +3396,7 @@
       "name": "Full name",
       "namePlaceholder": "Your name",
       "email": "Email",
-      "emailPlaceholder": "name@example.com",
+      "emailPlaceholder": "you@email.com",
       "phone": "Phone",
       "phonePlaceholder": "9xx xxx xxx",
       "emailOrPhoneHint": "Provide an email or phone so we can reach you.",

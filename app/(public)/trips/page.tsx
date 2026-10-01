@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { TripCatalogScreen } from "@/components/trips/TripCatalogScreen";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getTranslations } from "@/i18n/serverTranslations";
 import type { ListingSearchParams } from "@/lib/search/listingParams";
 
 export async function generateMetadata(): Promise<Metadata> {

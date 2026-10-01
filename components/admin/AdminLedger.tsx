@@ -1,25 +1,26 @@
 "use client";
 
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { BookOpen, Download } from "lucide-react";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { creditUsedClass, ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
-import { Badge } from "@/components/ui/Badge";
+import { LedgerStandingBadge } from "@/components/admin/LedgerStandingBadge";
+import { creditUsedClass } from "@/components/admin/ledgerStanding";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminLedger } from "@/hooks/useAdminLedger";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
 import { formatPercent } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import {
@@ -32,6 +33,9 @@ import type { LandingPillarId } from "@/lib/mock/landing";
 const ALL = "all";
 
 const PILLARS: LandingPillarId[] = ["hotels", "dining", "trips", "events", "guides"];
+
+/** Slightly tighter cells so all seven columns fit a 1280px admin screen (EN and AR). */
+const LEDGER_CELL = "px-4";
 
 function matchesLedgerQuery(row: AdminLedgerRow, query: string): boolean {
   const needle = query.trim().toLowerCase();
@@ -95,41 +99,33 @@ export function AdminLedger(): ReactNode {
 
   const paging = usePagination(filtered, `${query}|${standing}|${category}`);
 
-  const columns: TableColumn<AdminLedgerRow>[] = [
+  const baseColumns: TableColumn<AdminLedgerRow>[] = [
     {
       id: "provider",
       header: t("columns.provider"),
       cell: (row) => (
-        <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium">{localizedName(row.provider, loc)}</span>
-          <span className="text-prose-muted truncate text-xs">{tPillars(row.category)}</span>
+        <div className="flex max-w-36 min-w-0 flex-col gap-1">
+          <span className="font-medium break-words">{localizedName(row.provider, loc)}</span>
+          <span className="text-prose-muted text-xs">{tPillars(row.category)}</span>
         </div>
       ),
     },
     {
       id: "rating",
       header: t("columns.rating"),
-      cell: (row) => <AdminNamedRating about="provider" nameEn={row.provider.en} />,
+      cell: (row) => <AdminNamedRating about="provider" nameEn={row.provider.en} layout="stack" />,
     },
     {
       id: "outstanding",
       header: t("columns.outstanding"),
       align: "end",
-      cell: (row) => (
-        <span className="font-medium tabular-nums whitespace-nowrap">
-          {formatSyp(outstandingSyp(row), loc)}
-        </span>
-      ),
+      cell: (row) => <StackedMoney amountSyp={outstandingSyp(row)} locale={loc} strong />,
     },
     {
       id: "accrued",
       header: t("columns.accrued"),
       align: "end",
-      cell: (row) => (
-        <span className="text-prose-muted tabular-nums whitespace-nowrap">
-          {formatSyp(row.accruedSyp, loc)}
-        </span>
-      ),
+      cell: (row) => <StackedMoney amountSyp={row.accruedSyp} locale={loc} />,
     },
     {
       id: "credit",
@@ -140,9 +136,7 @@ export function AdminLedger(): ReactNode {
           <span className={cn("font-semibold tabular-nums", creditUsedClass(row.creditUsed))}>
             {formatPercent(row.creditUsed, loc, 0)}
           </span>
-          <span className="text-prose-muted text-xs tabular-nums whitespace-nowrap">
-            {formatSyp(row.creditCeilingSyp, loc)}
-          </span>
+          <StackedMoney amountSyp={row.creditCeilingSyp} locale={loc} small />
         </div>
       ),
     },
@@ -162,10 +156,15 @@ export function AdminLedger(): ReactNode {
       id: "standing",
       header: t("columns.standing"),
       cell: (row) => (
-        <Badge {...ledgerStandingBadgeProps(row.standing)}>{t(`standing.${row.standing}`)}</Badge>
+        <LedgerStandingBadge standing={row.standing} />
       ),
     },
   ];
+  const columns = baseColumns.map((column) => ({
+    ...column,
+    className: LEDGER_CELL,
+    headerClassName: LEDGER_CELL,
+  }));
 
   if (isError) {
     return (

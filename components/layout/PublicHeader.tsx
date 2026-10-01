@@ -1,10 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Coins, Menu as MenuIcon, UserRound } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Coins, Menu as MenuIcon, UserRound, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   useEffect,
   useId,
@@ -26,7 +24,10 @@ import {
 import { controlStyle } from "@/components/ui/controlScale";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select, type SelectOption } from "@/components/ui/Select";
+import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useOverlay } from "@/hooks/useOverlay";
+import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { cn } from "@/lib/cn";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
@@ -111,6 +112,9 @@ type HeaderMobileNavProps = {
   onCurrencyChange: (value: string) => void;
 };
 
+/** placeAnchoredMenu opens the panel this far below the trigger. */
+const DRAWER_OFFSET_PX = 8;
+
 function HeaderMobileNav({
   items,
   showGuestAuth,
@@ -139,8 +143,10 @@ function HeaderMobileNav({
       }
       setBox(
         placeAnchoredMenu(trigger, {
-          estimatedHeight: 12 + items.length * 40 + 160,
-          maxHeightCap: 420,
+          estimatedHeight: 12 + items.length * 44 + 200,
+          // Grow to the space under the header (less a 16px margin) so the language switch at the
+          // bottom is never cut off; taller lists scroll inside the panel.
+          maxHeightCap: window.innerHeight - trigger.getBoundingClientRect().bottom - DRAWER_OFFSET_PX - 16,
           width: "max-content",
           minWidth: Math.max(trigger.getBoundingClientRect().width, MOBILE_MENU_MIN_WIDTH_PX),
           // Open from trigger start so the panel stays on-screen on ~375.
@@ -174,20 +180,14 @@ function HeaderMobileNav({
       setOpen(false);
     }
 
-    function onKeyDown(event: globalThis.KeyboardEvent): void {
-      if (event.key === "Escape") {
-        setOpen(false);
-        triggerRef.current?.focus();
-      }
-    }
-
     document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
+
+  // Focus moves into the drawer and stays there; Escape closes it and focus returns to the menu button.
+  const { onPanelKeyDown } = useOverlay({ open: open && box !== null, onClose: () => setOpen(false), panelRef });
 
   function onTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>): void {
     if (event.key === "ArrowDown" && !open) {
@@ -202,11 +202,28 @@ function HeaderMobileNav({
           <div
             ref={panelRef}
             id={menuId}
-            role="menu"
+            role="dialog"
+            aria-modal="true"
             aria-label={t("navLabel")}
+            onKeyDown={onPanelKeyDown}
             style={{ ...controlStyle({ size: "sm", defaultRadius: "0.5rem" }), ...box }}
-            className={cn(SELECT_MENU_BASE, SELECT_MENU_VARIANT.glass, "w-max max-w-[min(100vw-2rem,20rem)]")}
+            className={cn(
+              SELECT_MENU_BASE,
+              SELECT_MENU_VARIANT.glass,
+              "w-max max-w-[min(100vw-2rem,20rem)] max-h-none overscroll-contain",
+            )}
           >
+            <div className="flex justify-end px-1 pb-1">
+              <button
+                type="button"
+                aria-label={t("closeMenu")}
+                title={t("closeMenu")}
+                className="text-prose-muted hover:bg-option-hover hover:text-prose flex size-11 items-center justify-center rounded-full transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <X className="size-4" aria-hidden />
+              </button>
+            </div>
             {items.map((item) => {
               const label = t(item.labelKey);
               const className = cn(SELECT_OPTION, "min-h-11 w-full no-underline");
@@ -217,7 +234,6 @@ function HeaderMobileNav({
                   <a
                     key={item.href}
                     href={item.href}
-                    role="menuitem"
                     className={className}
                     onClick={onNavigate}
                   >
@@ -230,7 +246,6 @@ function HeaderMobileNav({
                 <Link
                   key={item.href}
                   href={item.href}
-                  role="menuitem"
                   className={className}
                   onClick={onNavigate}
                 >
@@ -241,12 +256,10 @@ function HeaderMobileNav({
 
             {showGuestAuth ? (
               <div
-                role="none"
                 className="border-glass-border mt-1 flex flex-col gap-1 border-t px-3 py-3 sm:hidden"
               >
                 <Link
                   href={authHrefs.login}
-                  role="menuitem"
                   className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
                   onClick={() => setOpen(false)}
                 >
@@ -254,7 +267,6 @@ function HeaderMobileNav({
                 </Link>
                 <Link
                   href={authHrefs.register}
-                  role="menuitem"
                   className={cn(SELECT_OPTION, "min-h-11 w-full no-underline")}
                   onClick={() => setOpen(false)}
                 >
@@ -264,7 +276,6 @@ function HeaderMobileNav({
             ) : null}
 
             <div
-              role="none"
               className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 xl:hidden"
             >
               <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
@@ -274,7 +285,6 @@ function HeaderMobileNav({
             </div>
 
             <div
-              role="none"
               className="border-glass-border mt-1 flex flex-col gap-3 border-t px-3 py-3 sm:hidden"
             >
               <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
@@ -284,7 +294,6 @@ function HeaderMobileNav({
             </div>
 
             <div
-              role="none"
               className="border-glass-border mt-1 flex flex-col gap-2 border-t px-3 py-3 md:hidden"
             >
               <p className="text-prose-muted text-[0.65rem] font-semibold tracking-wide uppercase">
@@ -316,7 +325,7 @@ function HeaderMobileNav({
         ref={triggerRef}
         type="button"
         aria-label={t("openMenu")}
-        aria-haspopup="menu"
+        aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
         className="text-prose-muted hover:bg-option-hover hover:text-prose flex size-11 items-center justify-center rounded-full transition-colors"
@@ -338,9 +347,9 @@ export function PublicHeader(): ReactNode {
   const currency = useCurrencyStore((state) => state.currency);
   const setCurrency = useCurrencyStore((state) => state.setCurrency);
   const touristSignedIn = mounted && isAuthenticated && user.role === "TOURIST";
-  const pathname = usePathname();
-  // Sign-in from any page but home brings the user back to it (see lib/auth/returnTo).
-  const returnTo = pathname === "/" ? undefined : pathname;
+  const currentPath = useCurrentPath();
+  // Sign-in from any page but home brings the user back to it, query included (lib/auth/returnTo).
+  const returnTo = currentPath === "/" ? undefined : currentPath;
   const authHrefs: AuthHrefs = {
     login: withReturnTo("/login", returnTo),
     register: withReturnTo("/register", returnTo),

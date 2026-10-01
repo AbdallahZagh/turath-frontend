@@ -10,7 +10,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -22,6 +22,7 @@ import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderLedger } from "@/hooks/useProviderLedger";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatPercent } from "@/lib/format/number";
@@ -275,9 +276,16 @@ export function ProviderLedgerScreen(): ReactNode {
               <AlertTriangle className={cn("size-5", standing.icon)} aria-hidden />
             </span>
             <div>
-              <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">
-                {t("credit.eyebrow")}
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">
+                  {t("credit.eyebrow")}
+                </p>
+                {ledger.standing === "warning" ? (
+                  <Badge variant="warning" tooltip={t("credit.warningTooltip")}>
+                    {t("credit.warningBadge")}
+                  </Badge>
+                ) : null}
+              </div>
               <h2 className="font-heading text-prose mt-1 text-xl font-semibold">
                 {t(`credit.state.${ledger.standing}.title`)}
               </h2>

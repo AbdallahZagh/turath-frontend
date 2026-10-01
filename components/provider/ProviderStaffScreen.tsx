@@ -11,7 +11,7 @@ import {
   UserPlus,
   UsersRound,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { ProviderStaffModal } from "@/components/provider/ProviderStaffModal";
@@ -26,8 +26,10 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useProviderStaff, useSetProviderStaffActive } from "@/hooks/useProviderStaff";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
+import { formatCount } from "@/lib/format/number";
 import type { ProviderStaffMember } from "@/lib/mock/providerStaff";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "@/store/toastStore";
@@ -191,7 +193,7 @@ export function ProviderStaffScreen(): ReactNode {
               <Icon className="size-5" aria-hidden />
             </span>
             <div>
-              <p className="font-heading text-prose text-3xl font-semibold tabular-nums">{value}</p>
+              <p className="font-heading text-prose text-3xl font-semibold tabular-nums">{formatCount(value, locale)}</p>
               <p className="text-prose-muted mt-0.5 text-xs font-semibold uppercase tracking-wide">{label}</p>
             </div>
           </GlassPanel>

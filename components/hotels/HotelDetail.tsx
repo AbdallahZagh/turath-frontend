@@ -12,7 +12,7 @@ import {
   UsersRound,
   Zap,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
@@ -26,11 +26,17 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
+import { useBookingSearch } from "@/hooks/useBookingSearch";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { formatPickerTime, formatShortDate } from "@/lib/format/datetime";
+import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
+import { withBookingSearch } from "@/lib/search/bookingSearch";
 
 type HotelDetailProps = {
   hotelId: string;
@@ -51,6 +57,8 @@ function HotelDetailSkeleton(): ReactNode {
 
 export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps): ReactNode {
   const t = useTranslations("hotels");
+  const paths = useBookingPaths();
+  const bookingSearch = useBookingSearch();
   const tDetail = useTranslations("hotels.detail");
   const tRooms = useTranslations("hotels.roomTypes");
   const tGov = useTranslations("landing.governorates");
@@ -117,7 +125,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
             </h1>
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
               <StarRating value={hotel.rating} size="md" label={t("ratingLabel", { rating: hotel.rating })} />
-              <span className="text-prose font-semibold">{hotel.rating.toFixed(1)}</span>
+              <span className="text-prose font-semibold">{formatRating(hotel.rating, loc)}</span>
               <span className="text-prose-muted">{t("reviewsCount", { count: hotel.reviewCount })}</span>
               <span aria-hidden className="text-prose-muted">·</span>
               <span className="text-prose-muted">{localizedName(hotel.address, loc)}</span>
@@ -166,11 +174,11 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
               <dl className="mt-4 grid gap-4 text-sm">
                 <div className="flex items-center justify-between gap-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Clock3 className="size-4" aria-hidden />{tDetail("checkIn")}</dt>
-                  <dd className="text-prose font-medium">{hotel.checkInTime}</dd>
+                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkInTime, loc, "24")}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Clock3 className="size-4" aria-hidden />{tDetail("checkOut")}</dt>
-                  <dd className="text-prose font-medium">{hotel.checkOutTime}</dd>
+                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkOutTime, loc, "24")}</dd>
                 </div>
                 <div className="border-border border-t pt-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Zap className="size-4" aria-hidden />{tDetail("generatorHours")}</dt>
@@ -201,7 +209,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
                       <StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} />
                     </div>
                     <p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p>
-                    <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{review.date}</time>
+                    <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{formatShortDate(review.date, loc)}</time>
                   </article>
                 ))}
               </div>
@@ -217,7 +225,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
           <p className="text-prose-muted text-xs">{t("perNight")}</p>
           <div className="border-border my-5 border-t" />
           <p className="text-prose-muted text-sm leading-relaxed">{tDetail("cashOnArrival")}</p>
-          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} className="mt-5 w-full">
+          <Button href={withBookingSearch(`${paths.checkout}?type=hotel&id=${hotel.id}`, bookingSearch, "hotel")} className="mt-5 w-full">
             <CalendarCheck className="size-5" aria-hidden />
             {tDetail("book")}
           </Button>
@@ -233,7 +241,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
               <span className="text-prose-muted ms-1 font-normal">{t("perNight")}</span>
             </p>
           </div>
-          <Button href={`/bookings/new?type=hotel&id=${hotel.id}`} size="sm" className="shrink-0">
+          <Button href={withBookingSearch(`${paths.checkout}?type=hotel&id=${hotel.id}`, bookingSearch, "hotel")} size="sm" className="shrink-0">
             <CalendarCheck className="size-4" aria-hidden />
             {tDetail("book")}
           </Button>

@@ -3,7 +3,7 @@
 import { Bookmark, MapPin, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -13,6 +13,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useSavedPlaces, useToggleSavedPlace } from "@/hooks/useSavedPlaces";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import type { SavedPlaceCategory } from "@/lib/mock/savedPlaces";
 import { localizedName } from "@/lib/i18n/localized";
 import { cn } from "@/lib/cn";

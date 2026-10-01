@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import type { CouponResult } from "@/lib/mock/bookings";
 
 type BookingCouponFeedbackProps = {

@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp, viewportOnce } from "@/lib/motion/variants";
 
 export function ContactUs(): ReactNode {

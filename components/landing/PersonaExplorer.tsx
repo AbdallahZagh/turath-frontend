@@ -2,12 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
 import { useLiveFeaturedSlot } from "@/hooks/useHomeFeatured";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/i18n/config";
 import { localizedName } from "@/lib/i18n/localized";

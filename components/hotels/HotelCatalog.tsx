@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDays, Hotel as HotelIcon, SlidersHorizontal } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { HotelCard } from "@/components/hotels/HotelCard";
@@ -13,6 +13,9 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useHotels } from "@/hooks/useHotels";
+import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { formatMediumDate } from "@/lib/format/datetime";
 import type { HotelFilters } from "@/lib/mock/hotels";
 
 type HotelCatalogProps = {
@@ -51,6 +54,8 @@ export function HotelCatalog({
   detailBasePath = "/hotels",
 }: HotelCatalogProps): ReactNode {
   const t = useTranslations("hotels");
+  const locale = useLocale();
+  const loc: Locale = locale === "ar" ? "ar" : "en";
   const tFilters = useTranslations("hotels.filters");
   const [filters, setFilters] = useState<HotelFilters>(initialFilters);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -85,8 +90,11 @@ export function HotelCatalog({
             {checkIn || checkOut ? (
               <Badge icon={<CalendarDays className="size-3.5" aria-hidden />}>
                 {checkIn && checkOut
-                  ? t("searchDates", { checkIn, checkOut })
-                  : t("oneSearchDate", { date: checkIn ?? checkOut ?? "" })}
+                  ? t("searchDates", {
+                      checkIn: formatMediumDate(checkIn, loc),
+                      checkOut: formatMediumDate(checkOut, loc),
+                    })
+                  : t("oneSearchDate", { date: formatMediumDate(checkIn ?? checkOut ?? "", loc) })}
               </Badge>
             ) : null}
             <Button

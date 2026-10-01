@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { subYears } from "date-fns";
 import { motion } from "framer-motion";
 import { ImagePlus, Plus, X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -35,6 +35,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { useRegisterProvider } from "@/hooks/useAuth";
 import { isLocale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { toIsoDate } from "@/lib/format/datetime";
 import { SYRIA_ISO2 } from "@/lib/geo/countries";
 import { GOVERNORATES } from "@/lib/mock/landing";

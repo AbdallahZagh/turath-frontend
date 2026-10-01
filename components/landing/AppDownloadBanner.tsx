@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Apple, MapPinned, PlayCircle, QrCode } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp, viewportOnce } from "@/lib/motion/variants";
 
 type PhoneMockupProps = {

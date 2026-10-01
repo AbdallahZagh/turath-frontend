@@ -1,7 +1,6 @@
 "use client";
 
 import { RotateCcw, SlidersHorizontal, Ticket } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
@@ -9,6 +8,7 @@ import { DatePicker } from "@/components/ui/DatePicker";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Stepper } from "@/components/ui/Stepper";
+import { useTranslations } from "@/i18n/translations";
 import { GOVERNORATES } from "@/lib/mock/landing";
 import type { EventFilters, EventPriceRange, EventTierId } from "@/lib/mock/events";
 

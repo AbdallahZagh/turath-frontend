@@ -1,8 +1,9 @@
 "use client";
 
 import { QrCode, ShieldCheck, Wallet, type LucideIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+
+import { useTranslations } from "@/i18n/translations";
 
 const TRUST_ITEMS: {
   key: "cashOnArrivalTitle" | "offlineQrTitle" | "licensedProvidersTitle";

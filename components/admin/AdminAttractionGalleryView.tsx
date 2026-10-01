@@ -1,11 +1,12 @@
 "use client";
 
 import { ImageIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";

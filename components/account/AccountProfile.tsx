@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDays, Cake, Flag, Globe2, Mail, Phone, ShieldCheck } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
@@ -13,8 +13,11 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { useTouristAccount } from "@/hooks/useTouristAccount";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { toDisplayDigits } from "@/lib/format/digits";
 import { initialsFromName } from "@/lib/format/initials";
+import { formatRating, formatReliabilityScore } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { countryName } from "@/lib/geo/countries";
 import { isCurrency, useCurrencyStore } from "@/store/currencyStore";
@@ -96,7 +99,7 @@ export function AccountProfile(): ReactNode {
       <div className="space-y-6">
         <GlassPanel className="p-6 sm:p-7">
           <div className="flex items-start justify-between gap-4">
-            <div><p className="text-prose-muted text-sm">{t("reliability.score")}</p><p className="font-heading text-prose mt-1 text-5xl font-semibold">{account.reliabilityScore}<span className="text-prose-muted text-xl">/100</span></p></div>
+            <div><p className="text-prose-muted text-sm">{t("reliability.score")}</p><p className="font-heading text-prose mt-1 text-5xl font-semibold">{formatReliabilityScore(account.reliabilityScore, loc)}<span className="text-prose-muted text-xl">{toDisplayDigits("/100", loc)}</span></p></div>
             <span className="bg-primary/12 text-primary rounded-full px-3 py-1 text-xs font-bold">{t(`reliability.tiers.${account.tier}`)}</span>
           </div>
           <div className="bg-border mt-5 h-2 overflow-hidden rounded-full"><div className="bg-primary h-full rounded-full" style={{ width: `${account.reliabilityScore}%` }} /></div>
@@ -111,7 +114,7 @@ export function AccountProfile(): ReactNode {
               <p className="text-prose-muted mt-1 text-sm">{t("providerRating.description")}</p>
             </div>
             <div className="text-end">
-              <p className="font-heading text-prose text-3xl font-semibold">{account.providerRating.average.toFixed(1)}</p>
+              <p className="font-heading text-prose text-3xl font-semibold">{formatRating(account.providerRating.average, loc)}</p>
               <p className="text-prose-muted text-xs">{t("providerRating.count", { count: account.providerRating.count })}</p>
             </div>
           </div>

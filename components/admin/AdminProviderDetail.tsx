@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
 import { Building2 } from "lucide-react";
 
 import { AdminProviderActivity } from "@/components/admin/AdminProviderActivity";
@@ -16,6 +15,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminCommissions } from "@/hooks/useAdminCommissions";
 import { useAdminProvider, useSetAdminProviderStatus } from "@/hooks/useAdminProviders";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
+import { useTranslations } from "@/i18n/translations";
 import { DEFAULT_COMMISSION_RATE } from "@/lib/mock/adminCommissions";
 import type { ProviderStatus } from "@/lib/mock/adminProviders";
 import { reviewSummary } from "@/lib/mock/adminReviews";

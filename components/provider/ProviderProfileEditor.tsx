@@ -15,7 +15,7 @@ import {
   Upload,
 } from "lucide-react";
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRef, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
@@ -28,6 +28,9 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { formatPickerTime } from "@/lib/format/datetime";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import type { ProviderProfile } from "@/lib/mock/providerProfile";
 import {
   PROVIDER_PROFILE_AMENITIES,
@@ -119,7 +122,7 @@ function ProfilePreview({ values, locale }: { values: ProviderProfileValues; loc
           </div>
           <div className="flex items-center gap-2">
             <Clock3 className="text-primary size-4 shrink-0" aria-hidden />
-            <span className="text-prose">{values.opensAt} – {values.closesAt}</span>
+            <span className="text-prose">{formatPickerTime(values.opensAt, locale, "24")} – {formatPickerTime(values.closesAt, locale, "24")}</span>
           </div>
         </dl>
       </div>
@@ -310,7 +313,7 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               )}
             />
             <FormField label={t("fields.phone")} error={form.formState.errors.phone}>
-              <Input variant="glass" dir="ltr" {...form.register("phone")} />
+              <Input variant="glass" dir="ltr" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
             </FormField>
             <FormField label={t("fields.addressEn")} error={form.formState.errors.addressEn}>
               <Input variant="glass" dir="ltr" {...form.register("addressEn")} />

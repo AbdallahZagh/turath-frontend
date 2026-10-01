@@ -1,10 +1,12 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useId, useMemo, useState, type ReactNode } from "react";
 
 import { isLocale, type Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import { countryDialPrefix, SYRIA_ISO2 } from "@/lib/geo/countries";
 
 import { CountryFlag } from "./CountryFlag";
@@ -43,7 +45,7 @@ const PHONE_PREFIX = [
 ].join(" ");
 
 const PHONE_INPUT = [
-  "text-prose placeholder:text-prose-muted min-w-0 flex-1 self-stretch bg-transparent text-start outline-none",
+  "text-prose placeholder:text-prose-muted min-w-0 flex-1 self-stretch bg-transparent text-left outline-none",
   "px-3 py-(--control-py) leading-none text-(length:--control-font-size)",
   "dark:text-dust dark:placeholder:text-dust",
 ].join(" ");
@@ -129,15 +131,17 @@ export function PhoneField({
             ) : null}
           </span>
         )}
+        {/* Phone numbers are always Latin, left-to-right and ungrouped; the tel keypad allows + (docs/PAGES.md §0, "Digits"). */}
         <input
           id={inputId}
           name={name}
           type="tel"
+          dir="ltr"
           inputMode="tel"
           autoComplete={autoComplete}
           required={required}
           value={value}
-          onChange={(event) => onChange(event.target.value)}
+          onChange={(event) => onChange(normalizePhoneInput(event.target.value))}
           placeholder={placeholder}
           aria-label={label}
           className={PHONE_INPUT}

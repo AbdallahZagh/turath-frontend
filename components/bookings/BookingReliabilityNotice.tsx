@@ -1,10 +1,10 @@
 "use client";
 
 import { AlertTriangle } from "lucide-react";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { useTouristAccount } from "@/hooks/useTouristAccount";
+import { useTranslations } from "@/i18n/translations";
 import { RELIABILITY_PROVIDER_ACCEPTANCE_BELOW } from "@/lib/mock/touristAccount";
 
 export function BookingReliabilityNotice(): ReactNode {

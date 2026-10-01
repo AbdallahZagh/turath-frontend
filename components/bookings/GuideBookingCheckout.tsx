@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeft,
-  CalendarDays,
   Clock3,
   Languages,
   MapPin,
@@ -12,26 +11,30 @@ import {
   Tag,
   UserRoundSearch,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type FieldError } from "react-hook-form";
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
+import { DatePicker } from "@/components/ui/DatePicker";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
+import { useBookingPaths } from "@/hooks/useBookingPaths";
 import { useCreateGuideBooking, useValidateBookingCoupon } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useGuide } from "@/hooks/useGuides";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -64,6 +67,7 @@ export function GuideBookingCheckout({
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
   const router = useRouter();
+  const paths = useBookingPaths();
   const formatMoney = useFormatSyp();
   const guideQuery = useGuide(guideId);
   const createBooking = useCreateGuideBooking();
@@ -80,13 +84,15 @@ export function GuideBookingCheckout({
       couponCode: "",
     },
   });
-  const date = useWatch({ control: form.control, name: "date" });
+  const pickedDate = useWatch({ control: form.control, name: "date" });
   const duration = useWatch({ control: form.control, name: "duration" });
   const hours = useWatch({ control: form.control, name: "hours" });
   const language = useWatch({ control: form.control, name: "language" });
   const focusArea = useWatch({ control: form.control, name: "focusArea" });
   const couponCode = useWatch({ control: form.control, name: "couponCode" });
   const guide = guideQuery.data;
+  // A carried or typed date the guide is not available on is dropped, never booked.
+  const date = guide?.availability.includes(pickedDate) ? pickedDate : "";
   const listPriceSyp = guide
     ? duration === "hourly"
       ? guide.rates.hourly * hours
@@ -118,17 +124,15 @@ export function GuideBookingCheckout({
         title={t("states.unavailableTitle")}
         description={t("states.unavailableBody")}
         action={
-          <Button href="/guides" variant="outline">
+          <Button href={paths.catalog("guides")} variant="outline">
             {t("backToGuides")}
           </Button>
         }
       />
     );
   const availableGuide = guide;
-  const dates: SelectOption[] = guide.availability.map((value) => ({
-    value,
-    label: formatMediumDate(value, loc),
-  }));
+  const availableDates = [...guide.availability].sort();
+  const urlDateUnavailable = Boolean(initialDate) && pickedDate === initialDate && !date;
   const durations: SelectOption[] = (["hourly", "halfDay", "fullDay"] as const).map((value) => ({
     value,
     label: tg(`durations.${value}`),
@@ -152,6 +156,10 @@ export function GuideBookingCheckout({
     );
   }
   async function onSubmit(values: GuideBookingValues): Promise<void> {
+    if (!availableGuide.availability.includes(values.date)) {
+      form.setError("date", { message: "dateRequired" });
+      return;
+    }
     try {
       const booking = await createBooking.mutateAsync({
         guideId: availableGuide.id,
@@ -165,7 +173,7 @@ export function GuideBookingCheckout({
         cashDueSyp,
         couponCode: activeCoupon?.code ?? null,
       });
-      router.push(`/bookings/${booking.id}`);
+      router.push(paths.voucher(booking.id));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
@@ -173,14 +181,7 @@ export function GuideBookingCheckout({
   return (
     <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
-        <div className="border-border border-b pb-6">
-          <p className="text-primary text-sm font-semibold">{t("eyebrow")}</p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
-            {t("title")}
-          </h1>
-          <p className="text-prose-muted mt-2">{localizedName(guide.name, loc)}</p>
-        </div>
-        <form className="mt-7 space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("details")}</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -189,18 +190,25 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="date"
                   render={({ field }) => (
-                    <Select
+                    <DatePicker
                       variant="main"
+                      dateStyle="short"
                       required
                       label={t("date")}
                       placeholder={t("datePlaceholder")}
-                      options={dates}
-                      value={field.value}
+                      min={availableDates[0]}
+                      max={availableDates.at(-1)}
+                      centerOn={availableDates[0]}
+                      availableDates={availableDates}
+                      showToday={false}
+                      value={date}
                       onChange={field.onChange}
-                      icon={<CalendarDays className="size-4" />}
                     />
                   )}
                 />
+                {urlDateUnavailable && !form.formState.errors.date ? (
+                  <p className="text-prose-muted text-xs">{t("dateUnavailable")}</p>
+                ) : null}
                 <AuthFieldError message={errorMessage(te, form.formState.errors.date)} />
               </div>
               <div className="space-y-1.5">
@@ -292,6 +300,8 @@ export function GuideBookingCheckout({
             </div>
           </section>
           <BookingReliabilityNotice />
+
+          <BookingPolicyNote />
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -377,7 +387,7 @@ export function GuideBookingCheckout({
         >
           {createBooking.isPending ? t("confirming") : t("confirm")}
         </Button>
-        <Button href={`/guides/${guide.id}`} variant="glass" className="mt-3 w-full">
+        <Button href={paths.listing("guides", guide.id)} variant="glass" className="mt-3 w-full">
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("backToGuide")}
         </Button>

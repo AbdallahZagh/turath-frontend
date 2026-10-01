@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import type { CSSProperties, ReactNode } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 export type LogoVariant = "main" | "simple";

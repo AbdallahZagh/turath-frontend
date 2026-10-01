@@ -1,11 +1,12 @@
 "use client";
 
 import { CheckCircle2, EyeOff, Flag } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Menu, type MenuItem } from "@/components/ui/Menu";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminReview, ReviewModerationStatus } from "@/lib/mock/adminReviews";
 

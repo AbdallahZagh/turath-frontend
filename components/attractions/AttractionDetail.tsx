@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, BookOpen, Clock3, Landmark, MapPin, Navigation, Ticket } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { GuideCard } from "@/components/guides/GuideCard";
@@ -22,6 +22,7 @@ import { useGuides } from "@/hooks/useGuides";
 import { useHotels } from "@/hooks/useHotels";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";

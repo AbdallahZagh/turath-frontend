@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   useState,
@@ -19,7 +19,10 @@ import { controlStyle } from "@/components/ui/controlScale";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Stepper } from "@/components/ui/Stepper";
+import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { formatPickerTime } from "@/lib/format/datetime";
 import { BENTO_PILLARS, GOVERNORATES, type LandingPillarId } from "@/lib/mock/landing";
 
 type SearchTabLabelKey = "tabHotels" | "tabDining" | "tabTrips" | "tabEvents" | "tabGuides";
@@ -78,6 +81,8 @@ type Ripple = { id: number; x: number; y: number };
 
 export function OmniSearchWidget(): ReactNode {
   const t = useTranslations("landing.search");
+  const locale = useLocale();
+  const loc: Locale = locale === "ar" ? "ar" : "en";
   const tGov = useTranslations("landing.governorates");
   const router = useRouter();
 
@@ -237,7 +242,7 @@ export function OmniSearchWidget(): ReactNode {
                 <Select
                   {...SEARCH_FIELD}
                   label={t("timeLabel")}
-                  options={TIME_SLOTS.map((slot) => ({ value: slot, label: slot }))}
+                  options={TIME_SLOTS.map((slot) => ({ value: slot, label: formatPickerTime(slot, loc, "24") }))}
                   value={timeSlot}
                   onChange={setTimeSlot}
                 />

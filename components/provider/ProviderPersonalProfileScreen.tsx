@@ -14,7 +14,7 @@ import {
   UserRound,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm, type FieldError } from "react-hook-form";
 
@@ -30,6 +30,8 @@ import {
   useUpdateProviderPersonalProfile,
 } from "@/hooks/useProviderPersonalProfile";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
 import { countryName } from "@/lib/geo/countries";
@@ -171,7 +173,7 @@ function OwnerProfileEditor({ profile }: { profile: ProviderOwnerPersonalProfile
             <Input variant="glass" type="email" dir="ltr" autoComplete="email" {...form.register("email")} />
           </Field>
           <Field label={t("fields.phone")} error={form.formState.errors.phone}>
-            <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" {...form.register("phone")} />
+            <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
           </Field>
         </div>
         <div className="grid gap-5 sm:grid-cols-2">

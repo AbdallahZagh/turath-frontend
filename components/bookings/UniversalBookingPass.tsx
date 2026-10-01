@@ -39,9 +39,6 @@ export type BookingPassDiscount = {
 };
 
 type UniversalBookingPassProps = {
-  pageEyebrow: string;
-  pageTitle: string;
-  pageDescription: string;
   passLabel: string;
   downloadLabel: string;
   printLabel: string;
@@ -84,9 +81,6 @@ function TicketBarcode(): ReactNode {
 }
 
 export function UniversalBookingPass({
-  pageEyebrow,
-  pageTitle,
-  pageDescription,
   passLabel,
   downloadLabel,
   printLabel,
@@ -131,18 +125,7 @@ export function UniversalBookingPass({
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between print:hidden">
-        <div>
-          <p className="text-primary text-xs font-bold uppercase tracking-[0.18em]">
-            {pageEyebrow}
-          </p>
-          <h1 className="font-heading text-prose mt-2 text-3xl font-semibold sm:text-4xl">
-            {pageTitle}
-          </h1>
-          <p className="text-prose-muted mt-2 max-w-2xl text-sm leading-relaxed">
-            {pageDescription}
-          </p>
-        </div>
+      <div className="mb-5 flex justify-end print:hidden">
         <div className="flex flex-wrap gap-2">
           <Button variant="glass" size="sm" onClick={downloadQr}>
             <Download className="size-4" aria-hidden />

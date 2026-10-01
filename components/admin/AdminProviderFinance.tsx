@@ -1,22 +1,24 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { ADMIN_PATHS } from "@/config/adminRoutes";
-import { ledgerStandingBadgeProps } from "@/components/admin/ledgerStanding";
-import { Badge } from "@/components/ui/Badge";
+import { LedgerStandingBadge } from "@/components/admin/LedgerStandingBadge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { useSaveAdminProviderFinance } from "@/hooks/useAdminProviders";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatMediumDate } from "@/lib/format/datetime";
-import { formatSyp } from "@/lib/format/money";
-import { formatPercent } from "@/lib/format/number";
+import { parseNumberInput } from "@/lib/format/digits";
+import { formatSyp, formatSypLabel } from "@/lib/format/money";
+import { formatCount, formatPercent } from "@/lib/format/number";
 import type { AdminLedgerRow } from "@/lib/mock/adminLedger";
 import type { AdminProvider } from "@/lib/mock/adminProviders";
+import { parseCreditCeilingInput } from "@/lib/validation/creditCeiling";
 import { toast } from "@/store/toastStore";
 
 type AdminProviderFinanceProps = {
@@ -35,8 +37,8 @@ function rateToInput(rate: number | null): string {
 }
 
 function parsePercent(value: string): number | undefined {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed < 0 || parsed > 100) {
+  const parsed = parseNumberInput(value, { decimal: true });
+  if (parsed === undefined || parsed > 100) {
     return undefined;
   }
   return parsed / 100;
@@ -62,8 +64,12 @@ export function AdminProviderFinance({
     provider.creditOverrideSyp === null ? "" : String(provider.creditOverrideSyp),
   );
 
+  /** A typed credit limit that is not a clean amount: shown under the field, never saved as 0. */
+  const [creditInvalid, setCreditInvalid] = useState(false);
+
   if (provider !== source) {
     setSource(provider);
+    setCreditInvalid(false);
     setCommission(rateToInput(provider.commissionOverride));
     setCredit(provider.creditOverrideSyp === null ? "" : String(provider.creditOverrideSyp));
   }
@@ -75,9 +81,7 @@ export function AdminProviderFinance({
   function onSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const trimmedRate = commission.trim();
-    const trimmedCredit = credit.trim();
     let commissionOverride: number | null = null;
-    let creditOverrideSyp: number | null = null;
 
     if (trimmedRate !== "") {
       const parsed = parsePercent(trimmedRate);
@@ -88,14 +92,15 @@ export function AdminProviderFinance({
       commissionOverride = parsed;
     }
 
-    if (trimmedCredit !== "") {
-      const amount = Number(trimmedCredit);
-      if (!Number.isFinite(amount) || amount <= 0) {
-        toast.error(t("detail.financeInvalid"));
-        return;
-      }
-      creditOverrideSyp = Math.round(amount);
+    // Blank removes the override, so the business uses its tier default.
+    const ceiling = parseCreditCeilingInput(credit);
+    if (ceiling.kind === "invalid") {
+      setCreditInvalid(true);
+      toast.error(t("detail.financeInvalid"));
+      return;
     }
+    const creditOverrideSyp = ceiling.kind === "amount" ? ceiling.amountSyp : null;
+    setCreditInvalid(false);
 
     saveFinance.mutate(
       { id: provider.id, finance: { commissionOverride, creditOverrideSyp } },
@@ -117,7 +122,7 @@ export function AdminProviderFinance({
         <p className="text-prose-muted text-sm">
           {t("detail.tier")}: {tTiers(`tiers.${provider.tier}`)}
         </p>
-        <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+        <form className="flex flex-col gap-4" noValidate onSubmit={onSubmit}>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">{t("detail.commission")}</span>
             <div className="flex items-center gap-2">
@@ -125,10 +130,7 @@ export function AdminProviderFinance({
                 variant="glass"
                 size="sm"
                 type="number"
-                min={0}
-                max={100}
-                step={0.1}
-                inputMode="decimal"
+                step="any"
                 value={commission}
                 onChange={(event) => setCommission(event.target.value)}
                 label={t("detail.commission")}
@@ -149,17 +151,17 @@ export function AdminProviderFinance({
             <Input
               variant="glass"
               size="sm"
-              type="number"
-              min={1}
-              step={1000}
-              inputMode="numeric"
+              amount
               value={credit}
               onChange={(event) => setCredit(event.target.value)}
               label={t("detail.creditCeiling")}
+              placeholder={formatCount(tierCeilingSyp, loc)}
+              error={creditInvalid ? tUi("invalidAmount") : undefined}
             />
             <span className="text-prose-muted text-xs">
-              {t("detail.creditHint")}{" "}
-              {t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}
+              {credit.trim() === ""
+                ? t("detail.creditUsingDefault", { amount: formatSypLabel(tierCeilingSyp, loc) })
+                : `${t("detail.creditHint")} ${t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}`}
             </span>
             <span className="text-prose text-xs tabular-nums">{formatSyp(effectiveCeiling, loc)}</span>
           </label>
@@ -185,9 +187,7 @@ export function AdminProviderFinance({
             <div className="flex items-center justify-between gap-3">
               <dt className="text-prose-muted">{tLedger("columns.standing")}</dt>
               <dd>
-                <Badge {...ledgerStandingBadgeProps(ledger.standing)}>
-                  {tLedger(`standing.${ledger.standing}`)}
-                </Badge>
+                <LedgerStandingBadge standing={ledger.standing} />
               </dd>
             </div>
             <div className="flex items-center justify-between gap-3">

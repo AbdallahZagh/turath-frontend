@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Check, RotateCcw, ShieldOff, X } from "lucide-react";
 
 import { AdminStarRating } from "@/components/admin/AdminStarRating";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
 import { localizedName } from "@/lib/i18n/localized";

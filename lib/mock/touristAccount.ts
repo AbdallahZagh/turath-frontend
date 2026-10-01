@@ -1,3 +1,9 @@
+import { getAdminSettings } from "@/lib/mock/adminSettings";
+import {
+  reliabilityTier,
+  type ReliabilityTier as AdminReliabilityTier,
+} from "@/lib/mock/adminUsers";
+
 /** PAGES.md: checkout warns when the guest score is below this. */
 export const RELIABILITY_PROVIDER_ACCEPTANCE_BELOW = 50;
 
@@ -27,9 +33,12 @@ export type TouristSignupProfile = {
   email: string;
 };
 
+type StoredTouristAccount = Omit<TouristAccount, "tier">;
+
 export type TouristAccount = {
   profile: TouristSignupProfile;
   reliabilityScore: number;
+  /** Derived from the score and the admin reliability cutoffs (Settings), never stored. */
   tier: ReliabilityTier;
   completedCheckIns: number;
   noShows: number;
@@ -43,7 +52,7 @@ export type TouristAccount = {
   };
 };
 
-export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
+const MOCK_TOURIST_ACCOUNT: StoredTouristAccount = {
   profile: {
     name: "Rami Haddad",
     dateOfBirth: "1992-06-14",
@@ -53,7 +62,6 @@ export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
     email: "rami.haddad@example.com",
   },
   reliabilityScore: 100,
-  tier: "VIP",
   completedCheckIns: 7,
   noShows: 0,
   concurrentBookingCap: 4,
@@ -74,7 +82,7 @@ export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
         rating: 5,
         comment: {
           en: "Respectful, punctual, and easy to welcome.",
-          ar: "ضيف محترم وملتزم بالموعد وسهل التعامل.",
+          ar: "محترم وملتزم بالموعد وسهل التعامل.",
         },
       },
       {
@@ -93,17 +101,26 @@ export const MOCK_TOURIST_ACCOUNT: TouristAccount = {
         date: "2026-05-03",
         rating: 4,
         comment: {
-          en: "Clear communication and a pleasant guest.",
-          ar: "تواصل واضح وضيف لطيف.",
+          en: "Clear communication and arrived on time.",
+          ar: "تواصل واضح ووصول في الموعد.",
         },
       },
     ],
   },
 };
 
+const TOURIST_TIER: Record<AdminReliabilityTier, ReliabilityTier> = {
+  vip: "VIP",
+  standard: "STANDARD",
+  restricted: "RESTRICTED",
+  suspended: "SUSPENDED",
+};
+
 export function getMockTouristAccount(): TouristAccount {
+  const cutoffs = getAdminSettings().reliability;
   return {
     ...MOCK_TOURIST_ACCOUNT,
+    tier: TOURIST_TIER[reliabilityTier(MOCK_TOURIST_ACCOUNT.reliabilityScore, cutoffs)],
     profile: { ...MOCK_TOURIST_ACCOUNT.profile },
     history: MOCK_TOURIST_ACCOUNT.history.map((event) => ({ ...event })),
     providerRating: {

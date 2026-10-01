@@ -1,13 +1,14 @@
 "use client";
 
 import { Globe } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition, type ReactNode } from "react";
 
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { type Locale } from "@/i18n/config";
 import { setLocaleCookie } from "@/i18n/set-locale";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 
 type LocaleSwitcherProps = {

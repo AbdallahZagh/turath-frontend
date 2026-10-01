@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -13,7 +12,10 @@ import { OtpInput } from "@/components/auth/OtpInput";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { useSendLoginCode, useVerifyOtp } from "@/hooks/useAuth";
+import { useTranslations } from "@/i18n/translations";
 import { postSignInPath } from "@/lib/auth/home";
+import { withReturnTo } from "@/lib/auth/returnTo";
+import { mockRoleForSignIn } from "@/lib/auth/session";
 import { fadeUp } from "@/lib/motion/variants";
 import { verifyOtpSchema, type VerifyOtpValues } from "@/lib/validation/auth";
 import { fieldMessage } from "@/lib/validation/fieldMessage";
@@ -30,7 +32,6 @@ export function VerifyOtpForm(): ReactNode {
   const pending = useAuthStore((state) => state.pendingVerify);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const completeSession = useAuthStore((state) => state.completeSession);
-  const userRole = useAuthStore((state) => state.user.role);
   const verify = useVerifyOtp();
   const resend = useSendLoginCode();
   const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
@@ -73,8 +74,14 @@ export function VerifyOtpForm(): ReactNode {
         destination: pending.destination,
         code: values.code,
       });
-      const role = pending.flow === "register" || !isAuthenticated ? "TOURIST" : userRole;
+      // Sign-up always creates a user; sign-in opens the matching demo account's portal.
+      const role =
+        pending.flow === "register"
+          ? "TOURIST"
+          : mockRoleForSignIn(pending.channel, pending.destination);
       completeSession(role);
+      // The "Code sent" toast has done its job once the code is accepted.
+      toast.dismissAll();
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
       router.replace(postSignInPath(role, pending.returnTo));
     } catch {
@@ -157,7 +164,7 @@ export function VerifyOtpForm(): ReactNode {
             : t("resendCode")}
         </button>
         <Link
-          href="/login"
+          href={withReturnTo("/login", pending.returnTo)}
           className="text-prose-muted hover:text-prose font-medium transition-colors"
         >
           {t("backToLogin")}

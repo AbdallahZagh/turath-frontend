@@ -4,7 +4,7 @@ import { toIsoDate } from "@/lib/format/datetime";
 import type { CouponBookingType } from "@/lib/mock/couponTargets";
 
 export type TouristBookingStatus =
-  | "PENDING"
+  | "PENDING_CONFIRMATION"
   | "CONFIRMED"
   | "CHECKED_IN"
   | "CANCELLED"

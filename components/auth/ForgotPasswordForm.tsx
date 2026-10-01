@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/Input";
 import { PhoneField } from "@/components/ui/PhoneField";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { useRequestPasswordReset } from "@/hooks/useAuth";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 import {
   forgotEmailSchema,

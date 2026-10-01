@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type ReactNode } from "react";
@@ -13,6 +12,7 @@ import { Logo } from "@/components/logo/Logo";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useResetPassword } from "@/hooks/useAuth";
+import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 import {
   resetPasswordSchema,

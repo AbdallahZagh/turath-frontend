@@ -13,7 +13,7 @@ import {
   Utensils,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -26,7 +26,10 @@ import { useTouristBookings } from "@/hooks/useBookings";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useTouristAccount } from "@/hooks/useTouristAccount";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
+import { toDisplayDigits } from "@/lib/format/digits";
+import { formatReliabilityScore } from "@/lib/format/number";
 import type { TouristBooking } from "@/lib/mock/bookings";
 
 type DashboardStat = {
@@ -41,7 +44,7 @@ function bookingDate(booking: TouristBooking): string {
 }
 
 function isUpcoming(booking: TouristBooking, today: string): boolean {
-  return (booking.status === "PENDING" || booking.status === "CONFIRMED") && bookingDate(booking) >= today;
+  return (booking.status === "PENDING_CONFIRMATION" || booking.status === "CONFIRMED") && bookingDate(booking) >= today;
 }
 
 function BookingTypeIcon({ type }: { type: TouristBooking["type"] | null }): ReactNode {
@@ -146,7 +149,7 @@ export function UserDashboard(): ReactNode {
                     <p className="text-prose-muted text-xs">{nextBooking.reference}</p>
                     <p className="text-prose mt-1 text-sm font-semibold">{formatMoney(nextBooking.cashDueSyp)}</p>
                   </div>
-                  <Button href={`/bookings/${nextBooking.id}`} size="sm" variant="outline">{t("next.open")}</Button>
+                  <Button href={USER_PATHS.booking(nextBooking.id)} size="sm" variant="outline">{t("next.open")}</Button>
                 </div>
               </>
             ) : (
@@ -166,7 +169,7 @@ export function UserDashboard(): ReactNode {
               <Icon className="size-4" aria-hidden />
             </span>
             <div>
-              <p className="font-heading text-prose text-2xl font-semibold tabular-nums">{value}</p>
+              <p className="font-heading text-prose text-2xl font-semibold tabular-nums">{toDisplayDigits(String(value), locale)}</p>
               <p className="text-prose-muted mt-0.5 text-xs">{label}</p>
             </div>
           </GlassPanel>
@@ -180,7 +183,7 @@ export function UserDashboard(): ReactNode {
               <p className="text-primary text-xs font-bold uppercase tracking-wide">{t("standing.eyebrow")}</p>
               <h2 className="font-heading text-prose mt-2 text-2xl font-semibold">{t(`standing.tiers.${accountQuery.data.tier}`)}</h2>
             </div>
-            <p className="font-heading text-prose text-4xl font-semibold tabular-nums">{accountQuery.data.reliabilityScore}</p>
+            <p className="font-heading text-prose text-4xl font-semibold tabular-nums">{formatReliabilityScore(accountQuery.data.reliabilityScore, locale)}</p>
           </div>
           <div className="bg-border mt-5 h-2 overflow-hidden rounded-full">
             <div className="bg-primary h-full rounded-full" style={{ width: `${accountQuery.data.reliabilityScore}%` }} />

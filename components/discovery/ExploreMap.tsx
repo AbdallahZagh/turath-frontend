@@ -2,11 +2,11 @@
 
 import { AttributionControl, Map as MapLibreMap, NavigationControl, type GeoJSONSource, type MapGeoJSONFeature, type MapLayerMouseEvent } from "maplibre-gl";
 import { useTheme } from "next-themes";
-import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { DiscoveryCard } from "@/components/discovery/DiscoveryCard";
 import { resolveMapThemeColors } from "@/components/maps/mapTheme";
+import { useTranslations } from "@/i18n/translations";
 import type { DiscoveryResult } from "@/services/discovery";
 
 type DiscoveryFeatureCollection = GeoJSON.FeatureCollection<GeoJSON.Point, { key: string }>;

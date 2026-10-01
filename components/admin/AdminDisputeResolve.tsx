@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { disputeStatusBadgeProps } from "@/components/admin/disputeStatus";
 import { Badge } from "@/components/ui/Badge";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Textarea } from "@/components/ui/Textarea";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminDispute, DisputeResolution } from "@/lib/mock/adminDisputes";
 

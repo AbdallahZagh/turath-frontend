@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { useHomeFeatured } from "@/hooks/useHomeFeatured";
+import { useTranslations } from "@/i18n/translations";
 import { SLOT_BY_PILLAR_ID } from "@/lib/mock/featuredSlots";
 import { BENTO_PILLARS } from "@/lib/mock/landing";
 import { staggerContainer, viewportOnce } from "@/lib/motion/variants";

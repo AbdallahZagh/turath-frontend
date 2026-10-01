@@ -1,7 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { KeyboardEvent, ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+} from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Pagination } from "@/components/ui/Pagination";
@@ -51,6 +59,56 @@ const ALIGN: Record<TableAlign, string> = {
 };
 
 const CELL = "px-5 py-3 text-sm align-middle";
+const EDGE_FADE = "2rem";
+
+type OverflowEdges = { start: boolean; end: boolean };
+
+/**
+ * Which inline edges have more columns past them, so the table can fade that edge. Works in
+ * RTL too (scrollLeft runs negative there).
+ */
+function useOverflowEdges(): [RefObject<HTMLDivElement | null>, OverflowEdges] {
+  const ref = useRef<HTMLDivElement>(null);
+  const [edges, setEdges] = useState<OverflowEdges>({ start: false, end: false });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+    const measure = (): void => {
+      const max = el.scrollWidth - el.clientWidth;
+      const position = Math.abs(el.scrollLeft);
+      const next = { start: position > 1, end: max - position > 1 };
+      setEdges((current) =>
+        current.start === next.start && current.end === next.end ? current : next,
+      );
+    };
+    measure();
+    el.addEventListener("scroll", measure, { passive: true });
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    if (el.firstElementChild) {
+      observer.observe(el.firstElementChild);
+    }
+    return () => {
+      el.removeEventListener("scroll", measure);
+      observer.disconnect();
+    };
+  }, []);
+  return [ref, edges];
+}
+
+/** Mask that fades the clipped edge(s) of a horizontally scrolling table. */
+function edgeFadeStyle(edges: OverflowEdges): CSSProperties | undefined {
+  if (!edges.start && !edges.end) {
+    return undefined;
+  }
+  const start = edges.start ? `transparent, #000 ${EDGE_FADE}` : "#000";
+  const end = edges.end ? `#000 calc(100% - ${EDGE_FADE}), transparent` : "#000";
+  // Toward the inline end: right in LTR, left in RTL (--table-fade-to on the scroller).
+  const mask = `linear-gradient(to var(--table-fade-to), ${start}, ${end})`;
+  return { maskImage: mask, WebkitMaskImage: mask };
+}
 const HEADER_CELL =
   "px-5 py-3 text-xs font-semibold tracking-wide whitespace-nowrap uppercase align-middle";
 
@@ -69,6 +127,7 @@ export function Table<T>({
   className,
 }: TableProps<T>): ReactNode {
   const router = useRouter();
+  const [scrollRef, edges] = useOverflowEdges();
   const showEmpty = !isLoading && rows.length === 0;
 
   function openRow(row: T): void {
@@ -102,11 +161,13 @@ export function Table<T>({
       )}
     >
       <div
+        ref={scrollRef}
         className={cn(
-          "min-w-0",
+          "min-w-0 [--table-fade-to:right] rtl:[--table-fade-to:left]",
           fill ? "min-h-0 flex-1 overflow-auto" : "overflow-x-auto",
           pagination ? "rounded-t-[inherit]" : "rounded-[inherit]",
         )}
+        style={edgeFadeStyle(edges)}
       >
         <table className="w-full min-w-max border-collapse text-start">
           {caption ? <caption className="sr-only">{caption}</caption> : null}

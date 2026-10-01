@@ -1,7 +1,6 @@
 "use client";
 
 import { LogOut, Settings } from "lucide-react";
-import { useTranslations } from "next-intl";
 import {
   useEffect,
   useId,
@@ -17,6 +16,7 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { useIsClient } from "@/hooks/useIsClient";
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { useAuthStore } from "@/store/authStore";
 

@@ -12,7 +12,7 @@ import {
   Save,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Controller, useForm, useWatch, type Control } from "react-hook-form";
@@ -24,6 +24,7 @@ import { Select } from "@/components/ui/Select";
 import { Switch } from "@/components/ui/Switch";
 import { useUpdateProviderSettings } from "@/hooks/useProviderSettings";
 import { setLocaleCookie } from "@/i18n/set-locale";
+import { useTranslations } from "@/i18n/translations";
 import { formatSyp, formatSypLabel } from "@/lib/format/money";
 import type { ProviderSettings } from "@/lib/mock/providerSettings";
 import type { ProviderSettingsValues } from "@/lib/validation/providerSettings";

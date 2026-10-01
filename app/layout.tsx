@@ -1,14 +1,16 @@
 import { Cairo, Manrope, Playfair_Display } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 
+import { LatinUrlDigits } from "@/components/layout/LatinUrlDigits";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/Toaster";
 import { dirForLocale } from "@/i18n/config";
+import { getTranslations } from "@/i18n/serverTranslations";
 
 import "./globals.css";
 
@@ -63,6 +65,9 @@ export default async function RootLayout({
               <QueryProvider>
                 {children}
                 <Toaster />
+                <Suspense fallback={null}>
+                  <LatinUrlDigits />
+                </Suspense>
               </QueryProvider>
             </ThemeProvider>
           </NuqsAdapter>

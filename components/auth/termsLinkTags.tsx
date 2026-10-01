@@ -21,3 +21,8 @@ export const TERMS_LINK_TAGS = {
   terms: legalLink("/legal/terms"),
   privacy: legalLink("/legal/privacy"),
 };
+
+/** `t.rich` tag for the booking policy line on every checkout (new tab, same reason). */
+export const BOOKING_POLICY_LINK_TAGS = {
+  policy: legalLink("/legal/booking-policy"),
+};

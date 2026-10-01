@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -10,6 +10,7 @@ import { AttractionCover } from "@/components/admin/AttractionCover";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { localizedName } from "@/lib/i18n/localized";

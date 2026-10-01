@@ -1,7 +1,7 @@
 "use client";
 
 import { BadgeCheck, Inbox, MessageSquareQuote, Star } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Badge } from "@/components/ui/Badge";
@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { useProviderReviews } from "@/hooks/useProviderReviews";
 import type { Locale } from "@/i18n/config";
+import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
 import { formatCount, formatRating } from "@/lib/format/number";
@@ -152,7 +153,9 @@ export function ProviderReviewsScreen(): ReactNode {
           <span className="bg-primary/12 text-primary grid size-12 place-items-center rounded-2xl">
             <Star className="size-6 fill-current" aria-hidden />
           </span>
-          <p className="font-heading text-prose mt-4 text-5xl font-semibold tabular-nums">
+          <h2 className="font-heading text-prose mt-4 text-xl font-semibold">{t("summary.title")}</h2>
+          <p className="text-prose-muted mt-1 text-sm">{t("summary.subline")}</p>
+          <p className="font-heading text-prose mt-3 text-5xl font-semibold tabular-nums">
             {formatRating(summary.average, locale)}
           </p>
           <StarRating

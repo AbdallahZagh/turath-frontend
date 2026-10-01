@@ -1,7 +1,7 @@
 "use client";
 
 import { Minus, Plus, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import {
   useId,
   useState,
@@ -10,7 +10,9 @@ import {
   type ReactNode,
 } from "react";
 
+import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { parseNumberInput, toDisplayDigits } from "@/lib/format/digits";
 
 import {
   FIELD_BASE,
@@ -106,6 +108,7 @@ export function Stepper({
   className,
 }: StepperProps): ReactNode {
   const t = useTranslations("stepper");
+  const locale = useLocale();
   const generatedId = useId();
   const stepperId = id ?? generatedId;
   const labelId = `${stepperId}-label`;
@@ -114,10 +117,10 @@ export function Stepper({
   const [uncontrolled, setUncontrolled] = useState(defaultValue);
   const [draft, setDraft] = useState<string | null>(null);
   const count = isControlled ? value : uncontrolled;
-  const shown = draft ?? String(count);
+  const shown = draft ?? toDisplayDigits(String(count), locale);
   const live =
-    draft !== null && draft !== "" ? Number.parseInt(draft, 10) : count;
-  const liveCount = Number.isFinite(live) ? live : count;
+    draft !== null && draft !== "" ? (parseNumberInput(draft) ?? count) : count;
+  const liveCount = live;
   const atMin = liveCount <= min;
   const atMax = liveCount >= max;
   const maxDigits = Math.max(String(max).length, 1);
@@ -148,15 +151,16 @@ export function Stepper({
       setDraft(null);
       return;
     }
-    const parsed = Number.parseInt(draft, 10);
+    const parsed = parseNumberInput(draft);
     setDraft(null);
-    if (Number.isFinite(parsed)) {
+    if (parsed !== undefined) {
       commit(parsed);
     }
   }
 
   function onDraftChange(event: ChangeEvent<HTMLInputElement>): void {
-    const next = event.target.value.replace(/[^\d]/g, "");
+    // Latin, Arabic-Indic or Persian digits are kept as typed; parseNumberInput reads any of them.
+    const next = event.target.value.replace(/[^0-9\u0660-\u0669\u06F0-\u06F9]/g, "");
     if (next.length > maxDigits) {
       return;
     }

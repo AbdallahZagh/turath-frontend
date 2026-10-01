@@ -16,6 +16,7 @@ import {
   FIELD_VARIANT,
 } from "@/components/ui/controlClasses";
 import { cn } from "@/lib/cn";
+import { digitsOnly } from "@/lib/format/digits";
 
 const OTP_LENGTH = 6;
 
@@ -29,8 +30,9 @@ type OtpInputProps = {
   "aria-invalid"?: boolean;
 };
 
-function digitsOnly(raw: string): string {
-  return raw.replace(/\D/g, "").slice(0, OTP_LENGTH);
+/** Arabic-Indic, Persian or Latin digits in (typed or pasted), Latin digits out: the code is always Latin. */
+function otpDigits(raw: string): string {
+  return digitsOnly(raw).slice(0, OTP_LENGTH);
 }
 
 export function OtpInput({
@@ -44,7 +46,7 @@ export function OtpInput({
 }: OtpInputProps): ReactNode {
   const baseId = useId();
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
-  const digits = digitsOnly(value).padEnd(OTP_LENGTH, " ").slice(0, OTP_LENGTH).split("");
+  const digits = otpDigits(value).padEnd(OTP_LENGTH, " ").slice(0, OTP_LENGTH).split("");
 
   const focusIndex = useCallback((index: number) => {
     const el = inputsRef.current[index];
@@ -62,7 +64,7 @@ export function OtpInput({
   }, [autoFocus, disabled, focusIndex]);
 
   function setDigitAt(index: number, digit: string): void {
-    const next = digitsOnly(value).split("");
+    const next = otpDigits(value).split("");
     while (next.length < OTP_LENGTH) {
       next.push("");
     }
@@ -71,13 +73,13 @@ export function OtpInput({
   }
 
   function handleChange(index: number, raw: string): void {
-    const cleaned = digitsOnly(raw);
+    const cleaned = otpDigits(raw);
     if (cleaned.length === 0) {
       setDigitAt(index, "");
       return;
     }
     if (cleaned.length > 1) {
-      const next = digitsOnly(value).split("");
+      const next = otpDigits(value).split("");
       while (next.length < OTP_LENGTH) {
         next.push("");
       }
@@ -96,7 +98,7 @@ export function OtpInput({
 
   function handleKeyDown(index: number, event: KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Backspace") {
-      const current = digitsOnly(value);
+      const current = otpDigits(value);
       if (!current[index] && index > 0) {
         event.preventDefault();
         setDigitAt(index - 1, "");
@@ -117,7 +119,7 @@ export function OtpInput({
 
   function handlePaste(event: ClipboardEvent<HTMLInputElement>): void {
     event.preventDefault();
-    const pasted = digitsOnly(event.clipboardData.getData("text"));
+    const pasted = otpDigits(event.clipboardData.getData("text"));
     if (!pasted) {
       return;
     }
@@ -145,6 +147,7 @@ export function OtpInput({
               id={inputId}
               name={index === 0 ? name : undefined}
               type="text"
+              dir="ltr"
               inputMode="numeric"
               autoComplete={index === 0 ? "one-time-code" : "off"}
               maxLength={1}

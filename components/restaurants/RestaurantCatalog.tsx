@@ -1,7 +1,6 @@
 "use client";
 
 import { UtensilsCrossed } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { RestaurantCard } from "@/components/restaurants/RestaurantCard";
@@ -11,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useRestaurants } from "@/hooks/useRestaurants";
+import { useTranslations } from "@/i18n/translations";
 import type { RestaurantFilters } from "@/lib/mock/restaurants";
 
 const DEFAULT_FILTERS: RestaurantFilters = { partySize: 2, amenities: [] };

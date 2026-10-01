@@ -159,11 +159,8 @@ export function AdminProviderFinance({
               value={credit}
               onChange={(event) => setCredit(event.target.value)}
               label={t("detail.creditCeiling")}
-              aria-invalid={creditInvalid || undefined}
+              error={creditInvalid ? tUi("invalidAmount") : undefined}
             />
-            {creditInvalid ? (
-              <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
-            ) : null}
             <span className="text-prose-muted text-xs">
               {t("detail.creditHint")}{" "}
               {t("detail.creditDefault", { amount: formatSyp(tierCeilingSyp, loc) })}

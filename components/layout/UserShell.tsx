@@ -116,7 +116,7 @@ export function UserShell({ children }: UserShellProps): ReactNode {
           </div>
         </header>
 
-        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-0 lg:pe-8">
+        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-8 lg:pe-8">
           <div className="mx-auto w-full max-w-[98rem]">
             <PageHeader />
             {children}

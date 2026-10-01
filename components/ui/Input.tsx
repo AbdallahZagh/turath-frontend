@@ -3,6 +3,7 @@
 import { useLocale } from "next-intl";
 import {
   useId,
+  useLayoutEffect,
   useState,
   type ChangeEvent,
   type FocusEvent,
@@ -46,6 +47,8 @@ type InputProps = Omit<
    * when blurred and plain digits while focused. The field width never changes.
    */
   amount?: boolean;
+  /** Field error shown under the input; sets aria-invalid and aria-describedby. */
+  error?: string;
 };
 
 /** Room for a 1rem icon plus the control gap, same as the Select trigger. */
@@ -72,13 +75,29 @@ export function Input({
   placeholder,
   disabled,
   amount = false,
+  error,
   ...fieldProps
 }: InputProps): ReactNode {
   const generatedId = useId();
   const inputId = id ?? generatedId;
+  const errorId = `${inputId}-error`;
+  const errorProps = error
+    ? { "aria-invalid": true, "aria-describedby": errorId }
+    : {};
+  const errorText = error ? (
+    <span id={errorId} className="text-destructive text-xs">
+      {error}
+    </span>
+  ) : null;
   const locale = useLocale();
   const [focusedText, setFocusedText] = useState<string | null>(null);
   const rest = numberFieldProps(fieldProps, amount, locale, focusedText, setFocusedText);
+  useUncontrolledDisplayDigits(
+    inputId,
+    (fieldProps.type === "number" || amount) && fieldProps.value === undefined,
+    locale,
+    isDecimalStep(fieldProps.step),
+  );
   const style = controlStyle({
     size,
     paddingX,
@@ -92,9 +111,12 @@ export function Input({
   if (variant === "main") {
     return (
       <div className={cn(FIELD_GROUP_MAIN, className)} style={style}>
+        {/* The group is column-reverse: first child renders last, under the field. */}
+        {errorText}
         <div className="relative">
           <input
             {...rest}
+            {...errorProps}
             id={inputId}
             className={cn(FIELD_BASE, FIELD_VARIANT.main, icon && FIELD_ICON_PADDING)}
             placeholder={placeholder}
@@ -120,19 +142,62 @@ export function Input({
   }
 
   return (
-    <input
-      {...rest}
-      id={inputId}
-      style={style}
-      disabled={disabled}
-      placeholder={placeholder}
-      aria-label={label ?? placeholder}
-      className={cn(FIELD_BASE, FIELD_VARIANT[variant], className)}
-    />
+    <>
+      <input
+        {...rest}
+        {...errorProps}
+        id={inputId}
+        style={style}
+        disabled={disabled}
+        placeholder={placeholder}
+        aria-label={label ?? placeholder}
+        className={cn(FIELD_BASE, FIELD_VARIANT[variant], className)}
+      />
+      {errorText}
+    </>
   );
 }
 
 type FieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "size">;
+
+function isDecimalStep(step: FieldProps["step"]): boolean {
+  return step === "any" || (step !== undefined && !Number.isInteger(Number(step)));
+}
+
+/**
+ * Uncontrolled number fields (React Hook Form `register`) get their value from the form, in
+ * Latin. Outside of editing, show it in display digits (Arabic-Indic in Arabic). The form's own
+ * values are untouched: no input event fires, and typed text is read with `numberFieldValue`.
+ */
+function useUncontrolledDisplayDigits(
+  inputId: string,
+  enabled: boolean,
+  locale: string,
+  decimal: boolean,
+): void {
+  useLayoutEffect(() => {
+    const node = enabled ? document.getElementById(inputId) : null;
+    if (!(node instanceof HTMLInputElement)) {
+      return;
+    }
+    const show = (): void => {
+      if (node === document.activeElement) {
+        return;
+      }
+      const parsed = parseNumberInput(node.value, { decimal, negative: true });
+      const shown =
+        parsed === undefined
+          ? node.value
+          : toDisplayDigits(normalizeNumberInput(node.value), locale);
+      if (shown !== node.value) {
+        node.value = shown;
+      }
+    };
+    show();
+    node.addEventListener("blur", show);
+    return () => node.removeEventListener("blur", show);
+  });
+}
 
 /**
  * Number fields are text fields: browsers reject Arabic or Persian digits in `type="number"`.
@@ -155,7 +220,7 @@ function numberFieldProps(
   delete rest.type;
   delete rest.min;
   delete rest.max;
-  const decimal = step === "any" || (step !== undefined && !Number.isInteger(Number(step)));
+  const decimal = isDecimalStep(step);
   const field: FieldProps = {
     ...rest,
     type: "text",

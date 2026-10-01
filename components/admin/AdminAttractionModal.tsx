@@ -379,11 +379,8 @@ export function AdminAttractionModal({
                 value={entryFeeSyp}
                 onChange={(event) => setEntryFeeSyp(event.target.value)}
                 label={t("form.fee")}
-                aria-invalid={feeInvalid || undefined}
+                error={feeInvalid ? tUi("invalidAmount") : undefined}
               />
-              {feeInvalid ? (
-                <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
-              ) : null}
             </label>
           </div>
 

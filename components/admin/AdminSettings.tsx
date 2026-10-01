@@ -200,12 +200,10 @@ export function AdminSettings(): ReactNode {
               value={raw}
               onChange={(event) => setCeiling(row.tier, event.target.value)}
               label={t("credit.columns.ceiling")}
-              aria-invalid={invalid.has(row.tier) || undefined}
+              error={invalid.has(row.tier) ? tUi("invalidAmount") : undefined}
               className="w-full"
             />
-            {invalid.has(row.tier) ? (
-              <span className="text-destructive text-end text-xs">{tUi("invalidAmount")}</span>
-            ) : amount !== undefined ? (
+            {!invalid.has(row.tier) && amount !== undefined ? (
               <span className="text-prose-muted text-end text-xs">{formatSyp(amount, loc)}</span>
             ) : null}
           </div>
@@ -272,12 +270,10 @@ export function AdminSettings(): ReactNode {
                   value={raw}
                   onChange={(event) => setCeiling(tier, event.target.value)}
                   label={`${t(`tiers.${tier}`)} · ${t("credit.columns.ceiling")}`}
-                  aria-invalid={invalid.has(tier) || undefined}
+                  error={invalid.has(tier) ? tUi("invalidAmount") : undefined}
                   className="w-full"
                 />
-                {invalid.has(tier) ? (
-                  <span className="text-destructive text-xs">{tUi("invalidAmount")}</span>
-                ) : amount !== undefined ? (
+                {!invalid.has(tier) && amount !== undefined ? (
                   <span className="text-prose-muted text-xs whitespace-nowrap">
                     {formatSyp(amount, loc)}
                   </span>
@@ -320,12 +316,9 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.vipAtOrAbove")}
-              aria-invalid={invalid.has("vipAtOrAbove") || undefined}
+              error={invalid.has("vipAtOrAbove") ? t("invalidCutoff") : undefined}
               className="w-28"
             />
-            {invalid.has("vipAtOrAbove") ? (
-              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
-            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
@@ -344,12 +337,9 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.standardAtOrAbove")}
-              aria-invalid={invalid.has("standardAtOrAbove") || undefined}
+              error={invalid.has("standardAtOrAbove") ? t("invalidCutoff") : undefined}
               className="w-28"
             />
-            {invalid.has("standardAtOrAbove") ? (
-              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
-            ) : null}
           </label>
           <label className="flex flex-col gap-1.5">
             <span className="text-prose-muted text-xs font-medium">
@@ -368,12 +358,9 @@ export function AdminSettings(): ReactNode {
                 )
               }
               label={t("reliability.restrictedAtOrAbove")}
-              aria-invalid={invalid.has("restrictedAtOrAbove") || undefined}
+              error={invalid.has("restrictedAtOrAbove") ? t("invalidCutoff") : undefined}
               className="w-28"
             />
-            {invalid.has("restrictedAtOrAbove") ? (
-              <span className="text-destructive text-xs">{t("invalidCutoff")}</span>
-            ) : null}
           </label>
         </div>
         <p className="text-prose-muted text-xs">{t("reliability.tierHint")}</p>

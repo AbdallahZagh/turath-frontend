@@ -2679,7 +2679,8 @@
       "category": "Hotel · Damascus"
     },
     "sidebarBusiness": {
-      "current": "Current business"
+      "current": "Current business",
+      "preview": "Preview another provider type"
     },
     "nav": {
       "label": "Business navigation",
@@ -2804,12 +2805,12 @@
       },
       "location": {
         "title": "Location, contact, and hours",
-        "description": "These details help guests find the property and prepare for arrival.",
+        "description": "These details help guests find the business or meeting point and prepare for arrival.",
         "pinTitle": "Public map pin"
       },
       "amenities": {
-        "title": "Guest amenities",
-        "description": "Select the facilities guests can reliably expect during their stay.",
+        "title": "Guest facilities",
+        "description": "Select the facilities guests can reliably expect from this business.",
         "options": {
           "generator": "Generator electricity",
           "wifi": "Wi-Fi",
@@ -2823,14 +2824,14 @@
       },
       "media": {
         "title": "Logo and gallery",
-        "description": "Use clear, current images that accurately represent the property.",
+        "description": "Use clear, current images that accurately represent the business and its experiences.",
         "logo": "Business logo",
         "logoAlt": "Business logo preview",
         "replaceLogo": "Replace logo",
-        "gallery": "Property gallery",
+        "gallery": "Business gallery",
         "galleryHint": "{count} of 6 photos added",
         "addPhotos": "Add photos",
-        "galleryAlt": "Property gallery photo {number}",
+        "galleryAlt": "Business gallery photo {number}",
         "removePhoto": "Remove gallery photo {number}"
       },
       "preview": {
@@ -3059,7 +3060,7 @@
     "inventory": {
       "previewEyebrow": "Frontend preview",
       "previewTitle": "View each business inventory",
-      "previewDescription": "The live portal will use the approved business category automatically. Switch categories here to review every supported workflow.",
+      "previewDescription": "The active business selected in the sidebar controls the inventory and workflow shown here.",
       "categoryLabel": "Business category",
       "categories": { "hotels": "Hotel", "restaurants": "Restaurant", "trips": "Trip agency", "events": "Event manager", "guides": "Tour guide" },
       "readOnlyTitle": "View only",
@@ -3103,7 +3104,7 @@
         "codeError": "Enter exactly six letters or numbers.",
         "verify": "Verify and check in",
         "verifying": "Verifying…",
-        "demoHint": "Frontend demo: try Y4DYRZ for success or USED24 for an already-used pass."
+        "demoHint": "Frontend demo: try {code} for a successful check-in."
       },
       "ready": {
         "title": "Ready to verify an arrival",
@@ -3139,8 +3140,8 @@
       }
     },
     "bookings": {
-      "filters": { "date": "Arrival date", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
-      "columns": { "guest": "Guest", "arrival": "Arrival", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
+      "filters": { "date": "Booking date", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
+      "columns": { "guest": "Guest", "arrival": "Schedule", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
       "status": { "PENDING_CONFIRMATION": "Pending confirmation", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "CANCELLED": "Cancelled", "NO_SHOW": "No-show" },
       "party": "{count, plural, one {# guest} other {# guests}}",
       "caption": "Business bookings",
@@ -3155,9 +3156,15 @@
         "notFoundTitle": "Booking not found",
         "notFoundDescription": "This booking may have been removed or the link may be incorrect.",
         "guest": "Guest",
-        "arrival": "Check-in",
-        "departure": "Check-out",
-        "room": "Room",
+        "arrival": "Starts",
+        "departure": "Ends",
+        "offeringLabels": {
+          "hotels": "Room",
+          "dining": "Table and service",
+          "trips": "Trip",
+          "events": "Event session",
+          "guides": "Guide service"
+        },
         "party": "Party size",
         "notes": "Guest notes",
         "paymentTitle": "Cash on arrival",
@@ -3243,7 +3250,7 @@
       }
     },
     "dashboard": {
-      "welcome": "Today at Dar Al Yasmin",
+      "welcome": "Today at {business}",
       "periodLabel": "Dashboard period",
       "periodHint": "Activity from the last {days} days",
       "days7": "7 days",
@@ -3261,6 +3268,13 @@
         "checkInsHint": "Verified at the front desk",
         "cancellations": "Cancellations",
         "noShows": "No-shows"
+      },
+      "categoryMetrics": {
+        "hotels": { "label": "Room occupancy", "hint": "Current bookable room inventory" },
+        "dining": { "label": "Table utilisation", "hint": "Tables committed across today's service" },
+        "trips": { "label": "Seat utilisation", "hint": "Seats reserved across published departures" },
+        "events": { "label": "Ticket utilisation", "hint": "Tickets reserved across active sessions" },
+        "guides": { "label": "Calendar utilisation", "hint": "Booked time across available guide hours" }
       },
       "bookingActivity": "Booking activity",
       "finance": {

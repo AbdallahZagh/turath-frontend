@@ -8,27 +8,31 @@ import {
 
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
+import type { ProviderCategory } from "@/lib/validation/auth";
 import {
   getProviderBooking,
   listProviderBookings,
   updateProviderBookingStatus,
 } from "@/services/providerBookings";
 
-const providerBookingsKey = ["provider", "bookings"] as const;
-const providerBookingKey = (id: string) => ["provider", "bookings", id] as const;
+const providerBookingsKey = (category: ProviderCategory) => ["provider", "bookings", category] as const;
+const providerBookingKey = (category: ProviderCategory, id: string) => ["provider", "bookings", category, id] as const;
 
-export function useProviderBookings(): UseQueryResult<ProviderBooking[]> {
+export function useProviderBookings(category: ProviderCategory): UseQueryResult<ProviderBooking[]> {
   return useQuery({
-    queryKey: providerBookingsKey,
-    queryFn: listProviderBookings,
+    queryKey: providerBookingsKey(category),
+    queryFn: () => listProviderBookings(category),
     staleTime: 30_000,
   });
 }
 
-export function useProviderBooking(id: string): UseQueryResult<ProviderBooking | null> {
+export function useProviderBooking(
+  id: string,
+  category: ProviderCategory,
+): UseQueryResult<ProviderBooking | null> {
   return useQuery({
-    queryKey: providerBookingKey(id),
-    queryFn: () => getProviderBooking(id),
+    queryKey: providerBookingKey(category, id),
+    queryFn: () => getProviderBooking(id, category),
     enabled: Boolean(id),
   });
 }
@@ -42,8 +46,8 @@ export function useUpdateProviderBookingStatus(): UseMutationResult<
   return useMutation({
     mutationFn: updateProviderBookingStatus,
     onSuccess: (booking) => {
-      client.setQueryData(providerBookingKey(booking.id), booking);
-      client.setQueryData<ProviderBooking[]>(providerBookingsKey, (current) =>
+      client.setQueryData(providerBookingKey(booking.category, booking.id), booking);
+      client.setQueryData<ProviderBooking[]>(providerBookingsKey(booking.category), (current) =>
         current?.map((item) => (item.id === booking.id ? booking : item)),
       );
       void client.invalidateQueries({ queryKey: ["provider", "check-in"] });

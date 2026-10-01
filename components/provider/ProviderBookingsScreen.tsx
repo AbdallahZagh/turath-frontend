@@ -24,6 +24,7 @@ import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const ALL_STATUSES = "all";
 const STATUSES: TouristBookingStatus[] = [
@@ -51,7 +52,8 @@ export function ProviderBookingsScreen(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
-  const query = useProviderBookings();
+  const category = useProviderPreviewStore((state) => state.category);
+  const query = useProviderBookings(category);
   const [date, setDate] = useState("");
   const [status, setStatus] = useState(ALL_STATUSES);
 
@@ -83,7 +85,7 @@ export function ProviderBookingsScreen(): ReactNode {
       cell: (booking) => (
         <div className="whitespace-nowrap">
           <p className="font-medium">{formatMediumDate(booking.scheduledAt, locale)}</p>
-          <p className="text-prose-muted mt-1 text-xs"><bdi>{localizedName(booking.roomName, locale)}</bdi></p>
+          <p className="text-prose-muted mt-1 text-xs"><bdi>{localizedName(booking.offeringName, locale)}</bdi></p>
         </div>
       ),
     },
@@ -214,7 +216,7 @@ export function ProviderBookingsScreen(): ReactNode {
                 </p>
                 <p className="text-prose flex items-center gap-1.5 text-sm">
                   <CalendarDays className="text-prose-muted size-4" aria-hidden />
-                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.roomName, locale)}
+                  {formatMediumDate(booking.scheduledAt, locale)} · {localizedName(booking.offeringName, locale)}
                 </p>
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <span className="text-prose-muted inline-flex items-center gap-1.5">

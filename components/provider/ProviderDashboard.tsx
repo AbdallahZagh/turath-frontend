@@ -2,14 +2,18 @@
 
 import {
   BedDouble,
+  BusFront,
   CalendarClock,
   CircleCheck,
   Inbox,
   UserRoundCheck,
   UserRoundX,
   UsersRound,
+  Utensils,
   Wallet,
   XCircle,
+  TicketCheck,
+  Languages,
   type LucideIcon,
 } from "lucide-react";
 import { useLocale } from "next-intl";
@@ -29,7 +33,18 @@ import { cn } from "@/lib/cn";
 import { formatDisplayDate } from "@/lib/format/datetime";
 import { formatCount, formatPercent } from "@/lib/format/number";
 import { isolateName, localizedName } from "@/lib/i18n/localized";
+import { getProviderBusiness } from "@/lib/mock/providerBusinesses";
+import type { ProviderCategory } from "@/lib/validation/auth";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
+
+const CATEGORY_METRIC_ICON: Record<ProviderCategory, LucideIcon> = {
+  hotels: BedDouble,
+  dining: Utensils,
+  trips: BusFront,
+  events: TicketCheck,
+  guides: Languages,
+};
 
 type MetricCardProps = {
   icon: LucideIcon;
@@ -80,8 +95,10 @@ export function ProviderDashboard(): ReactNode {
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const role = useAuthStore((state) => state.user.role);
+  const category = useProviderPreviewStore((state) => state.category);
+  const business = getProviderBusiness(category);
   const [periodDays, setPeriodDays] = useState(30);
-  const query = useProviderDashboard(periodDays);
+  const query = useProviderDashboard(periodDays, category);
 
   if (query.isPending) {
     return <DashboardSkeleton />;
@@ -120,7 +137,9 @@ export function ProviderDashboard(): ReactNode {
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-prose text-sm font-semibold">{t("welcome")}</p>
+          <p className="text-prose text-sm font-semibold">
+            {t("welcome", { business: locale === "ar" ? business.name.ar : business.name.en })}
+          </p>
           <p className="text-prose-muted mt-1 text-xs">{periodHint}</p>
         </div>
         <SegmentSwitch
@@ -151,10 +170,10 @@ export function ProviderDashboard(): ReactNode {
           hint={t("metrics.upcomingHint")}
         />
         <MetricCard
-          icon={BedDouble}
-          label={t("metrics.occupancy")}
+          icon={CATEGORY_METRIC_ICON[category]}
+          label={t(`categoryMetrics.${category}.label`)}
           value={formatPercent(data.kpis.occupancyRate, locale, 0)}
-          hint={t("metrics.occupancyHint")}
+          hint={t(`categoryMetrics.${category}.hint`)}
         />
         <MetricCard
           icon={UserRoundCheck}
@@ -371,4 +390,3 @@ export function ProviderDashboard(): ReactNode {
     </div>
   );
 }
-

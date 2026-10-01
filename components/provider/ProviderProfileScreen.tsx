@@ -10,12 +10,14 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useProviderProfile } from "@/hooks/useProviderProfile";
 import { useTranslations } from "@/i18n/translations";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 export function ProviderProfileScreen(): ReactNode {
   const t = useTranslations("provider.profile");
   const tUi = useTranslations("ui");
   const role = useAuthStore((state) => state.user.role);
-  const query = useProviderProfile();
+  const category = useProviderPreviewStore((state) => state.category);
+  const query = useProviderProfile(category);
 
   if (role !== "PROVIDER_OWNER") {
     return <EmptyState icon={ShieldLock} title={t("ownerOnly.title")} description={t("ownerOnly.description")} />;
@@ -33,5 +35,5 @@ export function ProviderProfileScreen(): ReactNode {
     return <EmptyState icon={Inbox} title={t("empty.title")} description={t("empty.description")} />;
   }
 
-  return <ProviderProfileEditor profile={query.data} />;
+  return <ProviderProfileEditor key={query.data.category} profile={query.data} />;
 }

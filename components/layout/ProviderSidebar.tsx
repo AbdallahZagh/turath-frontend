@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, Building2, X } from "lucide-react";
+import { BadgeCheck, X } from "lucide-react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,12 +8,15 @@ import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { Select } from "@/components/ui/Select";
 import { PROVIDER_NAV } from "@/config/nav";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useProviderProfile } from "@/hooks/useProviderProfile";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
+import { getProviderBusiness, PROVIDER_BUSINESSES } from "@/lib/mock/providerBusinesses";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 type ProviderSidebarProps = {
   mobileOpen: boolean;
@@ -34,9 +37,13 @@ export function ProviderSidebar({
   const locale = useLocale();
   const pathname = usePathname();
   const role = useAuthStore((state) => state.user.role);
-  const profileQuery = useProviderProfile();
+  const category = useProviderPreviewStore((state) => state.category);
+  const setCategory = useProviderPreviewStore((state) => state.setCategory);
+  const profileQuery = useProviderProfile(category);
   const items = PROVIDER_NAV.filter((item) => item.roles.includes(role));
   const profile = profileQuery.data;
+  const business = getProviderBusiness(category);
+  const BusinessIcon = business.icon;
   const businessName = profile
     ? locale === "ar"
       ? profile.nameAr
@@ -114,7 +121,7 @@ export function ProviderSidebar({
             <section className="border-glass-border bg-glass-control rounded-2xl border p-3">
               <div className="flex min-w-0 items-center gap-3">
                 <span className="bg-primary/12 text-primary grid size-10 shrink-0 place-items-center rounded-xl">
-                  <Building2 className="size-5" aria-hidden />
+                  <BusinessIcon className="size-5" aria-hidden />
                 </span>
                 <div className="min-w-0">
                   <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.12em]">
@@ -136,6 +143,23 @@ export function ProviderSidebar({
                     <span className="sr-only">{t("profile.preview.verified")}</span>
                   </span>
                 ) : null}
+              </div>
+              <div className="border-glass-border mt-3 border-t pt-3">
+                <Select
+                  compact
+                  size="sm"
+                  variant="plain"
+                  label={t("sidebarBusiness.preview")}
+                  value={category}
+                  options={PROVIDER_BUSINESSES.map((item) => ({
+                    value: item.category,
+                    label: locale === "ar" ? item.name.ar : item.name.en,
+                  }))}
+                  onChange={(value) => {
+                    const next = PROVIDER_BUSINESSES.find((item) => item.category === value);
+                    if (next) setCategory(next.category);
+                  }}
+                />
               </div>
             </section>
           )}

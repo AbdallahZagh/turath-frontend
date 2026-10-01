@@ -39,7 +39,16 @@ import {
   type ProviderCheckInValues,
 } from "@/lib/validation/providerCheckIn";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
+
+const DEMO_CODES = {
+  hotels: "Y4DYRZ",
+  dining: "DINE21",
+  trips: "TRIP22",
+  events: "EVENT8",
+  guides: "GUIDE4",
+} as const;
 
 function ResultPanel({
   result,
@@ -198,8 +207,9 @@ export function ProviderCheckInScreen({ initialCode = "" }: { initialCode?: stri
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const user = useAuthStore((state) => state.user);
-  const arrivals = useProviderArrivals();
-  const verify = useVerifyProviderCheckIn();
+  const category = useProviderPreviewStore((state) => state.category);
+  const arrivals = useProviderArrivals(category);
+  const verify = useVerifyProviderCheckIn(category);
   const form = useForm<ProviderCheckInValues>({
     resolver: zodResolver(providerCheckInSchema),
     defaultValues: { code: initialCode },
@@ -248,7 +258,9 @@ export function ProviderCheckInScreen({ initialCode = "" }: { initialCode?: stri
               {verify.isPending ? t("form.verifying") : t("form.verify")}
             </Button>
           </form>
-          <p className="text-prose-muted mt-4 text-center text-xs">{t("form.demoHint")}</p>
+          <p className="text-prose-muted mt-4 text-center text-xs">
+            {t("form.demoHint", { code: DEMO_CODES[category] })}
+          </p>
         </GlassPanel>
 
         {verify.data ? (

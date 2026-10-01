@@ -1,16 +1,18 @@
 import type { LocalizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
 export type ProviderBooking = {
   id: string;
   reference: string;
   backupCode: string;
   qrPayload: string;
+  category: ProviderCategory;
   guestName: LocalizedName;
   phone: string;
   partySize: number;
   notes: string;
-  roomName: LocalizedName;
+  offeringName: LocalizedName;
   scheduledAt: string;
   endsAt: string;
   listPriceSyp: number;
@@ -28,13 +30,14 @@ type ProviderBookingSeed = Omit<ProviderBooking, "qrPayload">;
 const SEED: ProviderBookingSeed[] = [
   {
     id: "provider-booking-1",
+    category: "hotels",
     reference: "TRH-HJF799",
     backupCode: "Y4DYRZ",
     guestName: { en: "Rami Haddad", ar: "رامي حداد" },
     phone: "+963 944 123 456",
     partySize: 1,
     notes: "Late arrival expected. Please keep the courtyard-side room if available.",
-    roomName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
+    offeringName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
     scheduledAt: "2026-09-21T14:00:00+03:00",
     endsAt: "2026-09-22T11:00:00+03:00",
     listPriceSyp: 240_000,
@@ -48,13 +51,14 @@ const SEED: ProviderBookingSeed[] = [
   },
   {
     id: "provider-booking-2",
+    category: "hotels",
     reference: "TRH-MQK284",
     backupCode: "QAMAR1",
     guestName: { en: "Maya Darwish", ar: "مايا درويش" },
     phone: "+963 933 714 206",
     partySize: 2,
     notes: "Guest requested a quiet room away from the street.",
-    roomName: { en: "Courtyard king room", ar: "غرفة فناء بسرير كبير" },
+    offeringName: { en: "Courtyard king room", ar: "غرفة فناء بسرير كبير" },
     scheduledAt: "2026-09-21T16:30:00+03:00",
     endsAt: "2026-09-23T11:00:00+03:00",
     listPriceSyp: 600_000,
@@ -68,13 +72,14 @@ const SEED: ProviderBookingSeed[] = [
   },
   {
     id: "provider-booking-3",
+    category: "hotels",
     reference: "TRH-USED24",
     backupCode: "USED24",
     guestName: { en: "Lina Shami", ar: "لينا شامي" },
     phone: "+963 955 301 842",
     partySize: 2,
     notes: "No special requests.",
-    roomName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
+    offeringName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
     scheduledAt: "2026-09-21T11:30:00+03:00",
     endsAt: "2026-09-22T11:00:00+03:00",
     listPriceSyp: 420_000,
@@ -88,13 +93,14 @@ const SEED: ProviderBookingSeed[] = [
   },
   {
     id: "provider-booking-4",
+    category: "hotels",
     reference: "TRH-PND572",
     backupCode: "PND572",
     guestName: { en: "Fadi Khoury", ar: "فادي خوري" },
     phone: "+963 988 420 115",
     partySize: 3,
     notes: "Travelling with a child; requested an extra bed.",
-    roomName: { en: "Family courtyard suite", ar: "جناح الفناء العائلي" },
+    offeringName: { en: "Family courtyard suite", ar: "جناح الفناء العائلي" },
     scheduledAt: "2026-09-24T14:00:00+03:00",
     endsAt: "2026-09-27T11:00:00+03:00",
     listPriceSyp: 1_050_000,
@@ -108,13 +114,14 @@ const SEED: ProviderBookingSeed[] = [
   },
   {
     id: "provider-booking-5",
+    category: "hotels",
     reference: "TRH-NSH401",
     backupCode: "NSH401",
     guestName: { en: "Nour Hamdan", ar: "نور حمدان" },
     phone: "+963 934 650 812",
     partySize: 2,
     notes: "No arrival recorded before the desk closed the booking.",
-    roomName: { en: "Courtyard king room", ar: "غرفة فناء بسرير كبير" },
+    offeringName: { en: "Courtyard king room", ar: "غرفة فناء بسرير كبير" },
     scheduledAt: "2026-09-18T14:00:00+03:00",
     endsAt: "2026-09-19T11:00:00+03:00",
     listPriceSyp: 300_000,
@@ -128,13 +135,14 @@ const SEED: ProviderBookingSeed[] = [
   },
   {
     id: "provider-booking-6",
+    category: "hotels",
     reference: "TRH-CNL903",
     backupCode: "CNL903",
     guestName: { en: "Salma Atassi", ar: "سلمى الأتاسي" },
     phone: "+963 966 731 522",
     partySize: 1,
     notes: "Cancelled before arrival.",
-    roomName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
+    offeringName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
     scheduledAt: "2026-09-17T14:00:00+03:00",
     endsAt: "2026-09-18T11:00:00+03:00",
     listPriceSyp: 240_000,
@@ -146,12 +154,44 @@ const SEED: ProviderBookingSeed[] = [
     checkedInBy: null,
     createdAt: "2026-09-02T11:00:00+03:00",
   },
+  {
+    id: "provider-booking-dining-1", category: "dining", reference: "TRH-DIN821", backupCode: "DINE21",
+    guestName: { en: "Maya Darwish", ar: "مايا درويش" }, phone: "+963 933 714 206", partySize: 4,
+    notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table · 8:30 PM", ar: "طاولة التراس · ٨:٣٠ م" },
+    scheduledAt: "2026-09-21T20:30:00+03:00", endsAt: "2026-09-21T22:30:00+03:00", listPriceSyp: 320_000,
+    discountSyp: 32_000, cashDueSyp: 288_000, couponCode: "TASTE10", status: "CONFIRMED", checkedInAt: null,
+    checkedInBy: null, createdAt: "2026-09-18T12:30:00+03:00",
+  },
+  {
+    id: "provider-booking-trip-1", category: "trips", reference: "TRH-TRP622", backupCode: "TRIP22",
+    guestName: { en: "Omar Al Masri", ar: "عمر المصري" }, phone: "+963 988 420 115", partySize: 2,
+    notes: "Pickup from Bab Touma Square.", offeringName: { en: "Damascus story walk", ar: "جولة حكايات دمشق" },
+    scheduledAt: "2026-10-02T08:30:00+03:00", endsAt: "2026-10-02T16:30:00+03:00", listPriceSyp: 360_000,
+    discountSyp: 0, cashDueSyp: 360_000, couponCode: null, status: "CONFIRMED", checkedInAt: null,
+    checkedInBy: null, createdAt: "2026-09-19T09:15:00+03:00",
+  },
+  {
+    id: "provider-booking-event-1", category: "events", reference: "TRH-EVT808", backupCode: "EVENT8",
+    guestName: { en: "Lina Shami", ar: "لينا شامي" }, phone: "+963 955 301 842", partySize: 3,
+    notes: "Three VIP tickets.", offeringName: { en: "Courtyard music night · VIP", ar: "ليلة موسيقية في الباحة · كبار الزوار" },
+    scheduledAt: "2026-10-08T20:00:00+03:00", endsAt: "2026-10-08T22:30:00+03:00", listPriceSyp: 840_000,
+    discountSyp: 0, cashDueSyp: 840_000, couponCode: null, status: "CONFIRMED", checkedInAt: null,
+    checkedInBy: null, createdAt: "2026-09-20T17:40:00+03:00",
+  },
+  {
+    id: "provider-booking-guide-1", category: "guides", reference: "TRH-GDE404", backupCode: "GUIDE4",
+    guestName: { en: "Nour Hamdan", ar: "نور حمدان" }, phone: "+963 934 650 812", partySize: 2,
+    notes: "English-language private walk focused on architecture.", offeringName: { en: "Old Damascus private walk", ar: "جولة خاصة في دمشق القديمة" },
+    scheduledAt: "2026-09-25T09:00:00+03:00", endsAt: "2026-09-25T13:00:00+03:00", listPriceSyp: 360_000,
+    discountSyp: 40_000, cashDueSyp: 320_000, couponCode: "WALK40", status: "CONFIRMED", checkedInAt: null,
+    checkedInBy: null, createdAt: "2026-09-20T08:20:00+03:00",
+  },
 ];
 
 const bookings: ProviderBooking[] = SEED.map((booking) => ({
   ...booking,
   guestName: { ...booking.guestName },
-  roomName: { ...booking.roomName },
+  offeringName: { ...booking.offeringName },
   qrPayload: JSON.stringify({
     bookingId: booking.id,
     reference: booking.reference,
@@ -163,16 +203,19 @@ function cloneBooking(booking: ProviderBooking): ProviderBooking {
   return {
     ...booking,
     guestName: { ...booking.guestName },
-    roomName: { ...booking.roomName },
+    offeringName: { ...booking.offeringName },
   };
 }
 
-export function listProviderBookings(): ProviderBooking[] {
-  return bookings.map(cloneBooking);
+export function listProviderBookings(category: ProviderCategory = "hotels"): ProviderBooking[] {
+  return bookings.filter((booking) => booking.category === category).map(cloneBooking);
 }
 
-export function getProviderBooking(id: string): ProviderBooking | undefined {
-  const booking = bookings.find((item) => item.id === id);
+export function getProviderBooking(
+  id: string,
+  category?: ProviderCategory,
+): ProviderBooking | undefined {
+  const booking = bookings.find((item) => item.id === id && (!category || item.category === category));
   return booking ? cloneBooking(booking) : undefined;
 }
 

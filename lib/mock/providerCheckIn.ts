@@ -5,6 +5,7 @@ import {
   updateProviderBookingStatus,
   type ProviderBooking,
 } from "@/lib/mock/providerBookings";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
 export type ProviderDeskBooking = {
   id: string;
@@ -30,13 +31,14 @@ export type ProviderCheckInResult =
   | { kind: "alreadyUsed"; booking: ProviderDeskBooking };
 
 function toDeskBooking(booking: ProviderBooking): ProviderDeskBooking {
+  const category = booking.category === "dining" ? "restaurant" : booking.category.slice(0, -1) as ProviderDeskBooking["category"];
   return {
     id: booking.id,
     reference: booking.reference,
     backupCode: booking.backupCode,
     guestName: { ...booking.guestName },
     phone: booking.phone,
-    category: "hotel",
+    category,
     schedule: booking.scheduledAt,
     partySize: booking.partySize,
     listPriceSyp: booking.listPriceSyp,
@@ -49,8 +51,8 @@ function toDeskBooking(booking: ProviderBooking): ProviderDeskBooking {
   };
 }
 
-export function listProviderDeskArrivals(): ProviderDeskBooking[] {
-  return listProviderBookings()
+export function listProviderDeskArrivals(category: ProviderCategory = "hotels"): ProviderDeskBooking[] {
+  return listProviderBookings(category)
     .filter((booking) => booking.status === "CONFIRMED")
     .map(toDeskBooking);
 }
@@ -58,9 +60,10 @@ export function listProviderDeskArrivals(): ProviderDeskBooking[] {
 export function verifyProviderDeskCode(
   rawCode: string,
   staffName: string,
+  category: ProviderCategory,
 ): ProviderCheckInResult {
   const booking = getProviderBookingByBackupCode(rawCode);
-  if (!booking) return { kind: "invalid" };
+  if (!booking || booking.category !== category) return { kind: "invalid" };
   if (booking.status === "CHECKED_IN") {
     return { kind: "alreadyUsed", booking: toDeskBooking(booking) };
   }

@@ -10,32 +10,33 @@ import type {
   ProviderCheckInResult,
   ProviderDeskBooking,
 } from "@/lib/mock/providerCheckIn";
+import type { ProviderCategory } from "@/lib/validation/auth";
 import {
   listProviderArrivals,
   verifyProviderCheckInCode,
 } from "@/services/providerCheckIn";
 
-const providerArrivalsKey = ["provider", "check-in", "arrivals"] as const;
+const providerArrivalsKey = (category: ProviderCategory) => ["provider", "check-in", "arrivals", category] as const;
 
-export function useProviderArrivals(): UseQueryResult<ProviderDeskBooking[]> {
+export function useProviderArrivals(category: ProviderCategory): UseQueryResult<ProviderDeskBooking[]> {
   return useQuery({
-    queryKey: providerArrivalsKey,
-    queryFn: listProviderArrivals,
+    queryKey: providerArrivalsKey(category),
+    queryFn: () => listProviderArrivals(category),
     staleTime: 30_000,
   });
 }
 
-export function useVerifyProviderCheckIn(): UseMutationResult<
+export function useVerifyProviderCheckIn(category: ProviderCategory): UseMutationResult<
   ProviderCheckInResult,
   Error,
   { code: string; staffName: string }
 > {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: verifyProviderCheckInCode,
+    mutationFn: (input) => verifyProviderCheckInCode({ ...input, category }),
     onSuccess: (result) => {
       if (result.kind === "success") {
-        void client.invalidateQueries({ queryKey: providerArrivalsKey });
+        void client.invalidateQueries({ queryKey: ["provider", "check-in", "arrivals"] });
         void client.invalidateQueries({ queryKey: ["provider", "bookings"] });
         void client.invalidateQueries({ queryKey: ["tourist", "bookings"] });
       }

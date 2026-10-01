@@ -1,11 +1,11 @@
-import { useProviderProfile } from "@/hooks/useProviderProfile";
 import { useTranslations } from "@/i18n/translations";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 /** Hotel businesses say نزيل in Arabic; every other business says ضيف (docs/PAGES.md, people words). */
 export type ProviderStay = "hotel" | "other";
 
 export function useProviderStay(): ProviderStay {
-  return useProviderProfile().data?.category === "hotels" ? "hotel" : "other";
+  return useProviderPreviewStore((state) => state.category) === "hotels" ? "hotel" : "other";
 }
 
 type StayNamespace = "provider.bookings" | "provider.checkIn";

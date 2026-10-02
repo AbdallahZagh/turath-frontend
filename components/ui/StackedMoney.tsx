@@ -3,6 +3,12 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { formatSypParts, type DisplayCurrency } from "@/lib/format/money";
 
+/**
+ * KPI amount size, pure CSS: 14% of the card's content width (container query), never below 17px
+ * or above 24px. 24px on wide cards (1280), down to 17px in the two-up phone grid (375).
+ */
+const KPI_AMOUNT_SIZE = "text-[length:clamp(17px,14cqi,24px)]";
+
 type StackedMoneyProps = {
   amountSyp: number;
   locale: string;
@@ -10,8 +16,7 @@ type StackedMoneyProps = {
   displayCurrency?: DisplayCurrency;
   /**
    * `cell` (default): right-aligned for narrow table columns. `kpi`: start-aligned under a KPI
-   * label; the main amount keeps the card's large type and shrinks with the card (container
-   * width) only when a long amount would not fit on one line.
+   * label; the main amount is sized with a CSS clamp() on the card's width (17px to 24px).
    */
   variant?: "cell" | "kpi";
   /** Emphasise the main amount (e.g. what is owed). */
@@ -35,10 +40,6 @@ export function StackedMoney({
 }: StackedMoneyProps): ReactNode {
   const { primary, secondary } = formatSypParts(amountSyp, locale, displayCurrency);
   const kpi = variant === "kpi";
-  // Each character is at most about 0.48em wide in the heading font (measured in EN and AR), so
-  // this cap keeps the amount within the card's width (100cqi): it never wraps or overflows.
-  const visibleChars = primary.replace(/[\u2066-\u2069]/g, "").length;
-  const kpiFontSize = `min(1em, ${(100 / (0.48 * visibleChars)).toFixed(1)}cqi)`;
   return (
     <div
       className={cn(
@@ -47,11 +48,10 @@ export function StackedMoney({
       )}
     >
       <bdi
-        style={kpi ? { fontSize: kpiFontSize } : undefined}
         className={cn(
-          "whitespace-nowrap",
+          "break-normal whitespace-nowrap",
           kpi
-            ? null
+            ? KPI_AMOUNT_SIZE
             : small
               ? "text-prose-muted text-xs"
               : strong
@@ -63,7 +63,7 @@ export function StackedMoney({
       </bdi>
       <bdi
         className={cn(
-          "text-prose-muted whitespace-nowrap",
+          "text-prose-muted break-normal whitespace-nowrap",
           kpi ? "font-sans text-sm font-normal tracking-normal" : "text-xs",
         )}
       >

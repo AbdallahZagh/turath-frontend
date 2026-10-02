@@ -15,5 +15,7 @@ test("KPI amounts stack SYP above a USD part that never wraps", () => {
   assert.ok(parts[0][2].includes("ل.س"));
   assert.ok(parts[1][2].includes("US$"));
   assert.ok(parts[1][1].includes("whitespace-nowrap"));
-  assert.ok(parts[0][1].includes("font-size:min(1em"));
+  // Pure CSS size (clamp, 17px to 24px); no inline style from JavaScript fitting.
+  assert.ok(parts[0][1].includes("text-[length:clamp(17px,14cqi,24px)]"));
+  assert.ok(!html.includes("style="));
 });

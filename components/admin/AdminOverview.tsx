@@ -125,24 +125,22 @@ export function AdminOverview(): ReactNode {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-3 shrink-0">
+      <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <span className="text-prose-muted text-xs font-semibold tracking-wide uppercase">
           {periodHint}
         </span>
-        <div className="w-auto">
-          <SegmentSwitch
-            variant="glass"
-            size="sm"
-            aria-label={t("periodLabel")}
-            value={String(periodDays)}
-            onChange={(val) => setPeriodDays(Number(val))}
-            options={[
-              { value: "7", label: t("days7") },
-              { value: "30", label: t("days30") },
-              { value: "90", label: t("days90") },
-            ]}
-          />
-        </div>
+        <SegmentSwitch
+          variant="glass"
+          size="sm"
+          aria-label={t("periodLabel")}
+          value={String(periodDays)}
+          onChange={(val) => setPeriodDays(Number(val))}
+          options={[
+            { value: "7", label: t("days7") },
+            { value: "30", label: t("days30") },
+            { value: "90", label: t("days90") },
+          ]}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">

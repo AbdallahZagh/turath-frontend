@@ -81,7 +81,7 @@ export function GuideBookingCheckout({
     resolver: zodResolver(guideBookingSchema),
     defaultValues: {
       date: initialDate ?? "",
-      duration: "halfDay",
+      duration: undefined,
       hours: 2,
       language: undefined,
       focusArea: undefined,
@@ -97,11 +97,14 @@ export function GuideBookingCheckout({
   const guide = guideQuery.data;
   // A carried or typed date the guide is not available on is dropped, never booked.
   const date = guide?.availability.includes(pickedDate) ? pickedDate : "";
-  const listPriceSyp = guide
-    ? duration === "hourly"
-      ? guide.rates.hourly * hours
-      : guide.rates[duration]
-    : 0;
+  const listPriceSyp =
+    guide && duration
+      ? duration === "hourly"
+        ? guide.rates.hourly * hours
+        : guide.rates[duration]
+      : 0;
+  const price = (amountSyp: number): string => (duration ? formatMoney(amountSyp) : "—");
+  const priceHint = duration ? null : t("chooseDurationForPrice");
   const activeCoupon = coupon?.valid ? coupon : null;
   const discountSyp = calculateCouponDiscountSyp(activeCoupon, listPriceSyp);
   const cashDueSyp = listPriceSyp - discountSyp;
@@ -184,7 +187,7 @@ export function GuideBookingCheckout({
   }
   const confirm = {
     label: createBooking.isPending ? t("confirming") : t("confirm"),
-    disabled: createBooking.isPending || !date || !language || !focusArea,
+    disabled: createBooking.isPending || !date || !duration || !language || !focusArea,
     onClick: () => void form.handleSubmit(onSubmit)(),
   };
 
@@ -230,6 +233,7 @@ export function GuideBookingCheckout({
                       variant="main"
                       required
                       label={t("duration")}
+                      placeholder={t("durationPlaceholder")}
                       options={durations}
                       value={field.value}
                       onChange={field.onChange}
@@ -351,7 +355,7 @@ export function GuideBookingCheckout({
             id: "duration",
             label: t("duration"),
             icon: Clock3,
-            value: tg(`durations.${duration}`),
+            value: duration ? tg(`durations.${duration}`) : t("notSelected"),
           },
           {
             id: "language",
@@ -366,19 +370,19 @@ export function GuideBookingCheckout({
             value: focusArea ? tg(`specialties.${focusArea}`) : t("notSelected"),
           },
         ]}
-        listPrice={{ label: t("listPrice"), value: formatMoney(listPriceSyp) }}
+        listPrice={{ label: t("listPrice"), value: price(listPriceSyp) }}
         discount={
           discountSyp > 0 ? { label: t("discount"), value: `− ${formatMoney(discountSyp)}` } : null
         }
-        cashDue={{ label: t("cashDue"), value: formatMoney(cashDueSyp) }}
-        priceHint={null}
+        cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }}
+        priceHint={priceHint}
         cashDueHint={t("cashDueHint")}
         confirm={confirm}
         back={{ href: paths.listing("guides", guide.id), label: t("backToGuide") }}
       />
       <BookingConfirmBar
-        cashDue={{ label: t("cashDue"), value: formatMoney(cashDueSyp) }}
-        priceHint={null}
+        cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }}
+        priceHint={priceHint}
         confirm={confirm}
       />
     </div>

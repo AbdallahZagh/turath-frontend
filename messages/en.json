@@ -1978,7 +1978,7 @@
     "dateUnavailable": "That date isn't available. Pick another.",
     "details": "Experience details",
     "date": "Date", "datePlaceholder": "Choose an available date", "duration": "Duration", "hours": "Hours",
-    "language": "Language", "languagePlaceholder": "Choose a language", "focusArea": "Focus area", "focusPlaceholder": "Choose your focus",
+    "language": "Language", "languagePlaceholder": "Choose a language", "focusArea": "Focus area", "focusPlaceholder": "Choose your focus", "durationPlaceholder": "Choose a duration", "chooseDurationForPrice": "Choose a duration to see the price",
     "holdTitle": "Your selection is held for 10 minutes", "holdBody": "Complete confirmation within this window to keep your selection.",
     "discountTitle": "Discount code", "discountCode": "Code", "discountPlaceholder": "Enter a code", "apply": "Apply", "applying": "Applying…",
     "summary": "Booking summary", "notSelected": "Not selected", "listPrice": "List price", "discount": "Discount", "cashDue": "Cash due on arrival",

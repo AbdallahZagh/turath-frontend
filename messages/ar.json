@@ -1978,7 +1978,7 @@
     "dateUnavailable": "هذا التاريخ غير متاح، اختر تاريخاً آخر.",
     "details": "تفاصيل التجربة",
     "date": "التاريخ", "datePlaceholder": "اختر تاريخاً متاحاً", "duration": "المدة", "hours": "الساعات",
-    "language": "اللغة", "languagePlaceholder": "اختر اللغة", "focusArea": "محور الجولة", "focusPlaceholder": "اختر محور الجولة",
+    "language": "اللغة", "languagePlaceholder": "اختر اللغة", "focusArea": "محور الجولة", "focusPlaceholder": "اختر محور الجولة", "durationPlaceholder": "اختر المدة", "chooseDurationForPrice": "اختر المدة لعرض السعر",
     "holdTitle": "اختيارك محفوظ لمدة 10 دقائق", "holdBody": "أكمل التأكيد خلال هذه المدة للاحتفاظ باختيارك.",
     "discountTitle": "رمز الخصم", "discountCode": "الرمز", "discountPlaceholder": "أدخل الرمز", "apply": "تطبيق", "applying": "جارٍ التطبيق…",
     "summary": "ملخص الحجز", "notSelected": "لم يتم الاختيار", "listPrice": "السعر الأساسي", "discount": "الخصم", "cashDue": "المبلغ النقدي عند الوصول",

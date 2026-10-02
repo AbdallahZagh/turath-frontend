@@ -78,7 +78,8 @@ function FieldLabel({
 function Actions({ pending, onClose }: { pending: boolean; onClose: () => void }): ReactNode {
   const t = useTranslations("provider.inventory.form");
   return (
-    <div className="mt-2 flex justify-end gap-2">
+    // Sticky at the bottom of the modal's scrolling body, so Cancel and Save are always in view.
+    <div className="border-border bg-surface/70 sticky bottom-0 z-10 mt-2 flex justify-end gap-2 rounded-b-xl border-t py-3 backdrop-blur-xl">
       <Button type="button" variant="outline" size="sm" onClick={onClose}>
         {t("cancel")}
       </Button>

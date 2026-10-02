@@ -314,7 +314,7 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               )}
             />
             <FormField label={t("fields.phone")} error={form.formState.errors.phone}>
-              <Input variant="glass" dir="ltr" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
+              <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
             </FormField>
             <FormField label={t("fields.addressEn")} error={form.formState.errors.addressEn}>
               <Input variant="glass" dir="ltr" {...form.register("addressEn")} />

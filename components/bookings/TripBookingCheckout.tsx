@@ -26,6 +26,7 @@ import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
+import { normalizePhoneInput } from "@/lib/format/digits";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -98,7 +99,7 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
             <div className="space-y-1.5"><Controller control={form.control} name="date" render={({ field }) => <Select variant="main" required label={t("date")} placeholder={t("datePlaceholder")} options={departures} value={field.value} onChange={field.onChange} icon={<CalendarDays className="size-4" />} />} /><AuthFieldError message={message(te, form.formState.errors.date)} /></div>
             <div className="space-y-1.5"><Controller control={form.control} name="seats" render={({ field }) => <Stepper variant="main" required label={t("seats")} min={1} max={Math.min(12, departure?.seatsLeft ?? availableTrip.capacity)} value={field.value} onChange={field.onChange} />} /><AuthFieldError message={message(te, form.formState.errors.seats)} /></div>
             <div className="space-y-1.5 sm:col-span-2"><Controller control={form.control} name="pickupPointId" render={({ field }) => <Select variant="main" required label={t("pickup")} placeholder={t("pickupPlaceholder")} options={pickups} value={field.value} onChange={field.onChange} icon={<MapPin className="size-4" />} />} /><AuthFieldError message={message(te, form.formState.errors.pickupPointId)} /></div>
-            <div className="space-y-1.5 sm:col-span-2"><Input variant="main" required label={t("emergencyContact")} placeholder={t("emergencyContactPlaceholder")} inputMode="tel" autoComplete="tel" {...form.register("emergencyContact")} /><AuthFieldError message={message(te, form.formState.errors.emergencyContact)} /></div>
+            <div className="space-y-1.5 sm:col-span-2"><Input variant="main" required label={t("emergencyContact")} placeholder={t("emergencyContactPlaceholder")} type="tel" dir="ltr" inputMode="tel" autoComplete="tel" {...form.register("emergencyContact", { setValueAs: normalizePhoneInput })} /><AuthFieldError message={message(te, form.formState.errors.emergencyContact)} /></div>
           </div></section>
 
           <section className="bg-glass-control rounded-2xl p-5"><div className="flex gap-3"><Clock3 className="text-accent mt-0.5 size-5 shrink-0" aria-hidden /><div><h2 className="text-prose font-semibold">{t("holdTitle")}</h2><p className="text-prose-muted mt-1 text-sm leading-relaxed">{t("holdBody")}</p></div></div></section>

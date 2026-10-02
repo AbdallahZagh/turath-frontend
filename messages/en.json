@@ -737,7 +737,7 @@
           "completed": "Completed",
           "cancelled": "Cancelled",
           "noShow": "No-show",
-          "disputed": "In review",
+          "disputed": "Disputed",
           "locked": "Account locked",
           "unlocked": "Account unlocked"
         },
@@ -812,7 +812,7 @@
           "completed": "Completed",
           "cancelled": "Cancelled",
           "noShow": "No-show",
-          "disputed": "In review",
+          "disputed": "Disputed",
           "settled": "Settlement",
           "submitted": "Application submitted",
           "approved": "License approved",
@@ -920,7 +920,7 @@
         "completed": "Completed",
         "cancelled": "Cancelled",
         "noShow": "No-show",
-        "disputed": "In review"
+        "disputed": "Disputed"
       },
       "columns": {
         "guest": "Guest",

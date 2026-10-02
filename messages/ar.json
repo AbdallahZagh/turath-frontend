@@ -737,7 +737,7 @@
           "completed": "مكتمل",
           "cancelled": "ملغى",
           "noShow": "عدم حضور",
-          "disputed": "قيد المراجعة",
+          "disputed": "متنازع عليه",
           "locked": "قفل الحساب",
           "unlocked": "فتح الحساب"
         },
@@ -812,7 +812,7 @@
           "completed": "مكتمل",
           "cancelled": "ملغى",
           "noShow": "عدم حضور",
-          "disputed": "قيد المراجعة",
+          "disputed": "متنازع عليه",
           "settled": "تسوية",
           "submitted": "قُدّم الطلب",
           "approved": "قُبل الترخيص",
@@ -920,7 +920,7 @@
         "completed": "مكتمل",
         "cancelled": "ملغى",
         "noShow": "عدم حضور",
-        "disputed": "قيد المراجعة"
+        "disputed": "متنازع عليه"
       },
       "columns": {
         "guest": "الضيف",

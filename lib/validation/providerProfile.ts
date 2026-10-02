@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { parseNumberInput } from "@/lib/format/digits";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
 export const PROVIDER_PROFILE_AMENITIES = [
   "generator",
@@ -12,6 +13,18 @@ export const PROVIDER_PROFILE_AMENITIES = [
   "parking",
   "terrace",
 ] as const;
+
+export type ProviderProfileAmenity = (typeof PROVIDER_PROFILE_AMENITIES)[number];
+
+/** Stay facilities a restaurant does not offer, so its profile does not list them. */
+const NOT_OFFERED_BY_DINING: readonly ProviderProfileAmenity[] = ["breakfast", "airportTransfer"];
+
+/** The facilities a business of this category can tick on its profile. */
+export function profileAmenitiesFor(category: ProviderCategory): readonly ProviderProfileAmenity[] {
+  return category === "dining"
+    ? PROVIDER_PROFILE_AMENITIES.filter((amenity) => !NOT_OFFERED_BY_DINING.includes(amenity))
+    : PROVIDER_PROFILE_AMENITIES;
+}
 
 const coordinate = (minimum: number, maximum: number) =>
   z

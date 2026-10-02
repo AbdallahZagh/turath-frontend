@@ -1,3 +1,4 @@
+import { RESTAURANT_IMAGES } from "@/lib/mock/restaurants";
 import type { ProviderCategory } from "@/lib/validation/auth";
 import type { ProviderProfileValues } from "@/lib/validation/providerProfile";
 
@@ -108,11 +109,39 @@ const profiles: Record<ProviderCategory, ProviderProfile> = {
     descriptionAr: "مطعم دمشقي يقدم أطباقاً سورية موسمية حول باحة مظللة، مع جلسات داخلية وتراس ومساحات خاصة.",
     addressEn: "Bab Touma, Damascus",
     addressAr: "باب توما، دمشق",
+    phone: "+963 955 712 340",
+    email: "omar.halabi@example.com",
     opensAt: "12:00",
     closesAt: "23:30",
+    latitude: "33.5126",
+    longitude: "36.3139",
     amenities: ["generator", "wifi", "ac", "accessible", "terrace"],
-    logo: "/images/landing/pillar-dining.png",
-    gallery: ["/images/landing/pillar-dining.png", "/images/hotels/damascus-courtyard.webp"],
+    logo: RESTAURANT_IMAGES.gardenCourtyard,
+    gallery: [
+      RESTAURANT_IMAGES.gardenCourtyard,
+      RESTAURANT_IMAGES.mezzeTable,
+      RESTAURANT_IMAGES.damascusDiningRoom,
+    ],
+    registration: {
+      guideLicenseNumber: "",
+      commercialRegistration: {
+        filename: "beit-al-zaytoun-commercial-registration.pdf",
+        mimeType: "application/pdf",
+        size: 768_000,
+      },
+      ministryLicense: {
+        filename: "tourism-ministry-restaurant-license.pdf",
+        mimeType: "application/pdf",
+        size: 584_000,
+      },
+      ownerId: {
+        filename: "omar-halabi-id.webp",
+        mimeType: "image/webp",
+        size: 402_000,
+      },
+      logoFilename: "beit-al-zaytoun-logo.webp",
+      galleryFilenames: ["courtyard-tables.webp", "mezze-spread.webp", "dining-room.webp"],
+    },
   },
   trips: {
     ...hotelProfile,

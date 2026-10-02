@@ -35,7 +35,7 @@ import { formatPickerTime } from "@/lib/format/datetime";
 import { normalizePhoneInput } from "@/lib/format/digits";
 import type { ProviderProfile } from "@/lib/mock/providerProfile";
 import {
-  PROVIDER_PROFILE_AMENITIES,
+  profileAmenitiesFor,
   providerProfileSchema,
   type ProviderProfileValues,
 } from "@/lib/validation/providerProfile";
@@ -357,7 +357,7 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
             name="amenities"
             render={({ field }) => (
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {PROVIDER_PROFILE_AMENITIES.map((amenity) => (
+                {profileAmenitiesFor(profile.category).map((amenity) => (
                   <label key={amenity} className="border-border bg-glass-control text-prose flex items-center gap-3 rounded-xl border px-4 py-3 text-sm">
                     <Checkbox
                       checked={field.value.includes(amenity)}

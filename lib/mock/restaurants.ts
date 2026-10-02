@@ -1,6 +1,35 @@
 import type { LocalizedName } from "@/lib/i18n/localized";
 import type { GovernorateSlug } from "@/lib/mock/landing";
 
+/**
+ * Restaurant photos (public/images/restaurants), real dining rooms, terraces and tables, cropped
+ * to 4:3 WebP. Free licences: Pexels (pexels.com/license) and Unsplash (unsplash.com/license).
+ * - damascus-dining-room: pexels.com/photo/35441699 (Saif allah Dawoud, Damascus)
+ * - mezze-platter: pexels.com/photo/25907496 (Ali Dashti)
+ * - mezze-table: pexels.com/photo/31176992 (Ahmet Çötür)
+ * - grilled-kebab: pexels.com/photo/31151727 (Sina Rezakhani)
+ * - mezze-dark-table: pexels.com/photo/29253299 (Ali Dashti)
+ * - coastal-terrace: pexels.com/photo/33630389 (Nihat Küçük)
+ * - seaside-patio: pexels.com/photo/17631105 (Doğu Tuncer)
+ * - shared-plates: pexels.com/photo/31819814 (Vincent Rivaud)
+ * - outdoor-spread: pexels.com/photo/29253339 (Ali Dashti)
+ * - outdoor-dishes-tea: pexels.com/photo/29253345 (Ali Dashti)
+ * - garden-courtyard: unsplash.com/photos/iVUNzHj8jbY (Alexander Psiuk)
+ */
+export const RESTAURANT_IMAGES = {
+  damascusDiningRoom: "/images/restaurants/damascus-dining-room.webp",
+  mezzePlatter: "/images/restaurants/mezze-platter.webp",
+  mezzeTable: "/images/restaurants/mezze-table.webp",
+  grilledKebab: "/images/restaurants/grilled-kebab.webp",
+  mezzeDarkTable: "/images/restaurants/mezze-dark-table.webp",
+  coastalTerrace: "/images/restaurants/coastal-terrace.webp",
+  seasidePatio: "/images/restaurants/seaside-patio.webp",
+  sharedPlates: "/images/restaurants/shared-plates.webp",
+  outdoorSpread: "/images/restaurants/outdoor-spread.webp",
+  outdoorDishesTea: "/images/restaurants/outdoor-dishes-tea.webp",
+  gardenCourtyard: "/images/restaurants/garden-courtyard.webp",
+} as const;
+
 export type RestaurantZoneId = "indoor" | "terrace" | "vip" | "smoking";
 export type RestaurantAmenityId = "generator" | "wifi" | "ac" | "accessible";
 export type RestaurantPriceRange = "under75" | "75to150" | "over150";
@@ -59,8 +88,8 @@ const RESTAURANTS: Restaurant[] = [
     governorate: "damascus",
     address: { en: "Bab Touma, Old Damascus", ar: "باب توما، دمشق القديمة" },
     coordinates: { latitude: 33.5152, longitude: 36.3164 },
-    imageSrc: "/images/landing/pillar-dining.png",
-    gallery: ["/images/landing/pillar-dining.png", "/images/hotels/damascus-courtyard.webp", "/images/landing/hero-damascus.png"],
+    imageSrc: RESTAURANT_IMAGES.damascusDiningRoom,
+    gallery: [RESTAURANT_IMAGES.damascusDiningRoom, RESTAURANT_IMAGES.mezzePlatter, "/images/landing/pillar-dining.png"],
     rating: 4.9,
     reviewCount: 186,
     verified: true,
@@ -84,8 +113,8 @@ const RESTAURANTS: Restaurant[] = [
     governorate: "aleppo",
     address: { en: "Al-Jdayde Quarter, Aleppo", ar: "حي الجديدة، حلب" },
     coordinates: { latitude: 36.2058, longitude: 37.1571 },
-    imageSrc: "/images/hotels/aleppo-heritage-room.webp",
-    gallery: ["/images/hotels/aleppo-heritage-room.webp", "/images/landing/pillar-dining.png", "/images/landing/site-aleppo-citadel.png"],
+    imageSrc: RESTAURANT_IMAGES.mezzeTable,
+    gallery: [RESTAURANT_IMAGES.mezzeTable, RESTAURANT_IMAGES.grilledKebab, RESTAURANT_IMAGES.mezzeDarkTable],
     rating: 4.8,
     reviewCount: 124,
     verified: true,
@@ -105,8 +134,8 @@ const RESTAURANTS: Restaurant[] = [
     governorate: "latakia",
     address: { en: "Northern Corniche, Latakia", ar: "الكورنيش الشمالي، اللاذقية" },
     coordinates: { latitude: 35.548, longitude: 35.7726 },
-    imageSrc: "/images/hotels/latakia-sea-terrace.webp",
-    gallery: ["/images/hotels/latakia-sea-terrace.webp", "/images/landing/pillar-dining.png", "/images/landing/site-saladin-castle.png"],
+    imageSrc: RESTAURANT_IMAGES.coastalTerrace,
+    gallery: [RESTAURANT_IMAGES.coastalTerrace, RESTAURANT_IMAGES.seasidePatio, RESTAURANT_IMAGES.sharedPlates],
     rating: 4.7,
     reviewCount: 93,
     verified: true,
@@ -126,8 +155,8 @@ const RESTAURANTS: Restaurant[] = [
     governorate: "homs",
     address: { en: "Al-Husn Road, Homs countryside", ar: "طريق الحصن، ريف حمص" },
     coordinates: { latitude: 34.7556, longitude: 36.296 },
-    imageSrc: "/images/hotels/homs-heritage-inn.webp",
-    gallery: ["/images/hotels/homs-heritage-inn.webp", "/images/landing/pillar-dining.png", "/images/landing/site-krak-des-chevaliers.png"],
+    imageSrc: RESTAURANT_IMAGES.outdoorSpread,
+    gallery: [RESTAURANT_IMAGES.outdoorSpread, RESTAURANT_IMAGES.outdoorDishesTea, RESTAURANT_IMAGES.mezzePlatter],
     rating: 4.6,
     reviewCount: 58,
     verified: true,

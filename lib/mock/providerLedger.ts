@@ -1,3 +1,6 @@
+import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
+
+import { toIsoDate, todayInSyria } from "@/lib/format/datetime";
 import { creditStandingFor, creditUsedRatio } from "@/lib/mock/adminLedger";
 
 export type ProviderLedgerStanding = "healthy" | "warning" | "grace";
@@ -36,19 +39,30 @@ export type ProviderLedgerData = {
   entries: ProviderLedgerEntry[];
 };
 
-const PROVIDER_LEDGER: Omit<ProviderLedgerData, "standing"> = {
+/** Bi-weekly statements close every 14 days, counted from the open period's end. */
+const STATEMENT_CYCLE_DAYS = 14;
+const STATEMENT_CYCLE_END = "2026-09-28";
+
+/** The first statement close on or after today in Syria, so it is never in the past. */
+function nextStatementDate(today: string): string {
+  const anchor = parseISO(STATEMENT_CYCLE_END);
+  const elapsed = Math.max(0, differenceInCalendarDays(parseISO(today), anchor));
+  const cycles = Math.ceil(elapsed / STATEMENT_CYCLE_DAYS);
+  return toIsoDate(addDays(anchor, cycles * STATEMENT_CYCLE_DAYS));
+}
+
+const PROVIDER_LEDGER: Omit<ProviderLedgerData, "standing" | "nextStatementAt"> = {
   tier: "established",
   cadence: "biweekly",
   accruedCommissionSyp: 6_200_000,
   paidCommissionSyp: 2_100_000,
   outstandingCommissionSyp: 4_100_000,
   creditCeilingSyp: 5_000_000,
-  nextStatementAt: "2026-09-28",
   statements: [
     {
       id: "statement-open",
       periodStart: "2026-09-15",
-      periodEnd: "2026-09-28",
+      periodEnd: STATEMENT_CYCLE_END,
       accruedSyp: 1_420_000,
       paidSyp: 0,
       status: "due",
@@ -126,6 +140,7 @@ export function getProviderLedger(): ProviderLedgerData {
       PROVIDER_LEDGER.outstandingCommissionSyp,
       PROVIDER_LEDGER.creditCeilingSyp,
     ),
+    nextStatementAt: nextStatementDate(todayInSyria()),
     statements: PROVIDER_LEDGER.statements.map((statement) => ({ ...statement })),
     entries: PROVIDER_LEDGER.entries.map((entry) => ({ ...entry })),
   };

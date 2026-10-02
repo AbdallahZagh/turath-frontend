@@ -174,7 +174,7 @@ export function UniversalBookingPass({
                   {referenceLabel}
                 </p>
                 <p className="text-prose mt-1 font-mono text-sm font-bold tracking-[0.08em]">
-                  {reference}
+                  <bdi dir="ltr">{reference}</bdi>
                 </p>
               </div>
             </header>
@@ -279,7 +279,7 @@ export function UniversalBookingPass({
               {referenceLabel}
             </p>
             <p className="text-prose mt-0.5 font-mono text-sm font-bold tracking-[0.08em]">
-              {reference}
+              <bdi dir="ltr">{reference}</bdi>
             </p>
 
             <div className="mt-3 rounded-xl border border-border bg-white p-2.5 shadow-sm">
@@ -293,7 +293,7 @@ export function UniversalBookingPass({
                 {backupLabel}
               </p>
               <code className="text-prose mt-1.5 block font-mono text-xl font-bold tracking-[0.22em]">
-                {backupCode}
+                <bdi dir="ltr">{backupCode}</bdi>
               </code>
               <p className="text-prose-muted mt-1 text-[0.62rem] leading-relaxed">{backupHint}</p>
             </div>
@@ -301,7 +301,7 @@ export function UniversalBookingPass({
             <div className="mt-auto flex items-end justify-center gap-3 pt-4">
               <TicketBarcode />
               <span className="text-prose-muted font-mono text-[0.58rem] [writing-mode:vertical-rl]">
-                {reference}
+                <bdi dir="ltr">{reference}</bdi>
               </span>
             </div>
           </aside>

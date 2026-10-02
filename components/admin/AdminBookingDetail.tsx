@@ -177,7 +177,7 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
               <span>{t("detail.couponTitle")}</span>
             </div>
             <span className="font-mono text-xs font-bold tracking-wider text-prose border border-accent/30 bg-accent/10 px-2 py-0.5 rounded-md">
-              {booking.couponCode}
+              <bdi dir="ltr">{booking.couponCode}</bdi>
             </span>
           </div>
           {booking.discountSyp ? (

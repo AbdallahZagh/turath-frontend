@@ -142,7 +142,7 @@ export function AdminBookings(): ReactNode {
       id: "code",
       header: t("columns.code"),
       cell: (booking) => (
-        <span className="font-medium tracking-wider tabular-nums">{booking.code}</span>
+        <bdi dir="ltr" className="font-medium tracking-wider tabular-nums">{booking.code}</bdi>
       ),
     },
   ];

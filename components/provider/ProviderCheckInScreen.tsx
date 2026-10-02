@@ -109,7 +109,9 @@ function ResultPanel({
             </p>
           </div>
         </div>
-        <Badge variant={success ? "solid" : "outline"}>{booking.reference}</Badge>
+        <Badge variant={success ? "solid" : "outline"}>
+          <bdi dir="ltr">{booking.reference}</bdi>
+        </Badge>
       </div>
 
       <div className="grid gap-6 p-5 sm:grid-cols-2 sm:p-6">
@@ -354,7 +356,7 @@ function ArrivalCard({
             <bdi>{localizedName(booking.guestName, locale)}</bdi>
           </p>
           <p className="text-prose-muted mt-1 text-xs">
-            {booking.reference}
+            <bdi dir="ltr">{booking.reference}</bdi>
             {partSeparator(locale)}
             {t(`categories.${booking.category}`)}
           </p>

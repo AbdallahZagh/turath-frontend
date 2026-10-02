@@ -129,7 +129,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
         </Button>
         <div className="flex items-center gap-2">
           <BookingStatusBadge status={booking.status} />
-          <Badge variant="outline">{booking.reference}</Badge>
+          <Badge variant="outline"><bdi dir="ltr">{booking.reference}</bdi></Badge>
         </div>
       </div>
 
@@ -189,7 +189,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
               </span>
               <div>
                 <h2 className="text-prose font-semibold">{t("detail.notes")}</h2>
-                <p className="text-prose-muted mt-2 text-sm leading-7">{booking.notes}</p>
+                <p className="text-prose-muted mt-2 text-sm leading-7"><bdi>{booking.notes}</bdi></p>
               </div>
             </div>
           </GlassPanel>
@@ -236,7 +236,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
             <div className="border-border mt-5 w-full border-t pt-5">
               <p className="text-prose-muted text-xs font-semibold uppercase tracking-wide">{t("detail.backupCode")}</p>
               <div className="mt-2 flex items-center justify-center gap-2">
-                <code className="text-prose font-mono text-xl font-bold tracking-[0.22em]">{booking.backupCode}</code>
+                <code className="text-prose font-mono text-xl font-bold tracking-[0.22em]" dir="ltr">{booking.backupCode}</code>
                 <button
                   type="button"
                   className="border-border bg-glass-control text-prose-muted hover:text-primary grid size-9 place-items-center rounded-lg border transition-colors"

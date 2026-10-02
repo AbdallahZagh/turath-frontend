@@ -337,7 +337,7 @@ export function ProviderDashboard(): ReactNode {
                     <BookingStatusBadge status={arrival.status} />
                   </div>
                   <p className="text-prose-muted mt-1 text-xs">
-                    {arrival.id}{partSeparator(locale)}{t("arrivals.party", { count: arrival.partySize })}
+                    <bdi dir="ltr">{arrival.id}</bdi>{partSeparator(locale)}{t("arrivals.party", { count: arrival.partySize })}
                   </p>
                 </div>
                 <div className="shrink-0 sm:text-end">

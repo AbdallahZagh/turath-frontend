@@ -227,7 +227,7 @@ export function ProviderLedgerScreen(): ReactNode {
     {
       id: "reference",
       header: t("activity.reference"),
-      cell: (entry) => <span className="font-medium">{entry.reference}</span>,
+      cell: (entry) => <bdi dir="ltr" className="font-medium">{entry.reference}</bdi>,
     },
     {
       id: "amount",

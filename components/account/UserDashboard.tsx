@@ -145,7 +145,7 @@ export function UserDashboard(): ReactNode {
                 <p className="text-prose-muted mt-1 text-sm">{formatMediumDate(bookingDate(nextBooking), locale)}</p>
                 <div className="border-border mt-4 flex items-end justify-between gap-4 border-t pt-4">
                   <div>
-                    <p className="text-prose-muted text-xs">{nextBooking.reference}</p>
+                    <p className="text-prose-muted text-xs"><bdi dir="ltr">{nextBooking.reference}</bdi></p>
                     <p className="text-prose mt-1 text-sm font-semibold">{formatMoney(nextBooking.cashDueSyp)}</p>
                   </div>
                   <Button href={USER_PATHS.booking(nextBooking.id)} size="sm" variant="outline">{t("next.open")}</Button>

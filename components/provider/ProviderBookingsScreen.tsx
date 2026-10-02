@@ -88,7 +88,7 @@ export function ProviderBookingsScreen(): ReactNode {
       cell: (booking) => (
         <span className="text-prose-muted flex max-w-64 items-start gap-1.5 text-xs leading-relaxed">
           <StickyNote className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-          <span className="line-clamp-2">{booking.notes}</span>
+          <bdi className="line-clamp-2">{booking.notes}</bdi>
         </span>
       ),
     },

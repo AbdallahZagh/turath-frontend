@@ -1,3 +1,5 @@
+import { parseAsString } from "nuqs";
+
 import { toLatinDigits } from "@/lib/format/digits";
 
 /**
@@ -23,6 +25,24 @@ export const BOOKING_SEARCH_KEYS = [
 
 type BookingSearchKey = (typeof BOOKING_SEARCH_KEYS)[number];
 
+/**
+ * The one URL parser for each carried key, used by the booking search and by every listing's
+ * filters. nuqs shares a key's value between all hooks on the page without parsing it again, so
+ * two hooks reading the same key must use the same type: these keys are always strings, and
+ * readers clean them with readPeople / sanitizeBookingSearch.
+ */
+export const BOOKING_SEARCH_PARSERS = {
+  checkIn: parseAsString,
+  checkOut: parseAsString,
+  guests: parseAsString,
+  date: parseAsString,
+  time: parseAsString,
+  partySize: parseAsString,
+  seats: parseAsString,
+  qty: parseAsString,
+  session: parseAsString,
+} satisfies Record<BookingSearchKey, typeof parseAsString>;
+
 export type BookingSearchInput = Partial<Record<BookingSearchKey, string | null | undefined>>;
 
 export type BookingSearch = {
@@ -38,7 +58,9 @@ export type BookingSearch = {
 };
 
 /** Same ceilings as the checkout forms (lib/validation/booking.ts). */
-const BOOKING_PEOPLE_MAX = { guests: 8, partySize: 12, seats: 12, qty: 6 } as const;
+export const BOOKING_PEOPLE_MAX = { guests: 8, partySize: 12, seats: 12, qty: 6 } as const;
+
+type PeopleKey = keyof typeof BOOKING_PEOPLE_MAX;
 
 const KIND_KEYS: Record<BookingKind, readonly BookingSearchKey[]> = {
   hotel: ["checkIn", "checkOut", "guests"],
@@ -71,6 +93,16 @@ function time(value: string | null | undefined): string | undefined {
 
 function slug(value: string | null | undefined): string | undefined {
   return value && /^[a-z0-9-]{1,64}$/i.test(value) ? value : undefined;
+}
+
+/** A people count from the URL (any digits), or undefined when missing or out of range. */
+export function readPeople(value: string | null | undefined, key: PeopleKey): number | undefined {
+  return people(value ? toLatinDigits(value) : value, BOOKING_PEOPLE_MAX[key]);
+}
+
+/** A people count for the URL; the default of one person is left out. */
+export function peopleParam(value: number | undefined): string | null {
+  return value && value > 1 ? String(value) : null;
 }
 
 /** `today` is the viewer's local date as yyyy-mm-dd. */

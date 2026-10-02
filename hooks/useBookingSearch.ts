@@ -1,22 +1,14 @@
 "use client";
 
-import { parseAsString, useQueryStates } from "nuqs";
+import { useQueryStates } from "nuqs";
 import { useMemo } from "react";
 
 import { toIsoDate } from "@/lib/format/datetime";
-import { sanitizeBookingSearch, type BookingSearch } from "@/lib/search/bookingSearch";
-
-const BOOKING_SEARCH_PARSERS = {
-  checkIn: parseAsString,
-  checkOut: parseAsString,
-  guests: parseAsString,
-  date: parseAsString,
-  time: parseAsString,
-  partySize: parseAsString,
-  seats: parseAsString,
-  qty: parseAsString,
-  session: parseAsString,
-};
+import {
+  BOOKING_SEARCH_PARSERS,
+  sanitizeBookingSearch,
+  type BookingSearch,
+} from "@/lib/search/bookingSearch";
 
 /** Dates and people carried in the URL, already cleaned (see lib/search/bookingSearch.ts). */
 export function useBookingSearch(): BookingSearch {

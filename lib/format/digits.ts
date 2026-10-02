@@ -60,9 +60,13 @@ export function toDisplayDigits(text: string, locale: string): string {
   return out + toArabicIndic(chunk);
 }
 
-/** Arabic-Indic and Persian digits → Latin; nothing else changes. */
-export function toLatinDigits(text: string): string {
-  return text
+/**
+ * Arabic-Indic and Persian digits → Latin; nothing else changes. Numbers are read as their
+ * digits and a missing value (null or undefined) gives "", so a stray non-string never throws.
+ */
+export function toLatinDigits(text: string | number | null | undefined): string {
+  if (text === null || text === undefined) return "";
+  return String(text)
     .replace(/[\u0660-\u0669]/g, (digit) => String(digit.charCodeAt(0) - ARABIC_INDIC_ZERO))
     .replace(/[\u06F0-\u06F9]/g, (digit) => String(digit.charCodeAt(0) - PERSIAN_ZERO));
 }

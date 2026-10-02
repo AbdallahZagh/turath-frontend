@@ -207,7 +207,7 @@ const SEED: ProviderBookingSeed[] = [
   {
     id: "provider-booking-dining-1", category: "dining", reference: "TRH-DIN821", backupCode: "DINE21",
     guestName: { en: "Maya Darwish", ar: "مايا درويش" }, phone: "+963 933 714 206", partySize: 4,
-    notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table · 20:30", ar: "طاولة التراس ٢٠:٣٠" },
+    notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table", ar: "طاولة التراس" },
     scheduledAt: fromToday(0, "20:30"), endsAt: fromToday(0, "22:30"), listPriceSyp: 320_000,
     discountSyp: 32_000, cashDueSyp: 288_000, couponCode: "TASTE10", status: "CONFIRMED", checkedInAt: null,
     checkedInBy: null, createdAt: "2026-09-18T12:30:00+03:00",

@@ -153,7 +153,7 @@ const profiles: Record<ProviderCategory, ProviderProfile> = {
     ...hotelProfile,
     id: "layla-al-hakim",
     category: "guides",
-    nameEn: "Layla Al Hakim",
+    nameEn: "Layla Al-Hakim",
     nameAr: "ليلى الحكيم",
     descriptionEn: "A licensed cultural guide specialising in Old Damascus architecture, culinary heritage, and family-friendly walking tours.",
     descriptionAr: "دليلة سياحية مرخصة متخصصة في عمارة دمشق القديمة وتراث الطعام والجولات العائلية سيراً على الأقدام.",

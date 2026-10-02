@@ -2247,7 +2247,6 @@
     "voucher": {
       "date": "Event date",
       "doors": "Start time",
-      "admission": "Admission",
       "venue": "Venue",
       "tickets": "{count, plural, one {# ticket} other {# tickets}}"
     }

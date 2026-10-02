@@ -52,8 +52,9 @@ type UniversalBookingPassProps = {
   providerAddress: string;
   start: BookingPassPoint;
   end: BookingPassPoint;
-  routeLabel: string;
-  routeValue: string;
+  /** One summary line under the dates; left out when a fact below already says it (events). */
+  routeLabel?: string;
+  routeValue?: string;
   facts: BookingPassFact[];
   listPriceLabel: string;
   listPrice: string;
@@ -214,12 +215,14 @@ export function UniversalBookingPass({
                 </div>
               </div>
 
-              <div className="mt-5 flex items-center justify-center gap-2">
-                <TicketCheck className="text-primary size-4" aria-hidden />
-                <p className="text-prose-muted text-[0.68rem] font-bold uppercase tracking-[0.12em]">
-                  {routeLabel}: <span className="text-prose">{routeValue}</span>
-                </p>
-              </div>
+              {routeLabel && routeValue ? (
+                <div className="mt-5 flex items-center justify-center gap-2">
+                  <TicketCheck className="text-primary size-4" aria-hidden />
+                  <p className="text-prose-muted text-[0.68rem] font-bold uppercase tracking-[0.12em]">
+                    {routeLabel}: <span className="text-prose">{routeValue}</span>
+                  </p>
+                </div>
+              ) : null}
             </div>
 
             <dl className="grid border-y border-dashed border-border sm:grid-cols-3">

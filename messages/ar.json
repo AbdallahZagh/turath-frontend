@@ -2247,7 +2247,6 @@
     "voucher": {
       "date": "تاريخ الفعالية",
       "doors": "وقت البدء",
-      "admission": "الدخول",
       "venue": "المكان",
       "tickets": "{count, plural, one {تذكرة واحدة} two {تذكرتان} few {# تذاكر} many {# تذكرة} other {# تذكرة}}"
     }

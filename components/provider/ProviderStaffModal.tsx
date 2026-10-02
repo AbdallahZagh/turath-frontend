@@ -6,6 +6,7 @@ import { useEffect, type ReactNode } from "react";
 import { Controller, useForm, type FieldError } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
@@ -142,7 +143,7 @@ export function ProviderStaffModal({
             {t("invite.cancel")}
           </Button>
           <Button type="submit" size="sm" disabled={invite.isPending || update.isPending}>
-            {editing ? <Save className="size-4" aria-hidden /> : <Send className="size-4" aria-hidden />}
+            {editing ? <Save className="size-4" aria-hidden /> : <Icon icon={Send} className="size-4" aria-hidden />}
             {editing
               ? update.isPending ? t("edit.saving") : t("edit.save")
               : invite.isPending ? t("invite.sending") : t("invite.send")}

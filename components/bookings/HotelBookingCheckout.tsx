@@ -235,7 +235,14 @@ export function HotelBookingCheckout({
         title={localizedName(hotel.name, loc)}
         subtitle={localizedName(hotel.address, loc)}
         rows={[
-          { id: "dates", label: t("dates"), icon: CalendarDays, value: checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected") },
+          { id: "dates", label: t("dates"), icon: CalendarDays, value: checkIn && checkOut ? (
+                <>
+                  <span className="whitespace-nowrap">{formatMediumDate(checkIn, loc)}</span> –{" "}
+                  <span className="whitespace-nowrap">{formatMediumDate(checkOut, loc)}</span>
+                </>
+              ) : (
+                t("notSelected")
+              ) },
           { id: "room", label: t("room"), icon: BedDouble, value: selectedRoom ? tRooms(selectedRoom.type) : t("notSelected") },
           { id: "guests", label: t("guests"), icon: Users, value: formatCount(guests, loc) },
           { id: "nights", label: t("nights"), icon: Moon, value: formatCount(nights, loc) },

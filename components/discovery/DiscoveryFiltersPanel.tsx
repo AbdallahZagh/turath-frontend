@@ -68,7 +68,7 @@ export function DiscoveryFiltersPanel({
           <SlidersHorizontal className="text-primary size-4" aria-hidden />
           {tf("title")}
         </h2>
-        <Button variant="glass" size="sm" onClick={reset}>
+        <Button variant="glass" size="sm" className="shrink-0 whitespace-nowrap" onClick={reset}>
           <RotateCcw className="size-3.5" aria-hidden />
           {tf("reset")}
         </Button>

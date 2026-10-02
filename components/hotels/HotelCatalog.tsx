@@ -147,7 +147,7 @@ export function HotelCatalog({
         side="end"
         footer={
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-            <Button variant="glass" size="sm" onClick={resetFilters}>
+            <Button variant="glass" size="sm" className="shrink-0 whitespace-nowrap" onClick={resetFilters}>
               {tFilters("reset")}
             </Button>
             <Button size="sm" onClick={() => setFiltersOpen(false)}>

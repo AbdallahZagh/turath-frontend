@@ -75,7 +75,7 @@ export function HotelFiltersPanel({
             <SlidersHorizontal className="text-accent size-5" aria-hidden />
             {t("title")}
           </h2>
-          <Button variant="glass" size="sm" onClick={onReset}>
+          <Button variant="glass" size="sm" className="shrink-0 whitespace-nowrap" onClick={onReset}>
             <RotateCcw className="size-3.5" aria-hidden />
             {t("reset")}
           </Button>

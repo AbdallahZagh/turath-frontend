@@ -140,11 +140,11 @@ export function UniversalBookingPass({
 
       <article className="relative overflow-hidden rounded-[1.5rem] border border-border bg-surface shadow-[0_2rem_5rem_-2.25rem_var(--prose-muted)] print:rounded-none print:border-black print:bg-white print:shadow-none">
         <div className="bg-primary text-primary-foreground flex min-h-11 items-center justify-between gap-4 px-6 py-2.5 sm:px-8">
-          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em]">
+          <p className="flex min-w-0 items-center gap-2 whitespace-nowrap text-xs font-bold uppercase tracking-[0.12em] sm:tracking-[0.22em]">
             <TicketCheck className="size-4" aria-hidden />
             {passLabel}
           </p>
-          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em]">
+          <p className="flex shrink-0 items-center gap-2 whitespace-nowrap text-xs font-bold uppercase tracking-[0.1em] sm:tracking-[0.16em]">
             <CheckCircle2 className="size-4" aria-hidden />
             {statusLabel}
           </p>
@@ -180,12 +180,12 @@ export function UniversalBookingPass({
             </header>
 
             <div className="px-6 py-6 sm:px-8">
-              <div className="grid grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1fr)] sm:gap-5">
+              <div className="grid grid-cols-[minmax(0,1fr)_3rem_minmax(0,1fr)] items-center gap-2 sm:grid-cols-[minmax(0,1fr)_9rem_minmax(0,1fr)] sm:gap-5">
                 <div>
                   <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.18em]">
                     {start.label}
                   </p>
-                  <p className="font-heading text-prose mt-1.5 text-xl font-semibold sm:text-3xl">
+                  <p className="font-heading text-prose mt-1.5 whitespace-nowrap text-lg font-semibold sm:text-3xl">
                     {start.value}
                   </p>
                   {start.detail ? <p className="text-prose-muted mt-1 text-xs">{start.detail}</p> : null}
@@ -205,7 +205,7 @@ export function UniversalBookingPass({
                   <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.18em]">
                     {end.label}
                   </p>
-                  <p className="font-heading text-prose mt-1.5 text-xl font-semibold sm:text-3xl">
+                  <p className="font-heading text-prose mt-1.5 whitespace-nowrap text-lg font-semibold sm:text-3xl">
                     {end.value}
                   </p>
                   {end.detail ? <p className="text-prose-muted mt-1 text-xs">{end.detail}</p> : null}

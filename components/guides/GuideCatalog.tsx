@@ -68,7 +68,12 @@ export function GuideCatalog({
             <SlidersHorizontal className="text-primary size-4" aria-hidden />
             {tf("title")}
           </h2>
-          <Button variant="glass" size="sm" onClick={() => setFilters({})}>
+          <Button
+            variant="glass"
+            size="sm"
+            className="shrink-0 whitespace-nowrap"
+            onClick={() => setFilters({})}
+          >
             <RotateCcw className="size-3.5" aria-hidden />
             {tf("reset")}
           </Button>

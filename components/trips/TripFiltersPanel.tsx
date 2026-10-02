@@ -25,7 +25,7 @@ export function TripFiltersPanel({ filters, onChange, onReset }: { filters: Trip
 
   return (
     <GlassPanel className="p-5 lg:sticky lg:top-28">
-      <div className="flex items-center justify-between gap-3"><h2 className="text-prose flex items-center gap-2 font-semibold"><SlidersHorizontal className="text-primary size-4" aria-hidden />{t("title")}</h2><Button variant="glass" size="sm" onClick={onReset}><RotateCcw className="size-3.5" aria-hidden />{t("reset")}</Button></div>
+      <div className="flex items-center justify-between gap-3"><h2 className="text-prose flex items-center gap-2 font-semibold"><SlidersHorizontal className="text-primary size-4" aria-hidden />{t("title")}</h2><Button variant="glass" size="sm" className="shrink-0 whitespace-nowrap" onClick={onReset}><RotateCcw className="size-3.5" aria-hidden />{t("reset")}</Button></div>
       <div className="mt-5 space-y-4">
         <Select variant="main" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as TripFilters["governorate"] })} />
         <DatePicker variant="main" label={t("date")} value={filters.date ?? ""} onChange={(value) => onChange({ ...filters, date: value || undefined })} />

@@ -34,7 +34,7 @@ export function RestaurantFiltersPanel({ filters, onChange, onReset }: Props): R
 
   return (
     <GlassPanel className="p-5 lg:sticky lg:top-28">
-      <div className="flex items-center justify-between gap-3"><h2 className="font-heading text-prose flex items-center gap-2 text-lg font-semibold"><SlidersHorizontal className="text-accent size-5" aria-hidden />{t("title")}</h2><Button variant="glass" size="sm" onClick={onReset}><RotateCcw className="size-3.5" aria-hidden />{t("reset")}</Button></div>
+      <div className="flex items-center justify-between gap-3"><h2 className="font-heading text-prose flex items-center gap-2 text-lg font-semibold"><SlidersHorizontal className="text-accent size-5" aria-hidden />{t("title")}</h2><Button variant="glass" size="sm" className="shrink-0 whitespace-nowrap" onClick={onReset}><RotateCcw className="size-3.5" aria-hidden />{t("reset")}</Button></div>
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <Select variant="main" size="sm" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as RestaurantFilters["governorate"] })} />
         <Select variant="main" size="sm" label={t("price")} options={prices} value={filters.priceRange ?? "all"} onChange={(value) => onChange({ ...filters, priceRange: value === "all" ? undefined : value as RestaurantPriceRange })} />

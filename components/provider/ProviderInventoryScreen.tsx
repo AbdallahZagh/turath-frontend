@@ -367,7 +367,7 @@ function RestaurantInventory({
         <div>
           <p className="text-prose text-sm font-semibold">{t("slotsTitle")}</p>
           <p className="text-prose-muted mt-1 text-sm tabular-nums">
-            {slots.map((slot) => formatPickerTime(slot, locale, "12")).join(" · ")}
+            {slots.map((slot) => formatPickerTime(slot, locale)).join(" · ")}
           </p>
         </div>
         {actions ? (

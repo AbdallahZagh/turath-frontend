@@ -242,7 +242,7 @@ export function OmniSearchWidget(): ReactNode {
                 <Select
                   {...SEARCH_FIELD}
                   label={t("timeLabel")}
-                  options={TIME_SLOTS.map((slot) => ({ value: slot, label: formatPickerTime(slot, loc, "24") }))}
+                  options={TIME_SLOTS.map((slot) => ({ value: slot, label: formatPickerTime(slot, loc) }))}
                   value={timeSlot}
                   onChange={setTimeSlot}
                 />

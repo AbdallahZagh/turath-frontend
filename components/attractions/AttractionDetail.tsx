@@ -81,7 +81,7 @@ export function AttractionDetail({
   const allDay = attraction.opensAt === "00:00" && attraction.closesAt === "23:59";
   const hours = allDay
     ? t("allDay")
-    : `${formatPickerTime(attraction.opensAt, loc, "24")}–${formatPickerTime(attraction.closesAt, loc, "24")}`;
+    : `${formatPickerTime(attraction.opensAt, loc)}–${formatPickerTime(attraction.closesAt, loc)}`;
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${attraction.latitude},${attraction.longitude}`;
   const gallery = [
     attraction.imageSrc,

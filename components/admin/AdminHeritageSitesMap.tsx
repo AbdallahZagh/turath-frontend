@@ -262,8 +262,8 @@ export function AdminHeritageSitesMap({
                   <span className="flex items-center gap-1.5">
                     <Clock className="size-3.5" aria-hidden />
                     <span>
-                      {formatPickerTime(selectedSite.opensAt, loc, "24")}–
-                      {formatPickerTime(selectedSite.closesAt, loc, "24")}
+                      {formatPickerTime(selectedSite.opensAt, loc)}–
+                      {formatPickerTime(selectedSite.closesAt, loc)}
                     </span>
                   </span>
                   <span className="flex items-center gap-1.5 font-medium text-prose">

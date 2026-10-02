@@ -33,7 +33,7 @@ import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { formatPickerTime, formatShortDate } from "@/lib/format/datetime";
+import { formatPickerTime, formatMediumDate } from "@/lib/format/datetime";
 import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
@@ -174,11 +174,11 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
               <dl className="mt-4 grid gap-4 text-sm">
                 <div className="flex items-center justify-between gap-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Clock3 className="size-4" aria-hidden />{tDetail("checkIn")}</dt>
-                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkInTime, loc, "24")}</dd>
+                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkInTime, loc)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Clock3 className="size-4" aria-hidden />{tDetail("checkOut")}</dt>
-                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkOutTime, loc, "24")}</dd>
+                  <dd className="text-prose font-medium">{formatPickerTime(hotel.checkOutTime, loc)}</dd>
                 </div>
                 <div className="border-border border-t pt-4">
                   <dt className="text-prose-muted flex items-center gap-2"><Zap className="size-4" aria-hidden />{tDetail("generatorHours")}</dt>
@@ -209,7 +209,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
                       <StarRating value={review.rating} label={t("ratingLabel", { rating: review.rating })} />
                     </div>
                     <p className="text-prose-muted mt-3 text-sm leading-relaxed">{localizedName(review.comment, loc)}</p>
-                    <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{formatShortDate(review.date, loc)}</time>
+                    <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">{formatMediumDate(review.date, loc)}</time>
                   </article>
                 ))}
               </div>

@@ -20,7 +20,7 @@ import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useAdminOverview } from "@/hooks/useAdminOverview";
 import { useTranslations } from "@/i18n/translations";
-import { formatDisplayDate } from "@/lib/format/datetime";
+import { formatWeekdayShort } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatCount, formatPercent } from "@/lib/format/number";
 import type { Locale } from "@/i18n/config";
@@ -193,7 +193,7 @@ export function AdminOverview(): ReactNode {
           <div className="flex h-52 items-end gap-2 sm:gap-3">
             {data.volume.map((day) => {
               const height = (day.count / maxVolume) * 100;
-              const label = formatDisplayDate(new Date(`${day.date}T12:00:00`), "EEE", loc);
+              const label = formatWeekdayShort(day.date, loc);
               return (
                 <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
                   <span className="text-prose-muted text-xs tabular-nums">

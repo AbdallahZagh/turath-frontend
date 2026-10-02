@@ -123,7 +123,7 @@ function ProfilePreview({ values, locale }: { values: ProviderProfileValues; loc
           </div>
           <div className="flex items-center gap-2">
             <Clock3 className="text-primary size-4 shrink-0" aria-hidden />
-            <span className="text-prose">{formatPickerTime(values.opensAt, locale, "24")} – {formatPickerTime(values.closesAt, locale, "24")}</span>
+            <span className="text-prose">{formatPickerTime(values.opensAt, locale)} – {formatPickerTime(values.closesAt, locale)}</span>
           </div>
         </dl>
       </div>

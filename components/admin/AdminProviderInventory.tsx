@@ -163,7 +163,7 @@ function DiningTables({
       <p className="text-prose-muted text-sm">
         {t("detail.slots")}:{" "}
         <span className="text-prose tabular-nums">
-          {slots.map((slot) => formatPickerTime(slot, loc, "12")).join(" · ")}
+          {slots.map((slot) => formatPickerTime(slot, loc)).join(" · ")}
         </span>
       </p>
     </div>

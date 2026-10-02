@@ -5,12 +5,7 @@ import { useLocale } from "next-intl";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 
 import { useTranslations } from "@/i18n/translations";
-import {
-  formatPickerTime,
-  parseHHmm,
-  toHHmm,
-  type HourCycle,
-} from "@/lib/format/datetime";
+import { DATE_TIME_PREFS, formatPickerTime, parseHHmm, toHHmm } from "@/lib/format/datetime";
 import { isLocale } from "@/i18n/config";
 
 import type { ControlSize } from "./controlScale";
@@ -40,7 +35,6 @@ type TimePickerProps = {
   required?: boolean;
   id?: string;
   className?: string;
-  hourCycle?: HourCycle;
   minuteStep?: number;
 };
 
@@ -89,13 +83,12 @@ export function TimePicker({
   required,
   id,
   className,
-  hourCycle,
   minuteStep = 1,
 }: TimePickerProps): ReactNode {
   const t = useTranslations("picker");
   const rawLocale = useLocale();
   const locale = isLocale(rawLocale) ? rawLocale : "en";
-  const cycle = hourCycle ?? "12";
+  const cycle = DATE_TIME_PREFS.hourCycle;
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -145,7 +138,7 @@ export function TimePicker({
   }
 
   const display = selected
-    ? formatPickerTime(selected, locale, cycle)
+    ? formatPickerTime(selected, locale)
     : "";
 
   return (

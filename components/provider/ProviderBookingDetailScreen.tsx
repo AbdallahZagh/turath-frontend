@@ -37,7 +37,7 @@ import {
 } from "@/hooks/useProviderBookings";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatDisplayDate } from "@/lib/format/datetime";
+import { formatDateTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { useAuthStore } from "@/store/authStore";
 import { useProviderPreviewStore } from "@/store/providerPreviewStore";
@@ -162,12 +162,12 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
               <Detail
                 icon={CalendarClock}
                 label={t("detail.arrival")}
-                value={formatDisplayDate(new Date(booking.scheduledAt), "PPp", locale)}
+                value={formatDateTime(booking.scheduledAt, locale)}
               />
               <Detail
                 icon={CalendarClock}
                 label={t("detail.departure")}
-                value={formatDisplayDate(new Date(booking.endsAt), "PPp", locale)}
+                value={formatDateTime(booking.endsAt, locale)}
               />
               <Detail
                 icon={PackageOpen}

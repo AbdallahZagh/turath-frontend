@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDays, differenceInCalendarDays, format, parseISO } from "date-fns";
+import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
 import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -28,7 +28,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useHotel } from "@/hooks/useHotels";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate } from "@/lib/format/datetime";
+import { formatMediumDate, toIsoDate } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -74,9 +74,9 @@ export function HotelBookingCheckout({
   const couponMutation = useValidateBookingCoupon();
   const [coupon, setCoupon] = useState<CouponResult | null>(null);
 
-  const today = format(new Date(), "yyyy-MM-dd");
-  const defaultCheckIn = initialCheckIn ?? format(addDays(new Date(), 1), "yyyy-MM-dd");
-  const defaultCheckOut = initialCheckOut ?? format(addDays(parseISO(defaultCheckIn), 1), "yyyy-MM-dd");
+  const today = toIsoDate(new Date());
+  const defaultCheckIn = initialCheckIn ?? toIsoDate(addDays(new Date(), 1));
+  const defaultCheckOut = initialCheckOut ?? toIsoDate(addDays(parseISO(defaultCheckIn), 1));
   const form = useForm<HotelBookingValues>({
     resolver: zodResolver(hotelBookingSchema),
     defaultValues: {

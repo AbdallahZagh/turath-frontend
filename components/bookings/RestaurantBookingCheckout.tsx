@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import {
   CalendarDays,
   Clock3,
@@ -36,7 +35,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime, toIsoDate } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import { calculateCouponDiscountSyp, type CouponResult } from "@/lib/mock/bookings";
@@ -79,7 +78,7 @@ export function RestaurantBookingCheckout({
   const createBooking = useCreateRestaurantBooking();
   const couponMutation = useValidateBookingCoupon();
   const [coupon, setCoupon] = useState<CouponResult | null>(null);
-  const today = format(new Date(), "yyyy-MM-dd");
+  const today = toIsoDate(new Date());
   const form = useForm<RestaurantBookingValues>({
     resolver: zodResolver(restaurantBookingSchema),
     defaultValues: {
@@ -144,7 +143,7 @@ export function RestaurantBookingCheckout({
   }));
   const slots: SelectOption[] = availableRestaurant.timeSlots.map((slot) => ({
     value: slot,
-    label: formatPickerTime(slot, loc, "24"),
+    label: formatPickerTime(slot, loc),
   }));
 
   async function applyCoupon(): Promise<void> {
@@ -351,7 +350,7 @@ export function RestaurantBookingCheckout({
               {t("time")}
             </dt>
             <dd className="text-prose font-medium">
-              {timeSlot ? formatPickerTime(timeSlot, loc, "24") : t("notSelected")}
+              {timeSlot ? formatPickerTime(timeSlot, loc) : t("notSelected")}
             </dd>
           </div>
           <div className="flex justify-between gap-3">

@@ -350,7 +350,6 @@ export function AdminAttractionModal({
                 value={opensAt}
                 onChange={setOpensAt}
                 label={t("form.opensAt")}
-                hourCycle="24"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -361,7 +360,6 @@ export function AdminAttractionModal({
                 value={closesAt}
                 onChange={setClosesAt}
                 label={t("form.closesAt")}
-                hourCycle="24"
               />
             </div>
             <label className="flex flex-col gap-1.5">

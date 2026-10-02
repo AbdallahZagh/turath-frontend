@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
+import { formatDateAndPickerTime, formatMediumDate } from "@/lib/format/datetime";
 import type { BookingWhen } from "@/lib/mock/adminBookings";
 
 export function formatBookingWhen(when: BookingWhen, loc: Locale): string {
@@ -8,7 +8,7 @@ export function formatBookingWhen(when: BookingWhen, loc: Locale): string {
     return `${start} – ${formatMediumDate(when.end, loc)}`;
   }
   if (when.time) {
-    return `${start} · ${formatPickerTime(when.time, loc, "12")}`;
+    return formatDateAndPickerTime(when.start, when.time, loc);
   }
   return start;
 }

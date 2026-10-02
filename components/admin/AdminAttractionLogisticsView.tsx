@@ -29,7 +29,7 @@ export function AdminAttractionLogisticsView({
 
   const formattedHours = isAllDay
     ? t("detail.allDay")
-    : `${formatPickerTime(attraction.opensAt, loc, "24")} – ${formatPickerTime(attraction.closesAt, loc, "24")}`;
+    : `${formatPickerTime(attraction.opensAt, loc)} – ${formatPickerTime(attraction.closesAt, loc)}`;
 
   const formattedFee =
     attraction.entryFeeSyp > 0 ? formatSyp(attraction.entryFeeSyp, locale) : t("detail.freeEntry");

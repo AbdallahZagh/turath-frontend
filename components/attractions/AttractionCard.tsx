@@ -21,7 +21,7 @@ export function AttractionCard({ attraction, detailBasePath = "/attractions" }: 
   const loc: Locale = useLocale() === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const allDay = attraction.opensAt === "00:00" && attraction.closesAt === "23:59";
-  const hours = allDay ? t("allDay") : `${formatPickerTime(attraction.opensAt, loc, "24")}–${formatPickerTime(attraction.closesAt, loc, "24")}`;
+  const hours = allDay ? t("allDay") : `${formatPickerTime(attraction.opensAt, loc)}–${formatPickerTime(attraction.closesAt, loc)}`;
   const href = `${detailBasePath}/${attraction.slug}`;
 
   return (

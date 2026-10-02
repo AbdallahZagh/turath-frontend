@@ -27,7 +27,7 @@ export function AdminAttractionHero({ attraction }: AdminAttractionHeroProps): R
   const primaryName = localizedName(attraction.name, loc);
   const secondaryName = localizedName(attraction.name, otherLocale);
 
-  const formattedHours = `${formatPickerTime(attraction.opensAt, loc, "24")} – ${formatPickerTime(attraction.closesAt, loc, "24")}`;
+  const formattedHours = `${formatPickerTime(attraction.opensAt, loc)} – ${formatPickerTime(attraction.closesAt, loc)}`;
   const formattedFee =
     attraction.entryFeeSyp > 0 ? formatSyp(attraction.entryFeeSyp, locale) : t("free");
 

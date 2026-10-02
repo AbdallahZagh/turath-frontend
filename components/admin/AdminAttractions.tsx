@@ -51,7 +51,7 @@ function matchesAttractionQuery(attraction: AdminAttraction, query: string): boo
 }
 
 function hoursLabel(attraction: AdminAttraction, locale: Locale): string {
-  return `${formatPickerTime(attraction.opensAt, locale, "24")}–${formatPickerTime(attraction.closesAt, locale, "24")}`;
+  return `${formatPickerTime(attraction.opensAt, locale)}–${formatPickerTime(attraction.closesAt, locale)}`;
 }
 
 export function AdminAttractions(): ReactNode {

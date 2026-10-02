@@ -31,7 +31,7 @@ import { useProviderArrivals, useVerifyProviderCheckIn } from "@/hooks/useProvid
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { formatDisplayDate } from "@/lib/format/datetime";
+import { formatDateTime, formatTime } from "@/lib/format/datetime";
 import { isolateName, localizedName } from "@/lib/i18n/localized";
 import type { ProviderCheckInResult, ProviderDeskBooking } from "@/lib/mock/providerCheckIn";
 import {
@@ -127,7 +127,7 @@ function ResultPanel({
           <Detail
             icon={CalendarClock}
             label={t("result.schedule")}
-            value={formatDisplayDate(new Date(booking.schedule), "PPp", locale)}
+            value={formatDateTime(booking.schedule, locale)}
           />
         </div>
         <div className="bg-glass-control rounded-2xl p-5">
@@ -157,9 +157,7 @@ function ResultPanel({
               {success ? t("result.checkedNow") : t("result.checkedAt")}
             </p>
             <p className="text-prose mt-1 text-sm font-semibold">
-              {booking.checkedInAt
-                ? formatDisplayDate(new Date(booking.checkedInAt), "PPp", locale)
-                : "—"}
+              {booking.checkedInAt ? formatDateTime(booking.checkedInAt, locale) : "—"}
             </p>
             <p className="text-prose-muted mt-1 text-xs">
               {t("result.byStaff", {
@@ -358,7 +356,7 @@ function ArrivalCard({
             {booking.reference} · {t(`categories.${booking.category}`)}
           </p>
         </div>
-        <Badge>{formatDisplayDate(new Date(booking.schedule), "p", locale)}</Badge>
+        <Badge>{formatTime(booking.schedule, locale)}</Badge>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-4 border-y border-border py-4">
         <div>

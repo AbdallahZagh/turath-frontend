@@ -31,7 +31,7 @@ export function AdminAttractionCard({
   const tGov = useTranslations("landing.governorates");
   const locale = useLocale();
   const loc: Locale = locale === "ar" ? "ar" : "en";
-  const hours = `${formatPickerTime(attraction.opensAt, loc, "24")}–${formatPickerTime(attraction.closesAt, loc, "24")}`;
+  const hours = `${formatPickerTime(attraction.opensAt, loc)}–${formatPickerTime(attraction.closesAt, loc)}`;
   const fee =
     attraction.entryFeeSyp === 0 ? t("free") : formatSyp(attraction.entryFeeSyp, loc);
 

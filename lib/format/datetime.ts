@@ -12,6 +12,21 @@ import { toDisplayDigits } from "@/lib/format/digits";
 
 export type HourCycle = "12" | "24";
 
+/**
+ * The one place date and time display preferences live (docs/PAGES.md §0, "Dates and times").
+ * Screens never pass an hour cycle or a pattern of their own; change a value here and every
+ * date and time in the app follows.
+ */
+export const DATE_TIME_PREFS: { hourCycle: HourCycle; mediumDatePattern: string } = {
+  hourCycle: "24",
+  mediumDatePattern: "d MMM yyyy",
+};
+
+const TIME_PATTERN: Record<HourCycle, string> = { "12": "h:mm a", "24": "HH:mm" };
+
+/** Date and time on one line: "3 Oct 2026, 20:30" / "٣ تشرين الأول ٢٠٢٦، ٢٠:٣٠". */
+const DATE_TIME_JOINER: Record<Locale, string> = { en: ", ", ar: "، " };
+
 const ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
@@ -78,21 +93,45 @@ export function formatPickerDate(iso: string, locale: Locale): string {
   return formatDisplayDate(date, "PPP", locale);
 }
 
+/** The everyday date, in cards, lists and summaries: "18 Aug 2026" / "١٨ آب ٢٠٢٦". */
 export function formatMediumDate(iso: string, locale: Locale): string {
   const date = parseIsoDate(iso);
   if (!date) {
     return "";
   }
-  return formatDisplayDate(date, "PP", locale);
+  return formatDisplayDate(date, DATE_TIME_PREFS.mediumDatePattern, locale);
 }
 
-/** Compact day, month and year for lists such as review dates: "18 Aug 2026" / "١٨ آب ٢٠٢٦". */
-export function formatShortDate(iso: string, locale: Locale): string {
+/** Clock time of an ISO datetime, in the configured hour cycle. */
+export function formatTime(iso: string, locale: Locale): string {
   const date = parseIsoDate(iso);
   if (!date) {
     return "";
   }
-  return formatDisplayDate(date, "d MMM yyyy", locale);
+  return formatDisplayDate(date, TIME_PATTERN[DATE_TIME_PREFS.hourCycle], locale);
+}
+
+/** Medium date and clock time of an ISO datetime, joined with "," (Arabic "،"). */
+export function formatDateTime(iso: string, locale: Locale): string {
+  const date = formatMediumDate(iso, locale);
+  const time = formatTime(iso, locale);
+  return date && time ? `${date}${DATE_TIME_JOINER[locale]}${time}` : "";
+}
+
+/** A medium date and an `HH:mm` clock time, joined like `formatDateTime`. */
+export function formatDateAndPickerTime(iso: string, hhmm: string, locale: Locale): string {
+  const date = formatMediumDate(iso, locale);
+  const time = formatPickerTime(hhmm, locale);
+  return date && time ? `${date}${DATE_TIME_JOINER[locale]}${time}` : date;
+}
+
+/** Short weekday for chart axes: "Tue" / "الثلاثاء". */
+export function formatWeekdayShort(iso: string, locale: Locale): string {
+  const date = parseIsoDate(iso);
+  if (!date) {
+    return "";
+  }
+  return formatDisplayDate(date, "EEE", locale);
 }
 
 /** Full month name, for page dates such as "Last updated": "September 20, 2026" / "٢٠ أيلول ٢٠٢٦". */
@@ -116,16 +155,12 @@ export function toHHmm(hours: number, minutes: number): string {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 }
 
-export function formatPickerTime(
-  hhmm: string,
-  locale: Locale,
-  hourCycle: HourCycle,
-): string {
+/** An `HH:mm` clock time, in the configured hour cycle. */
+export function formatPickerTime(hhmm: string, locale: Locale): string {
   const parsed = parseHHmm(hhmm);
   if (!parsed) {
     return "";
   }
   const date = new Date(2000, 0, 1, parsed.hours, parsed.minutes);
-  const pattern = hourCycle === "12" ? "h:mm a" : "HH:mm";
-  return formatDisplayDate(date, pattern, locale);
+  return formatDisplayDate(date, TIME_PATTERN[DATE_TIME_PREFS.hourCycle], locale);
 }

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -10,6 +9,7 @@ import { TripBookingCheckout } from "@/components/bookings/TripBookingCheckout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CHECKOUT_PAGE_HEADERS } from "@/config/pageHeaders";
 import { getTranslations } from "@/i18n/serverTranslations";
+import { toIsoDate } from "@/lib/format/datetime";
 import {
   BOOKING_SEARCH_KEYS,
   sanitizeBookingSearch,
@@ -47,7 +47,7 @@ export async function BookingCheckoutScreen({
   const id = firstSearchValue(params.id) ?? "";
   const raw: BookingSearchInput = {};
   for (const key of BOOKING_SEARCH_KEYS) raw[key] = firstSearchValue(params[key]);
-  const search = sanitizeBookingSearch(raw, format(new Date(), "yyyy-MM-dd"));
+  const search = sanitizeBookingSearch(raw, toIsoDate(new Date()));
 
   let checkout: ReactNode;
   if (kind === "restaurant") {

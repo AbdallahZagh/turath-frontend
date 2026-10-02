@@ -32,7 +32,7 @@ import { useEvent } from "@/hooks/useEvents";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
-import { formatMediumDate, formatPickerTime, formatShortDate } from "@/lib/format/datetime";
+import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
@@ -177,8 +177,8 @@ export function EventDetail({
                       </p>
                       <p className="text-prose-muted mt-1 flex items-center gap-2 text-sm">
                         <Clock3 className="size-4" aria-hidden />
-                        {formatPickerTime(session.startsAt, loc, "24")}–
-                        {formatPickerTime(session.endsAt, loc, "24")}
+                        {formatPickerTime(session.startsAt, loc)}–
+                        {formatPickerTime(session.endsAt, loc)}
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -275,7 +275,7 @@ export function EventDetail({
                       {localizedName(review.comment, loc)}
                     </p>
                     <time dateTime={review.date} className="text-prose-muted mt-3 block text-xs">
-                      {formatShortDate(review.date, loc)}
+                      {formatMediumDate(review.date, loc)}
                     </time>
                   </article>
                 ))}
@@ -301,7 +301,7 @@ export function EventDetail({
               <div className="flex justify-between gap-3">
                 <dt className="text-prose-muted">{td("time")}</dt>
                 <dd className="text-prose font-semibold">
-                  {formatPickerTime(nextSession.startsAt, loc, "24")}
+                  {formatPickerTime(nextSession.startsAt, loc)}
                 </dd>
               </div>
             </dl>

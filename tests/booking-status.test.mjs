@@ -95,7 +95,12 @@ test("the profile facilities section says نزلاء for hotels and ضيوف oth
 });
 
 test("every stay message in the business namespaces formats for both stays in both locales", () => {
-  const namespaces = ["provider.bookings", "provider.checkIn", "provider.profile"];
+  const namespaces = [
+    "provider.bookings",
+    "provider.checkIn",
+    "provider.profile",
+    "provider.reviews",
+  ];
   for (const locale of ["en", "ar"]) {
     for (const namespace of namespaces) {
       const node = namespace.split(".").reduce((value, key) => value[key], LOCALES[locale]);
@@ -115,4 +120,12 @@ test("every stay message in the business namespaces formats for both stays in bo
       walk(node, "");
     }
   }
+});
+
+test("business reviews say النزلاء for hotels only", () => {
+  const t = translator("ar", "provider.reviews");
+  assert.equal(t("list.title", { stay: "hotel" }), "آراء النزلاء");
+  assert.equal(t("list.title", { stay: "other" }), "آراء الضيوف");
+  assert.match(t("summary.count", { stay: "hotel", count: 3 }), /النزلاء/);
+  assert.doesNotMatch(t("summary.count", { stay: "other", count: 3 }), /نزل/);
 });

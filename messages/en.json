@@ -2755,7 +2755,7 @@
       },
       "breakdown": {
         "title": "Rating breakdown",
-        "description": "How verified guests rated their completed stays.",
+        "description": "{stay, select, hotel {How verified guests rated their completed stays.} other {How verified guests rated their completed visits.}}",
         "rowLabel": "{stars}-star reviews"
       },
       "list": {
@@ -2767,8 +2767,8 @@
         "all": "All ratings",
         "stars": "{count, plural, one {# star} other {# stars}}"
       },
-      "verified": "Verified stay",
-      "stayed": "Stayed {date}",
+      "verified": "{stay, select, hotel {Verified stay} other {Verified visit}}",
+      "stayed": "{stay, select, hotel {Stayed {date}} other {Visited {date}}}",
       "empty": {
         "title": "No verified reviews yet",
         "description": "Guest feedback will appear here after completed arrivals and submitted reviews.",

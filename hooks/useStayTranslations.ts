@@ -20,7 +20,11 @@ export function useProviderStay(): ProviderStay {
   return stayForCategory(useProviderCategory());
 }
 
-type StayNamespace = "provider.bookings" | "provider.checkIn" | "provider.profile";
+type StayNamespace =
+  | "provider.bookings"
+  | "provider.checkIn"
+  | "provider.profile"
+  | "provider.reviews";
 
 type StayKey<N extends StayNamespace> = Parameters<ReturnType<typeof useTranslations<N>>>[0];
 
@@ -44,6 +48,9 @@ export function useStayTranslations(
 export function useStayTranslations(
   namespace: "provider.profile",
 ): StayTranslator<"provider.profile">;
+export function useStayTranslations(
+  namespace: "provider.reviews",
+): StayTranslator<"provider.reviews">;
 export function useStayTranslations(namespace: StayNamespace): StayTranslator<StayNamespace> {
   const t = useTranslations(namespace);
   const stay = useProviderStay();

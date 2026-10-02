@@ -13,6 +13,7 @@ import { Select } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { useProviderReviews } from "@/hooks/useProviderReviews";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
@@ -42,7 +43,7 @@ function ReviewsSkeleton(): ReactNode {
 }
 
 function ReviewCard({ review, locale }: { review: ProviderReview; locale: Locale }): ReactNode {
-  const t = useTranslations("provider.reviews");
+  const t = useStayTranslations("provider.reviews");
   const tUi = useTranslations("ui");
   const guestName = localizedName(review.guestName, locale);
 
@@ -97,7 +98,7 @@ function ReviewCard({ review, locale }: { review: ProviderReview; locale: Locale
 }
 
 export function ProviderReviewsScreen(): ReactNode {
-  const t = useTranslations("provider.reviews");
+  const t = useStayTranslations("provider.reviews");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";

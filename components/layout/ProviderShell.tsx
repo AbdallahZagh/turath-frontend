@@ -111,7 +111,9 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
     );
   }
 
-  const category = preview ?? businessQuery.data.category;
+  // Only owners can preview another business type; staff always see their own business.
+  const category =
+    (user.role === "PROVIDER_OWNER" ? preview : null) ?? businessQuery.data.category;
   const stay = stayForCategory(category);
 
   const roleOptions: SelectOption[] = [

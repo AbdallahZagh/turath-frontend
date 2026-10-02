@@ -145,23 +145,25 @@ export function ProviderSidebar({
                   </span>
                 ) : null}
               </div>
-              <div className="border-glass-border mt-3 border-t pt-3">
-                <Select
-                  compact
-                  size="sm"
-                  variant="plain"
-                  label={t("sidebarBusiness.preview")}
-                  value={category}
-                  options={PROVIDER_BUSINESSES.map((item) => ({
-                    value: item.category,
-                    label: locale === "ar" ? item.name.ar : item.name.en,
-                  }))}
-                  onChange={(value) => {
-                    const next = PROVIDER_BUSINESSES.find((item) => item.category === value);
-                    if (next) setPreview(next.category);
-                  }}
-                />
-              </div>
+              {role === "PROVIDER_OWNER" ? (
+                <div className="border-glass-border mt-3 border-t pt-3">
+                  <Select
+                    compact
+                    size="sm"
+                    variant="plain"
+                    label={t("sidebarBusiness.preview")}
+                    value={category}
+                    options={PROVIDER_BUSINESSES.map((item) => ({
+                      value: item.category,
+                      label: locale === "ar" ? item.name.ar : item.name.en,
+                    }))}
+                    onChange={(value) => {
+                      const next = PROVIDER_BUSINESSES.find((item) => item.category === value);
+                      if (next) setPreview(next.category);
+                    }}
+                  />
+                </div>
+              ) : null}
             </section>
           )}
         </div>

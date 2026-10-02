@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
-import { BedDouble, CalendarDays, Clock3, Hotel, Moon, Tag, Users } from "lucide-react";
+import { BedDouble, CalendarDays, Clock3, Hotel, Moon, Users } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
@@ -10,6 +10,7 @@ import { Controller, useForm, useWatch, type FieldError } from "react-hook-form"
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingCouponField } from "@/components/bookings/BookingCouponField";
 import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import {
@@ -22,7 +23,6 @@ import { DatePicker } from "@/components/ui/DatePicker";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
-import { Input } from "@/components/ui/Input";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Stepper } from "@/components/ui/Stepper";
@@ -208,10 +208,14 @@ export function HotelBookingCheckout({
 
           <section>
             <h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start">
-              <Input variant="main" label={t("discountCode")} placeholder={t("discountPlaceholder")} className="flex-1" {...form.register("couponCode", { onChange: () => setCoupon(null) })} />
-              <Button type="button" variant="outline" className="sm:mt-0.5" disabled={!couponCode.trim() || couponMutation.isPending} onClick={() => void applyCoupon()}><Tag className="size-4" aria-hidden />{couponMutation.isPending ? t("applying") : t("apply")}</Button>
-            </div>
+            <BookingCouponField
+              label={t("discountCode")}
+              placeholder={t("discountPlaceholder")}
+              applyLabel={couponMutation.isPending ? t("applying") : t("apply")}
+              disabled={!couponCode.trim() || couponMutation.isPending}
+              onApply={() => void applyCoupon()}
+              field={form.register("couponCode", { onChange: () => setCoupon(null) })}
+            />
             <BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} />
           </section>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDays, Clock3, Compass, MapPin, MapPinned, Tag, Users } from "lucide-react";
+import { CalendarDays, Clock3, Compass, MapPin, MapPinned, Users } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -9,6 +9,7 @@ import { Controller, useForm, useWatch, type FieldError } from "react-hook-form"
 
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
+import { BookingCouponField } from "@/components/bookings/BookingCouponField";
 import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
 import {
@@ -115,7 +116,14 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
 
           <BookingPolicyNote />
 
-          <section><h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2><div className="mt-4 flex flex-col gap-3 sm:flex-row"><Input variant="main" label={t("discountCode")} placeholder={t("discountPlaceholder")} className="flex-1" {...form.register("couponCode", { onChange: () => setCoupon(null) })} /><Button type="button" variant="outline" disabled={couponMutation.isPending || !couponCode.trim()} onClick={() => void applyCoupon()}><Tag className="size-4" aria-hidden />{couponMutation.isPending ? t("applying") : t("apply")}</Button></div><BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} /></section>
+          <section><h2 className="font-heading text-prose text-xl font-semibold">{t("discountTitle")}</h2><BookingCouponField
+              label={t("discountCode")}
+              placeholder={t("discountPlaceholder")}
+              applyLabel={couponMutation.isPending ? t("applying") : t("apply")}
+              disabled={couponMutation.isPending || !couponCode.trim()}
+              onApply={() => void applyCoupon()}
+              field={form.register("couponCode", { onChange: () => setCoupon(null) })}
+            /><BookingCouponFeedback coupon={coupon} formatMoney={formatMoney} /></section>
         </form>
       </GlassPanel>
 

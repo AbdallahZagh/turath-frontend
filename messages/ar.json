@@ -828,7 +828,7 @@
         },
         "documentsTitle": "المستندات",
         "documentsEmpty": "لم يُرفع أي ملف.",
-        "placeholderFile": "ملف تجريبي — ليس تحميلاً حقيقياً.",
+        "sentWithApplication": "أُرسل مع طلب التسجيل",
         "documentKind": {
           "commercialRegistration": "السجل التجاري",
           "ministryLicense": "رخصة الوزارة",

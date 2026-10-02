@@ -828,7 +828,7 @@
         },
         "documentsTitle": "Documents",
         "documentsEmpty": "No files were uploaded.",
-        "placeholderFile": "Placeholder file — not a real download.",
+        "sentWithApplication": "Sent with the application",
         "documentKind": {
           "commercialRegistration": "Commercial registration",
           "ministryLicense": "Ministry license",

@@ -41,7 +41,7 @@ export function AdminProviderDocuments({
                 </span>
                 <span className="text-prose-muted truncate text-xs">{doc.filename}</span>
                 <span className="text-prose-muted text-xs">
-                  {formatMediumDate(doc.uploadedAt, loc)}{partSeparator(loc)}{t("detail.placeholderFile")}
+                  {formatMediumDate(doc.uploadedAt, loc)}{partSeparator(loc)}{t("detail.sentWithApplication")}
                 </span>
               </div>
             </li>

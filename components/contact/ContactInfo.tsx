@@ -5,6 +5,7 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useTranslations } from "@/i18n/translations";
 import { fadeUp } from "@/lib/motion/variants";
 
@@ -35,9 +36,8 @@ export function ContactInfo(): ReactNode {
                 <a
                   href={`tel:${t("phoneValue").replace(/\s+/g, "")}`}
                   className="text-prose hover:text-accent mt-0.5 inline-block text-sm font-semibold transition-colors sm:text-base"
-                  dir="ltr"
                 >
-                  {t("phoneValue")}
+                  <PhoneNumber value={t("phoneValue")} />
                 </a>
               </div>
             </div>

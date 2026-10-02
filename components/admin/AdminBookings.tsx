@@ -15,6 +15,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useAdminBookings } from "@/hooks/useAdminBookings";
 import { usePagination } from "@/hooks/usePagination";
 import type { Locale } from "@/i18n/config";
@@ -98,7 +99,7 @@ export function AdminBookings(): ReactNode {
         <div className="flex max-w-32 min-w-0 flex-col gap-1">
           <span className="font-medium break-words"><bdi>{localizedName(booking.guest, loc)}</bdi></span>
           <AdminNamedRating about="guest" nameEn={booking.guest.en} />
-          <span className="text-prose-muted truncate text-xs tabular-nums" dir="ltr">{booking.phone}</span>
+          <PhoneNumber value={booking.phone} className="text-prose-muted text-xs" />
         </div>
       ),
     },

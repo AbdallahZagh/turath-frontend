@@ -9,6 +9,7 @@ import { providerStatusBadgeProps } from "@/components/admin/providerStatus";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
@@ -82,7 +83,9 @@ export function AdminProviderProfile({
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.phone")}</dt>
-                <dd className="tabular-nums" dir="ltr">{provider.phone}</dd>
+                <dd>
+                  <PhoneNumber value={provider.phone} />
+                </dd>
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.email")}</dt>

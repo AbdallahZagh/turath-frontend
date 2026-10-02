@@ -8,6 +8,7 @@ import { AdminStarRating } from "@/components/admin/AdminStarRating";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
@@ -64,7 +65,9 @@ export function AdminUserProfile({
             <dl className="mt-1 grid gap-2 text-sm sm:grid-cols-2">
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.phone")}</dt>
-                <dd className="tabular-nums" dir="ltr">{user.phone}</dd>
+                <dd>
+                  <PhoneNumber value={user.phone} />
+                </dd>
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.email")}</dt>

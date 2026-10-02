@@ -24,6 +24,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Menu } from "@/components/ui/Menu";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Table, type TableColumn } from "@/components/ui/Table";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useProviderStaff, useSetProviderStaffActive } from "@/hooks/useProviderStaff";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
@@ -107,7 +108,9 @@ export function ProviderStaffScreen(): ReactNode {
           </span>
           <div className="min-w-0">
             <p className="truncate font-semibold"><bdi>{member.name}</bdi></p>
-            <p className="text-prose-muted mt-0.5 text-xs" dir="ltr">{member.phone}</p>
+            <p className="text-prose-muted mt-0.5 text-xs">
+              <PhoneNumber value={member.phone} />
+            </p>
           </div>
         </div>
       ),

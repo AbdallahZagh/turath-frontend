@@ -31,6 +31,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Icon } from "@/components/ui/Icon";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { PROVIDER_PATHS, providerCheckInPath } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import {
@@ -152,10 +153,9 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
               <a
                 href={`tel:${booking.phone}`}
                 className="border-border bg-glass-control text-prose hover:text-primary inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition-colors"
-                dir="ltr"
               >
                 <Phone className="size-4" aria-hidden />
-                {booking.phone}
+                <PhoneNumber value={booking.phone} />
               </a>
             </div>
 

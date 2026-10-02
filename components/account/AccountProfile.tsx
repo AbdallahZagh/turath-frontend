@@ -11,6 +11,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select, type SelectOption } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useTouristAccount } from "@/hooks/useTouristAccount";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
@@ -55,7 +56,7 @@ export function AccountProfile(): ReactNode {
               <h2 className="font-heading text-prose mt-1 text-3xl font-semibold"><bdi>{profile.name}</bdi></h2>
               <div className="text-prose-muted mt-3 flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5">
                 <span className="inline-flex items-center gap-2"><Mail className="size-4" aria-hidden />{profile.email}</span>
-                <span className="inline-flex items-center gap-2" dir="ltr"><Phone className="size-4" aria-hidden />{profile.phone}</span>
+                <span className="inline-flex items-center gap-2"><Phone className="size-4" aria-hidden /><PhoneNumber value={profile.phone} /></span>
               </div>
             </div>
           </div>

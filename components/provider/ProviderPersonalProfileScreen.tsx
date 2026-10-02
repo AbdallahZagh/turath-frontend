@@ -25,6 +25,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import {
   useProviderPersonalProfile,
   useUpdateProviderPersonalProfile,
@@ -93,7 +94,7 @@ function ProfileSummary({ profile }: { profile: ProviderPersonalProfile }): Reac
       </div>
       <dl className="border-border mt-6 space-y-4 border-t pt-6 text-sm">
         {profile.role === "PROVIDER_OWNER" ? <ProfileDetail icon={Mail} label={t("fields.email")} value={profile.email} ltr /> : null}
-        <ProfileDetail icon={Phone} label={t("fields.phone")} value={profile.phone} ltr />
+        <ProfileDetail icon={Phone} label={t("fields.phone")} value={<PhoneNumber value={profile.phone} />} />
         {profile.role === "PROVIDER_OWNER" ? <ProfileDetail icon={Flag} label={t("fields.nationality")} value={countryName(profile.nationality, locale)} /> : null}
         {profile.role === "PROVIDER_STAFF" ? <ProfileDetail icon={ShieldCheck} label={t("fields.accessRole")} value={t(`accessRoles.${profile.accessRole}`)} /> : null}
         <ProfileDetail icon={CalendarDays} label={t("joined")} value={formatMediumDate(profile.joinedAt, locale)} />
@@ -110,7 +111,7 @@ function ProfileDetail({
 }: {
   icon: LucideIcon;
   label: string;
-  value: string;
+  value: ReactNode;
   ltr?: boolean;
 }): ReactNode {
   return (
@@ -199,7 +200,7 @@ function StaffReadOnlyProfile({ profile }: { profile: ProviderStaffPersonalProfi
   const t = useTranslations("provider.personalProfile");
   const details = [
     { label: t("fields.name"), value: profile.name, icon: UserRound },
-    { label: t("fields.phone"), value: profile.phone, icon: Phone, ltr: true },
+    { label: t("fields.phone"), value: <PhoneNumber value={profile.phone} />, icon: Phone },
     { label: t("fields.accessRole"), value: t(`accessRoles.${profile.accessRole}`), icon: ShieldCheck },
   ];
 
@@ -215,11 +216,11 @@ function StaffReadOnlyProfile({ profile }: { profile: ProviderStaffPersonalProfi
         </div>
       </div>
       <dl className="mt-6 grid gap-4 sm:grid-cols-2">
-        {details.map(({ label, value, icon: Icon, ltr }) => (
+        {details.map(({ label, value, icon: Icon }) => (
           <div key={label} className="bg-glass-control border-border rounded-2xl border p-4">
             <Icon className="text-primary size-4" aria-hidden />
             <dt className="text-prose-muted mt-3 text-xs">{label}</dt>
-            <dd className="text-prose mt-1 break-words text-sm font-semibold" dir={ltr ? "ltr" : undefined}>{value}</dd>
+            <dd className="text-prose mt-1 break-words text-sm font-semibold">{value}</dd>
           </div>
         ))}
       </dl>

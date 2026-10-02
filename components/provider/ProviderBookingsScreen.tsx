@@ -16,6 +16,7 @@ import { Select } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { providerBookingPath } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderBookings } from "@/hooks/useProviderBookings";
@@ -56,9 +57,9 @@ export function ProviderBookingsScreen(): ReactNode {
       cell: (booking) => (
         <div className="min-w-36">
           <p className="font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
-          <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-xs" dir="ltr">
+          <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-xs">
             <Phone className="size-3.5" aria-hidden />
-            {booking.phone}
+            <PhoneNumber value={booking.phone} />
           </p>
         </div>
       ),
@@ -190,7 +191,7 @@ export function ProviderBookingsScreen(): ReactNode {
                 </div>
                 <p className="text-prose-muted flex items-center gap-1.5 text-xs">
                   <Phone className="size-3.5" aria-hidden />
-                  <span dir="ltr">{booking.phone}</span>
+                  <PhoneNumber value={booking.phone} />
                 </p>
                 <p className="text-prose flex flex-wrap items-center gap-x-1.5 text-sm">
                   <CalendarDays className="text-prose-muted size-4" aria-hidden />

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Table, type TableColumn } from "@/components/ui/Table";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useAdminSettings } from "@/hooks/useAdminSettings";
 import { useAdminUsers } from "@/hooks/useAdminUsers";
 import { usePagination } from "@/hooks/usePagination";
@@ -129,7 +130,7 @@ export function AdminUsers(): ReactNode {
       id: "phone",
       header: t("columns.phone"),
       cell: (user) => (
-        <span className="tabular-nums whitespace-nowrap" dir="ltr">{user.phone}</span>
+        <PhoneNumber value={user.phone} />
       ),
     },
     {

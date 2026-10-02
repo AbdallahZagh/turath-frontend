@@ -26,6 +26,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
@@ -117,9 +118,9 @@ function ProfilePreview({ values, locale }: { values: ProviderProfileValues; loc
             <MapPin className="text-primary mt-0.5 size-4 shrink-0" aria-hidden />
             <span className="text-prose">{address}</span>
           </div>
-          <div className="flex items-center gap-2" dir="ltr">
+          <div className="flex items-center gap-2">
             <Phone className="text-primary size-4 shrink-0" aria-hidden />
-            <span className="text-prose">{values.phone}</span>
+            <PhoneNumber value={values.phone} className="text-prose" />
           </div>
           <div className="flex items-center gap-2">
             <Clock3 className="text-primary size-4 shrink-0" aria-hidden />

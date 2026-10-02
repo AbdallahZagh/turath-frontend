@@ -31,6 +31,7 @@ import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import { useUpdateAdminBookingStatus } from "@/hooks/useAdminBookings";
 import type { Locale } from "@/i18n/config";
@@ -231,7 +232,7 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
                 className="text-prose hover:text-primary inline-flex items-center gap-1.5 text-xs font-medium transition-colors tabular-nums"
               >
                 <Phone className="text-prose-muted size-3.5" aria-hidden />
-                <span dir="ltr">{booking.phone}</span>
+                <PhoneNumber value={booking.phone} />
               </a>
               {guestId ? (
                 <Button

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { Logo } from "@/components/logo/Logo";
 import { getTranslations } from "@/i18n/serverTranslations";
 import { EMERGENCY_HOTLINES, type EmergencyHotlineId } from "@/lib/mock/landing";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 
 const HOTLINE_ICONS: Record<EmergencyHotlineId, LucideIcon> = {
   police: ShieldAlert,
@@ -126,7 +127,7 @@ export async function PublicFooter(): Promise<ReactNode> {
                       className="text-prose ms-auto inline-flex items-center gap-1 font-medium"
                     >
                       <Phone className="size-3" aria-hidden />
-                      {hotline.phone}
+                      <PhoneNumber value={hotline.phone} />
                     </a>
                   </li>
                 );

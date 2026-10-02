@@ -27,6 +27,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderArrivals, useVerifyProviderCheckIn } from "@/hooks/useProviderCheckIn";
 import type { Locale } from "@/i18n/config";
@@ -113,7 +114,7 @@ function ResultPanel({
             label={t("result.guest")}
             value={localizedName(booking.guestName, locale)}
           />
-          <Detail icon={Phone} label={t("result.phone")} value={booking.phone} dir="ltr" />
+          <Detail icon={Phone} label={t("result.phone")} value={<PhoneNumber value={booking.phone} />} />
           <Detail
             icon={UsersRound}
             label={t("result.party")}
@@ -176,7 +177,7 @@ function Detail({
 }: {
   icon: LucideIcon;
   label: string;
-  value: string;
+  value: ReactNode;
   dir?: "ltr" | "rtl";
 }): ReactNode {
   return (

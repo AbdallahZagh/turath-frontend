@@ -21,11 +21,13 @@ import { useState, type ReactNode } from "react";
 
 import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderDashboard } from "@/hooks/useProviderDashboard";
 import type { Locale } from "@/i18n/config";
@@ -310,6 +312,15 @@ export function ProviderDashboard(): ReactNode {
             </div>
             <CalendarClock className="text-primary size-5" aria-hidden />
           </div>
+          {data.arrivals.length === 0 ? (
+            <EmptyState
+              icon={CalendarClock}
+              title={t("arrivals.emptyTitle")}
+              description={t("arrivals.emptyDescription")}
+              action={<Button href={PROVIDER_PATHS.bookings} variant="outline" size="sm">{t("arrivals.emptyAction")}</Button>}
+              className="rounded-none border-0 bg-transparent py-10 shadow-none backdrop-blur-none"
+            />
+          ) : (
           <ul className="divide-border divide-y">
             {data.arrivals.map((arrival) => (
               <li
@@ -344,6 +355,7 @@ export function ProviderDashboard(): ReactNode {
               </li>
             ))}
           </ul>
+          )}
         </GlassPanel>
 
         <GlassPanel className="overflow-hidden">

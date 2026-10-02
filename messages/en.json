@@ -3296,6 +3296,9 @@
         "description": "Use Bookings to prepare for arriving guests and Check-in to validate each six-character backup code. Financial account details remain owner-only."
       },
       "arrivals": {
+        "emptyTitle": "No arrivals today",
+        "emptyDescription": "Bookings dated today will appear here.",
+        "emptyAction": "Open bookings",
         "title": "Today's arrivals",
         "description": "Confirmed guests and reservations awaiting acceptance.",
         "party": "{count, plural, one {# guest} other {# guests}}",

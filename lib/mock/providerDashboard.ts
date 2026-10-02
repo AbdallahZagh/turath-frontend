@@ -1,6 +1,13 @@
+import { parseIsoDate, toIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import { listProviderBookings } from "@/lib/mock/providerBookings";
 import type { ProviderCategory } from "@/lib/validation/auth";
+
+/** The business's local calendar day of an ISO datetime. */
+function localDate(iso: string): string {
+  const date = parseIsoDate(iso);
+  return date ? toIsoDate(date) : "";
+}
 
 export type ProviderArrivalStatus = "CONFIRMED" | "PENDING_CONFIRMATION";
 
@@ -128,8 +135,10 @@ export function getProviderDashboardByDays(
   const multiplier = days / PROVIDER_DASHBOARD.periodDays;
   const categoryData = CATEGORY_DASHBOARD[category];
   const bookings = listProviderBookings(category);
+  const today = toIsoDate(new Date());
   const arrivals: ProviderArrival[] = bookings.flatMap((booking) =>
-    booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION"
+    (booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION") &&
+    localDate(booking.scheduledAt) === today
       ? [{
           id: booking.reference,
           guestName: { ...booking.guestName },

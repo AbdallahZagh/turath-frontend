@@ -1,3 +1,6 @@
+import { addDays } from "date-fns";
+
+import { toIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderCategory } from "@/lib/validation/auth";
@@ -27,6 +30,11 @@ export type ProviderBooking = {
 
 type ProviderBookingSeed = Omit<ProviderBooking, "qrPayload">;
 
+/** A local datetime `days` from today, so the demo always has arrivals dated today. */
+function fromToday(days: number, time: string): string {
+  return `${toIsoDate(addDays(new Date(), days))}T${time}:00`;
+}
+
 const SEED: ProviderBookingSeed[] = [
   {
     id: "provider-booking-1",
@@ -38,8 +46,8 @@ const SEED: ProviderBookingSeed[] = [
     partySize: 1,
     notes: "Late arrival expected. Please keep the courtyard-side room if available.",
     offeringName: { en: "Yasmin double room", ar: "غرفة الياسمين المزدوجة" },
-    scheduledAt: "2026-09-21T14:00:00+03:00",
-    endsAt: "2026-09-22T11:00:00+03:00",
+    scheduledAt: fromToday(0, "14:00"),
+    endsAt: fromToday(1, "11:00"),
     listPriceSyp: 240_000,
     discountSyp: 0,
     cashDueSyp: 240_000,
@@ -59,8 +67,8 @@ const SEED: ProviderBookingSeed[] = [
     partySize: 2,
     notes: "Guest requested a quiet room away from the street.",
     offeringName: { en: "Courtyard king room", ar: "غرفة فناء بسرير كبير" },
-    scheduledAt: "2026-09-21T16:30:00+03:00",
-    endsAt: "2026-09-23T11:00:00+03:00",
+    scheduledAt: fromToday(0, "16:30"),
+    endsAt: fromToday(2, "11:00"),
     listPriceSyp: 600_000,
     discountSyp: 60_000,
     cashDueSyp: 540_000,
@@ -101,8 +109,8 @@ const SEED: ProviderBookingSeed[] = [
     partySize: 3,
     notes: "Travelling with a child; requested an extra bed.",
     offeringName: { en: "Family courtyard suite", ar: "جناح الفناء العائلي" },
-    scheduledAt: "2026-09-24T14:00:00+03:00",
-    endsAt: "2026-09-27T11:00:00+03:00",
+    scheduledAt: fromToday(0, "14:00"),
+    endsAt: fromToday(3, "11:00"),
     listPriceSyp: 1_050_000,
     discountSyp: 150_000,
     cashDueSyp: 900_000,
@@ -200,7 +208,7 @@ const SEED: ProviderBookingSeed[] = [
     id: "provider-booking-dining-1", category: "dining", reference: "TRH-DIN821", backupCode: "DINE21",
     guestName: { en: "Maya Darwish", ar: "مايا درويش" }, phone: "+963 933 714 206", partySize: 4,
     notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table · 8:30 PM", ar: "طاولة التراس · ٨:٣٠ م" },
-    scheduledAt: "2026-09-21T20:30:00+03:00", endsAt: "2026-09-21T22:30:00+03:00", listPriceSyp: 320_000,
+    scheduledAt: fromToday(0, "20:30"), endsAt: fromToday(0, "22:30"), listPriceSyp: 320_000,
     discountSyp: 32_000, cashDueSyp: 288_000, couponCode: "TASTE10", status: "CONFIRMED", checkedInAt: null,
     checkedInBy: null, createdAt: "2026-09-18T12:30:00+03:00",
   },

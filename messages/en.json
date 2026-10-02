@@ -3265,7 +3265,13 @@
         "occupancy": "Room occupancy",
         "occupancyHint": "Current bookable inventory",
         "checkIns": "Check-ins today",
-        "checkInsHint": "Verified at the front desk",
+        "checkInsHint": {
+          "hotels": "Verified at the front desk",
+          "dining": "Verified at the restaurant entrance",
+          "trips": "Verified at departure",
+          "events": "Verified at the venue entrance",
+          "guides": "Verified at the meeting point"
+        },
         "cancellations": "Cancellations",
         "noShows": "No-shows"
       },

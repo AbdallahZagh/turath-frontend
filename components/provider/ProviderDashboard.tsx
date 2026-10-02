@@ -168,7 +168,7 @@ export function ProviderDashboard(): ReactNode {
           icon={UserRoundCheck}
           label={t("metrics.checkIns")}
           value={formatCount(data.kpis.checkInsToday, locale)}
-          hint={t("metrics.checkInsHint")}
+          hint={t(`metrics.checkInsHint.${category}`)}
         />
         <KpiCard
           icon={XCircle}

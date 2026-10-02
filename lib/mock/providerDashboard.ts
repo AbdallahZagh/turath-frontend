@@ -1,9 +1,9 @@
-import { parseIsoDate, toIsoDate } from "@/lib/format/datetime";
+import { parseIsoDate, todayInSyria, toIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import { listProviderBookings } from "@/lib/mock/providerBookings";
 import type { ProviderCategory } from "@/lib/validation/auth";
 
-/** The business's local calendar day of an ISO datetime. */
+/** The calendar day of a booking time (stored as Syrian wall-clock time). */
 function localDate(iso: string): string {
   const date = parseIsoDate(iso);
   return date ? toIsoDate(date) : "";
@@ -135,7 +135,7 @@ export function getProviderDashboardByDays(
   const multiplier = days / PROVIDER_DASHBOARD.periodDays;
   const categoryData = CATEGORY_DASHBOARD[category];
   const bookings = listProviderBookings(category);
-  const today = toIsoDate(new Date());
+  const today = todayInSyria();
   const arrivals: ProviderArrival[] = bookings.flatMap((booking) =>
     (booking.status === "CONFIRMED" || booking.status === "PENDING_CONFIRMATION") &&
     localDate(booking.scheduledAt) === today

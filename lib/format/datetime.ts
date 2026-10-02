@@ -77,6 +77,27 @@ export function toIsoDate(date: Date): string {
   return format(date, "yyyy-MM-dd");
 }
 
+/** Businesses keep Syrian time; "today" for arrivals and demo bookings is the day in Damascus. */
+export const SYRIA_TIME_ZONE = "Asia/Damascus";
+
+const SYRIA_DAY = new Intl.DateTimeFormat("en-CA", {
+  timeZone: SYRIA_TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
+/**
+ * Today's date in Damascus as `yyyy-MM-dd`, whatever the server's or browser's own time zone, so
+ * server and client agree on what "today" is.
+ */
+export function todayInSyria(now: Date = new Date()): string {
+  const parts = SYRIA_DAY.formatToParts(now);
+  const part = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((item) => item.type === type)?.value ?? "";
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
 /**
  * Any date shown to people: date-fns pattern in the locale, with Arabic-Indic digits in Arabic
  * (date-fns `ar` prints Latin digits). Stored and URL dates use `toIsoDate` instead.

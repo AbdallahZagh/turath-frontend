@@ -12,6 +12,7 @@ import {
   formatPickerTime,
   formatTime,
   LEVANTINE_MONTHS,
+  todayInSyria,
 } from "../lib/format/datetime.ts";
 
 test("Arabic dates use Levantine month names and Arabic-Indic digits", () => {
@@ -60,4 +61,11 @@ test("date and time join with a comma, Arabic with ،", () => {
   assert.equal(formatDateTime("2026-10-03T20:30:00", "en"), "3 Oct 2026, 20:30");
   assert.equal(formatDateTime("2026-10-03T20:30:00", "ar"), "٣ تشرين الأول ٢٠٢٦، ٢٠:٣٠");
   assert.equal(formatDateAndPickerTime("2026-10-03", "20:30", "ar"), "٣ تشرين الأول ٢٠٢٦، ٢٠:٣٠");
+});
+
+test("todayInSyria is the date in Damascus, not the host's", () => {
+  // 22:30 UTC is already 01:30 the next day in Damascus (UTC+3).
+  assert.equal(todayInSyria(new Date("2026-10-02T22:30:00Z")), "2026-10-03");
+  assert.equal(todayInSyria(new Date("2026-10-02T20:59:00Z")), "2026-10-02");
+  assert.equal(todayInSyria(new Date("2026-12-31T21:00:00Z")), "2027-01-01");
 });

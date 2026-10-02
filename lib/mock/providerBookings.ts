@@ -1,6 +1,6 @@
 import { addDays } from "date-fns";
 
-import { toIsoDate } from "@/lib/format/datetime";
+import { todayInSyria, toIsoDate } from "@/lib/format/datetime";
 import type { LocalizedName } from "@/lib/i18n/localized";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 import type { ProviderCategory } from "@/lib/validation/auth";
@@ -30,9 +30,10 @@ export type ProviderBooking = {
 
 type ProviderBookingSeed = Omit<ProviderBooking, "qrPayload">;
 
-/** A local datetime `days` from today, so the demo always has arrivals dated today. */
+/** A Syrian wall-clock datetime `days` from today in Damascus, so the demo always has arrivals today. */
 function fromToday(days: number, time: string): string {
-  return `${toIsoDate(addDays(new Date(), days))}T${time}:00`;
+  const [year, month, day] = todayInSyria().split("-").map(Number);
+  return `${toIsoDate(addDays(new Date(year, month - 1, day), days))}T${time}:00`;
 }
 
 const SEED: ProviderBookingSeed[] = [

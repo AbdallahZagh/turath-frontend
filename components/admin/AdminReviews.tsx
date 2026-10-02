@@ -9,6 +9,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminReview } from "@/lib/mock/adminReviews";
 
@@ -53,7 +54,7 @@ export function AdminReviews({
                     </p>
                     <p className="text-prose-muted text-xs">
                       {formatMediumDate(review.at, loc)}
-                      <span> · </span>
+                      <span>{partSeparator(loc)}</span>
                       <span className="tracking-wider tabular-nums">{review.bookingCode}</span>
                     </p>
                   </div>

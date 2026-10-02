@@ -33,6 +33,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatDateTime, formatTime } from "@/lib/format/datetime";
+import { partSeparator } from "@/lib/format/separators";
 import { isolateName, localizedName } from "@/lib/i18n/localized";
 import type { ProviderCheckInResult, ProviderDeskBooking } from "@/lib/mock/providerCheckIn";
 import {
@@ -353,7 +354,9 @@ function ArrivalCard({
             <bdi>{localizedName(booking.guestName, locale)}</bdi>
           </p>
           <p className="text-prose-muted mt-1 text-xs">
-            {booking.reference} · {t(`categories.${booking.category}`)}
+            {booking.reference}
+            {partSeparator(locale)}
+            {t(`categories.${booking.category}`)}
           </p>
         </div>
         <Badge>{formatTime(booking.schedule, locale)}</Badge>

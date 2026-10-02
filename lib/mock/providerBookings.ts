@@ -207,7 +207,7 @@ const SEED: ProviderBookingSeed[] = [
   {
     id: "provider-booking-dining-1", category: "dining", reference: "TRH-DIN821", backupCode: "DINE21",
     guestName: { en: "Maya Darwish", ar: "مايا درويش" }, phone: "+963 933 714 206", partySize: 4,
-    notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table · 8:30 PM", ar: "طاولة التراس · ٨:٣٠ م" },
+    notes: "Terrace seating requested. One guest has a nut allergy.", offeringName: { en: "Terrace table · 20:30", ar: "طاولة التراس ٢٠:٣٠" },
     scheduledAt: fromToday(0, "20:30"), endsAt: fromToday(0, "22:30"), listPriceSyp: 320_000,
     discountSyp: 32_000, cashDueSyp: 288_000, couponCode: "TASTE10", status: "CONFIRMED", checkedInAt: null,
     checkedInBy: null, createdAt: "2026-09-18T12:30:00+03:00",
@@ -223,7 +223,7 @@ const SEED: ProviderBookingSeed[] = [
   {
     id: "provider-booking-event-1", category: "events", reference: "TRH-EVT808", backupCode: "EVENT8",
     guestName: { en: "Lina Shami", ar: "لينا شامي" }, phone: "+963 955 301 842", partySize: 3,
-    notes: "Three VIP tickets.", offeringName: { en: "Courtyard music night · VIP", ar: "ليلة موسيقية في الباحة · كبار الزوار" },
+    notes: "Three VIP tickets.", offeringName: { en: "Courtyard music night · VIP", ar: "ليلة موسيقية في الباحة كبار الزوار" },
     scheduledAt: "2026-10-08T20:00:00+03:00", endsAt: "2026-10-08T22:30:00+03:00", listPriceSyp: 840_000,
     discountSyp: 0, cashDueSyp: 840_000, couponCode: null, status: "CONFIRMED", checkedInAt: null,
     checkedInBy: null, createdAt: "2026-09-20T17:40:00+03:00",

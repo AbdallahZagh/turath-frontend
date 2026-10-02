@@ -17,6 +17,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatSyp } from "@/lib/format/money";
 import { parseNumberInput } from "@/lib/format/digits";
+import { partSeparator } from "@/lib/format/separators";
 import {
   CREDIT_CEILING_TIERS,
   FEATURED_SLOT_IDS,
@@ -269,7 +270,7 @@ export function AdminSettings(): ReactNode {
                   amount
                   value={raw}
                   onChange={(event) => setCeiling(tier, event.target.value)}
-                  label={`${t(`tiers.${tier}`)} · ${t("credit.columns.ceiling")}`}
+                  label={`${t(`tiers.${tier}`)}${partSeparator(loc)}${t("credit.columns.ceiling")}`}
                   error={invalid.has(tier) ? tUi("invalidAmount") : undefined}
                   className="w-full"
                 />

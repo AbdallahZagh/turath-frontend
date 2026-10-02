@@ -22,6 +22,7 @@ import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { TOURIST_BOOKING_STATUSES } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
@@ -199,7 +200,7 @@ export function ProviderBookingsScreen(): ReactNode {
                 <p className="text-prose flex flex-wrap items-center gap-x-1.5 text-sm">
                   <CalendarDays className="text-prose-muted size-4" aria-hidden />
                   <span className="text-prose-muted">{t("columns.arrival")}</span>
-                  {formatMediumDate(booking.scheduledAt, locale)} · <bdi>{localizedName(booking.offeringName, locale)}</bdi>
+                  {formatMediumDate(booking.scheduledAt, locale)}{partSeparator(locale)}<bdi>{localizedName(booking.offeringName, locale)}</bdi>
                 </p>
                 <div className="flex items-center justify-between gap-3 text-sm">
                   <span className="text-prose-muted inline-flex items-center gap-1.5">

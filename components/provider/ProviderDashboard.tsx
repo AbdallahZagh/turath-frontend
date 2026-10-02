@@ -36,6 +36,7 @@ import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatTime, formatWeekdayShort } from "@/lib/format/datetime";
 import { formatCount, formatPercent } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { isolateName, localizedName } from "@/lib/i18n/localized";
 import { getProviderBusiness } from "@/lib/mock/providerBusinesses";
 import type { ProviderCategory } from "@/lib/validation/auth";
@@ -336,7 +337,7 @@ export function ProviderDashboard(): ReactNode {
                     <BookingStatusBadge status={arrival.status} />
                   </div>
                   <p className="text-prose-muted mt-1 text-xs">
-                    {arrival.id} · {t("arrivals.party", { count: arrival.partySize })}
+                    {arrival.id}{partSeparator(locale)}{t("arrivals.party", { count: arrival.partySize })}
                   </p>
                 </div>
                 <div className="shrink-0 sm:text-end">

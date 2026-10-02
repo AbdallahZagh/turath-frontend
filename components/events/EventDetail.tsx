@@ -35,6 +35,7 @@ import { cn } from "@/lib/cn";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatRating } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -141,7 +142,7 @@ export function EventDetail({
                 {t("reviewsCount", { count: event.reviewCount })}
               </span>
               <span className="text-prose-muted" aria-hidden>
-                ·
+                {partSeparator(loc)}
               </span>
               <span className="text-prose-muted">{localizedName(event.venue, loc)}</span>
             </div>
@@ -184,7 +185,9 @@ export function EventDetail({
                     <div className="flex flex-wrap gap-2">
                       {session.tiers.map((tier) => (
                         <Badge key={tier.id} icon={<Ticket className="size-3.5" aria-hidden />}>
-                          {tt(tier.id)} · {t("ticketsLeft", { count: tier.remaining })}
+                          {tt(tier.id)}
+                          {partSeparator(loc)}
+                          {t("ticketsLeft", { count: tier.remaining })}
                         </Badge>
                       ))}
                     </div>

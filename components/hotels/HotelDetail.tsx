@@ -35,6 +35,7 @@ import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatPickerTime, formatMediumDate } from "@/lib/format/datetime";
 import { formatRating } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -127,7 +128,7 @@ export function HotelDetail({ hotelId, basePath = "/hotels" }: HotelDetailProps)
               <StarRating value={hotel.rating} size="md" label={t("ratingLabel", { rating: hotel.rating })} />
               <span className="text-prose font-semibold">{formatRating(hotel.rating, loc)}</span>
               <span className="text-prose-muted">{t("reviewsCount", { count: hotel.reviewCount })}</span>
-              <span aria-hidden className="text-prose-muted">·</span>
+              <span aria-hidden className="text-prose-muted">{partSeparator(loc)}</span>
               <span className="text-prose-muted">{localizedName(hotel.address, loc)}</span>
             </div>
           </section>

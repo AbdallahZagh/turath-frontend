@@ -13,6 +13,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 
@@ -70,7 +71,7 @@ export function AdminAttractionCard({
             <p className="text-prose mt-auto pt-2 text-sm">
               <span className="text-prose-muted">{hours}</span>
               <span aria-hidden className="text-prose-muted">
-                {" · "}
+                {partSeparator(loc)}
               </span>
               {fee}
             </p>

@@ -17,6 +17,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { parseNumberInput } from "@/lib/format/digits";
 import { formatPercent } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import {
   COMMISSION_PILLARS,
   COMMISSION_TIER_RATES,
@@ -196,7 +197,7 @@ export function AdminCommissions(): ReactNode {
           {COMMISSION_TIERS.map((tier) => (
             <li key={tier}>
               <Badge variant={tier === "standard" ? "solid" : "glass"}>
-                {t(`tiers.${tier}`)} · {formatPercent(COMMISSION_TIER_RATES[tier], loc, 1)}
+                {t(`tiers.${tier}`)}{partSeparator(loc)}{formatPercent(COMMISSION_TIER_RATES[tier], loc, 1)}
               </Badge>
             </li>
           ))}

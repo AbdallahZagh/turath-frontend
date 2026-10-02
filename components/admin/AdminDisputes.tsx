@@ -17,6 +17,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import {
   DISPUTE_STATUSES,
@@ -101,7 +102,7 @@ export function AdminDisputes(): ReactNode {
         <div className="flex min-w-0 flex-col gap-1">
           <span className="truncate font-medium"><bdi>{localizedName(dispute.guest, loc)}</bdi></span>
           <span className="text-prose-muted truncate text-xs">
-            <bdi>{localizedName(dispute.provider, loc)}</bdi> · {tPillars(dispute.category)}
+            <bdi>{localizedName(dispute.provider, loc)}</bdi>{partSeparator(loc)}{tPillars(dispute.category)}
           </span>
         </div>
       ),

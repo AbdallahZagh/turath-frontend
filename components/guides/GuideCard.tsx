@@ -15,6 +15,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatRating } from "@/lib/format/number";
+import { listSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import type { TourGuide } from "@/lib/mock/guides";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
@@ -44,7 +45,7 @@ export function GuideCard({ guide, detailBasePath = "/guides" }: { guide: TourGu
             </div>
             <div className="mt-3 flex items-center gap-2 text-sm"><StarRating value={guide.rating} label={t("ratingLabel", { rating: guide.rating })} /><span className="text-prose font-semibold">{formatRating(guide.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: guide.reviewCount })}</span></div>
             <p className="text-prose-muted mt-3 line-clamp-2 text-sm leading-relaxed">{localizedName(guide.shortDescription, loc)}</p>
-            <div className="mt-4 flex flex-wrap gap-2"><Badge icon={<Languages className="size-3.5" aria-hidden />}>{guide.languages.slice(0, 2).map((item) => t(`languages.${item}`)).join(" · ")}</Badge>{guide.specialties.slice(0, 2).map((item) => <Badge key={item}>{t(`specialties.${item}`)}</Badge>)}</div>
+            <div className="mt-4 flex flex-wrap gap-2"><Badge icon={<Languages className="size-3.5" aria-hidden />}>{guide.languages.slice(0, 2).map((item) => t(`languages.${item}`)).join(listSeparator(loc))}</Badge>{guide.specialties.slice(0, 2).map((item) => <Badge key={item}>{t(`specialties.${item}`)}</Badge>)}</div>
             <div className="border-border mt-auto flex items-end justify-between gap-3 border-t pt-4"><p className="text-prose-muted text-xs">{t("experience", { count: guide.yearsExperience })}</p><div className="text-end"><p className="text-prose font-semibold">{formatMoney(guide.rates.hourly)}</p><p className="text-prose-muted text-xs">{t("perHour")}</p></div></div>
           </div>
         </GlassPanel>

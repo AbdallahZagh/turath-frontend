@@ -12,6 +12,7 @@ import { formatBookingWhen } from "@/lib/format/booking";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatCount } from "@/lib/format/number";
+import { listSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import type {
   DiningTable,
@@ -163,7 +164,7 @@ function DiningTables({
       <p className="text-prose-muted text-sm">
         {t("detail.slots")}:{" "}
         <span className="text-prose tabular-nums">
-          {slots.map((slot) => formatPickerTime(slot, loc)).join(" · ")}
+          {slots.map((slot) => formatPickerTime(slot, loc)).join(listSeparator(loc))}
         </span>
       </p>
     </div>
@@ -184,7 +185,7 @@ function TripCard({ trip }: { trip: TripListing }): ReactNode {
       </div>
       <div className="flex flex-col gap-1">
         <dt className="text-prose-muted text-xs">{t("detail.trip.dates")}</dt>
-        <dd>{trip.dates.map((iso) => formatMediumDate(iso, loc)).join(" · ")}</dd>
+        <dd>{trip.dates.map((iso) => formatMediumDate(iso, loc)).join(listSeparator(loc))}</dd>
       </div>
       <div className="flex flex-col gap-1">
         <dt className="text-prose-muted text-xs">{t("detail.trip.pickup")}</dt>
@@ -283,7 +284,7 @@ function GuideCard({ guide }: { guide: GuideListing }): ReactNode {
       </div>
       <div className="flex flex-col gap-1">
         <dt className="text-prose-muted text-xs">{t("detail.guide.languages")}</dt>
-        <dd>{guide.languages.map((lang) => t(`detail.lang.${lang}`)).join(" · ")}</dd>
+        <dd>{guide.languages.map((lang) => t(`detail.lang.${lang}`)).join(listSeparator(loc))}</dd>
       </div>
       <div className="flex flex-col gap-1">
         <dt className="text-prose-muted text-xs">{t("detail.guide.hourly")}</dt>

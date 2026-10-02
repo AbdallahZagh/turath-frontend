@@ -8,6 +8,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
+import { partSeparator } from "@/lib/format/separators";
 import type { AdminProviderDocument } from "@/lib/mock/adminProviders";
 
 type AdminProviderDocumentsProps = {
@@ -40,7 +41,7 @@ export function AdminProviderDocuments({
                 </span>
                 <span className="text-prose-muted truncate text-xs">{doc.filename}</span>
                 <span className="text-prose-muted text-xs">
-                  {formatMediumDate(doc.uploadedAt, loc)} · {t("detail.placeholderFile")}
+                  {formatMediumDate(doc.uploadedAt, loc)}{partSeparator(loc)}{t("detail.placeholderFile")}
                 </span>
               </div>
             </li>

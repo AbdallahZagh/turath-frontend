@@ -20,6 +20,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName, type LocalizedName } from "@/lib/i18n/localized";
 import type { LandingPillarId } from "@/lib/mock/landing";
 import {
@@ -175,7 +176,7 @@ export function AdminCoupons(): ReactNode {
       cell: (row) => (
         <span className="truncate">
           {t(`scope.${row.scope}`)}
-          {row.scope !== "platform" ? ` · ${scopeLabel(row)}` : ""}
+          {row.scope !== "platform" ? `${partSeparator(loc)}${scopeLabel(row)}` : ""}
         </span>
       ),
     },

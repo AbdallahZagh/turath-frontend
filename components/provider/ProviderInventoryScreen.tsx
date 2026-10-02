@@ -24,6 +24,7 @@ import { useTranslations } from "@/i18n/translations";
 import { formatBookingWhen } from "@/lib/format/booking";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatCount } from "@/lib/format/number";
+import { listSeparator } from "@/lib/format/separators";
 import {
   inventoryItemName,
   type DeleteProviderInventoryInput,
@@ -367,7 +368,7 @@ function RestaurantInventory({
         <div>
           <p className="text-prose text-sm font-semibold">{t("slotsTitle")}</p>
           <p className="text-prose-muted mt-1 text-sm tabular-nums">
-            {slots.map((slot) => formatPickerTime(slot, locale)).join(" · ")}
+            {slots.map((slot) => formatPickerTime(slot, locale)).join(listSeparator(locale))}
           </p>
         </div>
         {actions ? (

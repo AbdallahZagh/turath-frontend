@@ -24,6 +24,7 @@ import { cn } from "@/lib/cn";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { formatCount, formatRating } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -54,10 +55,10 @@ export function TripDetail({ tripId, basePath = "/trips" }: { tripId: string; ba
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="space-y-7">
           <section>
-            <div className="flex flex-wrap items-center gap-2">{trip.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(trip.governorate)}</Badge><Badge icon={<Clock3 className="size-3.5" aria-hidden />}>{t(`durations.${trip.duration}`)} · {localizedName(trip.durationDetail, loc)}</Badge></div>
+            <div className="flex flex-wrap items-center gap-2">{trip.verified ? <Badge variant="solid" icon={<ShieldCheck className="size-3.5" aria-hidden />}>{t("verified")}</Badge> : null}<Badge icon={<MapPin className="size-3.5" aria-hidden />}>{tGov(trip.governorate)}</Badge><Badge icon={<Clock3 className="size-3.5" aria-hidden />}>{t(`durations.${trip.duration}`)}{partSeparator(loc)}{localizedName(trip.durationDetail, loc)}</Badge></div>
             <h1 className={cn(PAGE_TITLE_CLASS, "mt-4")}><bdi>{name}</bdi></h1>
             <p className="text-primary mt-2 text-sm font-semibold"><bdi>{localizedName(trip.providerName, loc)}</bdi></p>
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} size="md" label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span><span className="text-prose-muted" aria-hidden>·</span><span className="text-prose-muted">{localizedName(trip.address, loc)}</span></div>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} size="md" label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span><span className="text-prose-muted" aria-hidden>{partSeparator(loc)}</span><span className="text-prose-muted">{localizedName(trip.address, loc)}</span></div>
           </section>
 
           <GlassPanel className="p-6 sm:p-7"><h2 className="font-heading text-prose text-2xl font-semibold">{td("about")}</h2><p className="text-prose-muted mt-3 leading-7">{localizedName(trip.description, loc)}</p></GlassPanel>

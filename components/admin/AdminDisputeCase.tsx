@@ -14,6 +14,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import type { AdminDispute } from "@/lib/mock/adminDisputes";
 
@@ -52,12 +53,12 @@ export function AdminDisputeCase({
           </div>
           <p className="text-prose text-sm font-medium">
             <bdi>{localizedName(dispute.guest, loc)}</bdi>
-            <span className="text-prose-muted"> · </span>
+            <span className="text-prose-muted">{partSeparator(loc)}</span>
             <bdi>{localizedName(dispute.provider, loc)}</bdi>
           </p>
           <p className="text-prose-muted text-sm">
             <bdi>{localizedName(dispute.guest, other)}</bdi>
-            <span> · </span>
+            <span>{partSeparator(other)}</span>
             <bdi>{localizedName(dispute.provider, other)}</bdi>
           </p>
           <dl className="mt-1 grid gap-3 text-sm sm:grid-cols-2">

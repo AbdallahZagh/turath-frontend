@@ -31,6 +31,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatRating } from "@/lib/format/number";
+import { partSeparator } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 
@@ -119,7 +120,8 @@ export function GuideDetail({
                 {t("reviewsCount", { count: guide.reviewCount })}
               </span>
               <span className="text-prose-muted">
-                · {t("experience", { count: guide.yearsExperience })}
+                {partSeparator(loc)}
+                {t("experience", { count: guide.yearsExperience })}
               </span>
             </div>
           </section>

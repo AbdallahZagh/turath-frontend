@@ -3310,7 +3310,10 @@
       "recent": {
         "title": "Recent check-ins",
         "description": "Latest verified arrivals and cash collection.",
-        "checkedInBy": "Checked in by {staff}"
+        "checkedInBy": "Checked in by {staff}",
+        "emptyTitle": "No check-ins yet",
+        "emptyDescription": "Verified arrivals and the cash collected will appear here.",
+        "emptyAction": "Open check-in"
       }
     }
   },

@@ -371,6 +371,15 @@ export function ProviderDashboard(): ReactNode {
             </div>
             <CircleCheck className="text-primary size-5" aria-hidden />
           </div>
+          {data.recentCheckIns.length === 0 ? (
+            <EmptyState
+              icon={CircleCheck}
+              title={t("recent.emptyTitle")}
+              description={t("recent.emptyDescription")}
+              action={<Button href={PROVIDER_PATHS.checkIn} variant="outline" size="sm">{t("recent.emptyAction")}</Button>}
+              className="rounded-none border-0 bg-transparent py-10 shadow-none backdrop-blur-none"
+            />
+          ) : (
           <ul className="divide-border divide-y">
             {data.recentCheckIns.map((checkIn) => (
               <li
@@ -398,6 +407,7 @@ export function ProviderDashboard(): ReactNode {
               </li>
             ))}
           </ul>
+          )}
         </GlassPanel>
       </div>
     </div>

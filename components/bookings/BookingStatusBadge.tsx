@@ -21,7 +21,8 @@ export const BOOKING_STATUS_STYLES: Record<TouristBookingStatus, BookingStatusSt
     className: "border-dashed border-accent text-accent",
   },
   CONFIRMED: { variant: "solid" },
-  CHECKED_IN: { variant: "glass", className: "text-primary" },
+  // Tinted fill with a border: clearly a badge, between Confirmed (solid) and Completed (outline).
+  CHECKED_IN: { variant: "outline", className: "border-primary/45 bg-primary/12 text-primary" },
   COMPLETED: { variant: "outline", className: "border-primary text-primary" },
   CANCELLED: DESTRUCTIVE,
   NO_SHOW: DESTRUCTIVE,

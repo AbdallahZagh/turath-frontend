@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Icon } from "@/components/ui/Icon";
 
 export type BookingSummaryRow = { id: string; label: string; value: ReactNode; icon?: LucideIcon };
 
@@ -34,7 +35,7 @@ type BookingSummaryCardProps = {
  * `BookingConfirmBar`, so the card shows it on wide screens only.
  */
 export function BookingSummaryCard({
-  icon: Icon,
+  icon: CategoryIcon,
   title,
   subtitle,
   rows,
@@ -50,7 +51,7 @@ export function BookingSummaryCard({
     <GlassPanel className="p-6 lg:sticky lg:top-28">
       <div className="flex items-center gap-3">
         <span className="bg-primary/12 text-primary grid size-11 shrink-0 place-items-center rounded-xl">
-          <Icon className="size-5" aria-hidden />
+          <CategoryIcon className="size-5" aria-hidden />
         </span>
         <div className="min-w-0">
           <h2 className="text-prose font-semibold">
@@ -100,7 +101,7 @@ export function BookingSummaryCard({
         {confirm.label}
       </Button>
       <Button href={back.href} variant="glass" className="mt-3 w-full">
-        <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
+        <Icon icon={ArrowLeft} className="size-4" aria-hidden />
         {back.label}
       </Button>
     </GlassPanel>

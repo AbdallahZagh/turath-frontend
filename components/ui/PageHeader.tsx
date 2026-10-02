@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
 import {
   getPageHeader,
@@ -64,7 +65,7 @@ function PageHeaderBreadcrumb({
           </Link>
         </li>
         <li aria-hidden>
-          <ChevronRight className="size-3.5 rtl:rotate-180" />
+          <Icon icon={ChevronRight} className="size-3.5" />
         </li>
         <li aria-current="page" className="text-prose font-medium">
           {currentTitle}

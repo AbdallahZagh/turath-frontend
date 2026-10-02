@@ -20,7 +20,8 @@ const CHECKBOX = [
   "transition-[border-color,background-color,box-shadow] duration-150",
   "motion-reduce:transition-none",
   "after:mb-[0.12em] after:box-border after:h-[0.58em] after:w-[0.32em] after:content-['']",
-  "after:border-b-2 after:border-e-2 after:border-primary-foreground",
+  // The tick is a glyph, not layout: physical sides so it never mirrors in Arabic.
+  "after:border-b-2 after:border-r-2 after:border-primary-foreground",
   "after:origin-center after:scale-0 after:rotate-45 after:transition-transform after:duration-150",
   "checked:border-primary checked:bg-primary checked:after:scale-100",
   "focus-visible:outline-ring focus-visible:outline-2 focus-visible:outline-offset-[3px]",

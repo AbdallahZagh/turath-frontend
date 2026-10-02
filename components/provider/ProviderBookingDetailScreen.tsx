@@ -29,6 +29,7 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Icon } from "@/components/ui/Icon";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS, providerCheckInPath } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -124,7 +125,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Button href={PROVIDER_PATHS.bookings} variant="glass" size="sm">
-          <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
+          <Icon icon={ArrowLeft} className="size-4" aria-hidden />
           {t("detail.back")}
         </Button>
         <div className="flex items-center gap-2">

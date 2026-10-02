@@ -10,6 +10,7 @@ import type { FieldError } from "react-hook-form";
 import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Icon } from "@/components/ui/Icon";
 import { Input } from "@/components/ui/Input";
 import { PhoneField } from "@/components/ui/PhoneField";
 import { Select, type SelectOption } from "@/components/ui/Select";
@@ -235,7 +236,7 @@ export function ContactForm(): ReactNode {
                 className="w-full justify-center whitespace-nowrap sm:w-auto"
               >
                 {busy ? tForm("submitting") : tForm("submit")}
-                <Send className="size-4 rtl:rotate-180" aria-hidden />
+                <Icon icon={Send} className="size-4" aria-hidden />
               </Button>
             </div>
           </form>

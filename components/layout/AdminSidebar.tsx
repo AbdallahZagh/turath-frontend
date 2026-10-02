@@ -7,6 +7,7 @@ import { useState, type ReactNode } from "react";
 
 import { AdminSettingsMenu } from "@/components/layout/AdminSettingsMenu";
 import { Logo } from "@/components/logo/Logo";
+import { Icon } from "@/components/ui/Icon";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
 import {
@@ -234,9 +235,9 @@ export function AdminSidebar({ sticky = false }: AdminSidebarProps): ReactNode {
           className="glass-surface backdrop-blur-sm text-prose-muted hover:text-prose absolute end-0 bottom-11 z-20 hidden size-8 translate-x-1/2 items-center justify-center rounded-full lg:flex rtl:-translate-x-1/2"
         >
           {collapsed ? (
-            <PanelLeftOpen className="size-3.5 rtl:scale-x-[-1]" aria-hidden />
+            <Icon icon={PanelLeftOpen} className="size-3.5" aria-hidden />
           ) : (
-            <PanelLeftClose className="size-3.5 rtl:scale-x-[-1]" aria-hidden />
+            <Icon icon={PanelLeftClose} className="size-3.5" aria-hidden />
           )}
         </button>
         <div

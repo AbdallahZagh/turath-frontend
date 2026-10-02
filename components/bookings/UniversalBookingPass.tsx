@@ -13,6 +13,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/cn";
 import { wrapAtLastSpaceOnly } from "@/lib/format/separators";
@@ -196,7 +197,7 @@ export function UniversalBookingPass({
                   <span className="size-1.5 shrink-0 rounded-full bg-primary" />
                   <span className="border-primary/45 w-full border-t border-dashed" />
                   <span className="border-primary text-primary grid size-8 shrink-0 place-items-center rounded-full border">
-                    <ArrowRight className="size-4 rtl:rotate-180" />
+                    <Icon icon={ArrowRight} className="size-4" />
                   </span>
                   <span className="border-primary/45 w-full border-t border-dashed" />
                   <span className="size-1.5 shrink-0 rounded-full bg-primary" />

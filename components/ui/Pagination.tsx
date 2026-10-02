@@ -5,6 +5,7 @@ import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { Icon } from "@/components/ui/Icon";
 import { Select } from "@/components/ui/Select";
 import { TABLE_PAGE_SIZES } from "@/hooks/usePagination";
 import { useTranslations } from "@/i18n/translations";
@@ -97,7 +98,7 @@ export function Pagination({
           aria-label={t("previous")}
           onClick={() => onPageChange(page - 1)}
         >
-          <ChevronLeft className="size-3.5 rtl:scale-x-[-1]" aria-hidden />
+          <Icon icon={ChevronLeft} className="size-3.5" aria-hidden />
         </Button>
         {pages.map((n) => (
           <Button
@@ -123,7 +124,7 @@ export function Pagination({
           aria-label={t("next")}
           onClick={() => onPageChange(page + 1)}
         >
-          <ChevronRight className="size-3.5 rtl:scale-x-[-1]" aria-hidden />
+          <Icon icon={ChevronRight} className="size-3.5" aria-hidden />
         </Button>
       </div>
     </nav>

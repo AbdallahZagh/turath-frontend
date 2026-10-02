@@ -14,6 +14,7 @@ import {
 
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
+import { Icon } from "@/components/ui/Icon";
 import { FIELD_GROUP_MAIN, FIELD_STACK_LABEL } from "@/components/ui/controlClasses";
 import { controlStyle } from "@/components/ui/controlScale";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -376,7 +377,7 @@ export function OmniSearchWidget(): ReactNode {
           className="text-primary hover:text-prose inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
         >
           {t("seeAllResults")}
-          <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+          <Icon icon={ArrowRight} className="size-4" aria-hidden />
         </Link>
       </div>
     </GlassPanel>

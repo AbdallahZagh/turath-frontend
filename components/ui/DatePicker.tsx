@@ -18,6 +18,7 @@ import {
   startOfWeek,
 } from "date-fns";
 
+import { Icon } from "@/components/ui/Icon";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import {
@@ -233,7 +234,7 @@ export function DatePicker({
               aria-label={t("previous")}
               onClick={() => shiftCursor(-1)}
             >
-              <ChevronLeft className="size-4 rtl:rotate-180" />
+              <Icon icon={ChevronLeft} className="size-4" />
             </button>
             <button
               type="button"
@@ -252,7 +253,7 @@ export function DatePicker({
               aria-label={t("next")}
               onClick={() => shiftCursor(1)}
             >
-              <ChevronRight className="size-4 rtl:rotate-180" />
+              <Icon icon={ChevronRight} className="size-4" />
             </button>
           </div>
 

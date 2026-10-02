@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Icon } from "@/components/ui/Icon";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
@@ -86,7 +87,7 @@ export function GuideDetail({
   return (
     <>
       <Button href={basePath} variant="glass" size="sm" className="mb-5 w-fit">
-        <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
+        <Icon icon={ArrowLeft} className="size-4" aria-hidden />
         {td("back")}
       </Button>
       <ListingGallery

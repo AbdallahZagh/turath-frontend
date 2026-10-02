@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { Icon } from "@/components/ui/Icon";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { StarRating } from "@/components/ui/StarRating";
 import { PAGE_TITLE_CLASS } from "@/components/ui/pageTitle";
@@ -50,7 +51,7 @@ export function RestaurantDetail({ restaurantId, basePath = "/restaurants" }: { 
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`;
   return (
     <>
-      <Button href={basePath} variant="glass" size="sm" className="mb-5 w-fit"><ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />{td("back")}</Button>
+      <Button href={basePath} variant="glass" size="sm" className="mb-5 w-fit"><Icon icon={ArrowLeft} className="size-4" aria-hidden />{td("back")}</Button>
       <ListingGallery images={restaurant.gallery} imageAlt={td("galleryImage", { restaurant: name })} openImageLabel={(number) => td("openImage", { number })} />
       <div className="mt-7 grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="space-y-7">

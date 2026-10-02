@@ -25,8 +25,10 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { KpiCard } from "@/components/ui/KpiCard";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderDashboard } from "@/hooks/useProviderDashboard";
@@ -41,6 +43,7 @@ import { isolateName, localizedName } from "@/lib/i18n/localized";
 import { getProviderBusiness } from "@/lib/mock/providerBusinesses";
 import type { ProviderCategory } from "@/lib/validation/auth";
 import { useAuthStore } from "@/store/authStore";
+import { useCurrencyStore } from "@/store/currencyStore";
 
 const CATEGORY_METRIC_ICON: Record<ProviderCategory, LucideIcon> = {
   hotels: BedDouble,
@@ -49,32 +52,6 @@ const CATEGORY_METRIC_ICON: Record<ProviderCategory, LucideIcon> = {
   events: TicketCheck,
   guides: Languages,
 };
-
-type MetricCardProps = {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-  hint: string;
-};
-
-function MetricCard({ icon: Icon, label, value, hint }: MetricCardProps): ReactNode {
-  return (
-    <GlassPanel className="flex min-w-0 flex-col gap-3 p-5">
-      <div className="flex items-center gap-2">
-        <span className="bg-option-hover text-accent grid size-8 place-items-center rounded-full">
-          <Icon className="size-4" aria-hidden />
-        </span>
-        <p className="text-prose-muted text-xs font-semibold uppercase tracking-wide">
-          {label}
-        </p>
-      </div>
-      <p className="font-heading text-prose wrap-break-word text-xl font-semibold tracking-tight sm:text-2xl">
-        {value}
-      </p>
-      <p className="text-prose-muted text-xs leading-relaxed">{hint}</p>
-    </GlassPanel>
-  );
-}
 
 function DashboardSkeleton(): ReactNode {
   return (
@@ -98,6 +75,7 @@ export function ProviderDashboard(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
+  const currency = useCurrencyStore((state) => state.currency);
   const role = useAuthStore((state) => state.user.role);
   const category = useProviderCategory();
   const business = getProviderBusiness(category);
@@ -161,37 +139,44 @@ export function ProviderDashboard(): ReactNode {
       </div>
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
-        <MetricCard
+        <KpiCard
           icon={Wallet}
           label={t("metrics.revenue")}
-          value={formatMoney(data.kpis.collectedRevenueSyp)}
+          value={
+            <StackedMoney
+              amountSyp={data.kpis.collectedRevenueSyp}
+              locale={locale}
+              displayCurrency={currency}
+              variant="kpi"
+            />
+          }
           hint={t("metrics.revenueHint")}
         />
-        <MetricCard
+        <KpiCard
           icon={UsersRound}
           label={t("metrics.upcoming")}
           value={formatCount(data.kpis.upcomingGuests, locale)}
           hint={t("metrics.upcomingHint")}
         />
-        <MetricCard
+        <KpiCard
           icon={CATEGORY_METRIC_ICON[category]}
           label={t(`categoryMetrics.${category}.label`)}
           value={formatPercent(data.kpis.occupancyRate, locale, 0)}
           hint={t(`categoryMetrics.${category}.hint`)}
         />
-        <MetricCard
+        <KpiCard
           icon={UserRoundCheck}
           label={t("metrics.checkIns")}
           value={formatCount(data.kpis.checkInsToday, locale)}
           hint={t("metrics.checkInsHint")}
         />
-        <MetricCard
+        <KpiCard
           icon={XCircle}
           label={t("metrics.cancellations")}
           value={formatCount(data.kpis.cancellations, locale)}
           hint={periodHint}
         />
-        <MetricCard
+        <KpiCard
           icon={UserRoundX}
           label={t("metrics.noShows")}
           value={formatCount(data.kpis.noShows, locale)}

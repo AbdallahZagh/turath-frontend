@@ -4,9 +4,10 @@ import type { ReactNode } from "react";
 import { useLocale } from "next-intl";
 import { CircleCheck, Scale, Wallet } from "lucide-react";
 
-import { KpiCard } from "@/components/admin/OverviewPrimitives";
 import { creditBarClass, creditUsedClass } from "@/components/admin/ledgerStanding";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { KpiCard } from "@/components/ui/KpiCard";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
@@ -31,17 +32,17 @@ export function AdminLedgerBalance({ ledger }: AdminLedgerBalanceProps): ReactNo
         <KpiCard
           icon={Scale}
           label={t("columns.outstanding")}
-          value={formatSyp(outstanding, loc)}
+          value={<StackedMoney amountSyp={outstanding} locale={loc} variant="kpi" />}
         />
         <KpiCard
           icon={Wallet}
           label={t("columns.accrued")}
-          value={formatSyp(ledger.accruedSyp, loc)}
+          value={<StackedMoney amountSyp={ledger.accruedSyp} locale={loc} variant="kpi" />}
         />
         <KpiCard
           icon={CircleCheck}
           label={t("detail.paid")}
-          value={formatSyp(ledger.paidSyp, loc)}
+          value={<StackedMoney amountSyp={ledger.paidSyp} locale={loc} variant="kpi" />}
         />
       </div>
       <GlassPanel className="flex-none gap-4 p-5 sm:p-6">

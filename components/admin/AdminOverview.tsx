@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import { useLocale } from "next-intl";
 
+import { KpiCard } from "@/components/ui/KpiCard";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { ADMIN_PATHS } from "@/config/adminRoutes";
-import { BarList, ChartCard, KpiCard } from "@/components/admin/OverviewPrimitives";
+import { BarList, ChartCard } from "@/components/admin/OverviewPrimitives";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SegmentSwitch } from "@/components/ui/SegmentSwitch";
@@ -147,7 +149,7 @@ export function AdminOverview(): ReactNode {
         <KpiCard
           icon={Wallet}
           label={t("grossBookings")}
-          value={formatSyp(data.kpis.grossBookingsSyp, loc)}
+          value={<StackedMoney amountSyp={data.kpis.grossBookingsSyp} locale={loc} variant="kpi" />}
           hint={periodHint}
           href={ADMIN_PATHS.bookings}
         />
@@ -168,7 +170,7 @@ export function AdminOverview(): ReactNode {
         <KpiCard
           icon={Percent}
           label={t("commissionRevenue")}
-          value={formatSyp(data.kpis.commissionRevenueSyp, loc)}
+          value={<StackedMoney amountSyp={data.kpis.commissionRevenueSyp} locale={loc} variant="kpi" />}
           hint={periodHint}
           href={ADMIN_PATHS.accounts}
         />

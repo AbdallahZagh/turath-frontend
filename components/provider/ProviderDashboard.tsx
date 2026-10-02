@@ -30,6 +30,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderDashboard } from "@/hooks/useProviderDashboard";
+import { useStayTranslations } from "@/hooks/useStayTranslations";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
@@ -91,7 +92,7 @@ function DashboardSkeleton(): ReactNode {
 }
 
 export function ProviderDashboard(): ReactNode {
-  const t = useTranslations("provider.dashboard");
+  const t = useStayTranslations("provider.dashboard");
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";

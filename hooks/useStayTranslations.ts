@@ -23,6 +23,7 @@ export function useProviderStay(): ProviderStay {
 type StayNamespace =
   | "provider.bookings"
   | "provider.checkIn"
+  | "provider.dashboard"
   | "provider.profile"
   | "provider.reviews";
 
@@ -45,6 +46,9 @@ export function useStayTranslations(
 export function useStayTranslations(
   namespace: "provider.checkIn",
 ): StayTranslator<"provider.checkIn">;
+export function useStayTranslations(
+  namespace: "provider.dashboard",
+): StayTranslator<"provider.dashboard">;
 export function useStayTranslations(
   namespace: "provider.profile",
 ): StayTranslator<"provider.profile">;

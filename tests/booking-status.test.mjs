@@ -98,6 +98,7 @@ test("every stay message in the business namespaces formats for both stays in bo
   const namespaces = [
     "provider.bookings",
     "provider.checkIn",
+    "provider.dashboard",
     "provider.profile",
     "provider.reviews",
   ];
@@ -128,4 +129,13 @@ test("business reviews say النزلاء for hotels only", () => {
   assert.equal(t("list.title", { stay: "other" }), "آراء الضيوف");
   assert.match(t("summary.count", { stay: "hotel", count: 3 }), /النزلاء/);
   assert.doesNotMatch(t("summary.count", { stay: "other", count: 3 }), /نزل/);
+});
+
+test("hotel arrivals count نزلاء with Arabic singular, dual and plural", () => {
+  const t = translator("ar", "provider.dashboard");
+  assert.equal(t("arrivals.party", { stay: "hotel", count: 1 }), "نزيل واحد");
+  assert.equal(t("arrivals.party", { stay: "hotel", count: 2 }), "نزيلان");
+  assert.equal(t("arrivals.party", { stay: "hotel", count: 3 }), "3 نزلاء");
+  assert.equal(t("arrivals.party", { stay: "other", count: 2 }), "ضيفان");
+  assert.match(t("arrivals.description", { stay: "hotel" }), /^النزلاء/);
 });

@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
-import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -31,6 +30,7 @@ const ALL_STATUSES = "all";
 export function ProviderBookingsScreen(): ReactNode {
   const t = useStayTranslations("provider.bookings");
   const tUi = useTranslations("ui");
+  const tStatus = useTranslations("bookings.voucher.status");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
@@ -105,7 +105,7 @@ export function ProviderBookingsScreen(): ReactNode {
       id: "status",
       header: t("columns.status"),
       cell: (booking) => (
-        <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+        <BookingStatusBadge status={booking.status} />
       ),
     },
   ];
@@ -151,7 +151,7 @@ export function ProviderBookingsScreen(): ReactNode {
             onChange={setStatus}
             options={[
               { value: ALL_STATUSES, label: t("filters.allStatuses") },
-              ...TOURIST_BOOKING_STATUSES.map((value) => ({ value, label: t(`status.${value}`) })),
+              ...TOURIST_BOOKING_STATUSES.map((value) => ({ value, label: tStatus(value) })),
             ]}
           />
         </div>
@@ -190,7 +190,7 @@ export function ProviderBookingsScreen(): ReactNode {
               <GlassPanel className="flex-none gap-2 p-4">
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-prose font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
-                  <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+                  <BookingStatusBadge status={booking.status} />
                 </div>
                 <p className="text-prose-muted flex items-center gap-1.5 text-xs">
                   <Phone className="size-3.5" aria-hidden />

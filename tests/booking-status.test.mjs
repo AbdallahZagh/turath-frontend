@@ -3,8 +3,8 @@ import test from "node:test";
 
 import { createTranslator } from "next-intl";
 
-import { bookingStatusBadgeProps } from "../components/admin/bookingStatus.ts";
-import { bookingStatusBadge } from "../components/bookings/bookingStatusBadge.ts";
+import { toBookingStatus } from "../components/admin/bookingStatus.ts";
+import { BOOKING_STATUS_STYLES } from "../components/bookings/BookingStatusBadge.tsx";
 import { BOOKING_STATUSES } from "../lib/mock/adminBookings.ts";
 import { TOURIST_BOOKING_STATUSES, VISITED_BOOKING_STATUS } from "../lib/mock/bookings.ts";
 import { verifyProviderDeskCode } from "../lib/mock/providerCheckIn.ts";
@@ -31,7 +31,7 @@ test("the booking status list includes the SRS additions COMPLETED and DISPUTED"
 
 test("every booking status has a label in both locales, in the user and business portals", () => {
   for (const locale of ["en", "ar"]) {
-    for (const namespace of ["bookings.voucher.status", "provider.bookings.status"]) {
+    for (const namespace of ["bookings.voucher.status"]) {
       const t = translator(locale, namespace);
       for (const status of TOURIST_BOOKING_STATUSES) {
         const label = t(status);
@@ -43,24 +43,27 @@ test("every booking status has a label in both locales, in the user and business
       assert.ok(tAdmin(status) !== `admin.bookings.status.${status}`, `${locale} admin ${status}`);
     }
   }
-  assert.equal(translator("en", "provider.bookings.status")("COMPLETED"), "Completed");
-  assert.equal(translator("en", "provider.bookings.status")("DISPUTED"), "Disputed");
-  assert.equal(translator("ar", "provider.bookings.status")("COMPLETED"), "مكتمل");
-  assert.equal(translator("ar", "provider.bookings.status")("DISPUTED"), "متنازع عليه");
+  assert.equal(translator("en", "bookings.voucher.status")("COMPLETED"), "Completed");
+  assert.equal(translator("en", "bookings.voucher.status")("DISPUTED"), "Disputed");
+  assert.equal(translator("ar", "bookings.voucher.status")("COMPLETED"), "مكتمل");
+  assert.equal(translator("ar", "bookings.voucher.status")("DISPUTED"), "متنازع عليه");
 });
 
-test("every status has an explicit badge, and admin rows share the same palette", () => {
+test("every status has one badge style, shared by admin rows; Pending and Confirmed differ", () => {
   for (const status of TOURIST_BOOKING_STATUSES) {
-    assert.ok(bookingStatusBadge(status)?.variant, status);
+    assert.ok(BOOKING_STATUS_STYLES[status]?.variant, status);
     assert.equal(typeof VISITED_BOOKING_STATUS[status], "boolean", status);
   }
-  assert.deepEqual(bookingStatusBadge("COMPLETED"), bookingStatusBadge("CHECKED_IN"));
-  assert.equal(bookingStatusBadge("DISPUTED").variant, "warning");
-  assert.deepEqual(bookingStatusBadgeProps("completed"), bookingStatusBadge("COMPLETED"));
-  assert.deepEqual(bookingStatusBadgeProps("disputed"), bookingStatusBadge("DISPUTED"));
+  assert.notDeepEqual(BOOKING_STATUS_STYLES.PENDING_CONFIRMATION, BOOKING_STATUS_STYLES.CONFIRMED);
+  assert.notEqual(
+    BOOKING_STATUS_STYLES.PENDING_CONFIRMATION.variant,
+    BOOKING_STATUS_STYLES.CONFIRMED.variant,
+  );
+  assert.equal(BOOKING_STATUS_STYLES.DISPUTED.variant, "warning");
   for (const status of BOOKING_STATUSES) {
-    assert.ok(bookingStatusBadgeProps(status)?.variant, status);
+    assert.ok(TOURIST_BOOKING_STATUSES.includes(toBookingStatus(status)), status);
   }
+  assert.equal(new Set(BOOKING_STATUSES.map(toBookingStatus)).size, BOOKING_STATUSES.length);
 });
 
 test("completed bookings count as visits; disputed ones do not", () => {

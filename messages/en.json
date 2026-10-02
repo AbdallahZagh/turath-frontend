@@ -3146,7 +3146,6 @@
     "bookings": {
       "filters": { "date": "{stay, select, hotel {Check-in date} other {Booking date}}", "status": "Booking status", "allStatuses": "All statuses", "clear": "Clear filters" },
       "columns": { "guest": "Guest", "arrival": "{stay, select, hotel {Check-in} other {Schedule}}", "party": "Party size", "notes": "Notes", "amount": "Cash due", "status": "Status" },
-      "status": { "PENDING_CONFIRMATION": "Pending confirmation", "CONFIRMED": "Confirmed", "CHECKED_IN": "Checked in", "COMPLETED": "Completed", "CANCELLED": "Cancelled", "NO_SHOW": "No-show", "DISPUTED": "Disputed" },
       "party": "{count, plural, one {# guest} other {# guests}}",
       "caption": "Business bookings",
       "results": "{count, plural, one {# booking shown} other {# bookings shown}}",
@@ -3301,11 +3300,7 @@
         "emptyAction": "Open bookings",
         "title": "Today's arrivals",
         "description": "Confirmed guests and bookings pending confirmation.",
-        "party": "{count, plural, one {# guest} other {# guests}}",
-        "status": {
-          "CONFIRMED": "Confirmed",
-          "PENDING_CONFIRMATION": "Pending confirmation"
-        }
+        "party": "{count, plural, one {# guest} other {# guests}}"
       },
       "recent": {
         "title": "Recent check-ins",

@@ -6,8 +6,8 @@ import { useLocale } from "next-intl";
 import { AdminBookingDetail } from "@/components/admin/AdminBookingDetail";
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { bookingStatusBadgeProps } from "@/components/admin/bookingStatus";
-import { Badge } from "@/components/ui/Badge";
+import { toBookingStatus } from "@/components/admin/bookingStatus";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { Drawer } from "@/components/ui/Drawer";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { usePagination } from "@/hooks/usePagination";
@@ -98,11 +98,7 @@ export function AdminUserBookings({ bookings }: AdminUserBookingsProps): ReactNo
     {
       id: "status",
       header: tBookings("columns.status"),
-      cell: (booking) => (
-        <Badge {...bookingStatusBadgeProps(booking.status)}>
-          {tBookings(`status.${booking.status}`)}
-        </Badge>
-      ),
+      cell: (booking) => <BookingStatusBadge status={toBookingStatus(booking.status)} />,
     },
     {
       id: "code",

@@ -26,7 +26,8 @@ import {
 } from "lucide-react";
 
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { bookingStatusBadgeProps } from "@/components/admin/bookingStatus";
+import { toBookingStatus } from "@/components/admin/bookingStatus";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -112,9 +113,7 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
     <div className="flex flex-col gap-4">
       <GlassPanel className="flex flex-col gap-4 p-5">
         <div className="flex items-center justify-between gap-2">
-          <Badge {...bookingStatusBadgeProps(currentStatus)}>
-            {t(`status.${currentStatus}`)}
-          </Badge>
+          <BookingStatusBadge status={toBookingStatus(currentStatus)} />
           <Badge variant="glass" icon={<PillarIcon className="size-3.5" aria-hidden />}>
             {tPillars(booking.category)}
           </Badge>

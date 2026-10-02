@@ -16,7 +16,7 @@ import {
 import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
-import { Badge } from "@/components/ui/Badge";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { Button } from "@/components/ui/Button";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -70,7 +70,6 @@ function DashboardSkeleton(): ReactNode {
 
 export function UserDashboard(): ReactNode {
   const t = useTranslations("account.dashboard");
-  const tStatus = useTranslations("bookings.voucher.status");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
@@ -135,7 +134,7 @@ export function UserDashboard(): ReactNode {
           <div className="bg-glass-control border-border rounded-2xl border p-5 sm:p-6">
             <div className="flex items-center justify-between gap-3">
               <p className="text-prose-muted text-xs font-bold uppercase tracking-wide">{t("next.title")}</p>
-              {nextBooking ? <Badge variant="glass" className="text-primary">{tStatus(nextBooking.status)}</Badge> : null}
+              {nextBooking ? <BookingStatusBadge status={nextBooking.status} /> : null}
             </div>
             <span className="bg-primary/12 text-primary mt-5 grid size-11 place-items-center rounded-2xl">
               <BookingTypeIcon type={nextBooking?.type ?? null} />

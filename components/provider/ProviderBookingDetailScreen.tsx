@@ -21,7 +21,7 @@ import dynamic from "next/dynamic";
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
-import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -128,7 +128,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
           {t("detail.back")}
         </Button>
         <div className="flex items-center gap-2">
-          <Badge {...bookingStatusBadge(booking.status)}>{t(`status.${booking.status}`)}</Badge>
+          <BookingStatusBadge status={booking.status} />
           <Badge variant="outline">{booking.reference}</Badge>
         </div>
       </div>

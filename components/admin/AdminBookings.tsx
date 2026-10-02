@@ -7,8 +7,8 @@ import { CalendarCheck, Download } from "lucide-react";
 import { AdminBookingDetail } from "@/components/admin/AdminBookingDetail";
 import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
 import { AdminNamedRating } from "@/components/admin/AdminNamedRating";
-import { bookingStatusBadgeProps } from "@/components/admin/bookingStatus";
-import { Badge } from "@/components/ui/Badge";
+import { toBookingStatus } from "@/components/admin/bookingStatus";
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { Button } from "@/components/ui/Button";
 import { Drawer } from "@/components/ui/Drawer";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -135,9 +135,7 @@ export function AdminBookings(): ReactNode {
       id: "status",
       header: t("columns.status"),
       cell: (booking) => (
-        <Badge {...bookingStatusBadgeProps(booking.status)}>
-          {t(`status.${booking.status}`)}
-        </Badge>
+        <BookingStatusBadge status={toBookingStatus(booking.status)} />
       ),
     },
     {

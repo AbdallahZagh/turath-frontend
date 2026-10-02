@@ -3055,7 +3055,6 @@
     "bookings": {
       "filters": { "date": "{stay, select, hotel {تاريخ الوصول} other {تاريخ الحجز}}", "status": "حالة الحجز", "allStatuses": "كل الحالات", "clear": "مسح عوامل التصفية" },
       "columns": { "guest": "{stay, select, hotel {النزيل} other {الضيف}}", "arrival": "{stay, select, hotel {الوصول} other {الموعد}}", "party": "{stay, select, hotel {عدد النزلاء} other {عدد الضيوف}}", "notes": "الملاحظات", "amount": "النقد المستحق", "status": "الحالة" },
-      "status": { "PENDING_CONFIRMATION": "بانتظار التأكيد", "CONFIRMED": "مؤكد", "CHECKED_IN": "تم تسجيل الوصول", "COMPLETED": "مكتمل", "CANCELLED": "ملغى", "NO_SHOW": "عدم حضور", "DISPUTED": "متنازع عليه" },
       "party": "{stay, select, hotel {{count, plural, one {نزيل واحد} two {نزيلان} few {# نزلاء} many {# نزيلاً} other {# نزيل}}} other {{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}}}",
       "caption": "حجوزات المنشأة",
       "results": "{count, plural, one {حجز واحد ظاهر} two {حجزان ظاهران} few {# حجوزات ظاهرة} many {# حجزاً ظاهراً} other {# حجز ظاهر}}",
@@ -3210,11 +3209,7 @@
         "emptyAction": "فتح الحجوزات",
         "title": "وصول اليوم",
         "description": "{stay, select, hotel {النزلاء المؤكدون والحجوزات بانتظار التأكيد.} other {الضيوف المؤكدون والحجوزات بانتظار التأكيد.}}",
-        "party": "{stay, select, hotel {{count, plural, one {نزيل واحد} two {نزيلان} few {# نزلاء} many {# نزيلاً} other {# نزيل}}} other {{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}}}",
-        "status": {
-          "CONFIRMED": "مؤكد",
-          "PENDING_CONFIRMATION": "بانتظار التأكيد"
-        }
+        "party": "{stay, select, hotel {{count, plural, one {نزيل واحد} two {نزيلان} few {# نزلاء} many {# نزيلاً} other {# نزيل}}} other {{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}}}"
       },
       "recent": {
         "title": "آخر عمليات الوصول",

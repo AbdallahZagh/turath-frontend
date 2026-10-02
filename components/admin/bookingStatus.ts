@@ -1,7 +1,3 @@
-import {
-  bookingStatusBadge,
-  type BookingStatusBadgeProps,
-} from "@/components/bookings/bookingStatusBadge";
 import type { BookingStatus } from "@/lib/mock/adminBookings";
 import type { TouristBookingStatus } from "@/lib/mock/bookings";
 
@@ -16,6 +12,6 @@ const ADMIN_TO_BOOKING_STATUS: Record<BookingStatus, TouristBookingStatus> = {
   disputed: "DISPUTED",
 };
 
-export function bookingStatusBadgeProps(status: BookingStatus): BookingStatusBadgeProps {
-  return bookingStatusBadge(ADMIN_TO_BOOKING_STATUS[status]);
+export function toBookingStatus(status: BookingStatus): TouristBookingStatus {
+  return ADMIN_TO_BOOKING_STATUS[status];
 }

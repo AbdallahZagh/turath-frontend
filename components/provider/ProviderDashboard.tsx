@@ -19,8 +19,8 @@ import {
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
+import { BookingStatusBadge } from "@/components/bookings/BookingStatusBadge";
 import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -333,13 +333,7 @@ export function ProviderDashboard(): ReactNode {
                     <p className="text-prose truncate text-sm font-semibold">
                       <bdi>{localizedName(arrival.guestName, locale)}</bdi>
                     </p>
-                    <Badge
-                      variant={
-                        arrival.status === "CONFIRMED" ? "solid" : "outline"
-                      }
-                    >
-                      {t(`arrivals.status.${arrival.status}`)}
-                    </Badge>
+                    <BookingStatusBadge status={arrival.status} />
                   </div>
                   <p className="text-prose-muted mt-1 text-xs">
                     {arrival.id} · {t("arrivals.party", { count: arrival.partySize })}

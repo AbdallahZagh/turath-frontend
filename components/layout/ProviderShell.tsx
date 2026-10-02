@@ -7,7 +7,9 @@ import { HeaderProfileMenu } from "@/components/layout/HeaderProfileMenu";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { ProviderGlobalSearch } from "@/components/layout/ProviderGlobalSearch";
 import { ProviderSidebar } from "@/components/layout/ProviderSidebar";
+import { ProviderCategoryProvider } from "@/components/provider/ProviderCategoryContext";
 import { Button } from "@/components/ui/Button";
+import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Select, type SelectOption } from "@/components/ui/Select";
@@ -15,10 +17,12 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { PROVIDER_PATHS } from "@/config/providerRoutes";
 import { useCurrentPath } from "@/hooks/useCurrentPath";
 import { useIsClient } from "@/hooks/useIsClient";
-import { useProviderStay } from "@/hooks/useStayTranslations";
+import { useSignedInProviderProfile } from "@/hooks/useProviderProfile";
+import { stayForCategory } from "@/hooks/useStayTranslations";
 import { useTranslations } from "@/i18n/translations";
 import { withReturnTo } from "@/lib/auth/returnTo";
 import { useAuthStore } from "@/store/authStore";
+import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 type ProviderShellProps = {
   children: ReactNode;
@@ -28,7 +32,9 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
   const t = useTranslations("provider");
   const mounted = useIsClient();
   const currentPath = useCurrentPath();
-  const stay = useProviderStay();
+  const tUi = useTranslations("ui");
+  const businessQuery = useSignedInProviderProfile();
+  const preview = useProviderPreviewStore((state) => state.preview);
   const [mobileOpen, setMobileOpen] = useState(false);
   const user = useAuthStore((state) => state.user);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -84,75 +90,101 @@ export function ProviderShell({ children }: ProviderShellProps): ReactNode {
     );
   }
 
+  if (businessQuery.isPending) {
+    return (
+      <div className="p-6">
+        <Skeleton className="h-[calc(100svh-3rem)]" />
+      </div>
+    );
+  }
+
+  if (businessQuery.isError) {
+    return (
+      <div className="grid min-h-svh place-items-center p-4">
+        <ErrorState
+          title={tUi("errorTitle")}
+          description={tUi("errorDescription")}
+          retryLabel={tUi("retry")}
+          onRetry={() => void businessQuery.refetch()}
+        />
+      </div>
+    );
+  }
+
+  const category = preview ?? businessQuery.data.category;
+  const stay = stayForCategory(category);
+
   const roleOptions: SelectOption[] = [
     { value: "PROVIDER_OWNER", label: t("roles.owner") },
     { value: "PROVIDER_STAFF", label: t("roles.staff") },
   ];
 
   return (
-    <div className="app-canvas flex h-svh overflow-hidden p-1.5 max-lg:p-0">
-      <ProviderSidebar
-        mobileOpen={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-      />
+    <ProviderCategoryProvider category={category}>
+      <div className="app-canvas flex h-svh overflow-hidden p-1.5 max-lg:p-0">
+        <ProviderSidebar
+          mobileOpen={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+        />
 
-      <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
-        <header className="glass-surface absolute start-2 end-2 top-2 z-30 flex items-center justify-between gap-3 rounded-xl px-3 py-2 backdrop-blur-sm sm:start-4 sm:end-4 sm:top-3 sm:px-4">
-          <div className="flex min-w-0 flex-1 items-center gap-2">
-            <button
-              type="button"
-              className="text-prose-muted hover:bg-option-hover grid size-10 place-items-center rounded-full lg:hidden"
-              aria-label={t("shell.openMenu")}
-              onClick={() => setMobileOpen(true)}
-            >
-              <Menu className="size-5" aria-hidden />
-            </button>
-            <ProviderGlobalSearch />
-          </div>
+        <div className="relative flex min-h-0 min-w-0 flex-1 flex-col">
+          <header className="glass-surface absolute start-2 end-2 top-2 z-30 flex items-center justify-between gap-3 rounded-xl px-3 py-2 backdrop-blur-sm sm:start-4 sm:end-4 sm:top-3 sm:px-4">
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <button
+                type="button"
+                className="text-prose-muted hover:bg-option-hover grid size-10 place-items-center rounded-full lg:hidden"
+                aria-label={t("shell.openMenu")}
+                onClick={() => setMobileOpen(true)}
+              >
+                <Menu className="size-5" aria-hidden />
+              </button>
+              <ProviderGlobalSearch />
+            </div>
 
-          <div className="flex min-w-0 items-center gap-2">
-            <NotificationBell audience="provider" href={PROVIDER_PATHS.notifications} />
-            {process.env.NODE_ENV === "development" ? (
-              <Select
-                compact
-                size="sm"
-                variant="plain"
-                className="hidden sm:block"
-                options={roleOptions}
-                value={user.role}
-                onChange={(value) => {
-                  if (value === "PROVIDER_OWNER" || value === "PROVIDER_STAFF") {
-                    setRole(value);
-                  }
-                }}
-                label={t("roles.label")}
+            <div className="flex min-w-0 items-center gap-2">
+              <NotificationBell audience="provider" href={PROVIDER_PATHS.notifications} />
+              {process.env.NODE_ENV === "development" ? (
+                <Select
+                  compact
+                  size="sm"
+                  variant="plain"
+                  className="hidden sm:block"
+                  options={roleOptions}
+                  value={user.role}
+                  onChange={(value) => {
+                    if (value === "PROVIDER_OWNER" || value === "PROVIDER_STAFF") {
+                      setRole(value);
+                    }
+                  }}
+                  label={t("roles.label")}
+                />
+              ) : null}
+              <HeaderProfileMenu
+                name={user.name}
+                email={user.email}
+                openLabel={t("shell.profileMenu.open")}
+                signOutLabel={t("nav.signOut")}
+                signOutHref="/login"
+                items={[
+                  { href: PROVIDER_PATHS.myProfile, label: t("shell.profileMenu.myProfile"), icon: UserRound },
+                  ...(user.role === "PROVIDER_OWNER"
+                    ? [{ href: PROVIDER_PATHS.profile, label: t("shell.profileMenu.businessProfile"), icon: Building2 }]
+                    : []),
+                ]}
+                showThemeToggle
+                onSignOut={signOut}
               />
-            ) : null}
-            <HeaderProfileMenu
-              name={user.name}
-              email={user.email}
-              openLabel={t("shell.profileMenu.open")}
-              signOutLabel={t("nav.signOut")}
-              signOutHref="/login"
-              items={[
-                { href: PROVIDER_PATHS.myProfile, label: t("shell.profileMenu.myProfile"), icon: UserRound },
-                ...(user.role === "PROVIDER_OWNER"
-                  ? [{ href: PROVIDER_PATHS.profile, label: t("shell.profileMenu.businessProfile"), icon: Building2 }]
-                  : []),
-              ]}
-              showThemeToggle
-              onSignOut={signOut}
-            />
-          </div>
-        </header>
+            </div>
+          </header>
 
-        <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-8 lg:pe-8">
-          <div className="mx-auto w-full max-w-[98rem]">
-            <PageHeader values={{ stay }} />
-            {children}
-          </div>
-        </main>
+          <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-20 sm:px-6 sm:pt-22 lg:ps-8 lg:pe-8">
+            <div className="mx-auto w-full max-w-[98rem]">
+              <PageHeader values={{ stay }} />
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </ProviderCategoryProvider>
   );
 }

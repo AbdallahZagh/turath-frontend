@@ -4,6 +4,7 @@ import { Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import {
   ProviderInventoryModal,
   type ProviderInventoryEditor,
@@ -35,7 +36,6 @@ import {
 } from "@/lib/mock/providerInventory";
 import { useAuthStore } from "@/store/authStore";
 import { PROVIDER_CATEGORY_TO_INVENTORY, getProviderBusiness } from "@/lib/mock/providerBusinesses";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
 
 type DeleteTarget = DeleteProviderInventoryInput & { name: string };
@@ -76,7 +76,7 @@ export function ProviderInventoryScreen(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const canEdit = useAuthStore((state) => state.user.role === "PROVIDER_OWNER");
-  const providerCategory = useProviderPreviewStore((state) => state.category);
+  const providerCategory = useProviderCategory();
   const category: ProviderInventoryCategory = PROVIDER_CATEGORY_TO_INVENTORY[providerCategory];
   const business = getProviderBusiness(providerCategory);
   const BusinessIcon = business.icon;

@@ -3,6 +3,7 @@
 import { Inbox, ShieldLock } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { ProviderProfileEditor } from "@/components/provider/ProviderProfileEditor";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -10,13 +11,12 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { useProviderProfile } from "@/hooks/useProviderProfile";
 import { useTranslations } from "@/i18n/translations";
 import { useAuthStore } from "@/store/authStore";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 export function ProviderProfileScreen(): ReactNode {
   const t = useTranslations("provider.profile");
   const tUi = useTranslations("ui");
   const role = useAuthStore((state) => state.user.role);
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const query = useProviderProfile(category);
 
   if (role !== "PROVIDER_OWNER") {

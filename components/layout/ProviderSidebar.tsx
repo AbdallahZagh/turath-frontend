@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Logo } from "@/components/logo/Logo";
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Select } from "@/components/ui/Select";
 import { PROVIDER_NAV } from "@/config/nav";
@@ -37,8 +38,8 @@ export function ProviderSidebar({
   const locale = useLocale();
   const pathname = usePathname();
   const role = useAuthStore((state) => state.user.role);
-  const category = useProviderPreviewStore((state) => state.category);
-  const setCategory = useProviderPreviewStore((state) => state.setCategory);
+  const category = useProviderCategory();
+  const setPreview = useProviderPreviewStore((state) => state.setPreview);
   const profileQuery = useProviderProfile(category);
   const items = PROVIDER_NAV.filter((item) => item.roles.includes(role));
   const profile = profileQuery.data;
@@ -157,7 +158,7 @@ export function ProviderSidebar({
                   }))}
                   onChange={(value) => {
                     const next = PROVIDER_BUSINESSES.find((item) => item.category === value);
-                    if (next) setCategory(next.category);
+                    if (next) setPreview(next.category);
                   }}
                 />
               </div>

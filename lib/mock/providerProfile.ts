@@ -188,7 +188,14 @@ function cloneProfile(value: ProviderProfile): ProviderProfile {
   };
 }
 
+/**
+ * The business the signed-in owner and staff belong to. The demo accounts run Dar Al Yasmin;
+ * registering a business makes it that business.
+ */
+let signedInCategory: ProviderCategory = "hotels";
+
 export function setMockProviderSignupProfile(values: ProviderSignupSnapshot): void {
+  signedInCategory = values.category;
   const current = profiles[values.category];
   profiles[values.category] = {
     ...current,
@@ -220,6 +227,10 @@ export function setMockProviderSignupProfile(values: ProviderSignupSnapshot): vo
 
 export function getProviderProfile(category: ProviderCategory = "hotels"): ProviderProfile {
   return cloneProfile(profiles[category]);
+}
+
+export function getSignedInProviderProfile(): ProviderProfile {
+  return cloneProfile(profiles[signedInCategory]);
 }
 
 export function updateProviderProfile(

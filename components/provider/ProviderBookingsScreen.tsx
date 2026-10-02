@@ -6,6 +6,7 @@ import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -25,7 +26,6 @@ import { formatMediumDate } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { TOURIST_BOOKING_STATUSES } from "@/lib/mock/bookings";
 import type { ProviderBooking } from "@/lib/mock/providerBookings";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const ALL_STATUSES = "all";
 export function ProviderBookingsScreen(): ReactNode {
@@ -34,7 +34,7 @@ export function ProviderBookingsScreen(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const query = useProviderBookings(category);
   const [date, setDate] = useState("");
   const [status, setStatus] = useState(ALL_STATUSES);

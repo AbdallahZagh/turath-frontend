@@ -19,6 +19,7 @@ import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -39,7 +40,6 @@ import {
   type ProviderCheckInValues,
 } from "@/lib/validation/providerCheckIn";
 import { useAuthStore } from "@/store/authStore";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
 
 const DEMO_CODES = {
@@ -205,7 +205,7 @@ export function ProviderCheckInScreen({ initialCode = "" }: { initialCode?: stri
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const user = useAuthStore((state) => state.user);
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const arrivals = useProviderArrivals(category);
   const verify = useVerifyProviderCheckIn(category);
   const form = useForm<ProviderCheckInValues>({

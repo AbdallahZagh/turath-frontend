@@ -4,6 +4,7 @@ import { BadgeCheck, Inbox, MessageSquareQuote, Star } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useMemo, useState, type ReactNode } from "react";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -20,7 +21,6 @@ import { formatCount, formatRating } from "@/lib/format/number";
 import { localizedName } from "@/lib/i18n/localized";
 import type { ReviewStars } from "@/lib/mock/adminReviews";
 import type { ProviderReview } from "@/lib/mock/providerReviews";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const ALL_RATINGS = "all";
 const RATINGS: ReviewStars[] = [5, 4, 3, 2, 1];
@@ -101,7 +101,7 @@ export function ProviderReviewsScreen(): ReactNode {
   const tUi = useTranslations("ui");
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const query = useProviderReviews(category);
   const [rating, setRating] = useState(ALL_RATINGS);
 

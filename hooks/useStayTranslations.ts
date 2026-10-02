@@ -1,8 +1,9 @@
 import type { TranslationValues } from "next-intl";
 import { useCallback } from "react";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { useTranslations } from "@/i18n/translations";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
+import type { ProviderCategory } from "@/lib/validation/auth";
 
 /**
  * Hotel businesses get hotel wording: نزيل in Arabic, Check-in / Check-out in English. Every
@@ -10,8 +11,13 @@ import { useProviderPreviewStore } from "@/store/providerPreviewStore";
  */
 export type ProviderStay = "hotel" | "other";
 
+export function stayForCategory(category: ProviderCategory): ProviderStay {
+  return category === "hotels" ? "hotel" : "other";
+}
+
+/** The stay of the business shown in the portal (its profile category, or an active preview). */
 export function useProviderStay(): ProviderStay {
-  return useProviderPreviewStore((state) => state.category) === "hotels" ? "hotel" : "other";
+  return stayForCategory(useProviderCategory());
 }
 
 type StayNamespace = "provider.bookings" | "provider.checkIn" | "provider.profile";

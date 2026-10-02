@@ -22,6 +22,7 @@ import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
 import { bookingStatusBadge } from "@/components/bookings/bookingStatusBadge";
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -40,7 +41,6 @@ import { useTranslations } from "@/i18n/translations";
 import { formatDateTime } from "@/lib/format/datetime";
 import { localizedName } from "@/lib/i18n/localized";
 import { useAuthStore } from "@/store/authStore";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 import { toast } from "@/store/toastStore";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
 
@@ -56,7 +56,7 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const role = useAuthStore((state) => state.user.role);
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const query = useProviderBooking(id, category);
   const updateStatus = useUpdateProviderBookingStatus();
   const [copied, setCopied] = useState(false);

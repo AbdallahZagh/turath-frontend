@@ -11,6 +11,7 @@ import type { ProviderCategory } from "@/lib/validation/auth";
 import type { ProviderProfileValues } from "@/lib/validation/providerProfile";
 import {
   getProviderProfile,
+  getSignedInProviderProfile,
   updateProviderProfile,
 } from "@/services/providerProfile";
 
@@ -20,6 +21,15 @@ export function useProviderProfile(category: ProviderCategory): UseQueryResult<P
   return useQuery({
     queryKey: providerProfileKey(category),
     queryFn: () => getProviderProfile(category),
+    staleTime: 60_000,
+  });
+}
+
+/** The signed-in business's profile, the source of truth for its category. */
+export function useSignedInProviderProfile(): UseQueryResult<ProviderProfile> {
+  return useQuery({
+    queryKey: ["provider", "profile", "signedIn"],
+    queryFn: getSignedInProviderProfile,
     staleTime: 60_000,
   });
 }

@@ -19,6 +19,7 @@ import {
 import { useLocale } from "next-intl";
 import { useState, type ReactNode } from "react";
 
+import { useProviderCategory } from "@/components/provider/ProviderCategoryContext";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -36,7 +37,6 @@ import { isolateName, localizedName } from "@/lib/i18n/localized";
 import { getProviderBusiness } from "@/lib/mock/providerBusinesses";
 import type { ProviderCategory } from "@/lib/validation/auth";
 import { useAuthStore } from "@/store/authStore";
-import { useProviderPreviewStore } from "@/store/providerPreviewStore";
 
 const CATEGORY_METRIC_ICON: Record<ProviderCategory, LucideIcon> = {
   hotels: BedDouble,
@@ -95,7 +95,7 @@ export function ProviderDashboard(): ReactNode {
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
   const role = useAuthStore((state) => state.user.role);
-  const category = useProviderPreviewStore((state) => state.category);
+  const category = useProviderCategory();
   const business = getProviderBusiness(category);
   const [periodDays, setPeriodDays] = useState(30);
   const query = useProviderDashboard(periodDays, category);

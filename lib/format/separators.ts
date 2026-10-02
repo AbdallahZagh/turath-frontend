@@ -16,3 +16,14 @@ export function partSeparator(locale: Locale): string {
 export function listSeparator(locale: Locale): string {
   return LIST_SEPARATOR[locale];
 }
+
+/**
+ * A short phrase that may wrap at its last space only ("14 تشرين الأول" / "2026"), so a date in a
+ * narrow column never splits a month name or leaves the day on its own.
+ */
+export function wrapAtLastSpaceOnly(text: string): string {
+  const last = text.lastIndexOf(" ");
+  return last < 0
+    ? text
+    : `${text.slice(0, last).replaceAll(" ", "\u00A0")} ${text.slice(last + 1)}`;
+}

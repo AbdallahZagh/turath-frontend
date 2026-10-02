@@ -15,3 +15,9 @@ test("Arabic copy has no middle dot", () => {
   const ar = readFileSync(new URL("../messages/ar.json", import.meta.url), "utf8");
   assert.equal(ar.includes("·"), false);
 });
+
+test("dates wrap only before the year", async () => {
+  const { wrapAtLastSpaceOnly } = await import("../lib/format/separators.ts");
+  assert.equal(wrapAtLastSpaceOnly("١٤ تشرين الأول ٢٠٢٦"), "١٤\u00A0تشرين\u00A0الأول ٢٠٢٦");
+  assert.equal(wrapAtLastSpaceOnly("20:00"), "20:00");
+});

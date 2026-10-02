@@ -15,6 +15,7 @@ import type { ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/cn";
+import { wrapAtLastSpaceOnly } from "@/lib/format/separators";
 
 const BookingQr = dynamic(
   () => import("qrcode.react").then((module) => module.QRCodeSVG),
@@ -185,8 +186,8 @@ export function UniversalBookingPass({
                   <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.18em]">
                     {start.label}
                   </p>
-                  <p className="font-heading text-prose mt-1.5 whitespace-nowrap text-lg font-semibold sm:text-3xl">
-                    {start.value}
+                  <p className="font-heading text-prose mt-1.5 text-lg leading-snug font-semibold sm:text-3xl">
+                    {wrapAtLastSpaceOnly(start.value)}
                   </p>
                   {start.detail ? <p className="text-prose-muted mt-1 text-xs">{start.detail}</p> : null}
                 </div>
@@ -205,8 +206,8 @@ export function UniversalBookingPass({
                   <p className="text-prose-muted text-[0.65rem] font-bold uppercase tracking-[0.18em]">
                     {end.label}
                   </p>
-                  <p className="font-heading text-prose mt-1.5 whitespace-nowrap text-lg font-semibold sm:text-3xl">
-                    {end.value}
+                  <p className="font-heading text-prose mt-1.5 text-lg leading-snug font-semibold sm:text-3xl">
+                    {wrapAtLastSpaceOnly(end.value)}
                   </p>
                   {end.detail ? <p className="text-prose-muted mt-1 text-xs">{end.detail}</p> : null}
                 </div>

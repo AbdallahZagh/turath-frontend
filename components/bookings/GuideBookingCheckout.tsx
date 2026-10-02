@@ -2,11 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  ArrowLeft,
+  CalendarDays,
   Clock3,
+  Landmark,
   Languages,
-  MapPin,
-  ShieldCheck,
   Sparkles,
   Tag,
   UserRoundSearch,
@@ -20,6 +19,11 @@ import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
 import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
+import {
+  BookingConfirmBar,
+  BookingSummaryCard,
+  CHECKOUT_GRID,
+} from "@/components/bookings/BookingSummaryCard";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -178,8 +182,14 @@ export function GuideBookingCheckout({
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }
   }
+  const confirm = {
+    label: createBooking.isPending ? t("confirming") : t("confirm"),
+    disabled: createBooking.isPending || !date || !language || !focusArea,
+    onClick: () => void form.handleSubmit(onSubmit)(),
+  };
+
   return (
-    <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
+    <div className={CHECKOUT_GRID}>
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
         <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
@@ -326,72 +336,51 @@ export function GuideBookingCheckout({
           </section>
         </form>
       </GlassPanel>
-      <GlassPanel className="p-6 lg:sticky lg:top-28">
-        <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p>
-        <h2 className="font-heading text-prose mt-2 text-2xl font-semibold">
-          <bdi>{localizedName(guide.name, loc)}</bdi>
-        </h2>
-        <p className="text-prose-muted mt-1 flex items-center gap-2 text-sm">
-          <MapPin className="size-4" aria-hidden />
-          {localizedName(guide.address, loc)}
-        </p>
-        <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between gap-3">
-            <dt className="text-prose-muted">{t("date")}</dt>
-            <dd className="text-prose font-medium">
-              {date ? formatMediumDate(date, loc) : t("notSelected")}
-            </dd>
-          </div>
-          <div className="flex justify-between gap-3">
-            <dt className="text-prose-muted">{t("duration")}</dt>
-            <dd className="text-prose font-medium">{tg(`durations.${duration}`)}</dd>
-          </div>
-          <div className="flex justify-between gap-3">
-            <dt className="text-prose-muted">{t("language")}</dt>
-            <dd className="text-prose font-medium">
-              {language ? tg(`languages.${language}`) : t("notSelected")}
-            </dd>
-          </div>
-          <div className="flex justify-between gap-3">
-            <dt className="text-prose-muted">{t("focusArea")}</dt>
-            <dd className="text-prose font-medium">
-              {focusArea ? tg(`specialties.${focusArea}`) : t("notSelected")}
-            </dd>
-          </div>
-        </dl>
-        <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-prose-muted">{t("listPrice")}</dt>
-            <dd className="text-prose font-medium">{formatMoney(listPriceSyp)}</dd>
-          </div>
-          {discountSyp ? (
-            <div className="text-primary flex justify-between">
-              <dt>{t("discount")}</dt>
-              <dd>− {formatMoney(discountSyp)}</dd>
-            </div>
-          ) : null}
-          <div className="border-border flex justify-between border-t pt-4">
-            <dt className="text-prose font-semibold">{t("cashDue")}</dt>
-            <dd className="text-prose font-semibold">{formatMoney(cashDueSyp)}</dd>
-          </div>
-        </dl>
-        <p className="text-prose-muted mt-4 flex gap-2 text-xs">
-          <ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />
-          {t("cashDueHint")}
-        </p>
-        <Button
-          type="submit"
-          className="mt-6 w-full"
-          disabled={createBooking.isPending || !date || !language || !focusArea}
-          onClick={() => void form.handleSubmit(onSubmit)()}
-        >
-          {createBooking.isPending ? t("confirming") : t("confirm")}
-        </Button>
-        <Button href={paths.listing("guides", guide.id)} variant="glass" className="mt-3 w-full">
-          <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
-          {t("backToGuide")}
-        </Button>
-      </GlassPanel>
+      <BookingSummaryCard
+        icon={Languages}
+        title={localizedName(guide.name, loc)}
+        subtitle={localizedName(guide.address, loc)}
+        rows={[
+          {
+            id: "date",
+            label: t("date"),
+            icon: CalendarDays,
+            value: date ? formatMediumDate(date, loc) : t("notSelected"),
+          },
+          {
+            id: "duration",
+            label: t("duration"),
+            icon: Clock3,
+            value: tg(`durations.${duration}`),
+          },
+          {
+            id: "language",
+            label: t("language"),
+            icon: Languages,
+            value: language ? tg(`languages.${language}`) : t("notSelected"),
+          },
+          {
+            id: "focus",
+            label: t("focusArea"),
+            icon: Landmark,
+            value: focusArea ? tg(`specialties.${focusArea}`) : t("notSelected"),
+          },
+        ]}
+        listPrice={{ label: t("listPrice"), value: formatMoney(listPriceSyp) }}
+        discount={
+          discountSyp > 0 ? { label: t("discount"), value: `− ${formatMoney(discountSyp)}` } : null
+        }
+        cashDue={{ label: t("cashDue"), value: formatMoney(cashDueSyp) }}
+        priceHint={null}
+        cashDueHint={t("cashDueHint")}
+        confirm={confirm}
+        back={{ href: paths.listing("guides", guide.id), label: t("backToGuide") }}
+      />
+      <BookingConfirmBar
+        cashDue={{ label: t("cashDue"), value: formatMoney(cashDueSyp) }}
+        priceHint={null}
+        confirm={confirm}
+      />
     </div>
   );
 }

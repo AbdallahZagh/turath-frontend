@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, CalendarDays, Clock3, Compass, MapPin, ShieldCheck, Tag, Users } from "lucide-react";
+import { CalendarDays, Clock3, Compass, MapPin, MapPinned, Tag, Users } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -11,6 +11,11 @@ import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
 import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
+import {
+  BookingConfirmBar,
+  BookingSummaryCard,
+  CHECKOUT_GRID,
+} from "@/components/bookings/BookingSummaryCard";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -91,8 +96,10 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
     } catch { toast.error(t("toastErrorTitle"), t("toastErrorBody")); }
   }
 
+  const confirm = { label: createBooking.isPending ? t("confirming") : t("confirm"), disabled: createBooking.isPending || !departure || !pickup, onClick: () => void form.handleSubmit(onSubmit)() };
+
   return (
-    <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_24rem]">
+    <div className={CHECKOUT_GRID}>
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
         <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section><h2 className="font-heading text-prose text-xl font-semibold">{t("tripDetails")}</h2><div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -112,15 +119,24 @@ export function TripBookingCheckout({ tripId, initialDate, initialSeats }: { tri
         </form>
       </GlassPanel>
 
-      <GlassPanel className="p-6 lg:sticky lg:top-28">
-        <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">{t("summary")}</p><h2 className="font-heading text-prose mt-2 text-2xl font-semibold"><bdi>{localizedName(trip.name, loc)}</bdi></h2>
-        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" aria-hidden />{t("date")}</dt><dd className="text-prose text-end font-medium">{date ? formatMediumDate(date, loc) : t("notSelected")}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" aria-hidden />{t("seats")}</dt><dd className="text-prose font-medium">{formatCount(seats, loc)}</dd></div><div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><MapPin className="size-4" aria-hidden />{t("pickup")}</dt><dd className="text-prose max-w-44 text-end font-medium">{pickup ? localizedName(pickup.name, loc) : t("notSelected")}</dd></div></dl>
-        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>{discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}<div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd></div></dl>
-        {priceReady ? null : <p className="text-prose-muted mt-3 text-xs">{t("chooseOptionForPrice")}</p>}
-        <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
-        <Button type="submit" className="mt-6 w-full" disabled={createBooking.isPending || !departure || !pickup} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>
-        <Button href={paths.listing("trips", trip.id)} variant="glass" className="mt-3 w-full"><ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />{t("backToTrip")}</Button>
-      </GlassPanel>
+      <BookingSummaryCard
+        icon={MapPinned}
+        title={localizedName(trip.name, loc)}
+        subtitle={localizedName(trip.address, loc)}
+        rows={[
+          { id: "date", label: t("date"), icon: CalendarDays, value: date ? formatMediumDate(date, loc) : t("notSelected") },
+          { id: "seats", label: t("seats"), icon: Users, value: formatCount(seats, loc) },
+          { id: "pickup", label: t("pickup"), icon: MapPin, value: pickup ? localizedName(pickup.name, loc) : t("notSelected") },
+        ]}
+        listPrice={{ label: t("listPrice"), value: price(listPriceSyp) }}
+        discount={discountSyp > 0 ? { label: t("discount"), value: `− ${formatMoney(discountSyp)}` } : null}
+        cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }}
+        priceHint={priceReady ? null : t("chooseOptionForPrice")}
+        cashDueHint={t("cashDueHint")}
+        confirm={confirm}
+        back={{ href: paths.listing("trips", trip.id), label: t("backToTrip") }}
+      />
+      <BookingConfirmBar cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }} priceHint={priceReady ? null : t("chooseOptionForPrice")} confirm={confirm} />
     </div>
   );
 }

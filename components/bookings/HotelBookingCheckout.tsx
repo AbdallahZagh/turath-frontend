@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDays, differenceInCalendarDays, parseISO } from "date-fns";
-import { BedDouble, CalendarDays, Clock3, Hotel, ShieldCheck, Tag, Users } from "lucide-react";
+import { BedDouble, CalendarDays, Clock3, Hotel, Moon, Tag, Users } from "lucide-react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
@@ -12,6 +12,11 @@ import { AuthFieldError } from "@/components/auth/AuthFieldError";
 import { BookingCouponFeedback } from "@/components/bookings/BookingCouponFeedback";
 import { BookingPolicyNote } from "@/components/bookings/BookingPolicyNote";
 import { BookingReliabilityNotice } from "@/components/bookings/BookingReliabilityNotice";
+import {
+  BookingConfirmBar,
+  BookingSummaryCard,
+  CHECKOUT_GRID,
+} from "@/components/bookings/BookingSummaryCard";
 import { Button } from "@/components/ui/Button";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -164,8 +169,10 @@ export function HotelBookingCheckout({
     }
   }
 
+  const confirm = { label: createBooking.isPending ? t("confirming") : t("confirm"), disabled: createBooking.isPending || !selectedRoom || nights < 1, onClick: () => void form.handleSubmit(onSubmit)() };
+
   return (
-    <div className="grid min-w-0 items-start gap-7 pb-24 lg:grid-cols-[minmax(0,1fr)_24rem] lg:pb-0">
+    <div className={CHECKOUT_GRID}>
       <GlassPanel className="p-6 sm:p-8 lg:p-9">
         <form className="space-y-7" noValidate onSubmit={form.handleSubmit(onSubmit)}>
           <section>
@@ -219,43 +226,25 @@ export function HotelBookingCheckout({
         </form>
       </GlassPanel>
 
-      <GlassPanel className="p-6 lg:sticky lg:top-28">
-        <div className="flex items-center gap-3"><div className="bg-primary/12 text-primary grid size-11 place-items-center rounded-xl"><Hotel className="size-5" aria-hidden /></div><div><h2 className="text-prose font-semibold"><bdi>{localizedName(hotel.name, loc)}</bdi></h2><p className="text-prose-muted text-xs">{localizedName(hotel.address, loc)}</p></div></div>
-        <dl className="border-border mt-5 space-y-3 border-y py-5 text-sm">
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><CalendarDays className="size-4" />{t("dates")}</dt><dd className="text-prose text-end font-medium">{checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected")}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><BedDouble className="size-4" />{t("room")}</dt><dd className="text-prose font-medium">{selectedRoom ? tRooms(selectedRoom.type) : t("notSelected")}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted flex items-center gap-2"><Users className="size-4" />{t("guests")}</dt><dd className="text-prose font-medium">{formatCount(guests, loc)}</dd></div>
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("nights")}</dt><dd className="text-prose font-medium">{formatCount(nights, loc)}</dd></div>
-        </dl>
-        <dl className="mt-5 space-y-3 text-sm">
-          <div className="flex justify-between gap-3"><dt className="text-prose-muted">{t("listPrice")}</dt><dd className="text-prose font-medium">{price(listPriceSyp)}</dd></div>
-          {discountSyp > 0 ? <div className="text-primary flex justify-between gap-3"><dt>{t("discount")}</dt><dd>− {formatMoney(discountSyp)}</dd></div> : null}
-          <div className="border-border flex justify-between gap-3 border-t pt-4"><dt className="text-prose font-semibold">{t("cashDue")}</dt><dd className="text-prose text-end font-semibold">{price(cashDueSyp)}</dd></div>
-        </dl>
-        {selectedRoom ? null : <p className="text-prose-muted mt-3 text-xs">{t("chooseRoomForPrice")}</p>}
-        <p className="text-prose-muted mt-4 flex gap-2 text-xs leading-relaxed"><ShieldCheck className="text-primary size-4 shrink-0" aria-hidden />{t("cashDueHint")}</p>
-        <Button type="submit" className="mt-6 hidden w-full lg:inline-flex" disabled={createBooking.isPending || !selectedRoom || nights < 1} onClick={() => void form.handleSubmit(onSubmit)()}>{createBooking.isPending ? t("confirming") : t("confirm")}</Button>
-        <Button href={paths.listing("hotels", hotel.id)} variant="glass" className="mt-3 w-full">{t("backToStay")}</Button>
-      </GlassPanel>
-
-      <div className="border-border bg-surface/95 supports-[backdrop-filter]:bg-surface/80 fixed inset-x-0 bottom-0 z-40 border-t px-4 py-3 backdrop-blur-md lg:hidden">
-        <div className="mx-auto flex max-w-[98rem] items-center gap-3">
-          <div className="min-w-0 flex-1">
-            <p className="text-prose-muted text-xs">{t("cashDue")}</p>
-            <p className="text-prose text-sm leading-tight font-semibold">{price(cashDueSyp)}</p>
-            {selectedRoom ? null : <p className="text-prose-muted text-xs">{t("chooseRoomForPrice")}</p>}
-          </div>
-          <Button
-            type="submit"
-            size="sm"
-            className="shrink-0"
-            disabled={createBooking.isPending || !selectedRoom || nights < 1}
-            onClick={() => void form.handleSubmit(onSubmit)()}
-          >
-            {createBooking.isPending ? t("confirming") : t("confirm")}
-          </Button>
-        </div>
-      </div>
+      <BookingSummaryCard
+        icon={Hotel}
+        title={localizedName(hotel.name, loc)}
+        subtitle={localizedName(hotel.address, loc)}
+        rows={[
+          { id: "dates", label: t("dates"), icon: CalendarDays, value: checkIn && checkOut ? `${formatMediumDate(checkIn, loc)} – ${formatMediumDate(checkOut, loc)}` : t("notSelected") },
+          { id: "room", label: t("room"), icon: BedDouble, value: selectedRoom ? tRooms(selectedRoom.type) : t("notSelected") },
+          { id: "guests", label: t("guests"), icon: Users, value: formatCount(guests, loc) },
+          { id: "nights", label: t("nights"), icon: Moon, value: formatCount(nights, loc) },
+        ]}
+        listPrice={{ label: t("listPrice"), value: price(listPriceSyp) }}
+        discount={discountSyp > 0 ? { label: t("discount"), value: `− ${formatMoney(discountSyp)}` } : null}
+        cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }}
+        priceHint={selectedRoom ? null : t("chooseRoomForPrice")}
+        cashDueHint={t("cashDueHint")}
+        confirm={confirm}
+        back={{ href: paths.listing("hotels", hotel.id), label: t("backToStay") }}
+      />
+      <BookingConfirmBar cashDue={{ label: t("cashDue"), value: price(cashDueSyp) }} priceHint={selectedRoom ? null : t("chooseRoomForPrice")} confirm={confirm} />
     </div>
   );
 }

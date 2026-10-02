@@ -109,7 +109,9 @@ export function ProviderInventoryModal({
       title={editor ? t(editing ? "editTitle" : "addTitle") : ""}
       className="max-w-2xl"
     >
-      <div className="max-h-[calc(90svh-8rem)] overflow-y-auto pe-1">
+      {/* The body fills the viewport minus the modal chrome (overlay p-4, panel p-6 / sm:p-8, title,
+          mt-4), so a form that fits on screen never hides its last line under the sticky actions. */}
+      <div className="max-h-[calc(100svh-7.75rem)] overflow-y-auto pe-1 sm:max-h-[calc(100svh-8.75rem)]">
         {editor?.kind === "hotels" ? (
           <HotelForm key={editor.item?.id ?? "new-room"} item={editor.item} onClose={onClose} />
         ) : null}

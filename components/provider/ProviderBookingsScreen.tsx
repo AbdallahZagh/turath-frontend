@@ -14,6 +14,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Select } from "@/components/ui/Select";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { providerBookingPath } from "@/config/providerRoutes";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -53,7 +54,7 @@ export function ProviderBookingsScreen(): ReactNode {
       id: "guest",
       header: t("columns.guest"),
       cell: (booking) => (
-        <div className="min-w-52">
+        <div className="min-w-36">
           <p className="font-semibold"><bdi>{localizedName(booking.guestName, locale)}</bdi></p>
           <p className="text-prose-muted mt-1 flex items-center gap-1.5 text-xs" dir="ltr">
             <Phone className="size-3.5" aria-hidden />
@@ -66,8 +67,8 @@ export function ProviderBookingsScreen(): ReactNode {
       id: "arrival",
       header: t("columns.arrival"),
       cell: (booking) => (
-        <div className="whitespace-nowrap">
-          <p className="font-medium">{formatMediumDate(booking.scheduledAt, locale)}</p>
+        <div className="max-w-36">
+          <p className="font-medium whitespace-nowrap">{formatMediumDate(booking.scheduledAt, locale)}</p>
           <p className="text-prose-muted mt-1 text-xs"><bdi>{localizedName(booking.offeringName, locale)}</bdi></p>
         </div>
       ),
@@ -76,19 +77,16 @@ export function ProviderBookingsScreen(): ReactNode {
       id: "party",
       header: t("columns.party"),
       cell: (booking) => (
-        <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-          <UsersRound className="text-prose-muted size-4" aria-hidden />
-          {t("party", { count: booking.partySize })}
-        </span>
+        <span className="whitespace-nowrap">{t("party", { count: booking.partySize })}</span>
       ),
     },
     {
       id: "notes",
       header: t("columns.notes"),
       cell: (booking) => (
-        <span className="text-prose-muted flex max-w-64 items-start gap-1.5 text-xs leading-relaxed">
+        <span className="text-prose-muted flex min-w-28 max-w-32 items-start gap-1.5 text-xs leading-relaxed">
           <StickyNote className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-          <bdi className="line-clamp-2">{booking.notes}</bdi>
+          <bdi>{booking.notes}</bdi>
         </span>
       ),
     },
@@ -97,9 +95,7 @@ export function ProviderBookingsScreen(): ReactNode {
       header: t("columns.amount"),
       align: "end",
       cell: (booking) => (
-        <span className="whitespace-nowrap font-semibold tabular-nums">
-          {formatMoney(booking.cashDueSyp)}
-        </span>
+        <StackedMoney amountSyp={booking.cashDueSyp} locale={locale} strong />
       ),
     },
     {

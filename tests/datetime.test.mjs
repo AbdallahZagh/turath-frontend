@@ -8,7 +8,6 @@ import {
   formatDisplayDate,
   formatLongDate,
   formatMediumDate,
-  formatPickerDate,
   formatPickerTime,
   formatTime,
   LEVANTINE_MONTHS,
@@ -18,7 +17,6 @@ import {
 test("Arabic dates use Levantine month names and Arabic-Indic digits", () => {
   assert.equal(formatMediumDate("2026-08-18", "ar"), "١٨ آب ٢٠٢٦");
   assert.equal(formatMediumDate("2026-01-05", "ar"), "٥ كانون الثاني ٢٠٢٦");
-  assert.equal(formatPickerDate("2026-10-10", "ar"), "١٠ تشرين الأول ٢٠٢٦");
   assert.equal(formatLongDate("2026-09-20", "ar"), "٢٠ أيلول ٢٠٢٦");
 });
 

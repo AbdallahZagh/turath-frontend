@@ -134,7 +134,6 @@ export function ProviderBookingsScreen(): ReactNode {
         <div className="min-w-0 flex-1">
           <DatePicker
             variant="glass"
-            dateStyle="short"
             label={t("filters.date")}
             value={date}
             onChange={setDate}

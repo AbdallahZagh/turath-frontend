@@ -106,14 +106,6 @@ export function formatDisplayDate(date: Date, pattern: string, locale: Locale): 
   return toDisplayDigits(format(date, pattern, { locale: dateFnsLocale(locale) }), locale);
 }
 
-export function formatPickerDate(iso: string, locale: Locale): string {
-  const date = parseIsoDate(iso);
-  if (!date) {
-    return "";
-  }
-  return formatDisplayDate(date, "PPP", locale);
-}
-
 /** The everyday date, in cards, lists and summaries: "18 Aug 2026" / "١٨ آب ٢٠٢٦". */
 export function formatMediumDate(iso: string, locale: Locale): string {
   const date = parseIsoDate(iso);

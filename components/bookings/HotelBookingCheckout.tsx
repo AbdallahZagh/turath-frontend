@@ -179,11 +179,11 @@ export function HotelBookingCheckout({
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
             <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkIn)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" dateStyle="short" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkOut)} />
               </div>
               <div className="min-w-0 space-y-1.5">

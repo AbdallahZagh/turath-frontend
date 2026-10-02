@@ -25,7 +25,6 @@ import {
   dateFnsLocale,
   formatDisplayDate,
   formatMediumDate,
-  formatPickerDate,
   parseIsoDate,
   toIsoDate,
 } from "@/lib/format/datetime";
@@ -64,8 +63,6 @@ type DatePickerProps = {
   max?: string;
   showToday?: boolean;
   centerOn?: string;
-  /** `short` ("Oct 10, 2026" / "١٠ تشرين الأول ٢٠٢٦") for narrow fields such as the checkout grid. */
-  dateStyle?: "long" | "short";
   /** When set, only these ISO dates can be picked; every other day is greyed out. */
   availableDates?: readonly string[];
 };
@@ -115,7 +112,6 @@ export function DatePicker({
   max,
   showToday = true,
   centerOn,
-  dateStyle = "long",
   availableDates,
 }: DatePickerProps): ReactNode {
   const t = useTranslations("picker");
@@ -186,11 +182,8 @@ export function DatePicker({
         ? formatDisplayDate(cursor, "yyyy", locale)
         : toDisplayDigits(`${yearStart} – ${yearStart + 11}`, locale);
 
-  const display = !selectedIso
-    ? ""
-    : dateStyle === "short"
-      ? formatMediumDate(selectedIso, locale)
-      : formatPickerDate(selectedIso, locale);
+  // The chosen date reads like every other date: the medium pattern from DATE_TIME_PREFS.
+  const display = selectedIso ? formatMediumDate(selectedIso, locale) : "";
 
   return (
     <PickerField

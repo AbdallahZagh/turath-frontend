@@ -197,7 +197,6 @@ export function GuideBookingCheckout({
                   render={({ field }) => (
                     <DatePicker
                       variant="main"
-                      dateStyle="short"
                       required
                       label={t("date")}
                       placeholder={t("datePlaceholder")}

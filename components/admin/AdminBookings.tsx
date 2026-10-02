@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { Drawer } from "@/components/ui/Drawer";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useAdminBookings } from "@/hooks/useAdminBookings";
 import { usePagination } from "@/hooks/usePagination";
@@ -20,7 +21,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { exportToCsv } from "@/lib/export/csv";
 import { formatBookingWhen } from "@/lib/format/booking";
-import { formatSyp } from "@/lib/format/money";
+import { wrapBetweenParts } from "@/lib/format/separators";
 import { localizedName } from "@/lib/i18n/localized";
 import { BOOKING_STATUSES, matchesAdminBookingQuery, type AdminBooking } from "@/lib/mock/adminBookings";
 import type { LandingPillarId } from "@/lib/mock/landing";
@@ -94,10 +95,10 @@ export function AdminBookings(): ReactNode {
       id: "guest",
       header: t("columns.guest"),
       cell: (booking) => (
-        <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium"><bdi>{localizedName(booking.guest, loc)}</bdi></span>
+        <div className="flex max-w-32 min-w-0 flex-col gap-1">
+          <span className="font-medium break-words"><bdi>{localizedName(booking.guest, loc)}</bdi></span>
           <AdminNamedRating about="guest" nameEn={booking.guest.en} />
-          <span className="text-prose-muted truncate text-xs tabular-nums">{booking.phone}</span>
+          <span className="text-prose-muted truncate text-xs tabular-nums" dir="ltr">{booking.phone}</span>
         </div>
       ),
     },
@@ -105,8 +106,8 @@ export function AdminBookings(): ReactNode {
       id: "provider",
       header: t("columns.provider"),
       cell: (booking) => (
-        <div className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-medium"><bdi>{localizedName(booking.provider, loc)}</bdi></span>
+        <div className="flex max-w-32 min-w-0 flex-col gap-1">
+          <span className="font-medium break-words"><bdi>{localizedName(booking.provider, loc)}</bdi></span>
           <AdminNamedRating about="provider" nameEn={booking.provider.en} />
           <span className="text-prose-muted truncate text-xs">{tPillars(booking.category)}</span>
         </div>
@@ -116,8 +117,8 @@ export function AdminBookings(): ReactNode {
       id: "when",
       header: t("columns.when"),
       cell: (booking) => (
-        <span className="text-prose-muted whitespace-nowrap">
-          {formatBookingWhen(booking.when, loc)}
+        <span className="text-prose-muted block max-w-36">
+          {wrapBetweenParts(formatBookingWhen(booking.when, loc))}
         </span>
       ),
     },
@@ -126,9 +127,7 @@ export function AdminBookings(): ReactNode {
       header: t("columns.amount"),
       align: "end",
       cell: (booking) => (
-        <span className="font-medium tabular-nums whitespace-nowrap">
-          {formatSyp(booking.amountSyp, loc)}
-        </span>
+        <StackedMoney amountSyp={booking.amountSyp} locale={loc} strong />
       ),
     },
     {

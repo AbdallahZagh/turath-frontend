@@ -27,3 +27,11 @@ export function wrapAtLastSpaceOnly(text: string): string {
     ? text
     : `${text.slice(0, last).replaceAll(" ", "\u00A0")} ${text.slice(last + 1)}`;
 }
+
+/**
+ * Keeps each date or time whole and lets a table cell wrap only between the parts: after the range
+ * dash or the date–time joiner ("2 Oct 2026 –" / "4 Oct 2026", "5 Oct 2026," / "19:30").
+ */
+export function wrapBetweenParts(text: string): string {
+  return text.replaceAll(" ", "\u00A0").replace(/(–|,|،)\u00A0/g, "$1 ");
+}

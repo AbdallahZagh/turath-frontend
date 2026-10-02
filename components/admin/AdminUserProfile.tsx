@@ -64,7 +64,7 @@ export function AdminUserProfile({
             <dl className="mt-1 grid gap-2 text-sm sm:grid-cols-2">
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.phone")}</dt>
-                <dd className="tabular-nums">{user.phone}</dd>
+                <dd className="tabular-nums" dir="ltr">{user.phone}</dd>
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.email")}</dt>

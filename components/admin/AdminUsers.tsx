@@ -129,7 +129,7 @@ export function AdminUsers(): ReactNode {
       id: "phone",
       header: t("columns.phone"),
       cell: (user) => (
-        <span className="tabular-nums whitespace-nowrap">{user.phone}</span>
+        <span className="tabular-nums whitespace-nowrap" dir="ltr">{user.phone}</span>
       ),
     },
     {

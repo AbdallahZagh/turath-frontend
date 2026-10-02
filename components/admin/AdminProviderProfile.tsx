@@ -82,7 +82,7 @@ export function AdminProviderProfile({
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.phone")}</dt>
-                <dd className="tabular-nums">{provider.phone}</dd>
+                <dd className="tabular-nums" dir="ltr">{provider.phone}</dd>
               </div>
               <div className="flex min-w-0 flex-col gap-0.5">
                 <dt className="text-prose-muted text-xs">{t("detail.email")}</dt>

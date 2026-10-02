@@ -231,7 +231,7 @@ export function AdminBookingDetail({ booking }: AdminBookingDetailProps): ReactN
                 className="text-prose hover:text-primary inline-flex items-center gap-1.5 text-xs font-medium transition-colors tabular-nums"
               >
                 <Phone className="text-prose-muted size-3.5" aria-hidden />
-                <span>{booking.phone}</span>
+                <span dir="ltr">{booking.phone}</span>
               </a>
               {guestId ? (
                 <Button

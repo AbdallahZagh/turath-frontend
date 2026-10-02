@@ -3300,7 +3300,7 @@
         "emptyDescription": "Bookings dated today will appear here.",
         "emptyAction": "Open bookings",
         "title": "Today's arrivals",
-        "description": "Confirmed guests and reservations awaiting acceptance.",
+        "description": "Confirmed guests and bookings pending confirmation.",
         "party": "{count, plural, one {# guest} other {# guests}}",
         "status": {
           "CONFIRMED": "Confirmed",

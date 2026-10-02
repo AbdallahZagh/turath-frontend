@@ -3209,7 +3209,7 @@
         "emptyDescription": "ستظهر هنا الحجوزات المؤرخة اليوم.",
         "emptyAction": "فتح الحجوزات",
         "title": "وصول اليوم",
-        "description": "الضيوف المؤكدون والحجوزات التي تنتظر القبول.",
+        "description": "الضيوف المؤكدون والحجوزات بانتظار التأكيد.",
         "party": "{count, plural, one {ضيف واحد} two {ضيفان} few {# ضيوف} many {# ضيفاً} other {# ضيف}}",
         "status": {
           "CONFIRMED": "مؤكد",

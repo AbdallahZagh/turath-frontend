@@ -7,15 +7,23 @@ import { useTranslations } from "@/i18n/translations";
 
 export type FilterChip = {
   id: string;
-  /** The filter's name, e.g. “Governorate”. */
-  label: string;
+  /** The filter's name, e.g. “Governorate”; the chip shows “Governorate: Damascus”. */
+  label?: string;
   /** The chosen value, e.g. “Damascus”. */
   value: string;
   onRemove: () => void;
+  /** Screen-reader name of the chip; defaults to “Remove filter {value}”. */
+  removeLabel?: string;
 };
 
-/** Removable chips for the filters in use (admin tables and the listing catalogs). */
-export function FilterChips({ chips }: { chips: FilterChip[] }): ReactNode {
+type FilterChipsProps = {
+  chips: FilterChip[];
+  /** Name of the chip list; defaults to “Active filters”. */
+  listLabel?: string;
+};
+
+/** Removable chips: the filters in use (admin tables, listing catalogs) or picked values. */
+export function FilterChips({ chips, listLabel }: FilterChipsProps): ReactNode {
   const t = useTranslations("ui.filter");
 
   if (chips.length === 0) {
@@ -23,12 +31,12 @@ export function FilterChips({ chips }: { chips: FilterChip[] }): ReactNode {
   }
 
   return (
-    <ul className="flex flex-wrap gap-2" aria-label={t("applied")}>
+    <ul className="flex flex-wrap gap-2" aria-label={listLabel ?? t("applied")}>
       {chips.map((chip) => (
         <li key={chip.id}>
           <FilterChipButton
-            label={`${chip.label}: ${chip.value}`}
-            removeLabel={t("remove", { filter: chip.value })}
+            label={chip.label ? `${chip.label}: ${chip.value}` : chip.value}
+            removeLabel={chip.removeLabel ?? t("remove", { filter: chip.value })}
             onRemove={chip.onRemove}
           />
         </li>

@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
+import { MultiDatePicker } from "@/components/ui/MultiDatePicker";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
@@ -834,13 +835,18 @@ function GuideForm({ item, onClose }: { item: GuideOffering; onClose: () => void
       </div>
       <FieldLabel label={t("blockedDates")}>
         {(id) => (
-          <Textarea
-            id={id}
-            variant="glass"
-            dir="ltr"
-            label={t("blockedDates")}
-            placeholder="2026-10-04, 2026-10-11"
-            {...form.register("blockedDates")}
+          <Controller
+            control={form.control}
+            name="blockedDates"
+            render={({ field }) => (
+              <MultiDatePicker
+                id={id}
+                variant="glass"
+                label={t("blockedDates")}
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
           />
         )}
       </FieldLabel>

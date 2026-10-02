@@ -77,7 +77,7 @@ const inventories: Record<ProviderInventoryCategory, ProviderInventory> = {
   },
   guides: {
     category: "guides",
-    guide: { licenseNumber: "TG-DAM-1842", languages: ["ar", "en", "fr"], hourlySyp: 90_000, fullDaySyp: 480_000, specialtiesEn: "Old Damascus, architecture, food heritage", specialtiesAr: "دمشق القديمة والعمارة وتراث الطعام", blockedDates: "2026-10-04, 2026-10-11" },
+    guide: { licenseNumber: "TG-DAM-1842", languages: ["ar", "en", "fr"], hourlySyp: 90_000, fullDaySyp: 480_000, specialtiesEn: "Old Damascus, architecture, food heritage", specialtiesAr: "دمشق القديمة والعمارة وتراث الطعام", blockedDates: ["2026-10-04", "2026-10-11"] },
   },
 };
 

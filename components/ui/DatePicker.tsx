@@ -65,6 +65,12 @@ type DatePickerProps = {
   centerOn?: string;
   /** When set, only these ISO dates can be picked; every other day is greyed out. */
   availableDates?: readonly string[];
+  /**
+   * Several dates at once: every ISO date listed is highlighted, and picking a day calls
+   * `onToggleDate` and keeps the calendar open (`value` / `onChange` are then unused).
+   */
+  selectedDates?: readonly string[];
+  onToggleDate?: (iso: string) => void;
 };
 
 const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6] as const;
@@ -113,6 +119,8 @@ export function DatePicker({
   showToday = true,
   centerOn,
   availableDates,
+  selectedDates,
+  onToggleDate,
 }: DatePickerProps): ReactNode {
   const t = useTranslations("picker");
   const rawLocale = useLocale();
@@ -152,7 +160,14 @@ export function DatePicker({
   const yearStart = Math.floor(cursor.getFullYear() / 12) * 12;
   const years = Array.from({ length: 12 }, (_, index) => yearStart + index);
 
+  const multiple = selectedDates !== undefined;
+
   function commit(date: Date): void {
+    if (multiple) {
+      onToggleDate?.(toIsoDate(clampDate(date, minDate, maxDate)));
+      setCursor(date);
+      return;
+    }
     const next = toIsoDate(clampDate(date, minDate, maxDate));
     if (value === undefined) {
       setUncontrolled(next);
@@ -183,7 +198,13 @@ export function DatePicker({
         : toDisplayDigits(`${yearStart} – ${yearStart + 11}`, locale);
 
   // The chosen date reads like every other date: the medium pattern from DATE_TIME_PREFS.
-  const display = selectedIso ? formatMediumDate(selectedIso, locale) : "";
+  const display = multiple
+    ? selectedDates.length > 0
+      ? t("datesChosen", { count: selectedDates.length })
+      : ""
+    : selectedIso
+      ? formatMediumDate(selectedIso, locale)
+      : "";
 
   return (
     <PickerField
@@ -203,8 +224,8 @@ export function DatePicker({
       name={name}
       className={className}
       display={display}
-      hiddenValue={selectedIso}
-      isEmpty={!selectedIso}
+      hiddenValue={multiple ? selectedDates.join(",") : selectedIso}
+      isEmpty={multiple ? selectedDates.length === 0 : !selectedIso}
       open={open}
       onOpenChange={(next) => {
         setOpen(next);
@@ -266,7 +287,11 @@ export function DatePicker({
                 {days.map((day) => {
                   const iso = toIsoDate(day);
                   const outside = !isSameMonth(day, cursor);
-                  const selected = selectedDate ? isSameDay(day, selectedDate) : false;
+                  const selected = multiple
+                    ? selectedDates.includes(iso)
+                    : selectedDate
+                      ? isSameDay(day, selectedDate)
+                      : false;
                   const isToday = isSameDay(day, today);
                   const blocked =
                     isDisabled(day, minDate, maxDate) ||
@@ -277,6 +302,7 @@ export function DatePicker({
                       key={iso}
                       type="button"
                       disabled={blocked}
+                      aria-pressed={multiple ? selected : undefined}
                       className={cn(
                         "mx-auto flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-medium",
                         outside && "text-prose-muted/50",

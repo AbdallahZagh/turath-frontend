@@ -608,7 +608,13 @@ function GuideInventory({
             {locale === "ar" ? guide.specialtiesAr : guide.specialtiesEn}
           </p>
           <p className="text-prose-muted mt-5 text-xs">{t("blockedDates")}</p>
-          <p className="text-prose mt-2 text-sm">{guide.blockedDates || t("none")}</p>
+          <p className="text-prose mt-2 text-sm">
+            {guide.blockedDates.length > 0
+              ? guide.blockedDates
+                  .map((date) => formatMediumDate(date, locale))
+                  .join(listSeparator(locale))
+              : t("none")}
+          </p>
         </GlassPanel>
       </div>
     </section>

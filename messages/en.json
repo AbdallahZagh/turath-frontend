@@ -135,7 +135,10 @@
     "pm": "PM",
     "previous": "Previous",
     "next": "Next",
-    "today": "Today"
+    "today": "Today",
+    "datesChosen": "{count, plural, one {# date chosen} other {# dates chosen}}",
+    "chosenDates": "Chosen dates",
+    "removeDate": "Remove {date}"
   },
   "themePreview": {
     "eyebrow": "Theme lab",
@@ -3099,7 +3102,7 @@
         "itineraryEn": "English itinerary", "itineraryAr": "Arabic itinerary", "tier": "Ticket tier", "standard": "Standard", "vip": "VIP", "available": "Tickets available", "maxPerUser": "Maximum per guest",
         "licenseNumber": "License number", "languages": "Languages", "language": { "ar": "Arabic", "en": "English", "fr": "French" },
         "hourlySyp": "Hourly rate in SYP", "fullDaySyp": "Full-day rate in SYP", "specialtiesEn": "English specialties", "specialtiesAr": "Arabic specialties",
-        "blockedDates": "Blocked dates", "blockedDatesHint": "Enter ISO dates separated by commas."
+        "blockedDates": "Blocked dates", "blockedDatesHint": "Pick each day you can't take bookings."
       }
     },
     "checkIn": {

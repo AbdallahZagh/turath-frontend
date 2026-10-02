@@ -135,7 +135,10 @@
     "pm": "م",
     "previous": "السابق",
     "next": "التالي",
-    "today": "اليوم"
+    "today": "اليوم",
+    "datesChosen": "{count, plural, one {تاريخ واحد مختار} two {تاريخان مختاران} few {# تواريخ مختارة} many {# تاريخاً مختاراً} other {# تاريخ مختار}}",
+    "chosenDates": "التواريخ المختارة",
+    "removeDate": "إزالة {date}"
   },
   "themePreview": {
     "eyebrow": "مختبر الثيم",
@@ -3008,7 +3011,7 @@
         "itineraryEn": "المسار بالإنجليزية", "itineraryAr": "المسار بالعربية", "tier": "فئة التذكرة", "standard": "عادية", "vip": "VIP", "available": "التذاكر المتاحة", "maxPerUser": "الحد الأقصى لكل ضيف",
         "licenseNumber": "رقم الترخيص", "languages": "اللغات", "language": { "ar": "العربية", "en": "الإنجليزية", "fr": "الفرنسية" },
         "hourlySyp": "سعر الساعة بالليرة", "fullDaySyp": "سعر اليوم الكامل بالليرة", "specialtiesEn": "التخصصات بالإنجليزية", "specialtiesAr": "التخصصات بالعربية",
-        "blockedDates": "التواريخ المحجوبة", "blockedDatesHint": "أدخل تواريخ ISO وافصل بينها بفواصل."
+        "blockedDates": "التواريخ المحجوبة", "blockedDatesHint": "اختر كل يوم لا تستقبل فيه حجوزات."
       }
     },
     "checkIn": {

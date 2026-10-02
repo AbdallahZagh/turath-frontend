@@ -57,7 +57,7 @@ export const guideOfferingSchema = z.object({
   fullDaySyp: positiveAmount,
   specialtiesEn: requiredText,
   specialtiesAr: requiredText,
-  blockedDates: z.string(),
+  blockedDates: z.array(z.string()),
 });
 
 export type HotelRoomValues = z.infer<typeof hotelRoomSchema>;

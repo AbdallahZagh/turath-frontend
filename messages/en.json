@@ -527,7 +527,9 @@
       "title": "Filter",
       "clear": "Clear filters",
       "applied": "Active filters",
-      "remove": "Remove filter {filter}"
+      "remove": "Remove filter {filter}",
+      "open": "Filters",
+      "openWithCount": "Filters ({count})"
     },
     "pagination": {
       "label": "Pagination",
@@ -1615,8 +1617,6 @@
         "150to300": "150,000–300,000 SYP",
         "over300": "Over 300,000 SYP"
       },
-      "open": "Filters",
-      "openWithCount": "Filters ({count})",
       "showResults": "Show stays"
     },
     "states": {
@@ -1769,7 +1769,8 @@
         "under200": "Under 200,000 SYP",
         "200to400": "200,000–400,000 SYP",
         "over400": "Over 400,000 SYP"
-      }
+      },
+      "showResults": "Show trips"
     },
     "states": {
       "errorTitle": "We couldn't load these trips",
@@ -1850,7 +1851,8 @@
         "under100": "Under 100,000 SYP",
         "100to250": "100,000–250,000 SYP",
         "over250": "Over 250,000 SYP"
-      }
+      },
+      "showResults": "Show events"
     },
     "states": {
       "errorTitle": "We couldn't load these events",
@@ -1941,7 +1943,8 @@
       "title": "Filter guides", "reset": "Reset", "governorate": "Governorate", "allGovernorates": "All governorates",
       "language": "Language", "allLanguages": "All languages", "specialty": "Specialty", "allSpecialties": "All specialties",
       "duration": "Duration", "allDurations": "All durations", "price": "Rate", "allPrices": "All prices",
-      "prices": { "under100": "Under 100,000 SYP", "100to250": "100,000–250,000 SYP", "over250": "Over 250,000 SYP" }
+      "prices": { "under100": "Under 100,000 SYP", "100to250": "100,000–250,000 SYP", "over250": "Over 250,000 SYP" },
+      "showResults": "Show guides"
     },
     "states": {
       "errorTitle": "We couldn't load these guides", "detailErrorTitle": "We couldn't load this guide", "errorDescription": "Please check your connection and try again.", "retry": "Try again",

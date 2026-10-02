@@ -332,6 +332,7 @@ Each page:
 
 - Title + count
 - Filters (price, governorate, capacity, amenities — category-specific extras below)
+- Filter pattern (hotels, trips, events, guides; `components/listings/ListingFiltersLayout.tsx`): a sticky side panel from `lg`, below that one “Filters” button opening a Drawer sheet; removable chips for each active filter (`components/ui/FilterChips.tsx`, shared with the admin filter bar). Filter state lives in the URL query (`hooks/useListingFilters.ts`, parsers in `lib/search/listingFilters.ts`), so a filtered list is shareable and survives a reload; people counts use the §0 names (`guests`, `seats`, `qty`)
 - Card grid → matching `[id]` detail
 
 **Hotels extra filters:** room type, occupancy, generator / Wi-Fi / AC  

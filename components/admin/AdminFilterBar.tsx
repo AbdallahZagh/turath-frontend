@@ -1,6 +1,6 @@
 "use client";
 
-import { ListFilter, X } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import { useLocale } from "next-intl";
 import {
   useCallback,
@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type KeyboardEvent,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
@@ -19,6 +18,7 @@ import {
   SELECT_MENU_BASE,
   SELECT_MENU_VARIANT,
 } from "@/components/ui/controlClasses";
+import { FilterChips } from "@/components/ui/FilterChips";
 import { Input } from "@/components/ui/Input";
 import { placeAnchoredMenu } from "@/components/ui/placeMenu";
 import { Select } from "@/components/ui/Select";
@@ -223,47 +223,14 @@ export function AdminFilterBar({
         ) : null}
         {menu}
       </div>
-      {activeCount > 0 ? (
-        <ul className="flex flex-wrap gap-2" aria-label={t("applied")}>
-          {active.map((field) => (
-            <li key={field.id}>
-              <FilterChip
-                label={`${field.label}: ${optionLabel(field)}`}
-                removeLabel={t("remove", { filter: optionLabel(field) })}
-                onRemove={() => field.onChange(field.allValue ?? ALL)}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <FilterChips
+        chips={active.map((field) => ({
+          id: field.id,
+          label: field.label,
+          value: optionLabel(field),
+          onRemove: () => field.onChange(field.allValue ?? ALL),
+        }))}
+      />
     </div>
-  );
-}
-
-type FilterChipProps = {
-  label: string;
-  removeLabel: string;
-  onRemove: () => void;
-};
-
-function FilterChip({ label, removeLabel, onRemove }: FilterChipProps): ReactNode {
-  function onKeyDown(event: KeyboardEvent<HTMLButtonElement>): void {
-    if (event.key === "Backspace" || event.key === "Delete") {
-      event.preventDefault();
-      onRemove();
-    }
-  }
-
-  return (
-    <button
-      type="button"
-      className="glass-surface backdrop-blur-sm text-prose inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
-      aria-label={removeLabel}
-      onClick={onRemove}
-      onKeyDown={onKeyDown}
-    >
-      <span>{label}</span>
-      <X className="size-3.5 shrink-0" aria-hidden />
-    </button>
   );
 }

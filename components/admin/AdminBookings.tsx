@@ -141,6 +141,9 @@ export function AdminBookings(): ReactNode {
     {
       id: "code",
       header: t("columns.code"),
+      // The last column keeps clear of the scroll edge when the table scrolls (375 px).
+      className: "pe-8",
+      headerClassName: "pe-8",
       cell: (booking) => (
         <bdi dir="ltr" className="font-medium tracking-wider tabular-nums">{booking.code}</bdi>
       ),

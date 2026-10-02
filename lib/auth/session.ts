@@ -39,6 +39,18 @@ export const MOCK_USERS: Record<AppRole, MockUser> = {
   },
 };
 
+/**
+ * Test data: a second business owner whose business is a restaurant, so QA can see the dining
+ * portal straight from sign-in. Same role as Samer; their profile decides the category.
+ */
+export const MOCK_DINING_OWNER: MockUser = {
+  id: "user-owner-dining",
+  name: "Omar Halabi",
+  email: "omar.halabi@example.com",
+  phone: "+963 955 712 340",
+  role: "PROVIDER_OWNER",
+};
+
 /** Signed-out placeholder. Never a privileged role; portals also check `isAuthenticated`. */
 export const DEFAULT_MOCK_USER: MockUser = MOCK_USERS.TOURIST;
 
@@ -48,15 +60,19 @@ function phoneDigits(value: string): string {
 }
 
 /**
- * Mock sign-in: the demo account whose email or phone matches signs in with its own role
- * (business owner, staff, admin). Any other destination signs in as a user.
+ * Mock sign-in: the demo account whose email or phone matches is the one signed in (business
+ * owners, staff, admin). Any other destination signs in as the demo user.
  */
-export function mockRoleForSignIn(channel: "phone" | "email", destination: string): AppRole {
+export function mockUserForSignIn(channel: "phone" | "email", destination: string): MockUser {
   const value = destination.trim();
-  const match = Object.values(MOCK_USERS).find((user) =>
+  const match = [...Object.values(MOCK_USERS), MOCK_DINING_OWNER].find((user) =>
     channel === "email"
       ? user.email.toLowerCase() === value.toLowerCase()
       : value.length > 0 && phoneDigits(user.phone) === phoneDigits(value),
   );
-  return match?.role ?? "TOURIST";
+  return match ?? MOCK_USERS.TOURIST;
+}
+
+export function mockRoleForSignIn(channel: "phone" | "email", destination: string): AppRole {
+  return mockUserForSignIn(channel, destination).role;
 }

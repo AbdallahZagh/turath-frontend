@@ -213,6 +213,15 @@ const SEED: ProviderBookingSeed[] = [
     discountSyp: 32_000, cashDueSyp: 288_000, couponCode: "TASTE10", status: "CONFIRMED", checkedInAt: null,
     checkedInBy: null, createdAt: "2026-09-18T12:30:00+03:00",
   },
+  // Test data: a party of one tonight, so today's dining arrivals show the singular form too.
+  {
+    id: "provider-booking-dining-2", category: "dining", reference: "TRH-DIN834", backupCode: "DINE34",
+    guestName: { en: "Sami Deeb", ar: "سامي ديب" }, phone: "+963 944 830 117", partySize: 1,
+    notes: "Window seat if possible.", offeringName: { en: "Courtyard table", ar: "طاولة الباحة" },
+    scheduledAt: fromToday(0, "13:00"), endsAt: fromToday(0, "14:30"), listPriceSyp: 95_000,
+    discountSyp: 0, cashDueSyp: 95_000, couponCode: null, status: "PENDING_CONFIRMATION", checkedInAt: null,
+    checkedInBy: null, createdAt: "2026-09-30T09:10:00+03:00",
+  },
   {
     id: "provider-booking-trip-1", category: "trips", reference: "TRH-TRP622", backupCode: "TRIP22",
     guestName: { en: "Omar Al Masri", ar: "عمر المصري" }, phone: "+963 988 420 115", partySize: 2,

@@ -12,8 +12,8 @@ export async function getProviderProfile(category: ProviderCategory): Promise<Pr
 }
 
 /** The signed-in business's own profile; its category drives the whole business portal. */
-export async function getSignedInProviderProfile(): Promise<ProviderProfile> {
-  return getSignedInProviderProfileMock();
+export async function getSignedInProviderProfile(accountId: string): Promise<ProviderProfile> {
+  return getSignedInProviderProfileMock(accountId);
 }
 
 export async function updateProviderProfile(

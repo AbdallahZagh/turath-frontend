@@ -15,7 +15,7 @@ import { useSendLoginCode, useVerifyOtp } from "@/hooks/useAuth";
 import { useTranslations } from "@/i18n/translations";
 import { postSignInPath } from "@/lib/auth/home";
 import { withReturnTo } from "@/lib/auth/returnTo";
-import { mockRoleForSignIn } from "@/lib/auth/session";
+import { MOCK_USERS, mockUserForSignIn } from "@/lib/auth/session";
 import { fadeUp } from "@/lib/motion/variants";
 import { verifyOtpSchema, type VerifyOtpValues } from "@/lib/validation/auth";
 import { fieldMessage } from "@/lib/validation/fieldMessage";
@@ -75,15 +75,15 @@ export function VerifyOtpForm(): ReactNode {
         code: values.code,
       });
       // Sign-up always creates a user; sign-in opens the matching demo account's portal.
-      const role =
+      const account =
         pending.flow === "register"
-          ? "TOURIST"
-          : mockRoleForSignIn(pending.channel, pending.destination);
-      completeSession(role);
+          ? MOCK_USERS.TOURIST
+          : mockUserForSignIn(pending.channel, pending.destination);
+      completeSession(account);
       // The "Code sent" toast has done its job once the code is accepted.
       toast.dismissAll();
       toast.success(t("toastVerifiedTitle"), t("toastVerifiedBody"));
-      router.replace(postSignInPath(role, pending.returnTo));
+      router.replace(postSignInPath(account.role, pending.returnTo));
     } catch {
       toast.error(t("toastErrorTitle"), t("toastErrorBody"));
     }

@@ -229,8 +229,12 @@ export function getProviderProfile(category: ProviderCategory = "hotels"): Provi
   return cloneProfile(profiles[category]);
 }
 
-export function getSignedInProviderProfile(): ProviderProfile {
-  return cloneProfile(profiles[signedInCategory]);
+/** Test data: the restaurant owner (`MOCK_DINING_OWNER`) runs the dining business. */
+const BUSINESS_BY_ACCOUNT: Record<string, ProviderCategory> = { "user-owner-dining": "dining" };
+
+/** The business of the signed-in account; every other owner or staff account runs `signedInCategory`. */
+export function getSignedInProviderProfile(accountId: string): ProviderProfile {
+  return cloneProfile(profiles[BUSINESS_BY_ACCOUNT[accountId] ?? signedInCategory]);
 }
 
 export function updateProviderProfile(

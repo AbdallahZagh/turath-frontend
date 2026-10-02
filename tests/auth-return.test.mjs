@@ -72,4 +72,17 @@ test("demo accounts sign in with their own role", () => {
   assert.equal(mockRoleForSignIn("phone", "0966481203"), "SUPER_ADMIN");
   assert.equal(mockRoleForSignIn("email", "someone@example.com"), "TOURIST");
   assert.equal(mockRoleForSignIn("phone", ""), "TOURIST");
+  assert.equal(mockRoleForSignIn("email", "Omar.Halabi@example.com"), "PROVIDER_OWNER");
+});
+
+test("the restaurant owner signs in to their own dining business", async () => {
+  const { mockUserForSignIn } = await import("../lib/auth/session.ts");
+  const { getSignedInProviderProfile } = await import("../lib/mock/providerProfile.ts");
+  const owner = mockUserForSignIn("email", "omar.halabi@example.com");
+  assert.equal(owner.id, "user-owner-dining");
+  assert.equal(getSignedInProviderProfile(owner.id).category, "dining");
+  assert.equal(
+    getSignedInProviderProfile(mockUserForSignIn("email", "samer.qabbani@example.com").id).category,
+    "hotels",
+  );
 });

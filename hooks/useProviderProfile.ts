@@ -14,6 +14,7 @@ import {
   getSignedInProviderProfile,
   updateProviderProfile,
 } from "@/services/providerProfile";
+import { useAuthStore } from "@/store/authStore";
 
 const providerProfileKey = (category: ProviderCategory) => ["provider", "profile", category] as const;
 
@@ -27,9 +28,10 @@ export function useProviderProfile(category: ProviderCategory): UseQueryResult<P
 
 /** The signed-in business's profile, the source of truth for its category. */
 export function useSignedInProviderProfile(): UseQueryResult<ProviderProfile> {
+  const accountId = useAuthStore((state) => state.user.id);
   return useQuery({
-    queryKey: ["provider", "profile", "signedIn"],
-    queryFn: getSignedInProviderProfile,
+    queryKey: ["provider", "profile", "signedIn", accountId],
+    queryFn: () => getSignedInProviderProfile(accountId),
     staleTime: 60_000,
   });
 }

@@ -4,10 +4,11 @@ import { cn } from "@/lib/cn";
 import { formatSypParts, type DisplayCurrency } from "@/lib/format/money";
 
 /**
- * KPI amount size, pure CSS: 14% of the card's content width (container query), never below 17px
- * or above 24px. 24px on wide cards (1280), down to 17px in the two-up phone grid (375).
+ * KPI amount size, pure CSS: 13% of the card's content width (container query), never below 17px
+ * or above 24px. 24px on wide cards (1280), down to 17px in the two-up phone grid (375), where
+ * KpiCard pads 16px instead of 20px so "428,500,000 SYP" fits at 17px.
  */
-const KPI_AMOUNT_SIZE = "text-[length:clamp(17px,14cqi,24px)]";
+const KPI_AMOUNT_SIZE = "text-[length:clamp(17px,13cqi,24px)]";
 
 type StackedMoneyProps = {
   amountSyp: number;

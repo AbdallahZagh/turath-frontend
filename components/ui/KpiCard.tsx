@@ -33,12 +33,12 @@ export function KpiCard({ icon: Icon, label, value, hint, href }: KpiCardProps):
   if (href) {
     return (
       <Link href={href} className="flex min-w-0 w-full">
-        <GlassPanel className="flex min-w-0 flex-col gap-3 p-5 transition-colors duration-200 hover:border-primary/40">
+        <GlassPanel className="flex min-w-0 flex-col gap-3 p-4 sm:p-5 transition-colors duration-200 hover:border-primary/40">
           {content}
         </GlassPanel>
       </Link>
     );
   }
 
-  return <GlassPanel className="flex min-w-0 flex-col gap-3 p-5">{content}</GlassPanel>;
+  return <GlassPanel className="flex min-w-0 flex-col gap-3 p-4 sm:p-5">{content}</GlassPanel>;
 }

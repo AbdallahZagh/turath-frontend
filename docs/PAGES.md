@@ -770,6 +770,11 @@ Admin-owned cash-on-arrival discount codes. Businesses do not self-serve codes i
 
 Wire real APIs and middleware only after the backend exists. Keep this file updated if a route is added or dropped.
 
+**Backend to-dos:**
+
+- Remove the business-type preview switcher when the real backend lands.
+- Decide which categories get the 10-minute hold in the backend spec.
+
 ---
 
 ## Loading, error and empty states (spec only, build with the backend)

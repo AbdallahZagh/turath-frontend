@@ -8,7 +8,6 @@ import {
   ReceiptText,
   ShieldLock,
   Wallet,
-  type LucideIcon,
 } from "lucide-react";
 import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
@@ -17,7 +16,9 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { KpiCard } from "@/components/ui/KpiCard";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { StackedMoney } from "@/components/ui/StackedMoney";
 import { Table, type TableColumn } from "@/components/ui/Table";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
 import { useProviderLedger } from "@/hooks/useProviderLedger";
@@ -33,32 +34,7 @@ import type {
   ProviderStatementStatus,
 } from "@/lib/mock/providerLedger";
 import { useAuthStore } from "@/store/authStore";
-
-type SummaryCardProps = {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-  hint: string;
-};
-
-function SummaryCard({ icon: Icon, label, value, hint }: SummaryCardProps): ReactNode {
-  return (
-    <GlassPanel className="flex min-w-0 flex-col gap-3 p-5">
-      <div className="flex items-center gap-2">
-        <span className="bg-option-hover text-accent grid size-8 place-items-center rounded-full">
-          <Icon className="size-4" aria-hidden />
-        </span>
-        <p className="text-prose-muted text-xs font-semibold uppercase tracking-wide">
-          {label}
-        </p>
-      </div>
-      <p className="font-heading text-prose wrap-break-word text-xl font-semibold tracking-tight sm:text-2xl">
-        {value}
-      </p>
-      <p className="text-prose-muted text-xs leading-relaxed">{hint}</p>
-    </GlassPanel>
-  );
-}
+import { useCurrencyStore } from "@/store/currencyStore";
 
 function statementBadge(status: ProviderStatementStatus): {
   variant: "solid" | "glass" | "outline";
@@ -116,6 +92,7 @@ export function ProviderLedgerScreen(): ReactNode {
   const rawLocale = useLocale();
   const locale: Locale = rawLocale === "ar" ? "ar" : "en";
   const formatMoney = useFormatSyp();
+  const currency = useCurrencyStore((state) => state.currency);
   const role = useAuthStore((state) => state.user.role);
   const query = useProviderLedger();
 
@@ -249,22 +226,28 @@ export function ProviderLedgerScreen(): ReactNode {
   return (
     <div className="flex flex-col gap-5">
       <div className="grid gap-4 sm:grid-cols-3">
-        <SummaryCard
+        <KpiCard
           icon={ReceiptText}
           label={t("summary.accrued")}
-          value={formatMoney(ledger.accruedCommissionSyp)}
+          value={
+            <StackedMoney amountSyp={ledger.accruedCommissionSyp} locale={locale} displayCurrency={currency} variant="kpi" />
+          }
           hint={t("summary.accruedHint")}
         />
-        <SummaryCard
+        <KpiCard
           icon={CircleCheck}
           label={t("summary.paid")}
-          value={formatMoney(ledger.paidCommissionSyp)}
+          value={
+            <StackedMoney amountSyp={ledger.paidCommissionSyp} locale={locale} displayCurrency={currency} variant="kpi" />
+          }
           hint={t("summary.paidHint")}
         />
-        <SummaryCard
+        <KpiCard
           icon={Wallet}
           label={t("summary.outstanding")}
-          value={formatMoney(ledger.outstandingCommissionSyp)}
+          value={
+            <StackedMoney amountSyp={ledger.outstandingCommissionSyp} locale={locale} displayCurrency={currency} variant="kpi" />
+          }
           hint={t("summary.outstandingHint")}
         />
       </div>

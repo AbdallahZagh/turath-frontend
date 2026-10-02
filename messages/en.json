@@ -2058,7 +2058,7 @@
       "unavailableBody": "The booking link may be incomplete, or this stay may no longer be listed.",
       "voucherErrorTitle": "We couldn't load this voucher",
       "voucherMissingTitle": "Voucher not found",
-      "voucherMissingBody": "This demo voucher is saved in the current browser session. It may have expired or the link may be incorrect."
+      "voucherMissingBody": "This voucher may have expired or the link may be incorrect."
     },
     "voucher": {
       "passLabel": "Turath booking pass",
@@ -2257,7 +2257,7 @@
     "contactNotice": "Questions about these pages can be sent through the Turath contact page. Final policies may be updated before the live service launches.",
     "pages": {
       "terms": {
-        "introduction": "These terms describe the frontend MVP experience. Completing a reservation means you agree to provide accurate details, respect the business's published rules, and pay the displayed amount in cash on arrival.",
+        "introduction": "These terms describe booking with Turath. Completing a reservation means you agree to provide accurate details, respect the business's published rules, and pay the displayed amount in cash on arrival.",
         "sections": {
           "agreement": { "title": "Using Turath", "body": "You may browse public listings without an account. An account is required to keep bookings, vouchers, preferences, and reliability history together. Account details must be accurate and must not be used to impersonate another person." },
           "bookings": { "title": "Bookings and cash on arrival", "body": "Turath shows the list price, any valid discount, and the final cash amount due on arrival. A booking pass contains a QR code and backup code. Availability is held briefly during checkout and is confirmed only when the reservation succeeds." },
@@ -2266,7 +2266,7 @@
         }
       },
       "privacy": {
-        "introduction": "Turath collects only the information needed to provide accounts, reservations, arrival verification, support, and platform safety. This frontend currently uses mock data and does not send booking details to a production backend.",
+        "introduction": "Turath collects only the information needed to provide accounts, reservations, arrival verification, support, and platform safety.",
         "sections": {
           "collection": { "title": "Information we use", "body": "Account information may include your name, phone number, email, nationality, date of birth, language, and currency preference. A booking may also include dates, party size, pickup choice, accessibility requests, special notes, or an emergency contact when the experience requires it." },
           "use": { "title": "Why the information is needed", "body": "Information is used to create and manage reservations, prepare booking passes, confirm arrival, calculate reliability, unlock verified reviews, prevent misuse, and help Turath or the business respond to support requests." },
@@ -2735,7 +2735,7 @@
       "saving": "Saving…",
       "saved": {
         "title": "Personal profile saved",
-        "description": "Your owner account details have been updated for this frontend session."
+        "description": "Your owner account details have been updated."
       },
       "saveError": {
         "title": "Could not save your profile",
@@ -2883,7 +2883,7 @@
       "saving": "Saving…",
       "saved": {
         "title": "Business profile saved",
-        "description": "The public listing information has been updated for this frontend session."
+        "description": "The public listing information has been updated."
       },
       "saveError": {
         "title": "Could not save the profile",
@@ -3054,7 +3054,7 @@
       "saving": "Saving…",
       "saved": {
         "title": "Preferences saved",
-        "description": "The business workspace preferences have been updated for this frontend session."
+        "description": "The business workspace preferences have been updated."
       },
       "saveError": {
         "title": "Could not save preferences",
@@ -3062,7 +3062,6 @@
       }
     },
     "inventory": {
-      "previewEyebrow": "Frontend preview",
       "previewTitle": "View each business inventory",
       "previewDescription": "The active business selected in the sidebar controls the inventory and workflow shown here.",
       "categoryLabel": "Business category",
@@ -3080,10 +3079,10 @@
       "addRoom": "Add room type", "addTable": "Add table", "addTrip": "Add trip", "addSession": "Add session", "editGuide": "Edit guide offering",
       "slotsTitle": "Reservation times", "editSlots": "Edit times", "seatsValue": "{left} of {total}",
       "specialties": "Specialties", "blockedDates": "Blocked dates", "none": "None",
-      "edit": "Edit", "delete": "Delete", "deleteTitle": "Delete inventory item", "deleteDescription": "Delete {name}? Existing frontend bookings are kept, but this item will no longer be offered.",
+      "edit": "Edit", "delete": "Delete", "deleteTitle": "Delete inventory item", "deleteDescription": "Delete {name}? Existing bookings are kept, but this item will no longer be offered.",
       "emptyTitle": "No inventory added", "emptyDescription": "Add the first item to make this category ready for bookings.", "emptyDescriptionReadOnly": "The business owner has not added anything to this category yet.", "addFirst": "Add first item",
-      "savedTitle": "Inventory saved", "savedBody": "The business inventory has been updated for this frontend session.",
-      "deletedTitle": "Inventory item deleted", "deletedBody": "The item was removed from this frontend session.",
+      "savedTitle": "Inventory saved", "savedBody": "The business inventory has been updated.",
+      "deletedTitle": "Inventory item deleted", "deletedBody": "The item was removed.",
       "saveFailedTitle": "Could not update inventory", "saveFailedBody": "Review the details and try again.",
       "form": {
         "addTitle": "Add inventory", "editTitle": "Edit inventory", "save": "Save changes", "saving": "Saving…", "cancel": "Cancel", "invalid": "Review the required information.",
@@ -3107,8 +3106,7 @@
         "codeLabel": "Six-character backup code",
         "codeError": "Enter exactly six letters or numbers.",
         "verify": "Verify and check in",
-        "verifying": "Verifying…",
-        "demoHint": "Frontend demo: try {code} for a successful check-in."
+        "verifying": "Verifying…"
       },
       "ready": {
         "title": "Ready to verify an arrival",
@@ -3181,12 +3179,11 @@
         "copyCode": "Copy backup code",
         "checkIn": "Open guest check-in",
         "ownerActions": "Owner actions",
-        "ownerActionsHint": "These status changes are recorded immediately in this frontend preview.",
         "markNoShow": "Mark as no-show",
         "cancelBooking": "Cancel booking",
         "keepBooking": "Keep booking",
-        "noShowDialog": { "title": "Mark this guest as a no-show?", "description": "This records that the guest did not arrive. The later backend flow will notify the guest and start the required handshake." },
-        "cancelDialog": { "title": "Cancel this booking?", "description": "The reservation will no longer be active. The later backend flow will notify the guest and request confirmation." },
+        "noShowDialog": { "title": "Mark this guest as a no-show?", "description": "This records that the guest did not arrive. The guest is notified and asked to confirm." },
+        "cancelDialog": { "title": "Cancel this booking?", "description": "The reservation will no longer be active. The guest is notified and asked to confirm." },
         "updatedTitle": "Booking updated",
         "updated": { "NO_SHOW": "The booking is now marked as a no-show.", "CANCELLED": "The booking has been cancelled." }
       }

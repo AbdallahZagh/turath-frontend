@@ -261,7 +261,6 @@ export function ProviderBookingDetailScreen({ id }: { id: string }): ReactNode {
                 <KeyRound className="text-primary size-4" aria-hidden />
                 <h2 className="text-prose font-semibold">{t("detail.ownerActions")}</h2>
               </div>
-              <p className="text-prose-muted mt-2 text-xs leading-relaxed">{t("detail.ownerActionsHint")}</p>
               <div className="mt-4 grid gap-2">
                 <Button variant="outline" size="sm" onClick={() => setPendingStatus("NO_SHOW")}>
                   {t("detail.markNoShow")}

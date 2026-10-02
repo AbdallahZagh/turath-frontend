@@ -43,14 +43,6 @@ import {
 import { useAuthStore } from "@/store/authStore";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
 
-const DEMO_CODES = {
-  hotels: "Y4DYRZ",
-  dining: "DINE21",
-  trips: "TRIP22",
-  events: "EVENT8",
-  guides: "GUIDE4",
-} as const;
-
 function ResultPanel({
   result,
   locale,
@@ -259,9 +251,6 @@ export function ProviderCheckInScreen({ initialCode = "" }: { initialCode?: stri
               {verify.isPending ? t("form.verifying") : t("form.verify")}
             </Button>
           </form>
-          <p className="text-prose-muted mt-4 text-center text-xs">
-            {t("form.demoHint", { code: DEMO_CODES[category] })}
-          </p>
         </GlassPanel>
 
         {verify.data ? (

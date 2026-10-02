@@ -94,12 +94,7 @@ export function ProviderInventoryScreen(): ReactNode {
     <div className="flex flex-col gap-5">
       <GlassPanel className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div>
-          <p className="text-primary text-xs font-bold uppercase tracking-[0.14em]">
-            {t("previewEyebrow")}
-          </p>
-          <h2 className="font-heading text-prose mt-2 text-xl font-semibold">
-            {t("previewTitle")}
-          </h2>
+          <h2 className="font-heading text-prose text-xl font-semibold">{t("previewTitle")}</h2>
           <p className="text-prose-muted mt-1 text-sm">{t("previewDescription")}</p>
         </div>
         <div className="bg-option-hover text-primary flex items-center gap-3 rounded-2xl px-4 py-3">

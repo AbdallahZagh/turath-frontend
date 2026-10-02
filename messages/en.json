@@ -2218,7 +2218,7 @@
     "listPrice": "List price",
     "discount": "Discount",
     "cashDue": "Cash due on arrival",
-    "cashDueHint": "No online payment is collected. Pay this amount directly to the event organizer.",
+    "cashDueHint": "No online payment is collected. Pay this amount directly at the venue.",
     "confirm": "Confirm tickets",
     "confirming": "Confirming…",
     "backToEvent": "Back to event",

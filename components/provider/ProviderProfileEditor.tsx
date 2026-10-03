@@ -26,6 +26,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { TimePicker } from "@/components/ui/TimePicker";
 import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
@@ -51,6 +52,10 @@ const GOVERNORATES = [
   "bosra",
   "palmyra",
 ] as const;
+
+/** The hours fields sit two to a half-width column, so they keep a slimmer side padding and gap. */
+const HOURS_FIELD_PADDING_X = "0.75em";
+const HOURS_FIELD_GAP = "0.35rem";
 
 function FormField({
   label,
@@ -327,12 +332,26 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               <Input variant="glass" type="email" dir="ltr" {...form.register("email")} />
             </FormField>
             <div className="grid grid-cols-2 gap-3">
-              <FormField label={t("fields.opensAt")} error={form.formState.errors.opensAt}>
-                <Input variant="glass" type="time" {...form.register("opensAt")} />
-              </FormField>
-              <FormField label={t("fields.closesAt")} error={form.formState.errors.closesAt}>
-                <Input variant="glass" type="time" {...form.register("closesAt")} />
-              </FormField>
+              {(["opensAt", "closesAt"] as const).map((name) => (
+                <Controller
+                  key={name}
+                  control={form.control}
+                  name={name}
+                  render={({ field, fieldState }) => (
+                    <FormField label={t(`fields.${name}`)} error={fieldState.error}>
+                      <TimePicker
+                        variant="glass"
+                        paddingX={HOURS_FIELD_PADDING_X}
+                        gap={HOURS_FIELD_GAP}
+                        name={field.name}
+                        label={t(`fields.${name}`)}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    </FormField>
+                  )}
+                />
+              ))}
             </div>
             <FormField label={t("fields.latitude")} error={form.formState.errors.latitude}>
               <Input variant="glass" inputMode="decimal" dir="ltr" {...form.register("latitude")} />

@@ -1585,7 +1585,7 @@
     "from": "From",
     "perNight": "per night",
     "sleepsUpTo": "{count, plural, one {Up to # guest} other {Up to # guests}}",
-    "resultCount": "{count} hotels found",
+    "resultCount": "{count, plural, one {# hotel found} other {# hotels found}}",
     "searchDates": "{checkIn} to {checkOut}",
     "oneSearchDate": "Date: {date}",
     "amenities": {
@@ -1667,7 +1667,7 @@
     "from": "From",
     "perGuest": "per guest",
     "partyUpTo": "Tables up to {count}",
-    "resultCount": "{count} restaurants found",
+    "resultCount": "{count, plural, one {# restaurant found} other {# restaurants found}}",
     "amenities": {
       "generator": "Generator",
       "wifi": "Wi-Fi",
@@ -1745,7 +1745,7 @@
     "seatsLeft": "{count, plural, one {# seat left} other {# seats left}}",
     "soldOut": "Sold out",
     "people": "{count, plural, one {# traveler} other {# travelers}}",
-    "resultCount": "{count} trips found",
+    "resultCount": "{count, plural, one {# trip found} other {# trips found}}",
     "durations": {
       "halfDay": "Half day",
       "fullDay": "Full day",
@@ -1823,7 +1823,7 @@
     "ticketsLeft": "{count, plural, one {# ticket left} other {# tickets left}}",
     "soldOut": "Sold out",
     "sessionCount": "{count, plural, one {# session} other {# sessions}}",
-    "resultCount": "{count} events found",
+    "resultCount": "{count, plural, one {# event found} other {# events found}}",
     "categories": {
       "music": "Music",
       "heritage": "Heritage",
@@ -1894,7 +1894,7 @@
       "search": { "title": "Search all of Turath", "description": "Compare places and experiences with one set of filters." }
     },
     "categories": { "attraction": "Attraction", "hotel": "Hotel", "restaurant": "Restaurant", "trip": "Trip", "event": "Event", "guide": "Guide" },
-    "resultCount": "{count} results found",
+    "resultCount": "{count, plural, one {# result found} other {# results found}}",
     "heritageSite": "Heritage site",
     "free": "Free",
     "priceUnits": { "attraction": "entry", "hotel": "per night", "restaurant": "per guest", "trip": "per seat", "event": "per ticket", "guide": "per hour" },
@@ -1911,7 +1911,7 @@
   },
   "attractions": {
     "headers": { "index": { "title": "Walk through Syria's living history", "description": "Explore published heritage sites from the Turath catalog, compare opening hours and entry fees, and plan what to visit nearby." } },
-    "resultCount": "{count} attractions found",
+    "resultCount": "{count, plural, one {# attraction found} other {# attractions found}}",
     "hours": "Opening hours",
     "entryFee": "Entry fee",
     "free": "Free entry",
@@ -1936,7 +1936,7 @@
     "verified": "Licensed guide",
     "ratingLabel": "Rated {rating} out of 5",
     "reviewsCount": "{count} reviews",
-    "resultCount": "{count} guides found",
+    "resultCount": "{count, plural, one {# guide found} other {# guides found}}",
     "from": "From",
     "perHour": "per hour",
     "experience": "{count, plural, one {# year experience} other {# years experience}}",

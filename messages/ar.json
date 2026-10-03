@@ -1585,7 +1585,7 @@
     "from": "ابتداءً من",
     "perNight": "لليلة الواحدة",
     "sleepsUpTo": "{count, plural, one {حتى ضيف واحد} two {حتى ضيفين} few {حتى # ضيوف} many {حتى # ضيفاً} other {حتى # ضيف}}",
-    "resultCount": "تم العثور على {count} فندق",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي فندق} one {تم العثور على فندق واحد} two {تم العثور على فندقين} few {تم العثور على # فنادق} many {تم العثور على # فندقاً} other {تم العثور على # فندق}}",
     "searchDates": "من {checkIn} إلى {checkOut}",
     "oneSearchDate": "التاريخ: {date}",
     "amenities": {
@@ -1667,7 +1667,7 @@
     "from": "ابتداءً من",
     "perGuest": "للضيف",
     "partyUpTo": "طاولات حتى {count}",
-    "resultCount": "تم العثور على {count} مطعم",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي مطعم} one {تم العثور على مطعم واحد} two {تم العثور على مطعمين} few {تم العثور على # مطاعم} many {تم العثور على # مطعماً} other {تم العثور على # مطعم}}",
     "amenities": {
       "generator": "مولدة كهرباء",
       "wifi": "واي فاي",
@@ -1745,7 +1745,7 @@
     "seatsLeft": "{count, plural, one {مقعد واحد متبقٍ} two {مقعدان متبقيان} few {# مقاعد متبقية} many {# مقعداً متبقياً} other {# مقعد متبقٍ}}",
     "soldOut": "مكتملة",
     "people": "{count, plural, one {مسافر واحد} two {مسافران} few {# مسافرين} many {# مسافراً} other {# مسافر}}",
-    "resultCount": "تم العثور على {count} رحلة",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي رحلة} one {تم العثور على رحلة واحدة} two {تم العثور على رحلتين} few {تم العثور على # رحلات} many {تم العثور على # رحلةً} other {تم العثور على # رحلة}}",
     "durations": {
       "halfDay": "نصف يوم",
       "fullDay": "يوم كامل",
@@ -1823,7 +1823,7 @@
     "ticketsLeft": "{count, plural, one {تذكرة واحدة متبقية} two {تذكرتان متبقيتان} few {# تذاكر متبقية} many {# تذكرة متبقية} other {# تذكرة متبقية}}",
     "soldOut": "نفدت التذاكر",
     "sessionCount": "{count, plural, one {موعد واحد} two {موعدان} few {# مواعيد} many {# موعداً} other {# موعد}}",
-    "resultCount": "تم العثور على {count} فعالية",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي فعالية} one {تم العثور على فعالية واحدة} two {تم العثور على فعاليتين} few {تم العثور على # فعاليات} many {تم العثور على # فعاليةً} other {تم العثور على # فعالية}}",
     "categories": {
       "music": "موسيقى",
       "heritage": "تراث",
@@ -1894,7 +1894,7 @@
       "search": { "title": "ابحث في تراث", "description": "قارن الأماكن والتجارب باستخدام مجموعة واحدة من عوامل التصفية." }
     },
     "categories": { "attraction": "معلم", "hotel": "فندق", "restaurant": "مطعم", "trip": "رحلة", "event": "فعالية", "guide": "دليل" },
-    "resultCount": "تم العثور على {count} نتيجة",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي نتيجة} one {تم العثور على نتيجة واحدة} two {تم العثور على نتيجتين} few {تم العثور على # نتائج} many {تم العثور على # نتيجةً} other {تم العثور على # نتيجة}}",
     "heritageSite": "موقع تراثي",
     "free": "مجاني",
     "priceUnits": { "attraction": "للدخول", "hotel": "لليلة", "restaurant": "للضيف", "trip": "للمقعد", "event": "للتذكرة", "guide": "للساعة" },
@@ -1911,7 +1911,7 @@
   },
   "attractions": {
     "headers": { "index": { "title": "اعبر تاريخ سوريا الحي", "description": "اكتشف المواقع التراثية المنشورة في دليل تراث، وقارن مواعيد الزيارة ورسوم الدخول وخطط لما حولها." } },
-    "resultCount": "تم العثور على {count} معلم",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي معلم} one {تم العثور على معلم واحد} two {تم العثور على معلمين} few {تم العثور على # معالم} many {تم العثور على # معلماً} other {تم العثور على # معلم}}",
     "hours": "ساعات الزيارة",
     "entryFee": "رسم الدخول",
     "free": "دخول مجاني",
@@ -1936,7 +1936,7 @@
     "verified": "دليل سياحي مرخص",
     "ratingLabel": "التقييم {rating} من 5",
     "reviewsCount": "{count} تقييم",
-    "resultCount": "تم العثور على {count} دليل",
+    "resultCount": "{count, plural, zero {لم يُعثر على أي دليل} one {تم العثور على دليل واحد} two {تم العثور على دليلين} few {تم العثور على # أدلاء} many {تم العثور على # دليلاً} other {تم العثور على # دليل}}",
     "from": "ابتداءً من",
     "perHour": "للساعة",
     "experience": "{count, plural, one {سنة خبرة} two {سنتان خبرة} few {# سنوات خبرة} many {# سنة خبرة} other {# سنة خبرة}}",

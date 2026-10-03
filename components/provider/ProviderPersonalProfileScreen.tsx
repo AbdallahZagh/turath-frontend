@@ -37,7 +37,7 @@ import { formatMediumDate } from "@/lib/format/datetime";
 import { initialsFromName } from "@/lib/format/initials";
 import { countryName } from "@/lib/geo/countries";
 import type {
-  ProviderAccountRole,
+  ProviderAccount,
   ProviderOwnerPersonalProfile,
   ProviderPersonalProfile,
   ProviderStaffPersonalProfile,
@@ -125,7 +125,13 @@ function ProfileDetail({
   );
 }
 
-function OwnerProfileEditor({ profile }: { profile: ProviderOwnerPersonalProfile }): ReactNode {
+function OwnerProfileEditor({
+  account,
+  profile,
+}: {
+  account: ProviderAccount;
+  profile: ProviderOwnerPersonalProfile;
+}): ReactNode {
   const t = useTranslations("provider.personalProfile");
   const update = useUpdateProviderPersonalProfile();
   const updateCurrentUser = useAuthStore((state) => state.updateCurrentUser);
@@ -142,7 +148,7 @@ function OwnerProfileEditor({ profile }: { profile: ProviderOwnerPersonalProfile
 
   function submit(values: ProviderPersonalProfileValues): void {
     update.mutate(
-      { values },
+      { account, values },
       {
         onSuccess: (saved) => {
           form.reset(saved);
@@ -231,9 +237,15 @@ function StaffReadOnlyProfile({ profile }: { profile: ProviderStaffPersonalProfi
 export function ProviderPersonalProfileScreen(): ReactNode {
   const t = useTranslations("provider.personalProfile");
   const tUi = useTranslations("ui");
-  const role = useAuthStore((state) => state.user.role);
-  const providerRole: ProviderAccountRole = role === "PROVIDER_OWNER" ? "PROVIDER_OWNER" : "PROVIDER_STAFF";
-  const query = useProviderPersonalProfile(providerRole);
+  const user = useAuthStore((state) => state.user);
+  const account: ProviderAccount = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    role: user.role === "PROVIDER_OWNER" ? "PROVIDER_OWNER" : "PROVIDER_STAFF",
+  };
+  const query = useProviderPersonalProfile(account);
 
   if (query.isPending) {
     return <div className="grid items-start gap-5 xl:grid-cols-[22rem_minmax(0,1fr)]"><Skeleton className="h-[30rem]" /><Skeleton className="h-[30rem]" /></div>;
@@ -250,7 +262,7 @@ export function ProviderPersonalProfileScreen(): ReactNode {
   return (
     <div className="grid items-start gap-5 xl:grid-cols-[22rem_minmax(0,1fr)]">
       <ProfileSummary profile={query.data} />
-      {query.data.role === "PROVIDER_OWNER" ? <OwnerProfileEditor profile={query.data} /> : <StaffReadOnlyProfile profile={query.data} />}
+      {query.data.role === "PROVIDER_OWNER" ? <OwnerProfileEditor account={account} profile={query.data} /> : <StaffReadOnlyProfile profile={query.data} />}
     </div>
   );
 }

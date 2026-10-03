@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 
 import type {
-  ProviderAccountRole,
+  ProviderAccount,
   ProviderOwnerPersonalProfile,
   ProviderPersonalProfile,
 } from "@/lib/mock/providerPersonalProfile";
@@ -17,16 +17,17 @@ import {
   updateProviderPersonalProfile,
 } from "@/services/providerPersonalProfile";
 
-function providerPersonalProfileKey(role: ProviderAccountRole): readonly string[] {
-  return ["provider", "personal-profile", role] as const;
+/** One cache entry per signed-in account, so switching accounts never shows the previous person. */
+function providerPersonalProfileKey(account: ProviderAccount): readonly string[] {
+  return ["provider", "personal-profile", account.role, account.id] as const;
 }
 
 export function useProviderPersonalProfile(
-  role: ProviderAccountRole,
+  account: ProviderAccount,
 ): UseQueryResult<ProviderPersonalProfile> {
   return useQuery({
-    queryKey: providerPersonalProfileKey(role),
-    queryFn: () => getProviderPersonalProfile(role),
+    queryKey: providerPersonalProfileKey(account),
+    queryFn: () => getProviderPersonalProfile(account),
     staleTime: 60_000,
   });
 }
@@ -34,13 +35,13 @@ export function useProviderPersonalProfile(
 export function useUpdateProviderPersonalProfile(): UseMutationResult<
   ProviderOwnerPersonalProfile,
   Error,
-  { values: ProviderPersonalProfileValues }
+  { account: ProviderAccount; values: ProviderPersonalProfileValues }
 > {
   const client = useQueryClient();
   return useMutation({
     mutationFn: updateProviderPersonalProfile,
-    onSuccess: (profile) => {
-      client.setQueryData(providerPersonalProfileKey("PROVIDER_OWNER"), profile);
+    onSuccess: (profile, { account }) => {
+      client.setQueryData(providerPersonalProfileKey(account), profile);
     },
   });
 }

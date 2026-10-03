@@ -116,7 +116,7 @@ const profiles: Record<ProviderCategory, ProviderProfile> = {
     latitude: "33.5126",
     longitude: "36.3139",
     amenities: ["generator", "wifi", "ac", "accessible", "terrace"],
-    logo: RESTAURANT_IMAGES.gardenCourtyard,
+    logo: RESTAURANT_IMAGES.logoPlaceholder,
     gallery: [
       RESTAURANT_IMAGES.gardenCourtyard,
       RESTAURANT_IMAGES.mezzeTable,

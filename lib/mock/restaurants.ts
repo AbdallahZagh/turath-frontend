@@ -28,6 +28,8 @@ export const RESTAURANT_IMAGES = {
   outdoorSpread: "/images/restaurants/outdoor-spread.webp",
   outdoorDishesTea: "/images/restaurants/outdoor-dishes-tea.webp",
   gardenCourtyard: "/images/restaurants/garden-courtyard.webp",
+  /** Stand-in logo for test businesses that have not uploaded their own. */
+  logoPlaceholder: "/images/restaurants/logo-placeholder.svg",
 } as const;
 
 export type RestaurantZoneId = "indoor" | "terrace" | "vip" | "smoking";

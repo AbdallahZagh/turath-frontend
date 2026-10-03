@@ -43,11 +43,14 @@ export type ProviderLedgerData = {
 const STATEMENT_CYCLE_DAYS = 14;
 const STATEMENT_CYCLE_END = "2026-09-28";
 
-/** The first statement close on or after today in Syria, so it is never in the past. */
-function nextStatementDate(today: string): string {
+/**
+ * The first statement close strictly after `today` (yyyy-mm-dd in Syria). On the day a cycle
+ * closes, that statement is being issued, so “Next statement” already shows the following close.
+ */
+export function nextStatementDate(today: string): string {
   const anchor = parseISO(STATEMENT_CYCLE_END);
-  const elapsed = Math.max(0, differenceInCalendarDays(parseISO(today), anchor));
-  const cycles = Math.ceil(elapsed / STATEMENT_CYCLE_DAYS);
+  const elapsed = differenceInCalendarDays(parseISO(today), anchor);
+  const cycles = elapsed < 0 ? 0 : Math.floor(elapsed / STATEMENT_CYCLE_DAYS) + 1;
   return toIsoDate(addDays(anchor, cycles * STATEMENT_CYCLE_DAYS));
 }
 

@@ -201,7 +201,7 @@ export function RestaurantBookingCheckout({
                   control={form.control}
                   name="date"
                   render={({ field }) => (
-                    <DatePicker
+                    <DatePicker size="sm"
                       variant="main"
                       required
                       label={t("date")}
@@ -218,7 +218,7 @@ export function RestaurantBookingCheckout({
                   control={form.control}
                   name="timeSlot"
                   render={({ field }) => (
-                    <Select
+                    <Select size="sm"
                       variant="main"
                       required
                       label={t("time")}
@@ -237,7 +237,7 @@ export function RestaurantBookingCheckout({
                   control={form.control}
                   name="partySize"
                   render={({ field }) => (
-                    <Stepper
+                    <Stepper size="sm"
                       variant="main"
                       required
                       label={t("partySize")}
@@ -259,7 +259,7 @@ export function RestaurantBookingCheckout({
                   control={form.control}
                   name="zoneId"
                   render={({ field }) => (
-                    <Select
+                    <Select size="sm"
                       variant="main"
                       required
                       label={t("zone")}
@@ -279,7 +279,7 @@ export function RestaurantBookingCheckout({
             <h2 className="font-heading text-prose text-xl font-semibold">{t("requestsTitle")}</h2>
             <p className="text-prose-muted mt-1 text-sm">{t("requestsHint")}</p>
             <div className="mt-4 space-y-1.5">
-              <Textarea
+              <Textarea size="sm"
                 variant="main"
                 label={t("specialRequests")}
                 placeholder={t("specialRequestsPlaceholder")}

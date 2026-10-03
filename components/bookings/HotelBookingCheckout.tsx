@@ -179,19 +179,19 @@ export function HotelBookingCheckout({
             <h2 className="font-heading text-prose text-xl font-semibold">{t("stayDetails")}</h2>
             <div className="mt-4 grid min-w-0 gap-4 sm:grid-cols-2">
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkIn" render={({ field }) => <DatePicker size="sm" variant="main" required label={t("checkIn")} min={today} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkIn)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
+                <Controller control={form.control} name="checkOut" render={({ field }) => <DatePicker size="sm" variant="main" required label={t("checkOut")} min={checkIn || today} centerOn={checkIn} value={field.value} onChange={field.onChange} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.checkOut)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="roomId" render={({ field }) => <Select variant="main" required label={t("roomType")} placeholder={t("roomPlaceholder")} options={roomOptions} value={field.value} onChange={field.onChange} icon={<BedDouble className="size-4" />} />} />
+                <Controller control={form.control} name="roomId" render={({ field }) => <Select size="sm" variant="main" required label={t("roomType")} placeholder={t("roomPlaceholder")} options={roomOptions} value={field.value} onChange={field.onChange} icon={<BedDouble className="size-4" />} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.roomId)} />
               </div>
               <div className="min-w-0 space-y-1.5">
-                <Controller control={form.control} name="guests" render={({ field }) => <Stepper variant="main" required label={t("guests")} min={1} max={selectedRoom?.maxGuests ?? 8} value={field.value} onChange={(value) => { field.onChange(value); if (selectedRoom && value > selectedRoom.maxGuests) form.setValue("roomId", ""); }} />} />
+                <Controller control={form.control} name="guests" render={({ field }) => <Stepper size="sm" variant="main" required label={t("guests")} min={1} max={selectedRoom?.maxGuests ?? 8} value={field.value} onChange={(value) => { field.onChange(value); if (selectedRoom && value > selectedRoom.maxGuests) form.setValue("roomId", ""); }} />} />
                 <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.guests)} />
               </div>
             </div>
@@ -201,7 +201,7 @@ export function HotelBookingCheckout({
             <h2 className="font-heading text-prose text-xl font-semibold">{t("requestsTitle")}</h2>
             <p className="text-prose-muted mt-1 text-sm">{t("requestsHint")}</p>
             <div className="mt-4 space-y-1.5">
-              <Textarea variant="main" label={t("specialRequests")} placeholder={t("specialRequestsPlaceholder")} rows={4} {...form.register("specialRequests")} />
+              <Textarea size="sm" variant="main" label={t("specialRequests")} placeholder={t("specialRequestsPlaceholder")} rows={4} {...form.register("specialRequests")} />
               <AuthFieldError message={fieldMessage(tErrors, form.formState.errors.specialRequests)} />
             </div>
           </section>

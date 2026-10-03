@@ -29,10 +29,13 @@ import type {
 } from "@/lib/mock/restaurants";
 import type { TripDurationId, TripFilters, TripPriceRange } from "@/lib/mock/trips";
 import {
+  BOOKING_KIND_KEYS,
   BOOKING_PEOPLE_MAX,
   BOOKING_SEARCH_PARSERS,
   peopleParam,
   readPeople,
+  type BookingKind,
+  type BookingSearchKey,
 } from "@/lib/search/bookingSearch";
 
 /**
@@ -136,13 +139,51 @@ const GUIDE_FILTER_PARSERS = {
 /**
  * One listing's URL step: the parsers, and the two pure mappings between the parsed query and
  * the filter object. Writing goes through the same types the parsers read, so every hook that
- * shares a key sees the same value.
+ * shares a key sees the same value. `kind` names the booking type whose carried dates and people
+ * (§0) the listing passes on to its cards; `keepOnClear` lists the carried keys the listing shows
+ * outside the chips (the hotel dates badge), which clearing the filters leaves in place.
  */
 export type ListingFiltersUrl<Parsers extends UseQueryStatesKeysMap, Filters> = {
   parsers: Parsers;
+  kind: BookingKind;
+  keepOnClear?: readonly BookingSearchKey[];
   read: (state: Values<Parsers>) => Filters;
   write: (filters: Filters) => Nullable<Values<Parsers>>;
 };
+
+type ListingQueryShape = Pick<
+  ListingFiltersUrl<UseQueryStatesKeysMap, unknown>,
+  "parsers" | "kind" | "keepOnClear"
+>;
+
+/** Every query key the listing reads: its filters plus the dates and people its cards carry. */
+function listingQueryKeys(url: ListingQueryShape): ReadonlySet<string> {
+  return new Set([...Object.keys(url.parsers), ...BOOKING_KIND_KEYS[url.kind]]);
+}
+
+/**
+ * Query keys this listing does not read (e.g. `seats` on /hotels, `checkIn` on /guides), dropped
+ * when the page is opened so a shared or hand-typed URL only keeps what the listing uses.
+ */
+export function unusedListingParams(url: ListingQueryShape, params: URLSearchParams): string[] {
+  const used = listingQueryKeys(url);
+  return [...new Set(params.keys())].filter((key) => !used.has(key));
+}
+
+/**
+ * Query keys removed when the filters are cleared (Reset, Clear filters, or the last chip):
+ * everything except the carried keys the listing still shows outside the chips, so e.g.
+ * /guides?date=… is left with a clean URL instead of a date nothing on the page shows.
+ */
+export function clearedListingParams(url: ListingQueryShape, params: URLSearchParams): string[] {
+  const kept = new Set<string>(url.keepOnClear ?? []);
+  return [...new Set(params.keys())].filter((key) => !kept.has(key));
+}
+
+/** True when the written filters hold nothing but defaults (no chip is left). */
+export function isClearedFilterQuery(written: Record<string, unknown>): boolean {
+  return Object.values(written).every((value) => value === null);
+}
 
 function listingFiltersUrl<Parsers extends UseQueryStatesKeysMap, Filters>(
   url: ListingFiltersUrl<Parsers, Filters>,
@@ -152,6 +193,8 @@ function listingFiltersUrl<Parsers extends UseQueryStatesKeysMap, Filters>(
 
 export const HOTEL_FILTERS_URL = listingFiltersUrl({
   parsers: HOTEL_FILTER_PARSERS,
+  kind: "hotel",
+  keepOnClear: ["checkIn", "checkOut"],
   read: (state): HotelFilters => ({
     governorate: state.governorate ?? undefined,
     priceRange: state.priceRange ?? undefined,
@@ -170,6 +213,7 @@ export const HOTEL_FILTERS_URL = listingFiltersUrl({
 
 export const RESTAURANT_FILTERS_URL = listingFiltersUrl({
   parsers: RESTAURANT_FILTER_PARSERS,
+  kind: "restaurant",
   read: (state): RestaurantFilters => ({
     governorate: state.governorate ?? undefined,
     zone: state.zone ?? undefined,
@@ -188,6 +232,7 @@ export const RESTAURANT_FILTERS_URL = listingFiltersUrl({
 
 export const TRIP_FILTERS_URL = listingFiltersUrl({
   parsers: TRIP_FILTER_PARSERS,
+  kind: "trip",
   read: (state): TripFilters => ({
     governorate: state.governorate ?? undefined,
     date: state.date ?? undefined,
@@ -206,6 +251,7 @@ export const TRIP_FILTERS_URL = listingFiltersUrl({
 
 export const EVENT_FILTERS_URL = listingFiltersUrl({
   parsers: EVENT_FILTER_PARSERS,
+  kind: "event",
   read: (state): EventFilters => ({
     governorate: state.governorate ?? undefined,
     date: state.date ?? undefined,
@@ -224,6 +270,7 @@ export const EVENT_FILTERS_URL = listingFiltersUrl({
 
 export const GUIDE_FILTERS_URL = listingFiltersUrl({
   parsers: GUIDE_FILTER_PARSERS,
+  kind: "guide",
   read: (state): GuideFilters => ({
     governorate: state.governorate ?? undefined,
     language: state.language ?? undefined,

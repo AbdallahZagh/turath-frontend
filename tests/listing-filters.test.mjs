@@ -5,9 +5,13 @@ import { toLatinDigits } from "../lib/format/digits.ts";
 import { sanitizeBookingSearch } from "../lib/search/bookingSearch.ts";
 import {
   EVENT_FILTERS_URL,
+  GUIDE_FILTERS_URL,
   HOTEL_FILTERS_URL,
   RESTAURANT_FILTERS_URL,
   TRIP_FILTERS_URL,
+  clearedListingParams,
+  isClearedFilterQuery,
+  unusedListingParams,
 } from "../lib/search/listingFilters.ts";
 
 const TODAY = "2026-09-26";
@@ -103,4 +107,55 @@ test("toLatinDigits never throws on a value that isn't a string", () => {
   assert.equal(toLatinDigits(undefined), "");
   assert.doesNotThrow(() => sanitizeBookingSearch({ guests: 3, seats: 2, qty: 4 }, TODAY));
   assert.equal(sanitizeBookingSearch({ guests: 3 }, TODAY).guests, 3);
+});
+
+test("opening a listing drops only the query keys it does not read", () => {
+  const unused = (url, query) => unusedListingParams(url, new URLSearchParams(query));
+  assert.deepEqual(
+    unused(HOTEL_FILTERS_URL, "guests=3&checkIn=2026-10-20&checkOut=2026-10-22&seats=2"),
+    ["seats"],
+  );
+  assert.deepEqual(
+    unused(RESTAURANT_FILTERS_URL, "partySize=3&date=2026-10-20&time=19:30&guests=2"),
+    ["guests"],
+  );
+  assert.deepEqual(unused(TRIP_FILTERS_URL, "seats=3&date=2026-10-20&qty=2"), ["qty"]);
+  assert.deepEqual(unused(EVENT_FILTERS_URL, "qty=3&tier=vip&session=evening&partySize=4"), [
+    "partySize",
+  ]);
+  assert.deepEqual(
+    unused(GUIDE_FILTERS_URL, "date=2026-10-20&language=english&checkIn=2026-10-20"),
+    ["checkIn"],
+  );
+});
+
+test("clearing the filters drops every key except the hotel dates shown in the toolbar", () => {
+  const cleared = (url, query) => clearedListingParams(url, new URLSearchParams(query));
+  assert.deepEqual(cleared(GUIDE_FILTERS_URL, "date=2026-10-20"), ["date"]);
+  assert.deepEqual(cleared(GUIDE_FILTERS_URL, "date=2026-10-20&language=english"), [
+    "date",
+    "language",
+  ]);
+  assert.deepEqual(cleared(HOTEL_FILTERS_URL, "guests=3&checkIn=2026-10-20&checkOut=2026-10-22"), [
+    "guests",
+  ]);
+  assert.deepEqual(cleared(RESTAURANT_FILTERS_URL, "partySize=3&date=2026-10-20&time=19:30"), [
+    "partySize",
+    "date",
+    "time",
+  ]);
+});
+
+test("removing the last chip counts as clearing; any other change does not", () => {
+  const guides = GUIDE_FILTERS_URL.read(parseQuery(GUIDE_FILTERS_URL, "language=english"));
+  assert.equal(
+    isClearedFilterQuery(GUIDE_FILTERS_URL.write({ ...guides, language: undefined })),
+    true,
+  );
+  const hotels = HOTEL_FILTERS_URL.read(parseQuery(HOTEL_FILTERS_URL, "guests=3&amenities=ac"));
+  assert.equal(isClearedFilterQuery(HOTEL_FILTERS_URL.write({ ...hotels, amenities: [] })), false);
+  assert.equal(
+    isClearedFilterQuery(HOTEL_FILTERS_URL.write({ ...hotels, amenities: [], guests: 1 })),
+    true,
+  );
 });

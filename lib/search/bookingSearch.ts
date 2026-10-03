@@ -23,7 +23,7 @@ export const BOOKING_SEARCH_KEYS = [
   "session",
 ] as const;
 
-type BookingSearchKey = (typeof BOOKING_SEARCH_KEYS)[number];
+export type BookingSearchKey = (typeof BOOKING_SEARCH_KEYS)[number];
 
 /**
  * The one URL parser for each carried key, used by the booking search and by every listing's
@@ -62,7 +62,8 @@ export const BOOKING_PEOPLE_MAX = { guests: 8, partySize: 12, seats: 12, qty: 6 
 
 type PeopleKey = keyof typeof BOOKING_PEOPLE_MAX;
 
-const KIND_KEYS: Record<BookingKind, readonly BookingSearchKey[]> = {
+/** The carried keys each booking type reads (§0 names). */
+export const BOOKING_KIND_KEYS: Record<BookingKind, readonly BookingSearchKey[]> = {
   hotel: ["checkIn", "checkOut", "guests"],
   restaurant: ["date", "time", "partySize"],
   trip: ["date", "seats"],
@@ -130,7 +131,7 @@ export function sanitizeBookingSearch(raw: BookingSearchInput, today: string): B
 /** Query string (no leading `?`) with only the values that apply to this booking type. */
 export function bookingSearchQuery(search: BookingSearch, kind: BookingKind): string {
   const params = new URLSearchParams();
-  for (const key of KIND_KEYS[kind]) {
+  for (const key of BOOKING_KIND_KEYS[kind]) {
     const value = search[key];
     if (value !== undefined) params.set(key, String(value));
   }

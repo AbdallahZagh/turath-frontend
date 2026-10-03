@@ -20,6 +20,12 @@ export const CONTROL_SIZE: Record<
   lg: { font: "1.125rem", px: "3.1em", py: "1.15em", gap: "0.65rem" },
 };
 
+/**
+ * Side padding for a text field without a leading icon in a dense form (business profiles). The
+ * size default leaves icon room, which cuts off long emails and addresses in half-width columns.
+ */
+export const TEXT_FIELD_PADDING_X = "0.875em";
+
 type ControlStyleOptions = {
   size?: ControlSize;
   gap?: string;

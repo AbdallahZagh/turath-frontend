@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
+import { TEXT_FIELD_PADDING_X } from "@/components/ui/controlScale";
 import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
@@ -53,11 +54,6 @@ const GOVERNORATES = [
   "palmyra",
 ] as const;
 
-/**
- * Text fields and the governorate select use a normal side padding (the control default leaves
- * room for a leading icon these fields do not have), so long emails and addresses are not cut off.
- */
-const TEXT_FIELD_PADDING_X = "0.875em";
 /** The hours fields sit two to a half-width column with a clock icon: slimmer padding and gap. */
 const HOURS_FIELD_PADDING_X = "0.75em";
 const HOURS_FIELD_GAP = "0.35rem";
@@ -334,9 +330,11 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
             <FormField label={t("fields.addressAr")} error={form.formState.errors.addressAr}>
               <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="rtl" {...form.register("addressAr")} />
             </FormField>
-            <FormField label={t("fields.email")} error={form.formState.errors.email}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" {...form.register("email")} />
-            </FormField>
+            <div className="min-w-0 md:col-span-2">
+              <FormField label={t("fields.email")} error={form.formState.errors.email}>
+                <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" {...form.register("email")} />
+              </FormField>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               {(["opensAt", "closesAt"] as const).map((name) => (
                 <Controller

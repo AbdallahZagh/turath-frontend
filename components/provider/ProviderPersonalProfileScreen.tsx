@@ -26,6 +26,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Input } from "@/components/ui/Input";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { PhoneNumber } from "@/components/ui/PhoneNumber";
+import { TEXT_FIELD_PADDING_X } from "@/components/ui/controlScale";
 import {
   useProviderPersonalProfile,
   useUpdateProviderPersonalProfile,
@@ -173,22 +174,22 @@ function OwnerProfileEditor({
       </div>
       <form className="mt-6 space-y-5" noValidate onSubmit={form.handleSubmit(submit)}>
         <Field label={t("fields.name")} error={form.formState.errors.name}>
-          <Input variant="glass" autoComplete="name" {...form.register("name")} />
+          <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} autoComplete="name" {...form.register("name")} />
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label={t("fields.email")} error={form.formState.errors.email}>
-            <Input variant="glass" type="email" dir="ltr" autoComplete="email" {...form.register("email")} />
+            <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" autoComplete="email" {...form.register("email")} />
           </Field>
           <Field label={t("fields.phone")} error={form.formState.errors.phone}>
-            <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
+            <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
           </Field>
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label={t("fields.nationality")} error={form.formState.errors.nationality}>
-            <Input variant="glass" autoComplete="country-name" {...form.register("nationality")} />
+            <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} autoComplete="country-name" {...form.register("nationality")} />
           </Field>
           <Field label={t("fields.dateOfBirth")} error={form.formState.errors.dateOfBirth}>
-            <Input variant="glass" type="date" autoComplete="bday" {...form.register("dateOfBirth")} />
+            <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="date" autoComplete="bday" {...form.register("dateOfBirth")} />
           </Field>
         </div>
         <div className="flex justify-end">

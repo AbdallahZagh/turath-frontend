@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell, CheckCheck } from "lucide-react";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
@@ -12,12 +13,14 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications } from "@/hooks/useNotifications";
 import { useTranslations } from "@/i18n/translations";
-import type { NotificationAudience } from "@/lib/mock/notifications";
 import { cn } from "@/lib/cn";
+import { formatCount } from "@/lib/format/number";
+import type { NotificationAudience } from "@/lib/mock/notifications";
 
 export function NotificationCenter({ audience }: { audience: NotificationAudience }): ReactNode {
   const t = useTranslations("notifications");
   const tUi = useTranslations("ui");
+  const locale = useLocale();
   const [filter, setFilter] = useState<"all" | "unread">("all");
   const query = useNotifications(audience);
   const markRead = useMarkNotificationRead(audience);
@@ -35,7 +38,7 @@ export function NotificationCenter({ audience }: { audience: NotificationAudienc
         <div className="flex rounded-xl bg-glass-control p-1" role="group" aria-label={t("filterLabel")}>
           {(["all", "unread"] as const).map((value) => (
             <button key={value} type="button" aria-pressed={filter === value} onClick={() => setFilter(value)} className={cn("rounded-lg px-4 py-2 text-sm font-semibold transition-colors", filter === value ? "bg-primary text-primary-foreground" : "text-prose-muted hover:text-prose")}>
-              {t(value)}{value === "unread" ? ` (${unread})` : ""}
+              {t(value)}{value === "unread" ? ` (${formatCount(unread, locale)})` : ""}
             </button>
           ))}
         </div>

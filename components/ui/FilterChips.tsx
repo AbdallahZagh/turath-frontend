@@ -12,7 +12,7 @@ export type FilterChip = {
   /** The chosen value, e.g. “Damascus”. */
   value: string;
   onRemove: () => void;
-  /** Screen-reader name of the chip; defaults to “Remove filter {value}”. */
+  /** Screen-reader name of the chip; defaults to “Remove {label}: {value}”. */
   removeLabel?: string;
 };
 
@@ -36,7 +36,12 @@ export function FilterChips({ chips, listLabel }: FilterChipsProps): ReactNode {
         <li key={chip.id}>
           <FilterChipButton
             label={chip.label ? `${chip.label}: ${chip.value}` : chip.value}
-            removeLabel={chip.removeLabel ?? t("remove", { filter: chip.value })}
+            removeLabel={
+              chip.removeLabel ??
+              (chip.label
+                ? t("removeNamed", { filter: chip.label, value: chip.value })
+                : t("remove", { filter: chip.value }))
+            }
             onRemove={chip.onRemove}
           />
         </li>

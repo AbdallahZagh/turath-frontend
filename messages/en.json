@@ -531,6 +531,7 @@
       "clear": "Clear filters",
       "applied": "Active filters",
       "remove": "Remove filter {filter}",
+      "removeNamed": "Remove {filter}: {value}",
       "open": "Filters",
       "openWithCount": "Filters ({count})"
     },

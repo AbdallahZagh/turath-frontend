@@ -531,6 +531,7 @@
       "clear": "مسح عوامل التصفية",
       "applied": "عوامل التصفية النشطة",
       "remove": "إزالة عامل التصفية {filter}",
+      "removeNamed": "إزالة {filter}: {value}",
       "open": "التصفية",
       "openWithCount": "التصفية ({count})"
     },

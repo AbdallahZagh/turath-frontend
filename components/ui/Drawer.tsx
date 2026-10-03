@@ -101,7 +101,7 @@ export function Drawer({
                 ) : null}
                 <h2
                   id={titleId}
-                  className="font-heading text-prose text-lg font-semibold tracking-tight sm:text-xl"
+                  className="font-heading text-prose text-lg font-semibold tracking-tight text-balance break-words sm:text-xl"
                 >
                   {title}
                 </h2>

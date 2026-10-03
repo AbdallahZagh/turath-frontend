@@ -78,7 +78,6 @@ export function HotelCatalog({ detailBasePath = "/hotels" }: HotelCatalogProps):
       renderFilters={(embedded) => (
         <HotelFiltersPanel embedded={embedded} filters={filters} onChange={setFilters} onReset={reset} />
       )}
-      drawerTitle={tFilters("title")}
       resetLabel={tFilters("reset")}
       showResultsLabel={tFilters("showResults")}
       onReset={reset}

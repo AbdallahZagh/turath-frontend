@@ -43,7 +43,6 @@ export function EventCatalog({ detailBasePath = "/events" }: { detailBasePath?: 
   return (
     <ListingFiltersLayout
       renderFilters={(embedded) => <EventFiltersPanel embedded={embedded} filters={filters} onChange={setFilters} onReset={reset} />}
-      drawerTitle={tf("title")}
       resetLabel={tf("reset")}
       showResultsLabel={tf("showResults")}
       onReset={reset}

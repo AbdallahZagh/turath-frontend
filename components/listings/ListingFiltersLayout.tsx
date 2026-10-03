@@ -11,7 +11,6 @@ import { useTranslations } from "@/i18n/translations";
 type ListingFiltersLayoutProps = {
   /** Renders the listing's filter fields; `embedded` is true inside the mobile Drawer. */
   renderFilters: (embedded: boolean) => ReactNode;
-  drawerTitle: string;
   resetLabel: string;
   showResultsLabel: string;
   onReset: () => void;
@@ -26,10 +25,10 @@ type ListingFiltersLayoutProps = {
 /**
  * The listing filter pattern (hotels, restaurants, trips, events, guides): a sticky side panel from `lg`,
  * one “Filters” button opening a Drawer below it, and removable chips for the filters in use.
+ * The Drawer is titled “Filters” / «التصفية» for every listing, the same words as its button.
  */
 export function ListingFiltersLayout({
   renderFilters,
-  drawerTitle,
   resetLabel,
   showResultsLabel,
   onReset,
@@ -72,7 +71,7 @@ export function ListingFiltersLayout({
       <Drawer
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
-        title={drawerTitle}
+        title={t("open")}
         side="end"
         footer={
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">

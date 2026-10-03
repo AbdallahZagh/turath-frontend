@@ -37,7 +37,6 @@ export function GuideCatalog({ detailBasePath = "/guides" }: { detailBasePath?: 
   return (
     <ListingFiltersLayout
       renderFilters={(embedded) => <GuideFiltersPanel embedded={embedded} filters={filters} onChange={setFilters} onReset={reset} />}
-      drawerTitle={tf("title")}
       resetLabel={tf("reset")}
       showResultsLabel={tf("showResults")}
       onReset={reset}

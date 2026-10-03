@@ -43,7 +43,6 @@ export function TripCatalog({ detailBasePath = "/trips" }: { detailBasePath?: st
   return (
     <ListingFiltersLayout
       renderFilters={(embedded) => <TripFiltersPanel embedded={embedded} filters={filters} onChange={setFilters} onReset={reset} />}
-      drawerTitle={tf("title")}
       resetLabel={tf("reset")}
       showResultsLabel={tf("showResults")}
       onReset={reset}

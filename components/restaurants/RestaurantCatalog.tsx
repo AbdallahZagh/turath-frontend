@@ -89,7 +89,6 @@ export function RestaurantCatalog({
           onReset={reset}
         />
       )}
-      drawerTitle={tFilters("title")}
       resetLabel={tFilters("reset")}
       showResultsLabel={tFilters("showResults")}
       onReset={reset}

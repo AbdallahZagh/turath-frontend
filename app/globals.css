@@ -112,6 +112,8 @@
   --glass-control: color-mix(in srgb, var(--white) 62%, var(--sage));
   --glass-control-hover: color-mix(in srgb, var(--white) 82%, var(--sage));
   --glass-menu: color-mix(in srgb, var(--mint) 82%, transparent);
+  /* Opaque menu glass for panels nested inside a blurred bar, where a second backdrop blur cannot work. */
+  --glass-menu-solid: var(--mint);
   --field-main: color-mix(in srgb, var(--white) 70%, var(--mint));
   --field-main-border: color-mix(in srgb, var(--teal) 45%, var(--sage));
   --option-hover: color-mix(in srgb, var(--primary) 16%, transparent);
@@ -215,6 +217,7 @@
   --glass-control: var(--glass);
   --glass-control-hover: color-mix(in srgb, var(--foam) 16%, var(--glass));
   --glass-menu: color-mix(in srgb, var(--ink) 82%, transparent);
+  --glass-menu-solid: var(--ink);
   --field-main: color-mix(in srgb, var(--pine) 55%, transparent);
   --field-main-border: color-mix(in srgb, var(--foam) 48%, transparent);
   --option-hover: color-mix(in srgb, var(--foam) 16%, transparent);
@@ -290,6 +293,7 @@
   --color-glass-control: var(--glass-control);
   --color-glass-control-hover: var(--glass-control-hover);
   --color-glass-menu: var(--glass-menu);
+  --color-glass-menu-solid: var(--glass-menu-solid);
   --color-field-main: var(--field-main);
   --color-field-main-border: var(--field-main-border);
   --color-option-hover: var(--option-hover);

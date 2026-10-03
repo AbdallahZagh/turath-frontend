@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { NOTIFICATION_ICONS } from "@/components/notifications/NotificationIcon";
-import { SOLID_GLASS_SURFACE } from "@/components/ui/controlClasses";
+import { NESTED_MENU_SURFACE } from "@/components/ui/controlClasses";
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications } from "@/hooks/useNotifications";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
@@ -68,7 +68,7 @@ export function NotificationBell({ audience, href }: NotificationBellProps): Rea
           role="dialog"
           aria-label={t("title")}
           className={cn(
-            SOLID_GLASS_SURFACE,
+            NESTED_MENU_SURFACE,
             "border-glass-border text-prose absolute end-0 top-12 z-50 w-[min(23rem,calc(100vw-2rem))] overflow-hidden rounded-glass border shadow-[var(--glass-inset),var(--shadow-glass-value)]",
           )}
         >

@@ -114,6 +114,12 @@ export const SELECT_TRIGGER_HOVER: Record<FieldVariant, string> = {
  */
 export const SOLID_GLASS_SURFACE = "bg-glass-menu bg-none backdrop-blur-xl";
 
+/**
+ * Menu glass for a panel nested inside a blurred header: its own backdrop blur cannot apply there,
+ * so it uses the opaque menu colour instead of the 82% one.
+ */
+export const NESTED_MENU_SURFACE = "bg-glass-menu-solid bg-none";
+
 export const SELECT_MENU_BASE = [
   "fixed z-80 m-0 max-h-64 list-none overflow-y-auto box-border p-[0.35rem]",
   "rounded-(--control-radius)",

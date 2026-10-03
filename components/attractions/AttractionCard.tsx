@@ -13,7 +13,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import type { TouristAttraction } from "@/services/attractions";
 
 export function AttractionCard({ attraction, detailBasePath = "/attractions" }: { attraction: TouristAttraction; detailBasePath?: string }): ReactNode {
@@ -35,7 +35,7 @@ export function AttractionCard({ attraction, detailBasePath = "/attractions" }: 
           </div>
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-start justify-between gap-4"><div><h2 className="font-heading text-prose text-xl font-semibold"><bdi>{localizedName(attraction.name, loc)}</bdi></h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4" aria-hidden />{tGov(attraction.governorate)}</p></div><ArrowUpRight className="text-primary size-5 shrink-0" aria-hidden /></div>
-            <p className="text-prose-muted mt-3 line-clamp-3 text-sm leading-relaxed">{localizedName(attraction.narrative, loc)}</p>
+            <p className="text-prose-muted mt-3 line-clamp-3 text-sm leading-relaxed">{localizedDisplayText(attraction.narrative, loc)}</p>
             <ListingCardFooter className="grid grid-cols-2 gap-3 text-sm"><div><p className="text-prose-muted flex items-center gap-1.5 text-xs"><Clock3 className="size-3.5" aria-hidden />{t("hours")}</p><p className="text-prose mt-1 font-semibold">{hours}</p></div><div className="text-end"><p className="text-prose-muted flex items-center justify-end gap-1.5 text-xs"><Ticket className="size-3.5" aria-hidden />{t("entryFee")}</p><p className="text-prose mt-1 font-semibold">{attraction.entryFeeSyp === 0 ? t("free") : formatMoney(attraction.entryFeeSyp)}</p></div></ListingCardFooter>
           </div>
         </GlassPanel>

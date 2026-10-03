@@ -14,7 +14,7 @@ import { useTranslations } from "@/i18n/translations";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { partSeparator } from "@/lib/format/separators";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 
 type AdminAttractionCardProps = {
@@ -66,7 +66,7 @@ export function AdminAttractionCard({
               {tGov(attraction.governorate)}
             </p>
             <p className="text-prose-muted line-clamp-2 text-sm leading-relaxed">
-              {localizedName(attraction.narrative, loc)}
+              {localizedDisplayText(attraction.narrative, loc)}
             </p>
             <p className="text-prose mt-auto pt-2 text-sm">
               <span className="text-prose-muted">{hours}</span>

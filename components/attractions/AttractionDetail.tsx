@@ -26,7 +26,7 @@ import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatPickerTime } from "@/lib/format/datetime";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 
 export function AttractionDetail({
   slug,
@@ -124,7 +124,7 @@ export function AttractionDetail({
                 {td("story")}
               </h2>
               <p className="text-prose-muted mt-4 text-base leading-8">
-                {localizedName(attraction.narrative, loc)}
+                {localizedDisplayText(attraction.narrative, loc)}
               </p>
             </GlassPanel>
             <GlassPanel className="p-6">

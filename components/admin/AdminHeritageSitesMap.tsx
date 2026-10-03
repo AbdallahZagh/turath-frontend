@@ -22,7 +22,7 @@ import { useTranslations } from "@/i18n/translations";
 import { cn } from "@/lib/cn";
 import { formatPickerTime } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 import { GOVERNORATES, type GovernorateSlug } from "@/lib/mock/landing";
 
@@ -253,7 +253,7 @@ export function AdminHeritageSitesMap({
                       <bdi>{localizedName(selectedSite.name, loc)}</bdi>
                     </h4>
                     <p className="text-prose-muted text-xs line-clamp-2 mt-0.5 leading-relaxed">
-                      {localizedName(selectedSite.narrative, loc)}
+                      {localizedDisplayText(selectedSite.narrative, loc)}
                     </p>
                   </div>
                 </div>

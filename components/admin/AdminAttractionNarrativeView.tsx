@@ -1,10 +1,12 @@
 "use client";
 
 import { BookOpen } from "lucide-react";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useTranslations } from "@/i18n/translations";
+import { toDisplayDigits } from "@/lib/format/digits";
 import type { AdminAttraction } from "@/lib/mock/adminAttractions";
 
 type AdminAttractionNarrativeViewProps = {
@@ -15,6 +17,7 @@ export function AdminAttractionNarrativeView({
   attraction,
 }: AdminAttractionNarrativeViewProps): ReactNode {
   const t = useTranslations("admin.attractions");
+  const locale = useLocale();
 
   return (
     <GlassPanel className="flex flex-col gap-5 p-6">
@@ -43,7 +46,7 @@ export function AdminAttractionNarrativeView({
             {t("detail.narrativeAr")}
           </span>
           <p className="text-prose text-sm leading-loose sm:text-base">
-            {attraction.narrative.ar}
+            {toDisplayDigits(attraction.narrative.ar, locale)}
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { ListingCardFooter } from "@/components/listings/ListingCardFooter";
 import { RestaurantAmenityList } from "@/components/restaurants/RestaurantAmenityList";
 import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
@@ -47,7 +48,7 @@ export function RestaurantCard({ restaurant, detailBasePath = "/restaurants" }: 
             <p className="text-primary mt-3 text-xs font-semibold">{localizedName(restaurant.cuisine, loc)}</p>
             <p className="text-prose-muted mt-2 line-clamp-2 text-sm leading-relaxed">{localizedName(restaurant.shortDescription, loc)}</p>
             <div className="mt-4"><RestaurantAmenityList amenities={restaurant.amenities} compact /></div>
-            <div className="border-border mt-auto flex items-end justify-between gap-4 border-t pt-4"><div><p className="text-prose-muted text-xs">{t("from")}</p><p className="text-prose text-sm font-semibold">{formatSyp(lowestPrice, loc)}</p><p className="text-prose-muted text-xs">{t("perGuest")}</p></div><span className="text-prose-muted inline-flex items-center gap-1 text-xs"><UsersRound className="size-4" aria-hidden />{t("partyUpTo", { count: maxParty })}</span></div>
+            <ListingCardFooter className="flex items-end justify-between gap-4"><div><p className="text-prose-muted text-xs">{t("from")}</p><p className="text-prose text-sm font-semibold">{formatSyp(lowestPrice, loc)}</p><p className="text-prose-muted text-xs">{t("perGuest")}</p></div><span className="text-prose-muted inline-flex items-center gap-1 text-xs"><UsersRound className="size-4" aria-hidden />{t("partyUpTo", { count: maxParty })}</span></ListingCardFooter>
           </div>
         </GlassPanel>
       </Link>

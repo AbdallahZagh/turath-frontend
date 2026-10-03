@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { ListingCardFooter } from "@/components/listings/ListingCardFooter";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useBookingSearch } from "@/hooks/useBookingSearch";
@@ -71,7 +72,7 @@ export function DiscoveryCard({
                 {localizedName(result.description, loc)}
               </p>
             )}
-            <div className="border-border mt-auto flex items-end justify-between gap-3 border-t pt-3">
+            <ListingCardFooter className="flex items-end justify-between gap-3 pt-3">
               <div>
                 {result.rating !== null ? (
                   <p className="text-prose flex items-center gap-1 text-sm font-semibold">
@@ -90,7 +91,7 @@ export function DiscoveryCard({
                   {t(`priceUnits.${result.category}`)}
                 </p>
               </div>
-            </div>
+            </ListingCardFooter>
           </div>
         </GlassPanel>
       </Link>

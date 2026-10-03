@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
+import { ListingCardFooter } from "@/components/listings/ListingCardFooter";
 import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useFormatSyp } from "@/hooks/useFormatSyp";
@@ -35,7 +36,7 @@ export function AttractionCard({ attraction, detailBasePath = "/attractions" }: 
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-start justify-between gap-4"><div><h2 className="font-heading text-prose text-xl font-semibold"><bdi>{localizedName(attraction.name, loc)}</bdi></h2><p className="text-prose-muted mt-1 flex items-center gap-1.5 text-sm"><MapPin className="size-4" aria-hidden />{tGov(attraction.governorate)}</p></div><ArrowUpRight className="text-primary size-5 shrink-0" aria-hidden /></div>
             <p className="text-prose-muted mt-3 line-clamp-3 text-sm leading-relaxed">{localizedName(attraction.narrative, loc)}</p>
-            <div className="border-border mt-auto grid grid-cols-2 gap-3 border-t pt-4 text-sm"><div><p className="text-prose-muted flex items-center gap-1.5 text-xs"><Clock3 className="size-3.5" aria-hidden />{t("hours")}</p><p className="text-prose mt-1 font-semibold">{hours}</p></div><div className="text-end"><p className="text-prose-muted flex items-center justify-end gap-1.5 text-xs"><Ticket className="size-3.5" aria-hidden />{t("entryFee")}</p><p className="text-prose mt-1 font-semibold">{attraction.entryFeeSyp === 0 ? t("free") : formatMoney(attraction.entryFeeSyp)}</p></div></div>
+            <ListingCardFooter className="grid grid-cols-2 gap-3 text-sm"><div><p className="text-prose-muted flex items-center gap-1.5 text-xs"><Clock3 className="size-3.5" aria-hidden />{t("hours")}</p><p className="text-prose mt-1 font-semibold">{hours}</p></div><div className="text-end"><p className="text-prose-muted flex items-center justify-end gap-1.5 text-xs"><Ticket className="size-3.5" aria-hidden />{t("entryFee")}</p><p className="text-prose mt-1 font-semibold">{attraction.entryFeeSyp === 0 ? t("free") : formatMoney(attraction.entryFeeSyp)}</p></div></ListingCardFooter>
           </div>
         </GlassPanel>
       </Link>

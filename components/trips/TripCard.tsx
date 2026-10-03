@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { ListingCardFooter } from "@/components/listings/ListingCardFooter";
 import { TripGearList } from "@/components/trips/TripGearList";
 import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
@@ -49,10 +50,10 @@ export function TripCard({ trip, detailBasePath = "/trips" }: { trip: Trip; deta
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm"><StarRating value={trip.rating} label={t("ratingLabel", { rating: trip.rating })} /><span className="text-prose font-semibold">{formatRating(trip.rating, loc)}</span><span className="text-prose-muted">{t("reviewsCount", { count: trip.reviewCount })}</span></div>
             <p className="text-prose-muted mt-3 line-clamp-2 text-sm leading-relaxed">{localizedName(trip.shortDescription, loc)}</p>
             <div className="mt-4"><TripGearList gear={trip.gear} compact /></div>
-            <div className="border-border mt-auto grid grid-cols-2 gap-3 border-t pt-4 text-sm">
+            <ListingCardFooter className="grid grid-cols-2 gap-3 text-sm">
               <div><p className="text-prose-muted flex items-center gap-1.5 text-xs"><CalendarDays className="size-3.5" aria-hidden />{t("nextDeparture")}</p><p className="text-prose mt-1 font-semibold">{nextDeparture ? formatMediumDate(nextDeparture.date, loc) : t("soldOut")}</p></div>
               <div className="text-end"><p className="text-prose-muted flex items-center justify-end gap-1.5 text-xs"><UsersRound className="size-3.5" aria-hidden />{nextDeparture ? t("seatsLeft", { count: nextDeparture.seatsLeft }) : t("soldOut")}</p><p className="text-prose mt-1 font-semibold">{formatSyp(trip.pricePerSeatSyp, loc)}</p><p className="text-prose-muted text-xs">{t("perPerson")}</p></div>
-            </div>
+            </ListingCardFooter>
           </div>
         </GlassPanel>
       </Link>

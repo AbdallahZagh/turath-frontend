@@ -7,6 +7,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { HotelAmenityList } from "@/components/hotels/HotelAmenityList";
+import { ListingCardFooter } from "@/components/listings/ListingCardFooter";
 import { SavePlaceButton } from "@/components/saved/SavePlaceButton";
 import { Badge } from "@/components/ui/Badge";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -90,7 +91,7 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
               <HotelAmenityList amenities={hotel.amenities} compact />
             </div>
 
-            <div className="border-border mt-auto flex items-end justify-between gap-4 border-t pt-4">
+            <ListingCardFooter className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-prose-muted text-xs">{t("from")}</p>
                 <p className="text-prose text-sm font-semibold">{formatMoney(lowestPrice)}</p>
@@ -100,7 +101,7 @@ export function HotelCard({ hotel, detailBasePath = "/hotels" }: HotelCardProps)
                 <UsersRound className="size-4" aria-hidden />
                 {t("sleepsUpTo", { count: maxGuests })}
               </span>
-            </div>
+            </ListingCardFooter>
           </div>
         </GlassPanel>
       </Link>

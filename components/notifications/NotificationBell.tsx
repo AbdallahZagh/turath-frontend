@@ -6,8 +6,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { NOTIFICATION_ICONS } from "@/components/notifications/NotificationIcon";
+import { SOLID_GLASS_SURFACE } from "@/components/ui/controlClasses";
 import { useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications } from "@/hooks/useNotifications";
 import { useTranslations } from "@/i18n/translations";
+import { cn } from "@/lib/cn";
 import { formatCount } from "@/lib/format/number";
 import type { NotificationAudience } from "@/lib/mock/notifications";
 
@@ -65,7 +67,10 @@ export function NotificationBell({ audience, href }: NotificationBellProps): Rea
         <section
           role="dialog"
           aria-label={t("title")}
-          className="glass-surface text-prose absolute end-0 top-12 z-50 w-[min(23rem,calc(100vw-2rem))] overflow-hidden rounded-glass shadow-xl backdrop-blur-xl"
+          className={cn(
+            SOLID_GLASS_SURFACE,
+            "border-glass-border text-prose absolute end-0 top-12 z-50 w-[min(23rem,calc(100vw-2rem))] overflow-hidden rounded-glass border shadow-[var(--glass-inset),var(--shadow-glass-value)]",
+          )}
         >
           <div className="border-glass-border flex items-center justify-between gap-3 border-b px-4 py-3">
             <div>

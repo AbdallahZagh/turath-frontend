@@ -341,6 +341,7 @@ export function AuthCredentialsForm({
                 render={({ field }) => (
                   <DatePicker
                     variant="main"
+                    size="sm"
                     name={field.name}
                     required
                     label={t("dateOfBirth")}
@@ -367,6 +368,7 @@ export function AuthCredentialsForm({
                 render={({ field }) => (
                   <Select
                     variant="main"
+                    size="sm"
                     searchable
                     required
                     name={field.name}

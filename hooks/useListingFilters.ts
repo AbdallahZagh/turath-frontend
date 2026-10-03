@@ -1,6 +1,6 @@
 "use client";
 
-import { useQueryStates, type ParserMap } from "nuqs";
+import { useQueryStates, type UseQueryStatesKeysMap } from "nuqs";
 
 import type { EventFilters } from "@/lib/mock/events";
 import type { GuideFilters } from "@/lib/mock/guides";
@@ -23,7 +23,7 @@ export type ListingFiltersState<Filters> = {
 
 const URL_OPTIONS = { history: "replace" } as const;
 
-function useListingFilters<Parsers extends ParserMap, Filters>(
+function useListingFilters<Parsers extends UseQueryStatesKeysMap, Filters>(
   url: ListingFiltersUrl<Parsers, Filters>,
 ): ListingFiltersState<Filters> {
   const [state, setState] = useQueryStates(url.parsers, URL_OPTIONS);

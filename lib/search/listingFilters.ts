@@ -1,4 +1,10 @@
-import { parseAsArrayOf, parseAsStringLiteral, type inferParserType } from "nuqs";
+import {
+  parseAsArrayOf,
+  parseAsStringLiteral,
+  type Nullable,
+  type UseQueryStatesKeysMap,
+  type Values,
+} from "nuqs";
 
 import type { EventFilters, EventPriceRange, EventTierId } from "@/lib/mock/events";
 import type {
@@ -44,7 +50,12 @@ export const EVENT_TIERS: readonly EventTierId[] = ["standard", "vip"];
 export const EVENT_PRICE_RANGES: readonly EventPriceRange[] = ["under100", "100to250", "over250"];
 export const EVENT_MAX_TICKETS = BOOKING_PEOPLE_MAX.qty;
 
-export const GUIDE_LANGUAGES: readonly GuideLanguageId[] = ["arabic", "english", "french", "german"];
+export const GUIDE_LANGUAGES: readonly GuideLanguageId[] = [
+  "arabic",
+  "english",
+  "french",
+  "german",
+];
 export const GUIDE_SPECIALTIES: readonly GuideSpecialtyId[] = [
   "history",
   "architecture",
@@ -55,7 +66,7 @@ export const GUIDE_SPECIALTIES: readonly GuideSpecialtyId[] = [
 export const GUIDE_DURATIONS: readonly GuideDurationId[] = ["hourly", "halfDay", "fullDay"];
 export const GUIDE_PRICE_RANGES: readonly GuidePriceRange[] = ["under100", "100to250", "over250"];
 
-export const HOTEL_FILTER_PARSERS = {
+const HOTEL_FILTER_PARSERS = {
   governorate: parseAsStringLiteral(GOVERNORATE_SLUGS),
   priceRange: parseAsStringLiteral(HOTEL_PRICE_RANGES),
   roomType: parseAsStringLiteral(HOTEL_ROOM_TYPES),
@@ -63,7 +74,7 @@ export const HOTEL_FILTER_PARSERS = {
   amenities: parseAsArrayOf(parseAsStringLiteral(HOTEL_FILTER_AMENITIES)),
 };
 
-export const TRIP_FILTER_PARSERS = {
+const TRIP_FILTER_PARSERS = {
   governorate: parseAsStringLiteral(GOVERNORATE_SLUGS),
   date: BOOKING_SEARCH_PARSERS.date,
   duration: parseAsStringLiteral(TRIP_DURATIONS),
@@ -71,7 +82,7 @@ export const TRIP_FILTER_PARSERS = {
   seats: BOOKING_SEARCH_PARSERS.seats,
 };
 
-export const EVENT_FILTER_PARSERS = {
+const EVENT_FILTER_PARSERS = {
   governorate: parseAsStringLiteral(GOVERNORATE_SLUGS),
   date: BOOKING_SEARCH_PARSERS.date,
   tier: parseAsStringLiteral(EVENT_TIERS),
@@ -79,7 +90,7 @@ export const EVENT_FILTER_PARSERS = {
   qty: BOOKING_SEARCH_PARSERS.qty,
 };
 
-export const GUIDE_FILTER_PARSERS = {
+const GUIDE_FILTER_PARSERS = {
   governorate: parseAsStringLiteral(GOVERNORATE_SLUGS),
   language: parseAsStringLiteral(GUIDE_LANGUAGES),
   specialty: parseAsStringLiteral(GUIDE_SPECIALTIES),
@@ -92,13 +103,13 @@ export const GUIDE_FILTER_PARSERS = {
  * the filter object. Writing goes through the same types the parsers read, so every hook that
  * shares a key sees the same value.
  */
-export type ListingFiltersUrl<Parsers extends Record<string, unknown>, Filters> = {
+export type ListingFiltersUrl<Parsers extends UseQueryStatesKeysMap, Filters> = {
   parsers: Parsers;
-  read: (state: inferParserType<Parsers>) => Filters;
-  write: (filters: Filters) => { [Key in keyof inferParserType<Parsers>]: inferParserType<Parsers>[Key] };
+  read: (state: Values<Parsers>) => Filters;
+  write: (filters: Filters) => Nullable<Values<Parsers>>;
 };
 
-function listingFiltersUrl<Parsers extends Record<string, unknown>, Filters>(
+function listingFiltersUrl<Parsers extends UseQueryStatesKeysMap, Filters>(
   url: ListingFiltersUrl<Parsers, Filters>,
 ): ListingFiltersUrl<Parsers, Filters> {
   return url;

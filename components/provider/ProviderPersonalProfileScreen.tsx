@@ -177,9 +177,11 @@ function OwnerProfileEditor({
           <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} autoComplete="name" {...form.register("name")} />
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label={t("fields.email")} error={form.formState.errors.email}>
-            <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" autoComplete="email" {...form.register("email")} />
-          </Field>
+          <div className="sm:col-span-2">
+            <Field label={t("fields.email")} error={form.formState.errors.email}>
+              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" autoComplete="email" {...form.register("email")} />
+            </Field>
+          </div>
           <Field label={t("fields.phone")} error={form.formState.errors.phone}>
             <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
           </Field>

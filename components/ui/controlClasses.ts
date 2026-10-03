@@ -51,6 +51,15 @@ export const FIELD_VARIANT: Record<FieldVariant, string> = {
   ].join(" "),
 };
 
+/**
+ * Typed free text (names, notes, specialties, search) uses `dir="auto"`, so English typed on an
+ * Arabic page reads left to right and Arabic on an English page right to left. An empty field
+ * showing its placeholder follows the page direction instead. Phone, OTP, codes and numbers keep
+ * their own fixed direction.
+ */
+export const FREE_TEXT_DIR = "auto";
+export const FREE_TEXT_PLACEHOLDER_DIR = "placeholder-shown:[direction:inherit]";
+
 /** Text start after a leading 1rem icon: the control padding, the icon, then the control gap. */
 export const FIELD_ICON_PADDING = "ps-[calc(var(--control-px)+1rem+var(--control-gap))]";
 

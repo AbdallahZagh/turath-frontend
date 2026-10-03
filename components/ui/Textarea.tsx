@@ -9,6 +9,8 @@ import {
   FIELD_ICON_SLOT,
   FIELD_STACK_LABEL,
   FIELD_VARIANT,
+  FREE_TEXT_DIR,
+  FREE_TEXT_PLACEHOLDER_DIR,
 } from "./controlClasses";
 import { controlStyle, type ControlSize } from "./controlScale";
 import type { FieldVariant } from "./field.types";
@@ -58,9 +60,11 @@ export function Textarea({
   placeholder,
   disabled,
   rows = 3,
+  dir,
   ...rest
 }: TextareaProps): ReactNode {
   const generatedId = useId();
+  const autoDir = dir === undefined;
   const textareaId = id ?? generatedId;
   const style = controlStyle({
     size,
@@ -80,11 +84,13 @@ export function Textarea({
             {...rest}
             id={textareaId}
             rows={rows}
+            dir={autoDir ? FREE_TEXT_DIR : dir}
             className={cn(
               FIELD_BASE,
               FIELD_VARIANT.main,
               "min-h-(--control-min-height) resize-y",
               icon && FIELD_ICON_PADDING,
+              autoDir && FREE_TEXT_PLACEHOLDER_DIR,
             )}
             placeholder={placeholder}
             disabled={disabled}
@@ -110,6 +116,7 @@ export function Textarea({
       {...rest}
       id={textareaId}
       rows={rows}
+      dir={autoDir ? FREE_TEXT_DIR : dir}
       style={style}
       disabled={disabled}
       placeholder={placeholder}
@@ -118,6 +125,7 @@ export function Textarea({
         FIELD_BASE,
         FIELD_VARIANT[variant],
         "min-h-(--control-min-height) resize-y",
+        autoDir && FREE_TEXT_PLACEHOLDER_DIR,
         className,
       )}
     />

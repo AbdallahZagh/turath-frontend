@@ -22,6 +22,8 @@ import {
   FIELD_ICON_SLOT,
   FIELD_STACK_LABEL,
   FIELD_VARIANT,
+  FREE_TEXT_DIR,
+  FREE_TEXT_PLACEHOLDER_DIR,
 } from "./controlClasses";
 import { controlStyle, type ControlSize } from "./controlScale";
 import type { FieldVariant } from "./field.types";
@@ -53,6 +55,17 @@ type InputProps = Omit<
   /** Field error shown under the input; sets aria-invalid and aria-describedby. */
   error?: string;
 };
+
+/** Input types and keyboards that take free text rather than a number, phone, code or address. */
+const FREE_TEXT_TYPES: ReadonlySet<string> = new Set(["text", "search"]);
+const FIXED_INPUT_MODES: ReadonlySet<string> = new Set(["numeric", "decimal", "tel"]);
+
+function isFreeText(props: FieldProps, amount: boolean): boolean {
+  if (amount || (props.inputMode && FIXED_INPUT_MODES.has(props.inputMode))) {
+    return false;
+  }
+  return props.type === undefined || FREE_TEXT_TYPES.has(props.type);
+}
 
 const VARIANT_RADIUS: Record<InputVariant, string> = {
   main: "0.625rem",
@@ -92,6 +105,8 @@ export function Input({
   const locale = useLocale();
   const [focusedText, setFocusedText] = useState<string | null>(null);
   const rest = numberFieldProps(fieldProps, amount, locale, focusedText, setFocusedText);
+  const autoDir = fieldProps.dir === undefined && isFreeText(fieldProps, amount);
+  const dir = autoDir ? FREE_TEXT_DIR : fieldProps.dir;
   useUncontrolledDisplayDigits(
     inputId,
     (fieldProps.type === "number" || amount) && fieldProps.value === undefined,
@@ -119,7 +134,13 @@ export function Input({
             {...rest}
             {...errorProps}
             id={inputId}
-            className={cn(FIELD_BASE, FIELD_VARIANT.main, icon && FIELD_ICON_PADDING)}
+            dir={dir}
+            className={cn(
+              FIELD_BASE,
+              FIELD_VARIANT.main,
+              icon && FIELD_ICON_PADDING,
+              autoDir && FREE_TEXT_PLACEHOLDER_DIR,
+            )}
             placeholder={placeholder}
             disabled={disabled}
             aria-label={label}
@@ -145,11 +166,17 @@ export function Input({
         {...rest}
         {...errorProps}
         id={inputId}
+        dir={dir}
         style={style}
         disabled={disabled}
         placeholder={placeholder}
         aria-label={label ?? placeholder}
-        className={cn(FIELD_BASE, FIELD_VARIANT[variant], className)}
+        className={cn(
+          FIELD_BASE,
+          FIELD_VARIANT[variant],
+          autoDir && FREE_TEXT_PLACEHOLDER_DIR,
+          className,
+        )}
       />
       {errorText}
     </>

@@ -39,6 +39,7 @@ These are settled. Code, copy, and later phases follow them.
   - **Icons in Arabic:** only direction icons mirror (arrows, chevrons, panel toggles, send). They go through `Icon` (`components/ui/Icon.tsx`) and its `RTL_MIRRORED_ICONS` allowlist; no other icon flips, and the checkbox tick and Check/CheckCircle never mirror.
   - **OTP:** always Latin, `dir="ltr"`, cursor at the left, ungrouped, `inputmode="numeric"`; typed or pasted Arabic/Persian digits (e.g. ١٢٣٤٥٦) are normalized to Latin and sign in.
   - **Phone:** always Latin, `dir="ltr"`, cursor at the left, ungrouped, `inputmode="tel"` (so + is on the keypad for +963). Every keystroke runs through the normalizer (`normalizePhoneInput`): digits become Latin, spaces are removed, and a leading + is kept.
+  - **Free text:** typed free text (names, notes, specialties, search) uses `dir="auto"` by default in the shared `Input` (text and search types) and `Textarea`, so English typed on an Arabic page reads left to right; an empty field showing its placeholder follows the page. Fields that declare a language (`…Ar` → `rtl`, `…En` → `ltr`) keep it, and phone, OTP, codes and numbers keep their fixed direction.
   - **Stored, API and links:** saved values, mock/API payloads and URL params are always Latin. Arabic or Persian digits typed into the address (dates, people) are read as Latin, applied, and the address bar is rewritten to Latin (`lib/search/bookingSearch.ts`, `components/layout/LatinUrlDigits.tsx`).
 
 ---

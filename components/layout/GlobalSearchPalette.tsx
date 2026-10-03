@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
+import { FREE_TEXT_DIR, FREE_TEXT_PLACEHOLDER_DIR } from "@/components/ui/controlClasses";
 import { useIsClient } from "@/hooks/useIsClient";
 import { useOverlay } from "@/hooks/useOverlay";
 import { cn } from "@/lib/cn";
@@ -147,6 +148,7 @@ export function GlobalSearchPalette({
                   <Search className="text-accent size-4 shrink-0" aria-hidden />
                   <input
                     type="search"
+                    dir={FREE_TEXT_DIR}
                     autoFocus
                     autoComplete="off"
                     placeholder={labels.placeholder}
@@ -172,7 +174,7 @@ export function GlobalSearchPalette({
                         }
                       }
                     }}
-                    className="text-prose flex-1 bg-transparent text-sm outline-hidden"
+                    className={cn("text-prose flex-1 bg-transparent text-sm outline-hidden", FREE_TEXT_PLACEHOLDER_DIR)}
                   />
                   {query ? (
                     <button

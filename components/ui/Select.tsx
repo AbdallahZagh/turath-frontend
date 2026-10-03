@@ -21,6 +21,8 @@ import {
   FIELD_GROUP_MAIN,
   FIELD_STACK_LABEL,
   FIELD_VARIANT,
+  FREE_TEXT_DIR,
+  FREE_TEXT_PLACEHOLDER_DIR,
   SELECT_MENU_BASE,
   SELECT_MENU_VARIANT,
   SELECT_OPTION,
@@ -565,11 +567,15 @@ export function Select({
                   <input
                     ref={searchInputRef}
                     type="search"
+                    dir={FREE_TEXT_DIR}
                     value={query}
                     placeholder={searchPlaceholder}
                     aria-label={searchPlaceholder}
                     autoComplete="off"
-                    className="text-prose placeholder:text-prose-muted min-w-0 flex-1 bg-transparent text-(length:--control-font-size) outline-none"
+                    className={cn(
+                      "text-prose placeholder:text-prose-muted min-w-0 flex-1 bg-transparent text-(length:--control-font-size) outline-none",
+                      FREE_TEXT_PLACEHOLDER_DIR,
+                    )}
                     onChange={(event) => {
                       const next = event.target.value;
                       setQuery(next);

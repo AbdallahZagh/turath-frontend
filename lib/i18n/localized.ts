@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { toDisplayDigits } from "@/lib/format/digits";
 
 export type LocalizedName = {
   en: string;
@@ -7,6 +8,15 @@ export type LocalizedName = {
 
 export function localizedName(name: LocalizedName, locale: Locale): string {
   return name[locale];
+}
+
+/**
+ * Localized content shown as reading text (durations, descriptions): the locale's value with its
+ * digits in display form (Arabic-Indic in Arabic, §0 Digits). Data stays Latin, as the API sends
+ * it; use `localizedName` for values that go back into forms or URLs.
+ */
+export function localizedDisplayText(text: LocalizedName, locale: Locale): string {
+  return toDisplayDigits(text[locale], locale);
 }
 
 /**

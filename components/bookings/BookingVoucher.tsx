@@ -21,7 +21,7 @@ import { useTrip } from "@/hooks/useTrips";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate, formatPickerTime } from "@/lib/format/datetime";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import { VISITED_BOOKING_STATUS } from "@/lib/mock/bookings";
 
 export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode {
@@ -89,7 +89,7 @@ export function BookingVoucher({ bookingId }: { bookingId: string }): ReactNode 
     if (tripQuery.isError || !tripQuery.data) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void tripQuery.refetch()} />;
     const trip = tripQuery.data;
     const pickup = trip.pickupPoints.find((item) => item.id === booking.pickupPointId);
-    pass = <UniversalBookingPass {...shared} totalHint={tt("cashDueHint")} providerName={localizedName(trip.name, loc)} providerAddress={localizedName(trip.address, loc)} start={{ label: tt("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tt("voucher.pickupTime"), value: pickup ? formatPickerTime(pickup.time, loc) : "—" }} routeLabel={tt("voucher.journey")} routeValue={localizedName(trip.durationDetail, loc)} facts={[{ icon: MapPin, label: tt("pickup"), value: pickup ? localizedName(pickup.name, loc) : t("notSelected") }, { icon: Users, label: tt("seats"), value: tt("voucher.travelers", { count: booking.seats }) }, { icon: Bus, label: tt("voucher.operator"), value: localizedName(trip.providerName, loc) }]} />;
+    pass = <UniversalBookingPass {...shared} totalHint={tt("cashDueHint")} providerName={localizedName(trip.name, loc)} providerAddress={localizedName(trip.address, loc)} start={{ label: tt("voucher.date"), value: formatMediumDate(booking.date, loc) }} end={{ label: tt("voucher.pickupTime"), value: pickup ? formatPickerTime(pickup.time, loc) : "—" }} routeLabel={tt("voucher.journey")} routeValue={localizedDisplayText(trip.durationDetail, loc)} facts={[{ icon: MapPin, label: tt("pickup"), value: pickup ? localizedName(pickup.name, loc) : t("notSelected") }, { icon: Users, label: tt("seats"), value: tt("voucher.travelers", { count: booking.seats }) }, { icon: Bus, label: tt("voucher.operator"), value: localizedName(trip.providerName, loc) }]} />;
   } else if (booking.type === "event") {
     if (eventQuery.isPending) return <Skeleton className="mx-auto h-[40rem] max-w-6xl" />;
     if (eventQuery.isError || !eventQuery.data) return <ErrorState title={t("states.voucherErrorTitle")} description={t("states.loadErrorBody")} retryLabel={t("states.retry")} onRetry={() => void eventQuery.refetch()} />;

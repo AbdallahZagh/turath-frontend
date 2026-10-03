@@ -45,8 +45,9 @@ export function NotificationBell({ audience, href }: NotificationBellProps): Rea
     };
   }, [open]);
 
+  // Below sm the wrapper is static, so the panel anchors to the header's end edge and stays on screen in RTL and LTR.
   return (
-    <div ref={rootRef} className="relative shrink-0">
+    <div ref={rootRef} className="shrink-0 sm:relative">
       <button
         type="button"
         aria-label={t("open")}
@@ -69,7 +70,7 @@ export function NotificationBell({ audience, href }: NotificationBellProps): Rea
           aria-label={t("title")}
           className={cn(
             NESTED_MENU_SURFACE,
-            "border-glass-border text-prose absolute end-0 top-12 z-50 w-[min(23rem,calc(100vw-2rem))] overflow-hidden rounded-glass border shadow-[var(--glass-inset),var(--shadow-glass-value)]",
+            "border-glass-border text-prose absolute end-0 top-[calc(100%+0.5rem)] z-50 w-[23rem] max-w-[calc(100vw-2rem)] sm:top-12 overflow-hidden rounded-glass border shadow-[var(--glass-inset),var(--shadow-glass-value)]",
           )}
         >
           <div className="border-glass-border flex items-center justify-between gap-3 border-b px-4 py-3">

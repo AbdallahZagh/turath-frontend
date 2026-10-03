@@ -55,6 +55,8 @@ type PickerFieldProps = {
   id?: string;
   name?: string;
   className?: string;
+  /** Extra classes for the floating panel, merged over the variant's menu surface. */
+  menuClassName?: string;
   display: string;
   hiddenValue: string;
   isEmpty: boolean;
@@ -84,6 +86,7 @@ export function PickerField({
   id,
   name,
   className,
+  menuClassName,
   display,
   hiddenValue,
   isEmpty,
@@ -258,7 +261,7 @@ export function PickerField({
             id={listId}
             role="dialog"
             data-anchored-menu=""
-            className={cn(PICKER_MENU_BASE, SELECT_MENU_VARIANT[variant])}
+            className={cn(PICKER_MENU_BASE, SELECT_MENU_VARIANT[variant], menuClassName)}
             aria-label={label ?? placeholder}
             style={{ ...style, ...menuBox }}
           >

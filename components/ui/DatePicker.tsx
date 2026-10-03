@@ -31,6 +31,7 @@ import {
 import { isLocale } from "@/i18n/config";
 import { toDisplayDigits } from "@/lib/format/digits";
 
+import { SOLID_GLASS_SURFACE } from "./controlClasses";
 import type { ControlSize } from "./controlScale";
 import type { FieldVariant } from "./field.types";
 import { PickerField } from "./PickerField";
@@ -237,6 +238,7 @@ export function DatePicker({
       estimatedHeight={420}
       maxHeightCap={460}
       menuWidth={296}
+      menuClassName={variant === "glass" ? SOLID_GLASS_SURFACE : undefined}
       triggerRef={triggerRef}
       menuRef={menuRef}
       menu={

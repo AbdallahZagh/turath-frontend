@@ -99,6 +99,12 @@ export const SELECT_TRIGGER_HOVER: Record<FieldVariant, string> = {
   ].join(" "),
 };
 
+/**
+ * Near-opaque frosted glass (the menu glass at 82% with a strong blur) for surfaces that float over
+ * fields: the inventory modal footer and the date picker calendar. Nothing underneath shows through.
+ */
+export const SOLID_GLASS_SURFACE = "bg-glass-menu bg-none backdrop-blur-xl";
+
 export const SELECT_MENU_BASE = [
   "fixed z-80 m-0 max-h-64 list-none overflow-y-auto box-border p-[0.35rem]",
   "rounded-(--control-radius)",

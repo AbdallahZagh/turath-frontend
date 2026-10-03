@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
+import { SOLID_GLASS_SURFACE } from "@/components/ui/controlClasses";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
@@ -15,6 +16,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
 import { useSaveProviderInventory } from "@/hooks/useProviderInventory";
 import { useTranslations } from "@/i18n/translations";
+import { cn } from "@/lib/cn";
 import { numberFieldValue } from "@/lib/format/digits";
 import type {
   EventSession,
@@ -82,7 +84,7 @@ function Actions({ pending, onClose }: { pending: boolean; onClose: () => void }
     // Sticky at the bottom of the modal's scrolling body, so Cancel and Save are always in view. A
     // near-opaque frosted surface (the menu glass) with a top border, so fields scrolling
     // underneath never show through.
-    <div className="border-border bg-glass-menu sticky bottom-0 z-10 -me-1 mt-2 flex justify-end gap-2 rounded-b-xl border-t px-1 py-3 backdrop-blur-xl">
+    <div className={cn("border-border sticky bottom-0 z-10 -me-1 mt-2 flex justify-end gap-2 rounded-b-xl border-t px-1 py-3", SOLID_GLASS_SURFACE)}>
       <Button type="button" variant="outline" size="sm" onClick={onClose}>
         {t("cancel")}
       </Button>

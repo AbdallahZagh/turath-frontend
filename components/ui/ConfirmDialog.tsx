@@ -101,7 +101,7 @@ export function ConfirmDialog({
 
             {children ? <div className="mt-4">{children}</div> : null}
 
-            <div className="mt-6 grid grid-cols-2 gap-2">
+            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Button
                 type="button"
                 variant="outline"

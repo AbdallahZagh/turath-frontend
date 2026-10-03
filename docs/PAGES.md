@@ -576,7 +576,7 @@ UI titles are in `messages/` (Home, Guests, Businesses, …). Headings below are
 
 - Scroll the page. Header title is static (“Business”); the business name lives in the profile card
 - Profile (glass): names AR/EN, owner, category, governorate, phone, email, address, submitted date, status, guest rating (stars + count). KYC actions by status — pending: Approve / Reject; approved: Suspend; suspended: Reinstate; rejected: no further action (mock for the session)
-- Documents (glass): commercial registration, ministry license, owner ID as placeholder files
+- Documents (glass): commercial registration, ministry license, owner ID — each shows its file name and the upload date with “Sent with the application” / «أُرسل مع طلب التسجيل» (date and wording joined with `partSeparator`: “ · ” in English, an em space in Arabic, §0)
 - Listing snapshot changes with pillar (not a full inventory editor):
   - Hotel: room types (occupancy, quantity, price/night, amenities)
   - Dining: tables (label, capacity, zone) and slot templates

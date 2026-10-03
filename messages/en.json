@@ -3399,7 +3399,7 @@
       "location": "Location",
       "locationValue": "Bab Sharqi, Old Damascus, Syria",
       "hours": "Working hours",
-      "hoursValue": "Daily 9:00 AM – 9:00 PM (Damascus GMT+3)"
+      "hoursValue": "Daily {opens} – {closes} (Damascus GMT+3)"
     },
     "form": {
       "title": "Send a message",

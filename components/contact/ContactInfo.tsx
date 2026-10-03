@@ -2,15 +2,22 @@
 
 import { motion } from "framer-motion";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { PhoneNumber } from "@/components/ui/PhoneNumber";
+import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
+import { formatPickerTime } from "@/lib/format/datetime";
 import { fadeUp } from "@/lib/motion/variants";
+
+/** Support desk hours, Damascus time; shown in the shared 24-hour format (lib/format/datetime.ts). */
+const SUPPORT_HOURS = { opens: "09:00", closes: "21:00" } as const;
 
 export function ContactInfo(): ReactNode {
   const t = useTranslations("contact.info");
+  const locale: Locale = useLocale() === "ar" ? "ar" : "en";
 
   return (
     <motion.div initial="hidden" animate="visible" variants={fadeUp} className="h-full">
@@ -82,7 +89,10 @@ export function ContactInfo(): ReactNode {
           <Clock className="text-accent size-5 shrink-0" aria-hidden />
           <div className="min-w-0">
             <p className="text-prose-muted text-xs font-medium">{t("hours")}</p>
-            <p className="text-prose text-xs font-semibold sm:text-sm">{t("hoursValue")}</p>
+            <p className="text-prose text-xs font-semibold sm:text-sm">{t("hoursValue", {
+                opens: formatPickerTime(SUPPORT_HOURS.opens, locale),
+                closes: formatPickerTime(SUPPORT_HOURS.closes, locale),
+              })}</p>
           </div>
         </div>
       </GlassPanel>

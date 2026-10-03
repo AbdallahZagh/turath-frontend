@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 
+import { ListingFiltersFieldset } from "@/components/listings/ListingFiltersFieldset";
 import { ListingFiltersPanel } from "@/components/listings/ListingFiltersPanel";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Select, type SelectOption } from "@/components/ui/Select";
@@ -65,7 +66,12 @@ export function HotelFiltersPanel({
   }
 
   return (
-    <ListingFiltersPanel title={t("title")} resetLabel={t("reset")} onReset={onReset} embedded={embedded}>
+    <ListingFiltersPanel
+      title={t("title")}
+      resetLabel={t("reset")}
+      onReset={onReset}
+      embedded={embedded}
+    >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <Select
           variant="main"
@@ -116,21 +122,21 @@ export function HotelFiltersPanel({
         />
       </div>
 
-      <fieldset className="border-border mt-5 border-t pt-5">
-        <legend className="text-prose text-sm font-semibold">{t("amenities")}</legend>
-        <div className="mt-3 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-          {HOTEL_FILTER_AMENITIES.map((amenity) => (
-            <label key={amenity} className="text-prose flex cursor-pointer items-center gap-2.5 text-sm">
-              <Checkbox
-                size="sm"
-                checked={(filters.amenities ?? []).includes(amenity)}
-                onChange={() => toggleAmenity(amenity)}
-              />
-              {tAmenities(amenity)}
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <ListingFiltersFieldset legend={t("amenities")} className="sm:grid-cols-3 lg:grid-cols-1">
+        {HOTEL_FILTER_AMENITIES.map((amenity) => (
+          <label
+            key={amenity}
+            className="text-prose flex cursor-pointer items-center gap-2.5 text-sm"
+          >
+            <Checkbox
+              size="sm"
+              checked={(filters.amenities ?? []).includes(amenity)}
+              onChange={() => toggleAmenity(amenity)}
+            />
+            {tAmenities(amenity)}
+          </label>
+        ))}
+      </ListingFiltersFieldset>
     </ListingFiltersPanel>
   );
 }

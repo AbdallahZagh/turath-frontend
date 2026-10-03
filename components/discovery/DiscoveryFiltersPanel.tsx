@@ -77,6 +77,7 @@ export function DiscoveryFiltersPanel({
         {showQuery ? (
           <Input
             variant="main"
+            size="sm"
             type="search"
             label={tf("query")}
             placeholder={tf("queryPlaceholder")}
@@ -86,6 +87,7 @@ export function DiscoveryFiltersPanel({
         ) : null}
         <Select
           variant="main"
+          size="sm"
           label={tf("category")}
           options={categories}
           value={state.category ?? "all"}
@@ -95,6 +97,7 @@ export function DiscoveryFiltersPanel({
         />
         <Select
           variant="main"
+          size="sm"
           label={tf("governorate")}
           options={governorates}
           value={state.governorate ?? "all"}
@@ -110,6 +113,7 @@ export function DiscoveryFiltersPanel({
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <Select
             variant="main"
+            size="sm"
             label={tf("radius")}
             options={radius}
             value={state.radius ? String(state.radius) : "all"}
@@ -117,6 +121,7 @@ export function DiscoveryFiltersPanel({
           />
           <Select
             variant="main"
+            size="sm"
             label={tf("price")}
             options={prices}
             value={state.maxPrice ? String(state.maxPrice) : "all"}
@@ -132,6 +137,7 @@ export function DiscoveryFiltersPanel({
                 className="text-prose-muted flex cursor-pointer items-center gap-3 text-sm"
               >
                 <Checkbox
+                  size="sm"
                   checked={state[amenity]}
                   onChange={(event) => update({ [amenity]: event.target.checked })}
                 />
@@ -145,6 +151,7 @@ export function DiscoveryFiltersPanel({
           <div className="space-y-2">
             <label className="text-prose-muted flex cursor-pointer items-center gap-3 text-sm">
               <Checkbox
+                size="sm"
                 checked={state.smoking}
                 onChange={(event) => update({ smoking: event.target.checked })}
               />
@@ -152,6 +159,7 @@ export function DiscoveryFiltersPanel({
             </label>
             <label className="text-prose-muted flex cursor-pointer items-center gap-3 text-sm">
               <Checkbox
+                size="sm"
                 checked={state.accessible}
                 onChange={(event) => update({ accessible: event.target.checked })}
               />

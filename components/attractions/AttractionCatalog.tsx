@@ -53,6 +53,7 @@ export function AttractionCatalog({
         <div className="mt-5 space-y-5">
           <Select
             variant="main"
+            size="sm"
             label={tf("governorate")}
             options={governorates}
             value={filters.governorate ?? "all"}
@@ -66,6 +67,7 @@ export function AttractionCatalog({
           />
           <label className="bg-glass-control text-prose flex cursor-pointer items-center gap-3 rounded-2xl p-4 text-sm font-semibold">
             <Checkbox
+              size="sm"
               checked={filters.openNow ?? false}
               onChange={(event) =>
                 setFilters({ ...filters, openNow: event.target.checked || undefined })

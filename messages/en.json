@@ -1696,7 +1696,8 @@
         "under75": "Under 75,000 SYP",
         "75to150": "75,000–150,000 SYP",
         "over150": "Over 150,000 SYP"
-      }
+      },
+      "showResults": "Show restaurants"
     },
     "states": {
       "errorTitle": "We couldn't load these restaurants",

@@ -6,6 +6,7 @@ import { sanitizeBookingSearch } from "../lib/search/bookingSearch.ts";
 import {
   EVENT_FILTERS_URL,
   HOTEL_FILTERS_URL,
+  RESTAURANT_FILTERS_URL,
   TRIP_FILTERS_URL,
 } from "../lib/search/listingFilters.ts";
 
@@ -74,6 +75,20 @@ test("trips and events: seats=3 / qty=3, then another filter, nothing throws", (
   );
   assert.equal(event.written.qty, "3");
   assert.equal(event.search.qty, 3);
+});
+
+test("restaurants: partySize=3, then removing the AC chip keeps the party and nothing throws", () => {
+  const { written, search } = changeFilterThenReadBookingSearch(
+    RESTAURANT_FILTERS_URL,
+    "partySize=3&amenities=ac",
+    (current) => ({ ...current, amenities: [] }),
+  );
+  assert.equal(written.partySize, "3");
+  assert.equal(written.amenities, null);
+  assert.equal(search.partySize, 3);
+  assert.equal(RESTAURANT_FILTERS_URL.read(parseQuery(RESTAURANT_FILTERS_URL, "")).partySize, 2);
+  assert.equal(RESTAURANT_FILTERS_URL.write({ partySize: 2 }).partySize, null);
+  assert.equal(RESTAURANT_FILTERS_URL.write({ partySize: 1 }).partySize, "1");
 });
 
 test("people counts in Arabic digits read the same and fall back when out of range", () => {

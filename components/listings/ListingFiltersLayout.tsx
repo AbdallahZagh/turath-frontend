@@ -24,7 +24,7 @@ type ListingFiltersLayoutProps = {
 };
 
 /**
- * The listing filter pattern (hotels, trips, events, guides): a sticky side panel from `lg`,
+ * The listing filter pattern (hotels, restaurants, trips, events, guides): a sticky side panel from `lg`,
  * one “Filters” button opening a Drawer below it, and removable chips for the filters in use.
  */
 export function ListingFiltersLayout({

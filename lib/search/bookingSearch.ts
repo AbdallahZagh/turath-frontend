@@ -100,9 +100,9 @@ export function readPeople(value: string | null | undefined, key: PeopleKey): nu
   return people(value ? toLatinDigits(value) : value, BOOKING_PEOPLE_MAX[key]);
 }
 
-/** A people count for the URL; the default of one person is left out. */
-export function peopleParam(value: number | undefined): string | null {
-  return value && value > 1 ? String(value) : null;
+/** A people count for the URL; the listing's default (one person unless given) is left out. */
+export function peopleParam(value: number | undefined, defaultCount = 1): string | null {
+  return value && value !== defaultCount ? String(value) : null;
 }
 
 /** `today` is the viewer's local date as yyyy-mm-dd. */

@@ -21,6 +21,12 @@ import type {
   HotelRoomTypeId,
 } from "@/lib/mock/hotels";
 import { GOVERNORATES, type GovernorateSlug } from "@/lib/mock/landing";
+import type {
+  RestaurantAmenityId,
+  RestaurantFilters,
+  RestaurantPriceRange,
+  RestaurantZoneId,
+} from "@/lib/mock/restaurants";
 import type { TripDurationId, TripFilters, TripPriceRange } from "@/lib/mock/trips";
 import {
   BOOKING_PEOPLE_MAX,
@@ -41,6 +47,27 @@ export const HOTEL_FILTER_AMENITIES: readonly HotelAmenityId[] = ["generator", "
 export const HOTEL_ROOM_TYPES: readonly HotelRoomTypeId[] = ["single", "double", "suite"];
 export const HOTEL_PRICE_RANGES: readonly HotelPriceRange[] = ["under150", "150to300", "over300"];
 export const HOTEL_MAX_GUESTS = BOOKING_PEOPLE_MAX.guests;
+
+export const RESTAURANT_ZONES: readonly RestaurantZoneId[] = [
+  "indoor",
+  "terrace",
+  "vip",
+  "smoking",
+];
+export const RESTAURANT_PRICE_RANGES: readonly RestaurantPriceRange[] = [
+  "under75",
+  "75to150",
+  "over150",
+];
+export const RESTAURANT_FILTER_AMENITIES: readonly RestaurantAmenityId[] = [
+  "generator",
+  "wifi",
+  "ac",
+  "accessible",
+];
+export const RESTAURANT_MAX_PARTY = BOOKING_PEOPLE_MAX.partySize;
+/** A table search starts at two guests, as the dining checkout does. */
+export const RESTAURANT_DEFAULT_PARTY = 2;
 
 export const TRIP_DURATIONS: readonly TripDurationId[] = ["halfDay", "fullDay", "multiDay"];
 export const TRIP_PRICE_RANGES: readonly TripPriceRange[] = ["under200", "200to400", "over400"];
@@ -72,6 +99,14 @@ const HOTEL_FILTER_PARSERS = {
   roomType: parseAsStringLiteral(HOTEL_ROOM_TYPES),
   guests: BOOKING_SEARCH_PARSERS.guests,
   amenities: parseAsArrayOf(parseAsStringLiteral(HOTEL_FILTER_AMENITIES)),
+};
+
+const RESTAURANT_FILTER_PARSERS = {
+  governorate: parseAsStringLiteral(GOVERNORATE_SLUGS),
+  zone: parseAsStringLiteral(RESTAURANT_ZONES),
+  priceRange: parseAsStringLiteral(RESTAURANT_PRICE_RANGES),
+  partySize: BOOKING_SEARCH_PARSERS.partySize,
+  amenities: parseAsArrayOf(parseAsStringLiteral(RESTAURANT_FILTER_AMENITIES)),
 };
 
 const TRIP_FILTER_PARSERS = {
@@ -129,6 +164,24 @@ export const HOTEL_FILTERS_URL = listingFiltersUrl({
     priceRange: filters.priceRange ?? null,
     roomType: filters.roomType ?? null,
     guests: peopleParam(filters.guests),
+    amenities: filters.amenities?.length ? [...filters.amenities] : null,
+  }),
+});
+
+export const RESTAURANT_FILTERS_URL = listingFiltersUrl({
+  parsers: RESTAURANT_FILTER_PARSERS,
+  read: (state): RestaurantFilters => ({
+    governorate: state.governorate ?? undefined,
+    zone: state.zone ?? undefined,
+    priceRange: state.priceRange ?? undefined,
+    partySize: readPeople(state.partySize, "partySize") ?? RESTAURANT_DEFAULT_PARTY,
+    amenities: state.amenities ?? [],
+  }),
+  write: (filters: RestaurantFilters) => ({
+    governorate: filters.governorate ?? null,
+    zone: filters.zone ?? null,
+    priceRange: filters.priceRange ?? null,
+    partySize: peopleParam(filters.partySize, RESTAURANT_DEFAULT_PARTY),
     amenities: filters.amenities?.length ? [...filters.amenities] : null,
   }),
 });

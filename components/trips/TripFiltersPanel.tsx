@@ -30,11 +30,11 @@ export function TripFiltersPanel({ filters, onChange, onReset, embedded = false 
   return (
     <ListingFiltersPanel title={t("title")} resetLabel={t("reset")} onReset={onReset} embedded={embedded}>
       <div className="space-y-4">
-        <Select variant="main" size="sm" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as TripFilters["governorate"] })} />
-        <DatePicker variant="main" size="sm" label={t("date")} value={filters.date ?? ""} onChange={(value) => onChange({ ...filters, date: value || undefined })} />
-        <Select variant="main" size="sm" label={t("duration")} options={durations} value={filters.duration ?? "all"} onChange={(value) => onChange({ ...filters, duration: value === "all" ? undefined : value as TripDurationId })} />
-        <Select variant="main" size="sm" label={t("price")} options={prices} value={filters.priceRange ?? "all"} onChange={(value) => onChange({ ...filters, priceRange: value === "all" ? undefined : value as TripPriceRange })} />
-        <Stepper variant="main" size="sm" label={t("seats")} icon={<UsersRound className="size-4" />} min={1} max={TRIP_MAX_SEATS} value={filters.minSeats ?? 1} onChange={(value) => onChange({ ...filters, minSeats: value })} />
+        <Select variant="main" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as TripFilters["governorate"] })} />
+        <DatePicker variant="main" label={t("date")} value={filters.date ?? ""} onChange={(value) => onChange({ ...filters, date: value || undefined })} />
+        <Select variant="main" label={t("duration")} options={durations} value={filters.duration ?? "all"} onChange={(value) => onChange({ ...filters, duration: value === "all" ? undefined : value as TripDurationId })} />
+        <Select variant="main" label={t("price")} options={prices} value={filters.priceRange ?? "all"} onChange={(value) => onChange({ ...filters, priceRange: value === "all" ? undefined : value as TripPriceRange })} />
+        <Stepper variant="main" label={t("seats")} icon={<UsersRound className="size-4" />} min={1} max={TRIP_MAX_SEATS} value={filters.minSeats ?? 1} onChange={(value) => onChange({ ...filters, minSeats: value })} />
       </div>
     </ListingFiltersPanel>
   );

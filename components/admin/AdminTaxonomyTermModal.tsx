@@ -101,7 +101,7 @@ function TaxonomyTermForm({ kind, term, onClose }: TaxonomyTermFormProps): React
           <span className="text-prose-muted text-xs font-medium">{t("form.nameEn")}</span>
           <Input
             variant="glass"
-            size="sm"
+           
             required
             value={nameEn}
             onChange={(event) => {
@@ -124,7 +124,7 @@ function TaxonomyTermForm({ kind, term, onClose }: TaxonomyTermFormProps): React
           <span className="text-prose-muted text-xs font-medium">{t("form.nameAr")}</span>
           <Input
             variant="glass"
-            size="sm"
+           
             required
             dir="rtl"
             value={nameAr}
@@ -137,7 +137,7 @@ function TaxonomyTermForm({ kind, term, onClose }: TaxonomyTermFormProps): React
         <span className="text-prose-muted text-xs font-medium">{t("form.slug")}</span>
         <Input
           variant="glass"
-          size="sm"
+         
           required
           value={slug}
           onChange={(event) => {

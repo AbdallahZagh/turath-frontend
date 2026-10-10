@@ -190,7 +190,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.titleEn")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               {...form.register("titleEn")}
               label={t("form.titleEn")}
               aria-invalid={Boolean(form.formState.errors.titleEn)}
@@ -205,7 +205,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.titleAr")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               dir="rtl"
               {...form.register("titleAr")}
               label={t("form.titleAr")}
@@ -227,7 +227,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             render={({ field }) => (
               <Select
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={(value) => {
                   field.onChange(value);
@@ -258,7 +258,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             render={({ field }) => (
               <Select
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={field.onChange}
                 label={t("form.kind")}
@@ -281,7 +281,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             render={({ field }) => (
               <Select
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={(val) => {
                   field.onChange(val);
@@ -309,7 +309,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.targetEn")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               {...form.register("targetEn")}
               label={t("form.targetEn")}
               aria-invalid={Boolean(form.formState.errors.targetEn)}
@@ -324,7 +324,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.targetAr")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               dir="rtl"
               {...form.register("targetAr")}
               label={t("form.targetAr")}
@@ -345,7 +345,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             render={({ field }) => (
               <DatePicker
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={field.onChange}
                 label={t("form.start")}
@@ -359,7 +359,7 @@ function PromotionForm({ promotion, onClose }: PromotionFormProps): ReactNode {
             render={({ field }) => (
               <DatePicker
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={field.onChange}
                 label={t("form.end")}

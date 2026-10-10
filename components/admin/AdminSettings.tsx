@@ -196,7 +196,7 @@ export function AdminSettings(): ReactNode {
           <div className="ms-auto flex w-56 flex-col items-end gap-1">
             <Input
               variant="glass"
-              size="sm"
+             
               amount
               value={raw}
               onChange={(event) => setCeiling(row.tier, event.target.value)}
@@ -266,7 +266,7 @@ export function AdminSettings(): ReactNode {
                 <span className="text-prose text-start font-medium">{t(`tiers.${tier}`)}</span>
                 <Input
                   variant="glass"
-                  size="sm"
+                 
                   amount
                   value={raw}
                   onChange={(event) => setCeiling(tier, event.target.value)}
@@ -308,7 +308,7 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-              size="sm"
+             
               type="number"
               value={draft.vipAtOrAbove}
               onChange={(event) =>
@@ -327,7 +327,7 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-              size="sm"
+             
               type="number"
               value={draft.standardAtOrAbove}
               onChange={(event) =>
@@ -348,7 +348,7 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-              size="sm"
+             
               type="number"
               value={draft.restrictedAtOrAbove}
               onChange={(event) =>

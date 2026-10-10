@@ -29,11 +29,11 @@ export function EventFiltersPanel({ filters, onChange, onReset, embedded = false
   return (
     <ListingFiltersPanel title={t("title")} resetLabel={t("reset")} onReset={onReset} embedded={embedded}>
       <div className="space-y-4">
-        <Select variant="main" size="sm" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as EventFilters["governorate"] })} />
-        <DatePicker variant="main" size="sm" label={t("date")} value={filters.date ?? ""} onChange={(value) => onChange({ ...filters, date: value || undefined })} />
-        <Select variant="main" size="sm" label={t("tier")} options={tiers} value={filters.ticketTier ?? "all"} onChange={(value) => onChange({ ...filters, ticketTier: value === "all" ? undefined : value as EventTierId })} />
-        <Select variant="main" size="sm" label={t("price")} options={prices} value={filters.priceRange ?? "all"} onChange={(value) => onChange({ ...filters, priceRange: value === "all" ? undefined : value as EventPriceRange })} />
-        <Stepper variant="main" size="sm" label={t("tickets")} icon={<Ticket className="size-4" />} min={1} max={EVENT_MAX_TICKETS} value={filters.minTickets ?? 1} onChange={(value) => onChange({ ...filters, minTickets: value })} />
+        <Select variant="main" label={t("governorate")} options={governorates} value={filters.governorate ?? "all"} onChange={(value) => onChange({ ...filters, governorate: value === "all" ? undefined : value as EventFilters["governorate"] })} />
+        <DatePicker variant="main" label={t("date")} value={filters.date ?? ""} onChange={(value) => onChange({ ...filters, date: value || undefined })} />
+        <Select variant="main" label={t("tier")} options={tiers} value={filters.ticketTier ?? "all"} onChange={(value) => onChange({ ...filters, ticketTier: value === "all" ? undefined : value as EventTierId })} />
+        <Select variant="main" label={t("price")} options={prices} value={filters.priceRange ?? "all"} onChange={(value) => onChange({ ...filters, priceRange: value === "all" ? undefined : value as EventPriceRange })} />
+        <Stepper variant="main" label={t("tickets")} icon={<Ticket className="size-4" />} min={1} max={EVENT_MAX_TICKETS} value={filters.minTickets ?? 1} onChange={(value) => onChange({ ...filters, minTickets: value })} />
       </div>
     </ListingFiltersPanel>
   );

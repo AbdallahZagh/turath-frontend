@@ -77,7 +77,7 @@ export function DiscoveryFiltersPanel({
         {showQuery ? (
           <Input
             variant="main"
-            size="sm"
+           
             type="search"
             label={tf("query")}
             placeholder={tf("queryPlaceholder")}
@@ -87,7 +87,7 @@ export function DiscoveryFiltersPanel({
         ) : null}
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("category")}
           options={categories}
           value={state.category ?? "all"}
@@ -97,7 +97,7 @@ export function DiscoveryFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("governorate")}
           options={governorates}
           value={state.governorate ?? "all"}
@@ -113,7 +113,7 @@ export function DiscoveryFiltersPanel({
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           <Select
             variant="main"
-            size="sm"
+           
             label={tf("radius")}
             options={radius}
             value={state.radius ? String(state.radius) : "all"}
@@ -121,7 +121,7 @@ export function DiscoveryFiltersPanel({
           />
           <Select
             variant="main"
-            size="sm"
+           
             label={tf("price")}
             options={prices}
             value={state.maxPrice ? String(state.maxPrice) : "all"}

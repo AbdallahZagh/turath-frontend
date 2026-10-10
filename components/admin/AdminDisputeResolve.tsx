@@ -75,7 +75,7 @@ export function AdminDisputeResolve({
           <span className="text-prose-muted text-xs font-medium">{t("detail.notesEn")}</span>
           <Textarea
             variant="glass"
-            size="sm"
+           
             value={notesEn}
             onChange={(event) => setNotesEn(event.target.value)}
             label={t("detail.notesEn")}
@@ -85,7 +85,7 @@ export function AdminDisputeResolve({
           <span className="text-prose-muted text-xs font-medium">{t("detail.notesAr")}</span>
           <Textarea
             variant="glass"
-            size="sm"
+           
             dir="rtl"
             value={notesAr}
             onChange={(event) => setNotesAr(event.target.value)}

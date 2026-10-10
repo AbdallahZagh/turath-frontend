@@ -195,7 +195,7 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="date"
                   render={({ field }) => (
-                    <DatePicker size="sm"
+                    <DatePicker
                       variant="main"
                       required
                       label={t("date")}
@@ -220,7 +220,7 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="duration"
                   render={({ field }) => (
-                    <Select size="sm"
+                    <Select
                       variant="main"
                       required
                       label={t("duration")}
@@ -240,7 +240,7 @@ export function GuideBookingCheckout({
                     control={form.control}
                     name="hours"
                     render={({ field }) => (
-                      <Stepper size="sm"
+                      <Stepper
                         variant="main"
                         required
                         label={t("hours")}
@@ -260,7 +260,7 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="language"
                   render={({ field }) => (
-                    <Select size="sm"
+                    <Select
                       variant="main"
                       required
                       label={t("language")}
@@ -279,7 +279,7 @@ export function GuideBookingCheckout({
                   control={form.control}
                   name="focusArea"
                   render={({ field }) => (
-                    <Select size="sm"
+                    <Select
                       variant="main"
                       required
                       label={t("focusArea")}

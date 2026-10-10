@@ -3,6 +3,17 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Field, select, picker and in-row button height (controlScale.ts): 44px touch target on phones. */
+:root {
+  --control-height: 2.75rem;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --control-height: 2.5rem;
+  }
+}
+
 @keyframes toast-progress {
   from { transform: scaleX(1); }
   to { transform: scaleX(0); }

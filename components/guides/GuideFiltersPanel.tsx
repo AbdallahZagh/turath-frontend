@@ -57,7 +57,7 @@ export function GuideFiltersPanel({ filters, onChange, onReset, embedded = false
       <div className="space-y-4">
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("governorate")}
           options={governorates}
           value={filters.governorate ?? "all"}
@@ -70,7 +70,7 @@ export function GuideFiltersPanel({ filters, onChange, onReset, embedded = false
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("language")}
           options={languages}
           value={filters.language ?? "all"}
@@ -80,7 +80,7 @@ export function GuideFiltersPanel({ filters, onChange, onReset, embedded = false
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("specialty")}
           options={specialties}
           value={filters.specialty ?? "all"}
@@ -90,7 +90,7 @@ export function GuideFiltersPanel({ filters, onChange, onReset, embedded = false
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("duration")}
           options={durations}
           value={filters.duration ?? "all"}
@@ -100,7 +100,7 @@ export function GuideFiltersPanel({ filters, onChange, onReset, embedded = false
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={tf("price")}
           options={prices}
           value={filters.priceRange ?? "all"}

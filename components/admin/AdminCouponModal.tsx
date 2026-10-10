@@ -213,7 +213,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.titleEn")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               required
               value={titleEn}
               onChange={(event) => setTitleEn(event.target.value)}
@@ -224,7 +224,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.titleAr")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               required
               dir="rtl"
               value={titleAr}
@@ -237,7 +237,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
           <span className="text-prose-muted text-xs font-medium">{t("form.code")}</span>
           <Input
             variant="glass"
-            size="sm"
+           
             required
             value={code}
             onChange={(event) => setCode(normalizeCouponCode(event.target.value))}
@@ -251,7 +251,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.discountKind")}</span>
             <Select
               variant="glass"
-              size="sm"
+             
               value={discountKind}
               onChange={(value) => {
                 if (isCouponDiscountKind(value)) {
@@ -271,7 +271,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             </span>
             <Input
               variant="glass"
-              size="sm"
+             
               required
               type="number"
               min={1}
@@ -288,7 +288,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.scope")}</span>
             <Select
               variant="glass"
-              size="sm"
+             
               value={scope}
               onChange={(value) => {
                 if (!isCouponScope(value)) {
@@ -316,7 +316,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
               <span className="text-prose-muted text-xs font-medium">{t("form.scopeTarget")}</span>
               <Select
                 variant="glass"
-                size="sm"
+               
                 value={scopeId}
                 onChange={setScopeId}
                 label={t("form.scopeTarget")}
@@ -331,7 +331,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
         <div className="grid gap-3 sm:grid-cols-2">
           <DatePicker
             variant="glass"
-            size="sm"
+           
             required
             value={startAt}
             onChange={setStartAt}
@@ -340,7 +340,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
           />
           <DatePicker
             variant="glass"
-            size="sm"
+           
             required
             value={endAt}
             onChange={setEndAt}
@@ -353,7 +353,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.maxRedemptions")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               type="number"
               min={1}
               step={1}
@@ -366,7 +366,7 @@ function CouponForm({ coupon, onClose }: CouponFormProps): ReactNode {
             <span className="text-prose-muted text-xs font-medium">{t("form.perGuestCap")}</span>
             <Input
               variant="glass"
-              size="sm"
+             
               type="number"
               min={1}
               step={1}

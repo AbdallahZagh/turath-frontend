@@ -75,7 +75,7 @@ export function HotelFiltersPanel({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <Select
           variant="main"
-          size="sm"
+         
           label={t("governorate")}
           options={governorateOptions}
           value={filters.governorate ?? "all"}
@@ -88,7 +88,7 @@ export function HotelFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("price")}
           options={priceOptions}
           value={filters.priceRange ?? "all"}
@@ -101,7 +101,7 @@ export function HotelFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("roomType")}
           options={roomOptions}
           value={filters.roomType ?? "all"}
@@ -114,7 +114,7 @@ export function HotelFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("guests")}
           options={guestOptions}
           value={String(filters.guests ?? 1)}

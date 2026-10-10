@@ -76,7 +76,7 @@ export function RestaurantFiltersPanel({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <Select
           variant="main"
-          size="sm"
+         
           label={t("governorate")}
           options={governorateOptions}
           value={filters.governorate ?? "all"}
@@ -90,7 +90,7 @@ export function RestaurantFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("price")}
           options={priceOptions}
           value={filters.priceRange ?? "all"}
@@ -103,7 +103,7 @@ export function RestaurantFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("zone")}
           options={zoneOptions}
           value={filters.zone ?? "all"}
@@ -116,7 +116,7 @@ export function RestaurantFiltersPanel({
         />
         <Select
           variant="main"
-          size="sm"
+         
           label={t("partySize")}
           options={partyOptions}
           value={String(filters.partySize ?? RESTAURANT_DEFAULT_PARTY)}

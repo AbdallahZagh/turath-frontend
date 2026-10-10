@@ -198,7 +198,7 @@ export function EventBookingCheckout({
                   control={form.control}
                   name="sessionId"
                   render={({ field }) => (
-                    <Select size="sm"
+                    <Select
                       variant="main"
                       required
                       label={t("session")}
@@ -217,7 +217,7 @@ export function EventBookingCheckout({
                   control={form.control}
                   name="ticketTier"
                   render={({ field }) => (
-                    <Select size="sm"
+                    <Select
                       variant="main"
                       required
                       disabled={!session}
@@ -237,7 +237,7 @@ export function EventBookingCheckout({
                   control={form.control}
                   name="quantity"
                   render={({ field }) => (
-                    <Stepper size="sm"
+                    <Stepper
                       variant="main"
                       required
                       label={t("quantity")}

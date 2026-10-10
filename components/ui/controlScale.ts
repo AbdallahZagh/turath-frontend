@@ -11,20 +11,21 @@ export type ControlScaleProps = {
   minHeight?: string;
 };
 
+/**
+ * Shared height of fields, selects, pickers and in-row buttons: 44px below `sm` (touch target),
+ * 40px from `sm` up. Defined as `--control-height` in globals.css so every control in a row
+ * matches.
+ */
+export const CONTROL_HEIGHT = "var(--control-height)";
+
 export const CONTROL_SIZE: Record<
   ControlSize,
-  { font: string; px: string; py: string; gap: string }
+  { font: string; px: string; py: string; gap: string; minHeight: string }
 > = {
-  sm: { font: "0.875rem", px: "1.6em", py: "0.7em", gap: "0.35rem" },
-  md: { font: "1.0625rem", px: "2.7em", py: "1em", gap: "0.5rem" },
-  lg: { font: "1.125rem", px: "3.1em", py: "1.15em", gap: "0.65rem" },
+  sm: { font: "0.875rem", px: "0.875em", py: "0.35em", gap: "0.35rem", minHeight: CONTROL_HEIGHT },
+  md: { font: "1.0625rem", px: "0.875em", py: "0.35em", gap: "0.5rem", minHeight: CONTROL_HEIGHT },
+  lg: { font: "1.125rem", px: "3.1em", py: "1.15em", gap: "0.65rem", minHeight: "0px" },
 };
-
-/**
- * Side padding for a text field without a leading icon in a dense form (business profiles). The
- * size default leaves icon room, which cuts off long emails and addresses in half-width columns.
- */
-export const TEXT_FIELD_PADDING_X = "0.875em";
 
 type ControlStyleOptions = {
   size?: ControlSize;
@@ -53,6 +54,6 @@ export function controlStyle({
     "--control-py": paddingY ?? scale.py,
     "--control-radius": rounded ?? defaultRadius,
     "--control-gap": gap ?? scale.gap,
-    "--control-min-height": minHeight ?? "0px",
+    "--control-min-height": minHeight ?? scale.minHeight,
   } as CSSProperties;
 }

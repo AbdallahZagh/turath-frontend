@@ -97,7 +97,7 @@ export function AdminCommissions(): ReactNode {
         <div className="ms-auto flex w-28 items-center gap-2">
           <Input
             variant="glass"
-            size="sm"
+           
             type="number"
             min={0}
             max={100}
@@ -172,7 +172,7 @@ export function AdminCommissions(): ReactNode {
         <div className="flex flex-wrap items-stretch gap-2">
           <Input
             variant="glass"
-            size="sm"
+           
             type="number"
             min={1}
             step={1}

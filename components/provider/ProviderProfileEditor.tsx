@@ -27,7 +27,6 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { TimePicker } from "@/components/ui/TimePicker";
-import { TEXT_FIELD_PADDING_X } from "@/components/ui/controlScale";
 import { PhoneNumber } from "@/components/ui/PhoneNumber";
 import { useUpdateProviderProfile } from "@/hooks/useProviderProfile";
 import { useStayTranslations } from "@/hooks/useStayTranslations";
@@ -287,18 +286,18 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
           <SectionHeading title={t("identity.title")} description={t("identity.description")} />
           <div className="grid gap-4 md:grid-cols-2">
             <FormField label={t("fields.nameEn")} error={form.formState.errors.nameEn}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="ltr" {...form.register("nameEn")} />
+              <Input variant="glass" dir="ltr" {...form.register("nameEn")} />
             </FormField>
             <FormField label={t("fields.nameAr")} error={form.formState.errors.nameAr}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="rtl" {...form.register("nameAr")} />
+              <Input variant="glass" dir="rtl" {...form.register("nameAr")} />
             </FormField>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <FormField label={t("fields.descriptionEn")} error={form.formState.errors.descriptionEn}>
-              <Textarea variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="ltr" rows={5} {...form.register("descriptionEn")} />
+              <Textarea variant="glass" dir="ltr" rows={5} {...form.register("descriptionEn")} />
             </FormField>
             <FormField label={t("fields.descriptionAr")} error={form.formState.errors.descriptionAr}>
-              <Textarea variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="rtl" rows={5} {...form.register("descriptionAr")} />
+              <Textarea variant="glass" dir="rtl" rows={5} {...form.register("descriptionAr")} />
             </FormField>
           </div>
         </GlassPanel>
@@ -313,7 +312,6 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
                 <FormField label={t("fields.governorate")} error={fieldState.error}>
                   <Select
                     variant="glass"
-                    paddingX={TEXT_FIELD_PADDING_X}
                     value={field.value}
                     onChange={field.onChange}
                     options={GOVERNORATES.map((value) => ({ value, label: t(`governorates.${value}`) }))}
@@ -322,17 +320,17 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               )}
             />
             <FormField label={t("fields.phone")} error={form.formState.errors.phone}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
+              <Input variant="glass" type="tel" dir="ltr" autoComplete="tel" inputMode="tel" {...form.register("phone", { setValueAs: normalizePhoneInput })} />
             </FormField>
             <FormField label={t("fields.addressEn")} error={form.formState.errors.addressEn}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="ltr" {...form.register("addressEn")} />
+              <Input variant="glass" dir="ltr" {...form.register("addressEn")} />
             </FormField>
             <FormField label={t("fields.addressAr")} error={form.formState.errors.addressAr}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} dir="rtl" {...form.register("addressAr")} />
+              <Input variant="glass" dir="rtl" {...form.register("addressAr")} />
             </FormField>
             <div className="min-w-0 md:col-span-2">
               <FormField label={t("fields.email")} error={form.formState.errors.email}>
-                <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} type="email" dir="ltr" {...form.register("email")} />
+                <Input variant="glass" type="email" dir="ltr" {...form.register("email")} />
               </FormField>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -358,10 +356,10 @@ export function ProviderProfileEditor({ profile }: { profile: ProviderProfile })
               ))}
             </div>
             <FormField label={t("fields.latitude")} error={form.formState.errors.latitude}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} inputMode="decimal" dir="ltr" {...form.register("latitude")} />
+              <Input variant="glass" inputMode="decimal" dir="ltr" {...form.register("latitude")} />
             </FormField>
             <FormField label={t("fields.longitude")} error={form.formState.errors.longitude}>
-              <Input variant="glass" paddingX={TEXT_FIELD_PADDING_X} inputMode="decimal" dir="ltr" {...form.register("longitude")} />
+              <Input variant="glass" inputMode="decimal" dir="ltr" {...form.register("longitude")} />
             </FormField>
           </div>
           <div className="border-border bg-glass-control flex items-start gap-3 rounded-2xl border p-4">

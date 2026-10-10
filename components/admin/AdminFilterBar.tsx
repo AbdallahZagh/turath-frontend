@@ -166,7 +166,7 @@ export function AdminFilterBar({
               <Select
                 key={field.id}
                 variant="glass"
-                size="sm"
+               
                 value={field.value}
                 onChange={field.onChange}
                 label={field.label}
@@ -189,7 +189,7 @@ export function AdminFilterBar({
       <div className="flex flex-wrap items-stretch gap-2">
         <Input
           variant="glass"
-          size="sm"
+         
           type="search"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}

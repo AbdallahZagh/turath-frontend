@@ -49,6 +49,9 @@ type StepperProps = {
   className?: string;
 };
 
+/** Stepper buttons are sized from the shared control height so the stepper matches its row. */
+const STEPPER_BUTTON_SIZE = "size-[calc(var(--control-height)-0.75rem)]";
+
 const VARIANT_RADIUS: Record<StepperVariant, string> = {
   main: "0.625rem",
   glass: "0.5rem",
@@ -127,7 +130,7 @@ export function Stepper({
 
   const style = controlStyle({
     size,
-    paddingX: paddingX ?? "1.15em",
+    paddingX,
     paddingY,
     rounded,
     minHeight,
@@ -204,12 +207,12 @@ export function Stepper({
         FIELD_BASE,
         FIELD_VARIANT[variant],
         FOCUS_WITHIN[variant],
-        "flex min-w-0 max-w-full items-center gap-2",
+        "flex min-w-0 max-w-full items-center gap-2 py-0",
         disabled && "pointer-events-none opacity-40",
       )}
     >
       <span
-        className="text-prose-muted flex size-[1.85em] shrink-0 items-center justify-center rounded-full"
+        className={cn("text-prose-muted flex shrink-0 items-center justify-center rounded-full", STEPPER_BUTTON_SIZE)}
         aria-hidden
       >
         {icon ?? <Users className="size-[1.1em]" />}
@@ -244,7 +247,8 @@ export function Stepper({
           disabled={disabled || atMin}
           aria-label={t("decrease", { label: namedLabel })}
           className={cn(
-            "flex size-[1.85em] items-center justify-center rounded-full border",
+            "flex items-center justify-center rounded-full border",
+            STEPPER_BUTTON_SIZE,
             "transition-colors disabled:pointer-events-none disabled:opacity-30",
             BUTTON_VARIANT[variant],
           )}
@@ -262,7 +266,8 @@ export function Stepper({
           disabled={disabled || atMax}
           aria-label={t("increase", { label: namedLabel })}
           className={cn(
-            "flex size-[1.85em] items-center justify-center rounded-full border",
+            "flex items-center justify-center rounded-full border",
+            STEPPER_BUTTON_SIZE,
             "transition-colors disabled:pointer-events-none disabled:opacity-30",
             BUTTON_VARIANT[variant],
           )}

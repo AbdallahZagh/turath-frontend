@@ -23,13 +23,6 @@ export type PaginationProps = {
   className?: string;
 };
 
-const PAGER_PAD = {
-  paddingX: "0.45em",
-  paddingY: "0.28em",
-  minHeight: "1.75rem",
-  rounded: "0.4em",
-} as const;
-
 function pageWindow(page: number, pageCount: number): number[] {
   const span = 5;
   const start = Math.max(1, Math.min(page - 2, pageCount - span + 1));
@@ -71,10 +64,6 @@ export function Pagination({
           variant="glass"
           size="sm"
           compact
-          paddingX="0.7em"
-          paddingY="0.28em"
-          minHeight="1.75rem"
-          rounded="0.4em"
           value={String(pageSize)}
           onChange={(value) => onPageSizeChange(Number(value))}
           label={t("perPage")}
@@ -93,7 +82,6 @@ export function Pagination({
           type="button"
           variant="glass"
           size="sm"
-          {...PAGER_PAD}
           disabled={page <= 1}
           aria-label={t("previous")}
           onClick={() => onPageChange(page - 1)}
@@ -106,8 +94,7 @@ export function Pagination({
             type="button"
             variant={n === page ? "solid" : "glass"}
             size="sm"
-            {...PAGER_PAD}
-            className="min-w-7"
+              className="min-w-(--control-height)"
             aria-label={t("page", { page: n })}
             aria-current={n === page ? "page" : undefined}
             onClick={() => onPageChange(n)}
@@ -119,7 +106,6 @@ export function Pagination({
           type="button"
           variant="glass"
           size="sm"
-          {...PAGER_PAD}
           disabled={page >= pageCount}
           aria-label={t("next")}
           onClick={() => onPageChange(page + 1)}

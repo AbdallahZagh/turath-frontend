@@ -31,7 +31,7 @@ type PhoneFieldProps = ControlScaleProps & {
 };
 
 const PHONE_WRAPPER = [
-  "border-field-main-border bg-field-main flex min-w-0 items-stretch overflow-hidden",
+  "border-field-main-border bg-field-main box-border flex h-(--control-height) min-w-0 items-stretch overflow-hidden",
   "rounded-(--control-radius) border-2 transition-[border-color,box-shadow] duration-300",
   "has-focus:border-primary has-focus:shadow-field dark:has-focus:border-foam",
   "has-[[aria-expanded=true]]:border-primary has-[[aria-expanded=true]]:shadow-field",
@@ -46,7 +46,7 @@ const PHONE_PREFIX = [
 
 const PHONE_INPUT = [
   "text-prose placeholder:text-prose-muted min-w-0 flex-1 self-stretch bg-transparent text-left outline-none",
-  "px-3 py-(--control-py) leading-none text-(length:--control-font-size)",
+  "px-3 py-0 leading-none text-(length:--control-font-size)",
   "dark:text-dust dark:placeholder:text-dust",
 ].join(" ");
 
@@ -105,6 +105,7 @@ export function PhoneField({
             chrome="inline"
             compact
             searchable
+            minHeight="0px"
             variant="main"
             name={name ? `${name}Country` : undefined}
             options={options}

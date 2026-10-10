@@ -14,7 +14,7 @@ import { useFormatSyp } from "@/hooks/useFormatSyp";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
 import { formatRating } from "@/lib/format/number";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import { withBookingSearch } from "@/lib/search/bookingSearch";
 import type { DiscoveryResult } from "@/services/discovery";
 
@@ -69,7 +69,7 @@ export function DiscoveryCard({
             </div>
             {compact ? null : (
               <p className="text-prose-muted mt-3 line-clamp-2 text-sm leading-relaxed">
-                {localizedName(result.description, loc)}
+                {localizedDisplayText(result.description, loc)}
               </p>
             )}
             <ListingCardFooter className="flex items-end justify-between gap-3 pt-3">

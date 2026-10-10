@@ -18,7 +18,7 @@ import { useTranslations } from "@/i18n/translations";
 import { formatMediumDate } from "@/lib/format/datetime";
 import { formatSyp } from "@/lib/format/money";
 import { partSeparator } from "@/lib/format/separators";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText, localizedName } from "@/lib/i18n/localized";
 import {
   DISPUTE_STATUSES,
   type AdminDispute,
@@ -114,11 +114,11 @@ export function AdminDisputes(): ReactNode {
         <div className="flex max-w-sm flex-col gap-1.5">
           <p className="text-prose text-xs leading-relaxed">
             <span className="text-prose-muted font-semibold">{t("providerLabel")}: </span>
-            {localizedName(dispute.providerClaim, loc)}
+            {localizedDisplayText(dispute.providerClaim, loc)}
           </p>
           <p className="text-prose text-xs leading-relaxed">
             <span className="text-prose-muted font-semibold">{t("touristLabel")}: </span>
-            {localizedName(dispute.touristClaim, loc)}
+            {localizedDisplayText(dispute.touristClaim, loc)}
           </p>
         </div>
       ),
@@ -144,7 +144,7 @@ export function AdminDisputes(): ReactNode {
       id: "notes",
       header: t("columns.notes"),
       cell: (dispute) => {
-        const notes = localizedName(dispute.notes, loc);
+        const notes = localizedDisplayText(dispute.notes, loc);
         return (
           <span className="text-prose-muted max-w-56 truncate text-xs">
             {notes || t("noNotes")}

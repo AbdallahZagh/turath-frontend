@@ -7,7 +7,7 @@ import { Building2, UserRound } from "lucide-react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { Locale } from "@/i18n/config";
 import { useTranslations } from "@/i18n/translations";
-import { localizedName } from "@/lib/i18n/localized";
+import { localizedDisplayText } from "@/lib/i18n/localized";
 import type { AdminDispute } from "@/lib/mock/adminDisputes";
 
 type AdminDisputeClaimsProps = {
@@ -30,10 +30,10 @@ export function AdminDisputeClaims({ dispute }: AdminDisputeClaimsProps): ReactN
             <span>{t("providerLabel")}</span>
           </div>
           <p className="text-prose text-sm leading-relaxed">
-            {localizedName(dispute.providerClaim, loc)}
+            {localizedDisplayText(dispute.providerClaim, loc)}
           </p>
           <p className="text-prose-muted text-sm leading-relaxed">
-            {localizedName(dispute.providerClaim, other)}
+            {localizedDisplayText(dispute.providerClaim, other)}
           </p>
         </GlassPanel>
         <GlassPanel className="flex-none gap-3 p-5 sm:p-6">
@@ -42,10 +42,10 @@ export function AdminDisputeClaims({ dispute }: AdminDisputeClaimsProps): ReactN
             <span>{t("touristLabel")}</span>
           </div>
           <p className="text-prose text-sm leading-relaxed">
-            {localizedName(dispute.touristClaim, loc)}
+            {localizedDisplayText(dispute.touristClaim, loc)}
           </p>
           <p className="text-prose-muted text-sm leading-relaxed">
-            {localizedName(dispute.touristClaim, other)}
+            {localizedDisplayText(dispute.touristClaim, other)}
           </p>
         </GlassPanel>
       </div>

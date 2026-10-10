@@ -154,7 +154,6 @@ export function ProviderBookingsScreen(): ReactNode {
         </div>
         <Button
           variant="outline"
-          size="sm"
           disabled={!date && status === ALL_STATUSES}
           onClick={() => {
             setDate("");

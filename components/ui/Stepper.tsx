@@ -240,7 +240,7 @@ export function Stepper({
         onBlur={flushDraft}
         onKeyDown={onInputKeyDown}
       />
-      <div className="flex shrink-0 items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-3 sm:gap-1.5">
         <button
           type="button"
           tabIndex={-1}

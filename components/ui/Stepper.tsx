@@ -247,7 +247,7 @@ export function Stepper({
           disabled={disabled || atMin}
           aria-label={t("decrease", { label: namedLabel })}
           className={cn(
-            "flex items-center justify-center rounded-full border",
+            "tap-target flex items-center justify-center rounded-full border",
             STEPPER_BUTTON_SIZE,
             "transition-colors disabled:pointer-events-none disabled:opacity-30",
             BUTTON_VARIANT[variant],
@@ -266,7 +266,7 @@ export function Stepper({
           disabled={disabled || atMax}
           aria-label={t("increase", { label: namedLabel })}
           className={cn(
-            "flex items-center justify-center rounded-full border",
+            "tap-target flex items-center justify-center rounded-full border",
             STEPPER_BUTTON_SIZE,
             "transition-colors disabled:pointer-events-none disabled:opacity-30",
             BUTTON_VARIANT[variant],

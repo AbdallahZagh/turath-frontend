@@ -110,7 +110,7 @@ export function Drawer({
                 type="button"
                 onClick={onClose}
                 aria-label={t("close")}
-                className="glass-surface backdrop-blur-sm text-prose-muted hover:text-prose flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
+                className="glass-surface backdrop-blur-sm text-prose-muted hover:text-prose tap-target flex size-8 shrink-0 items-center justify-center rounded-full transition-colors"
               >
                 <X className="size-4" aria-hidden />
               </button>

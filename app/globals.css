@@ -14,6 +14,30 @@
   }
 }
 
+/*
+ * Icon-only buttons that look smaller than 44px keep a 44 x 44 tap area below `sm` through an
+ * invisible centred ::after. The parent must not clip it (no overflow-hidden).
+ */
+@utility tap-target {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 2.75rem);
+    height: max(100%, 2.75rem);
+    transform: translate(-50%, -50%);
+  }
+
+  @media (min-width: 40rem) {
+    &::after {
+      content: none;
+    }
+  }
+}
+
 @keyframes toast-progress {
   from { transform: scaleX(1); }
   to { transform: scaleX(0); }

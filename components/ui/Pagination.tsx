@@ -82,6 +82,7 @@ export function Pagination({
           type="button"
           variant="glass"
           size="sm"
+          className="min-w-(--control-height)"
           disabled={page <= 1}
           aria-label={t("previous")}
           onClick={() => onPageChange(page - 1)}
@@ -106,6 +107,7 @@ export function Pagination({
           type="button"
           variant="glass"
           size="sm"
+          className="min-w-(--control-height)"
           disabled={page >= pageCount}
           aria-label={t("next")}
           onClick={() => onPageChange(page + 1)}

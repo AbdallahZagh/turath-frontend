@@ -74,7 +74,7 @@ export function ProviderSidebar({
       >
         <button
           type="button"
-          className="text-prose-muted hover:bg-option-hover absolute end-3 top-3 grid size-9 place-items-center rounded-full lg:hidden"
+          className="text-prose-muted hover:bg-option-hover absolute end-3 top-3 tap-target grid size-9 place-items-center rounded-full lg:hidden"
           aria-label={t("shell.closeMenu")}
           onClick={onClose}
         >

@@ -16,11 +16,10 @@
 
 /*
  * Icon-only buttons that look smaller than 44px keep a 44 x 44 tap area below `sm` through an
- * invisible centred ::after. The parent must not clip it (no overflow-hidden).
+ * invisible centred ::after. The button must be positioned (relative or absolute) and its parent
+ * must not clip it (no overflow-hidden).
  */
 @utility tap-target {
-  position: relative;
-
   &::after {
     content: "";
     position: absolute;

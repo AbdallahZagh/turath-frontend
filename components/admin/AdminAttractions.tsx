@@ -9,7 +9,7 @@ import { AdminAttractionCard } from "@/components/admin/AdminAttractionCard";
 import { AdminAttractionDeleteDialog } from "@/components/admin/AdminAttractionDeleteDialog";
 import { AdminEditDeleteMenu } from "@/components/admin/AdminEditDeleteMenu";
 import { AdminAttractionModal } from "@/components/admin/AdminAttractionModal";
-import { AdminFilterBar, ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
+import { AdminFilterBar } from "@/components/admin/AdminFilterBar";
 import { AdminHeritageSitesMap } from "@/components/admin/AdminHeritageSitesMap";
 import { AttractionCover } from "@/components/admin/AttractionCover";
 import { Badge } from "@/components/ui/Badge";
@@ -284,7 +284,6 @@ export function AdminAttractions(): ReactNode {
           <SegmentSwitch
             variant="glass"
             size="sm"
-            minHeight={ADMIN_TOOLBAR_HEIGHT}
             aria-label={t("viewLabel")}
             value={view}
             onChange={(value) => setView(value as ViewMode)}

@@ -255,7 +255,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.nameEn")}</span>
               <Input
                 variant="glass"
-               
                 required
                 value={nameEn}
                 onChange={(event) => setNameEn(event.target.value)}
@@ -266,7 +265,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.nameAr")}</span>
               <Input
                 variant="glass"
-               
                 required
                 dir="rtl"
                 value={nameAr}
@@ -281,7 +279,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.narrativeEn")}</span>
               <Textarea
                 variant="glass"
-               
                 rows={3}
                 required
                 value={narrativeEn}
@@ -293,7 +290,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.narrativeAr")}</span>
               <Textarea
                 variant="glass"
-               
                 rows={3}
                 required
                 dir="rtl"
@@ -311,7 +307,6 @@ export function AdminAttractionModal({
               </span>
               <Select
                 variant="glass"
-               
                 value={governorate}
                 onChange={(value) => setGovernorate(value as GovernorateSlug)}
                 label={t("columns.governorate")}
@@ -346,7 +341,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.opensAt")}</span>
               <TimePicker
                 variant="glass"
-               
                 value={opensAt}
                 onChange={setOpensAt}
                 label={t("form.opensAt")}
@@ -356,7 +350,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.closesAt")}</span>
               <TimePicker
                 variant="glass"
-               
                 value={closesAt}
                 onChange={setClosesAt}
                 label={t("form.closesAt")}
@@ -371,7 +364,6 @@ export function AdminAttractionModal({
               </div>
               <Input
                 variant="glass"
-               
                 amount
                 required
                 value={entryFeeSyp}
@@ -387,7 +379,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.latitude")}</span>
               <Input
                 variant="glass"
-               
                 type="number"
                 required
                 step="any"
@@ -400,7 +391,6 @@ export function AdminAttractionModal({
               <span className="text-prose-muted text-xs font-medium">{t("form.longitude")}</span>
               <Input
                 variant="glass"
-               
                 type="number"
                 required
                 step="any"

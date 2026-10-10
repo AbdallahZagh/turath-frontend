@@ -128,7 +128,6 @@ export function AdminProviderFinance({
             <div className="flex items-center gap-2">
               <Input
                 variant="glass"
-               
                 type="number"
                 step="any"
                 value={commission}
@@ -150,7 +149,6 @@ export function AdminProviderFinance({
             <span className="text-prose-muted text-xs font-medium">{t("detail.creditCeiling")}</span>
             <Input
               variant="glass"
-             
               amount
               value={credit}
               onChange={(event) => setCredit(event.target.value)}

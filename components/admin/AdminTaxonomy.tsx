@@ -4,7 +4,6 @@ import { useMemo, useState, type ReactNode } from "react";
 import { useLocale } from "next-intl";
 import { ChevronDown, ChevronUp, Pencil, Tags, Trash2 } from "lucide-react";
 
-import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
 import { AdminTaxonomyTermModal } from "@/components/admin/AdminTaxonomyTermModal";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -208,7 +207,6 @@ export function AdminTaxonomy(): ReactNode {
           <SegmentSwitch
             variant="glass"
             size="sm"
-            minHeight={ADMIN_TOOLBAR_HEIGHT}
             aria-label={t("kindLabel")}
             value={kind}
             onChange={(value) => {

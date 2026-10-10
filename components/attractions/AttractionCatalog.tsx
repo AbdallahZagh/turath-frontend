@@ -53,7 +53,6 @@ export function AttractionCatalog({
         <div className="mt-5 space-y-5">
           <Select
             variant="main"
-           
             label={tf("governorate")}
             options={governorates}
             value={filters.governorate ?? "all"}

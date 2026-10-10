@@ -3,7 +3,6 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { useLocale } from "next-intl";
 
-import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -97,7 +96,6 @@ export function AdminCommissions(): ReactNode {
         <div className="ms-auto flex w-28 items-center gap-2">
           <Input
             variant="glass"
-           
             type="number"
             min={0}
             max={100}
@@ -172,7 +170,6 @@ export function AdminCommissions(): ReactNode {
         <div className="flex flex-wrap items-stretch gap-2">
           <Input
             variant="glass"
-           
             type="number"
             min={1}
             step={1}
@@ -181,13 +178,11 @@ export function AdminCommissions(): ReactNode {
             onChange={(event) => setSypPerUsd(event.target.value)}
             placeholder={t("rateLabel")}
             label={t("rateLabel")}
-            minHeight={ADMIN_TOOLBAR_HEIGHT}
             className="w-full sm:max-w-sm"
           />
           <Button
             type="submit"
             size="sm"
-            minHeight={ADMIN_TOOLBAR_HEIGHT}
             disabled={saveRates.isPending || !rates}
           >
             {t("save")}

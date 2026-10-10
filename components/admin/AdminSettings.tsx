@@ -3,7 +3,6 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { useLocale } from "next-intl";
 
-import { ADMIN_TOOLBAR_HEIGHT } from "@/components/admin/AdminFilterBar";
 import { Button } from "@/components/ui/Button";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -196,7 +195,6 @@ export function AdminSettings(): ReactNode {
           <div className="ms-auto flex w-56 flex-col items-end gap-1">
             <Input
               variant="glass"
-             
               amount
               value={raw}
               onChange={(event) => setCeiling(row.tier, event.target.value)}
@@ -244,7 +242,6 @@ export function AdminSettings(): ReactNode {
         <Button
           type="submit"
           size="sm"
-          minHeight={ADMIN_TOOLBAR_HEIGHT}
           disabled={saveSettings.isPending}
         >
           {t("save")}
@@ -266,7 +263,6 @@ export function AdminSettings(): ReactNode {
                 <span className="text-prose text-start font-medium">{t(`tiers.${tier}`)}</span>
                 <Input
                   variant="glass"
-                 
                   amount
                   value={raw}
                   onChange={(event) => setCeiling(tier, event.target.value)}
@@ -308,7 +304,6 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-             
               type="number"
               value={draft.vipAtOrAbove}
               onChange={(event) =>
@@ -327,7 +322,6 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-             
               type="number"
               value={draft.standardAtOrAbove}
               onChange={(event) =>
@@ -348,7 +342,6 @@ export function AdminSettings(): ReactNode {
             </span>
             <Input
               variant="glass"
-             
               type="number"
               value={draft.restrictedAtOrAbove}
               onChange={(event) =>
@@ -395,7 +388,6 @@ export function AdminSettings(): ReactNode {
           <SegmentSwitch
             variant="glass"
             size="sm"
-            minHeight={ADMIN_TOOLBAR_HEIGHT}
             aria-label={t("flags.otp")}
             value={draft.otpChannel}
             onChange={(value) => {

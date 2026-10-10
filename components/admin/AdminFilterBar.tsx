@@ -44,7 +44,6 @@ type AdminFilterBarProps = {
   trailing?: ReactNode;
 };
 
-export const ADMIN_TOOLBAR_HEIGHT = "2.625rem";
 const ALL = "all";
 
 function isActive(field: AdminFilterField): boolean {
@@ -166,7 +165,6 @@ export function AdminFilterBar({
               <Select
                 key={field.id}
                 variant="glass"
-               
                 value={field.value}
                 onChange={field.onChange}
                 label={field.label}
@@ -189,13 +187,11 @@ export function AdminFilterBar({
       <div className="flex flex-wrap items-stretch gap-2">
         <Input
           variant="glass"
-         
           type="search"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder={searchPlaceholder}
           label={searchPlaceholder}
-          minHeight={ADMIN_TOOLBAR_HEIGHT}
           className="w-full sm:max-w-sm"
         />
         <Button
@@ -203,7 +199,6 @@ export function AdminFilterBar({
           type="button"
           variant="glass"
           size="sm"
-          minHeight={ADMIN_TOOLBAR_HEIGHT}
           aria-expanded={open}
           aria-haspopup="dialog"
           aria-label={t("title")}

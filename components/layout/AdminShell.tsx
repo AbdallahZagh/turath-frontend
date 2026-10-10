@@ -92,7 +92,7 @@ export function AdminShell({ children }: AdminShellProps): ReactNode {
           <div className="flex min-w-0 flex-1 items-center gap-2">
             <button
               type="button"
-              className="text-prose-muted hover:bg-option-hover grid size-10 place-items-center rounded-full lg:hidden"
+              className="text-prose-muted hover:bg-option-hover tap-target grid size-10 place-items-center rounded-full lg:hidden"
               aria-label={t("openNav")}
               onClick={() => setMobileNavOpen(true)}
             >

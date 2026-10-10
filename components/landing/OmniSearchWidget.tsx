@@ -63,17 +63,13 @@ const LANGUAGE_LABEL_KEY: Record<(typeof LANGUAGE_VALUES)[number], LanguageLabel
  */
 const SEARCH_FIELD_SIZE = "sm" as const;
 const SEARCH_FIELD_PADDING_X = "1rem";
-const SEARCH_FIELD_PADDING_Y = "0.75rem";
 const SEARCH_FIELD_RADIUS = "0.625rem";
-const SEARCH_CONTROL_MIN_HEIGHT = "3.375rem";
 
 const SEARCH_FIELD = {
   variant: "main" as const,
   size: SEARCH_FIELD_SIZE,
   paddingX: SEARCH_FIELD_PADDING_X,
-  paddingY: SEARCH_FIELD_PADDING_Y,
   rounded: SEARCH_FIELD_RADIUS,
-  minHeight: SEARCH_CONTROL_MIN_HEIGHT,
 };
 
 const SEARCH_PATH = "/search";
@@ -320,10 +316,8 @@ export function OmniSearchWidget(): ReactNode {
               style={controlStyle({
                 size: SEARCH_FIELD_SIZE,
                 paddingX: SEARCH_FIELD_PADDING_X,
-                paddingY: SEARCH_FIELD_PADDING_Y,
-                rounded: SEARCH_FIELD_RADIUS,
-                minHeight: SEARCH_CONTROL_MIN_HEIGHT,
-                defaultRadius: SEARCH_FIELD_RADIUS,
+                              rounded: SEARCH_FIELD_RADIUS,
+                              defaultRadius: SEARCH_FIELD_RADIUS,
                 gap: "0.625rem",
               })}
             >
@@ -336,9 +330,7 @@ export function OmniSearchWidget(): ReactNode {
                   variant="solid"
                   size={SEARCH_FIELD_SIZE}
                   paddingX={SEARCH_FIELD_PADDING_X}
-                  paddingY={SEARCH_FIELD_PADDING_Y}
                   rounded={SEARCH_FIELD_RADIUS}
-                  minHeight={SEARCH_CONTROL_MIN_HEIGHT}
                   className="w-full justify-center border-2 border-transparent"
                 >
                   <Search className="size-[1.1em]" aria-hidden />
